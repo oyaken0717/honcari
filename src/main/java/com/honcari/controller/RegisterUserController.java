@@ -1,5 +1,4 @@
 package com.honcari.controller;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,5 +49,4 @@ public class RegisterUserController {
 		registerUserService.registerUser(form);
 		return "redirect:/toLogin";
 	}
-
 }
