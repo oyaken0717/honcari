@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-public class RegisterUser {
+public class RegisterUserController {
 
 	/**
 	 * ユーザ登録画面を表示する.
