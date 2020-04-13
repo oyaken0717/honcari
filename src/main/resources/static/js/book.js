@@ -9,8 +9,9 @@ $(function() {
 			async: true // 非同期で処理を行う
 		}).done(function(data) {
 			let element = document.getElementById('book-thumbnail');
-			let element1 = document.getElementById('book-name')
+			let element1 = document.getElementById('book-names')
 			for(var i = 0; i < data.items.length; i++){
+				element1.insertAdjacentHTML('afterend', '<a>' + data.items[i].volumeInfo.title + '</a>');
 				element.insertAdjacentHTML('beforeend', '<a id="register" href=\"' + data.items[i].volumeInfo.industryIdentifiers[1].identifier + '\"><img src=\"' + data.items[i].volumeInfo.imageLinks.smallThumbnail + '\"></a>');
 				var id = $('#register').val();
 				console.log(id);
