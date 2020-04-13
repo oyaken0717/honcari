@@ -8,6 +8,6 @@ public class BookApiTestController {
 
 	@RequestMapping("")
 	public String test() {
-		return "test";
+		return "api_test";
 	}
 }
