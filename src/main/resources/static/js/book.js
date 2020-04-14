@@ -6,16 +6,53 @@ $(function() {
 			url : url,
 			type : 'GET',
 			dataType : 'json',
-			async: true // 非同期で処理を行う
+			async: true
 		}).done(function(data) {
-			let element = document.getElementById('book-thumbnail');
-			let element1 = document.getElementById('book-names')
+			let element = document.getElementById('book-list');
+//			let element1 = document.getElementById('book-names')
 			for(var i = 0; i < data.items.length; i++){
-				element1.insertAdjacentHTML('afterend', '<a>' + data.items[i].volumeInfo.title + '</a>');
-				element.insertAdjacentHTML('beforeend', '<a id="register" href=\"' + data.items[i].volumeInfo.industryIdentifiers[1].identifier + '\"><img src=\"' + data.items[i].volumeInfo.imageLinks.smallThumbnail + '\"></a>');
-				var id = $('#register').val();
-				console.log(id);
+//				element1.insertAdjacentHTML('afterend', '<a>' + data.items[i].volumeInfo.title + '</a>');
+				element.insertAdjacentHTML('beforeend', '<li><button class="get-button" type="button"><img src="' + data.items[i].volumeInfo.imageLinks.smallThumbnail + 
+						'"></button><input class="isbn-id" type="hidden" value="' + data.items[i].volumeInfo.industryIdentifiers[0].identifier + 
+						'"><input type="hidden" class="title" value="' + data.items[i].volumeInfo.title + 
+						'"><input type="hidden" class="author" value="' + data.items[0].volumeInfo.authors[0] + 
+						'"><input type="hidden" class="published-date" value="' + data.items[0].volumeInfo.publishedDate + 
+						'"><input type="hidden" class="description" value="' + data.items[0].volumeInfo.description + 
+						'"><input type="hidden" class="page-count" value="'+ data.items[i].volumeInfo.pageCount + 
+						'"><input type="hidden" class="thumbnail-path" value="' + data.items[i].volumeInfo.imageLinks.smallThumbnail + '"></li>');
 			}
+		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("エラーが発生しました！");
+			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+			console.log("textStatus     : " + textStatus);
+			console.log("errorThrown    : " + errorThrown.message);
+		});
+	});
+	
+	$("#book-list").on('click', function(){
+		var isbnId = $('.isbn-id').val();
+		var title = $('.title').val();
+		var author = $('.author').val();
+		var publishedDate = $('.published-date').val();
+		var description = $('.description').val();
+		var pageCount = $('.page-count').val();
+		var thumbnailPath = $('.thumbnail-path').val();
+		var url = 'http://localhost:8080/register_book_api/register_book';
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : {
+				isbnId : isbnId,
+				title : title,
+				author : author,
+				publishedDate : publishedDate,
+				description : description,
+				pageCount : pageCount,
+				thumbnailPath : thumbnailPath
+			},
+			async: true
+		}).done(function(data) {
+			$('#result').text("登録完了！");
 		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("エラーが発生しました！");
 			console.log("XMLHttpRequest : " + XMLHttpRequest.status);

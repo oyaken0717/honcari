@@ -10,6 +10,8 @@ public class Book {
 	
 	/** ID */
 	private Integer id;
+	/**	ISBNコード(13) **/
+	private Long isbnId;
 	/** ユーザーID */
 	private Integer userId;
 	/** カテゴリーID */
@@ -19,7 +21,7 @@ public class Book {
 	/** 著者 */
 	private String author;
 	/** 発行日 */
-	private String published_date;
+	private String publishedDate;
 	/** 説明 */
 	private String description;
 	/** 総ページ数 */
@@ -32,19 +34,20 @@ public class Book {
 	private User user;
 	/** カテゴリー */
 	private Category category;
-
+	
 	public Book() {
 	}
-
-	public Book(Integer id, Integer userId, Integer categoryId, String title, String author, String published_date,
-			String description, Integer pageCount, String thumbnailPath, Integer status, User user, Category category) {
-		super();
+	
+	public Book(Integer id, Long isbnId, Integer userId, Integer categoryId, String title, String author,
+			String publishedDate, String description, Integer pageCount, String thumbnailPath, Integer status,
+			User user, Category category) {
 		this.id = id;
+		this.isbnId = isbnId;
 		this.userId = userId;
 		this.categoryId = categoryId;
 		this.title = title;
 		this.author = author;
-		this.published_date = published_date;
+		this.publishedDate = publishedDate;
 		this.description = description;
 		this.pageCount = pageCount;
 		this.thumbnailPath = thumbnailPath;
@@ -59,6 +62,14 @@ public class Book {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Long getIsbnId() {
+		return isbnId;
+	}
+
+	public void setIsbnId(Long isbnId) {
+		this.isbnId = isbnId;
 	}
 
 	public Integer getUserId() {
@@ -93,12 +104,12 @@ public class Book {
 		this.author = author;
 	}
 
-	public String getPublished_date() {
-		return published_date;
+	public String getPublishedDate() {
+		return publishedDate;
 	}
 
-	public void setPublished_date(String published_date) {
-		this.published_date = published_date;
+	public void setPublishedDate(String publishedDate) {
+		this.publishedDate = publishedDate;
 	}
 
 	public String getDescription() {
@@ -149,4 +160,11 @@ public class Book {
 		this.category = category;
 	}
 
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
+				+ ", title=" + title + ", author=" + author + ", publishedDate=" + publishedDate + ", description="
+				+ description + ", pageCount=" + pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status
+				+ ", user=" + user + ", category=" + category + "]";
+	}
 }

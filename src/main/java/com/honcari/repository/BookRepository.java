@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -34,7 +35,7 @@ public class BookRepository {
 		book.setCategoryId(rs.getInt("category_id"));
 		book.setTitle(rs.getString("book_title"));
 		book.setAuthor(rs.getString("book_author"));
-		book.setPublished_date(rs.getString("book_published_date"));
+		book.setPublishedDate(rs.getString("book_published_date"));
 		book.setDescription(rs.getString("book_description"));
 		book.setPageCount(rs.getInt("book_page_count"));
 		book.setThumbnailPath(rs.getString("book_thumbnail_path"));
@@ -70,7 +71,7 @@ public class BookRepository {
 				book.setCategoryId(rs.getInt("category_id"));
 				book.setTitle(rs.getString("book_title"));
 				book.setAuthor(rs.getString("book_author"));
-				book.setPublished_date(rs.getString("book_published_date"));
+				book.setPublishedDate(rs.getString("book_published_date"));
 				book.setDescription(rs.getString("book_description"));
 				book.setPageCount(rs.getInt("book_page_count"));
 				book.setThumbnailPath(rs.getString("book_thumbnail_path"));
@@ -123,5 +124,18 @@ public class BookRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId);
 		Book book = template.queryForObject(sql, param, BOOK_USER_CATEGORY_ROW_MAPPER);
 		return book;
+	}
+	
+	/**
+	 * 引数の書籍情報をbooksテーブルに追加するメソッド.
+	 * 
+	 * @param book 書籍情報
+	 */
+	public void insert(Book book) {
+		System.out.println("kitenai?");
+		String sql = "INSERT INTO books(book_id, isbn_id, user_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status)"
+				+ " VALUES(DEFAULT, :isbnId, :userId, :categoryId, :title, :author, :publishedDate, :description, :pageCount, :thumbnailPath, :status);";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
+		template.update(sql, param);
 	}
 }
