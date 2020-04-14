@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class BookApiTestController {
 
-	@RequestMapping("")
+	@RequestMapping("/test")
 	public String test() {
 		return "api_test";
 	}
