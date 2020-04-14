@@ -3,6 +3,9 @@ package com.honcari.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.honcari.domain.Book;
 import com.honcari.form.RegisterBookForm;
@@ -14,35 +17,26 @@ import com.honcari.service.RegisterBookService;
  * @author hatakeyamakouta
  *
  */
-public class RegisterBookController {
+@RestController
+@RequestMapping(value = "/register_book_api")
+public class RegisterBookAPIController {
 
 	@Autowired
 	private RegisterBookService registerBookService;
-	
+
 	/**
-	 * 書籍登録画面でクリックされた書籍の情報をbooksテーブルに登録する.
+	 * 書籍登録画面でクリックされた書籍をテーブルに登録する.
 	 * 
-	 * @param registerBookForm 書籍登録画面でクリックされた書籍情報
-	 * @return 一覧画面にリダイレクト //仮
+	 * @param registerBookForm 書籍登録画面でクリックされた書籍
 	 */
-	@RequestMapping("/register_book")
-	public String registerBook(RegisterBookForm registerBookForm) {
+	@ResponseBody
+	@RequestMapping(value="/register_book", method=RequestMethod.POST)
+	public void registerBook(RegisterBookForm registerBookForm) {
 		Book book = new Book();
 		book.setUserId(1); //SpringSecurity未実装の為、仮登録
 		book.setCategoryId(1); //CategoryIdの取得方法未確定の為、仮登録
 		book.setStatus(0); //statusの各値が未確定の為、仮登録
 		BeanUtils.copyProperties(registerBookForm, book);
 		registerBookService.registerBook(book);
-		return "redirect:/to_top"; //本来は非同期ですが動作確認のためトップにリダイレクト
-	}
-	
-	/**
-	 * トップページにリダイレクト.
-	 * 
-	 * @return トップページ
-	 */
-	@RequestMapping("/to_top")
-	public String toTop() {
-		return "/";
 	}
 }
