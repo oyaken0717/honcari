@@ -31,4 +31,14 @@ public class BookService {
 	public List<Book> findByGroupId(Integer groupId) {
 		return bookRepository.findByGroupId(groupId);
 	}
+	
+	/**
+	 * 本IDから本情報を取得するメソッド.
+	 * 
+	 * @param bookId 本ID
+	 * @return 本情報
+	 */
+	public Book findByBookId(Integer bookId) {
+		return bookRepository.findByBookId(bookId);
+	}
 }
