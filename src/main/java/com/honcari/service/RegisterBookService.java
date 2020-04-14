@@ -25,7 +25,7 @@ public class RegisterBookService {
 	 * 
 	 * @param book 書籍情報
 	 */
-	public void insert(Book book) {
+	public void registerBook(Book book) {
 		bookRepository.insert(book);
 	}
 }
