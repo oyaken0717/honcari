@@ -15,9 +15,9 @@ $(function() {
 				element.insertAdjacentHTML('beforeend', '<li><button class="get-button" type="button"><img src="' + data.items[i].volumeInfo.imageLinks.smallThumbnail + 
 						'"></button><input class="isbn-id" type="hidden" value="' + data.items[i].volumeInfo.industryIdentifiers[0].identifier + 
 						'"><input type="hidden" class="title" value="' + data.items[i].volumeInfo.title + 
-						'"><input type="hidden" class="author" value="' + data.items[0].volumeInfo.authors[0] + 
-						'"><input type="hidden" class="published-date" value="' + data.items[0].volumeInfo.publishedDate + 
-						'"><input type="hidden" class="description" value="' + data.items[0].volumeInfo.description + 
+						'"><input type="hidden" class="author" value="' + data.items[i].volumeInfo.authors[0] + 
+						'"><input type="hidden" class="published-date" value="' + data.items[i].volumeInfo.publishedDate + 
+						'"><input type="hidden" class="description" value="' + data.items[i].volumeInfo.description + 
 						'"><input type="hidden" class="page-count" value="'+ data.items[i].volumeInfo.pageCount + 
 						'"><input type="hidden" class="thumbnail-path" value="' + data.items[i].volumeInfo.imageLinks.smallThumbnail + '"></li>');
 			}
