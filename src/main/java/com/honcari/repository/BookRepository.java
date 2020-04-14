@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -81,5 +82,17 @@ public class BookRepository {
 			return null;
 		}
 		return bookList;
+	}
+	
+	/**
+	 * 引数の書籍情報をbooksテーブルに追加するメソッド.
+	 * 
+	 * @param book 書籍情報
+	 */
+	public void insert(Book book) {
+		String sql = "INSERT INTO books(id, isbn_id, user_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status"
+				+ " VALUES(:id, :isbnId, :userId, :categoryId, :title, :author, :published_date, :description, :page_count, :thumbnail_path, status;";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
+		template.update(sql, param);
 	}
 }
