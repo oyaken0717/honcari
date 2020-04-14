@@ -46,7 +46,7 @@ public class BookRepository {
 				book.setCategoryId(rs.getInt("category_id"));
 				book.setTitle(rs.getString("book_title"));
 				book.setAuthor(rs.getString("book_author"));
-				book.setPublished_date(rs.getString("book_published_date"));
+				book.setPublishedDate(rs.getString("book_published_date"));
 				book.setDescription(rs.getString("book_description"));
 				book.setPageCount(rs.getInt("book_page_count"));
 				book.setThumbnailPath(rs.getString("book_thumbnail_path"));
@@ -90,8 +90,8 @@ public class BookRepository {
 	 * @param book 書籍情報
 	 */
 	public void insert(Book book) {
-		String sql = "INSERT INTO books(id, isbn_id, user_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status"
-				+ " VALUES(:id, :isbnId, :userId, :categoryId, :title, :author, :published_date, :description, :page_count, :thumbnail_path, status;";
+		String sql = "INSERT INTO books(book_id, isbn_id, user_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status)"
+				+ " VALUES(DEFAULT, :isbnId, :userId, :categoryId, :title, :author, :publishedDate, :description, :pageCount, :thumbnailPath, :status);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
 		template.update(sql, param);
 	}
