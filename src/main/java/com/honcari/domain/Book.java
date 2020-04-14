@@ -2,6 +2,7 @@ package com.honcari.domain;
 
 public class Book {
 	private Integer id;
+	private Integer isbnId;
 	private Integer userId;
 	private Integer categoryId;
 	private String title;
@@ -16,6 +17,12 @@ public class Book {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Integer getIsbnId() {
+		return isbnId;
+	}
+	public void setIsbnId(Integer isbnId) {
+		this.isbnId = isbnId;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -73,11 +80,9 @@ public class Book {
 	}
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", userId=" + userId + ", categoryId=" + categoryId + ", title=" + title + ", author="
-				+ author + ", published_date=" + published_date + ", description=" + description + ", pageCount="
-				+ pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status + "]";
+		return "Book [id=" + id + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
+				+ ", title=" + title + ", author=" + author + ", published_date=" + published_date + ", description="
+				+ description + ", pageCount=" + pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status
+				+ "]";
 	}
-	
-	
-
 }
