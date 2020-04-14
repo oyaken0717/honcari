@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Honcari -気軽に本をどこへでも-</title>
+<!-- Style CSS -->
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+	<nav th:insert="header::frag_header"></nav>
+</header>
+<section>
+<div class="py-5 book-detail-wrapper">
+    <div class="container">
+        <!-- Row -->
+        <div class="row">
+            <!-- Column -->
+            <div class="col-lg-6"> 
+				<img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" 
+					th:src="@{${book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail" alt="thumbnail" /> 
+			</div>
+            <!-- Column -->
+            <div class="col-lg-6 mt-4 mt-md-0">
+                <div class="text-box">
+                    <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>
+                    <h4 class="font-weight-light mt-2 mb-4" th:text="${book.author}">author</h4>
+                    <h4 class="font-weight-light mt-2 mb-4" th:text="${book.published_date}">published_date</h4>
+                    <p th:text="${book.description}">description</p>
+					<a href="#" th:href="@{#}"><button class="btn btn-warning btn-lg btn-block" >貸出リクエスト</button></a>
+				</div>
+            </div>
+            <!-- Column -->
+        </div>
+    </div>
+</div>
+</section>
+
+</body>
+</html>
