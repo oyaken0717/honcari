@@ -13,8 +13,8 @@ $(function() {
 			$('#book-list').html('');
 			for(var i = 0; i < data.items.length; i++){
 //				element1.insertAdjacentHTML('afterend', '<a>' + data.items[i].volumeInfo.title + '</a>');
-				element.insertAdjacentHTML('beforeend', '<li class="item col-lg-2 col-md-3 col-3"><button class="get-button" type="button"><img class="img-fluid img-thumbnail" src="' + data.items[i].volumeInfo.imageLinks.smallThumbnail + 
-						'"></button><input class="isbn-id" type="hidden" value="' + data.items[i].volumeInfo.industryIdentifiers[0].identifier + 
+				element.insertAdjacentHTML('beforeend', '<li class="item col-lg-2 col-md-3 col-3"><button class="get-button" type="button"><img class="book-img" src="' + data.items[i].volumeInfo.imageLinks.smallThumbnail + 
+						'"></button><span class="mask">Tap to register!</span><input class="isbn-id" type="hidden" value="' + data.items[i].volumeInfo.industryIdentifiers[0].identifier + 
 						'"><input type="hidden" class="title" value="' + data.items[i].volumeInfo.title + 
 						'"><input type="hidden" class="author" value="' + data.items[i].volumeInfo.authors[0] + 
 						'"><input type="hidden" class="published-date" value="' + data.items[i].volumeInfo.publishedDate + 
@@ -82,8 +82,19 @@ $(function() {
 			},
 			async: true
 		}).done(function(data) {
-			$('#result-1').text("著作者名：" + author);
-			$('#result-2').text("書籍名：" + title);
+			$('#result-1').text("author：" + author);
+			$('#result-2').text("title：" + title);
+			$('#result-3').text("published date：" + publishedDate);
+			});
+	});
+	
+	$(document).on('mouseout', '.item', function(){
+		$.ajax({
+			async: true
+		}).done(function(data){
+			$('#result-1').text('');
+			$('#result-2').text('');
+			$('#result-3').text('');
 		});
 	});
 });
