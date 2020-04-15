@@ -8,7 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.User;
-import com.honcari.service.UserService;
+import com.honcari.service.SearchBookService;
+import com.honcari.service.ShowBookListService;
 
 /**
  * 本一覧を表示するコントローラ.
@@ -21,7 +22,7 @@ import com.honcari.service.UserService;
 public class ShowBookListController {
 
 	@Autowired
-	private UserService userService;
+	private ShowBookListService showBookListService;
 	
 	/**
 	 * 本一覧を表示するメソッド.
@@ -31,7 +32,7 @@ public class ShowBookListController {
 	 */
 	@RequestMapping("/")
 	public String showBookList(Model model) {
-		List<User> userList = userService.findByGroupId(1);
+		List<User> userList = showBookListService.findByGroupId(1);
 		model.addAttribute("userList", userList);
 		return "home";
 	}
