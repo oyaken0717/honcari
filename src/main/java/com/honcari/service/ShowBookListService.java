@@ -10,14 +10,14 @@ import com.honcari.domain.User;
 import com.honcari.repository.UserRepository;
 
 /**
- * ユーザー情報に関するサービスクラス.
+ * 本一覧を表示させるサービスクラス.
  * 
  * @author yamadadai
  *
  */
 @Service
 @Transactional
-public class UserService {
+public class ShowBookListService {
 
 	@Autowired
 	private UserRepository userRepository;

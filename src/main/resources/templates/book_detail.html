@@ -24,11 +24,13 @@
             <!-- Column -->
             <div class="col-lg-6 mt-4 mt-md-0">
                 <div class="text-box">
+                	<p>貸出状況：<span th:text="${book.getBookLendingStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                		所有者：<span th:text="${book.user.name}">status</span></p>
                     <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.author}">author</h4>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.publishedDate}">published_date</h4>
                     <p th:text="${book.description}">description</p>
-					<a href="#" th:href="@{#}"><button class="btn btn-warning btn-lg btn-block" >貸出リクエスト</button></a>
+					<a href="#" th:href="@{#}"><button class="btn btn-warning btn-lg btn-block">貸出リクエスト</button></a>
 				</div>
             </div>
             <!-- Column -->

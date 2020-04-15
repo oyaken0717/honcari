@@ -1,10 +1,6 @@
 package com.honcari.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -28,6 +24,7 @@ public class BookRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
+	//本情報に紐づくユーザー・カテゴリーのマッパー
 	private final static RowMapper<Book> BOOK_USER_CATEGORY_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
 		book.setId(rs.getInt("book_id"));
@@ -44,9 +41,11 @@ public class BookRepository {
 		user.setId(rs.getInt("user_id"));
 		user.setName(rs.getString("user_name"));
 		user.setEmail(rs.getString("user_email"));
+		book.setUser(user);
 		Category category = new Category();
 		category.setId(rs.getInt("category_id"));
 		category.setName(rs.getString("category_name"));
+		book.setCategory(category);
 		return book;
 	};
 
