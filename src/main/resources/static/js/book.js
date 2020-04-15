@@ -12,7 +12,7 @@ $(function() {
 //			let element1 = document.getElementById('book-names')
 			for(var i = 0; i < data.items.length; i++){
 //				element1.insertAdjacentHTML('afterend', '<a>' + data.items[i].volumeInfo.title + '</a>');
-				element.insertAdjacentHTML('beforeend', '<li><button class="get-button" type="button"><img src="' + data.items[i].volumeInfo.imageLinks.smallThumbnail + 
+				element.insertAdjacentHTML('beforeend', '<li class="item"><button class="get-button" type="button"><img src="' + data.items[i].volumeInfo.imageLinks.smallThumbnail + 
 						'"></button><input class="isbn-id" type="hidden" value="' + data.items[i].volumeInfo.industryIdentifiers[0].identifier + 
 						'"><input type="hidden" class="title" value="' + data.items[i].volumeInfo.title + 
 						'"><input type="hidden" class="author" value="' + data.items[i].volumeInfo.authors[0] + 
@@ -29,14 +29,14 @@ $(function() {
 		});
 	});
 	
-	$("#book-list").on('click', function(){
-		var isbnId = $('.isbn-id').val();
-		var title = $('.title').val();
-		var author = $('.author').val();
-		var publishedDate = $('.published-date').val();
-		var description = $('.description').val();
-		var pageCount = $('.page-count').val();
-		var thumbnailPath = $('.thumbnail-path').val();
+	$(document).on('click', '.item', function(){
+		var isbnId = $(this).children('.isbn-id').val();
+		var title = $(this).children('.title').val();
+		var author = $(this).children('.author').val();
+		var publishedDate = $(this).children('.published-date').val();
+		var description = $(this).children('.description').val();
+		var pageCount = $(this).children('.page-count').val();
+		var thumbnailPath = $(this).children('.thumbnail-path').val();
 		var url = 'http://localhost:8080/register_book_api/register_book';
 		$.ajax({
 			url : url,
