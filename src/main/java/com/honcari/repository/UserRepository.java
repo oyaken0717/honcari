@@ -187,4 +187,21 @@ public class UserRepository {
 		return userList;
 	}
 
+	/**
+	 * 本のタイトルとグループIDからユーザー情報を取得するメソッド(あいまい検索).
+	 * 
+	 * @param groupId グループID
+	 * @param title タイトル
+	 * @return ユーザー情報リスト
+	 */
+	public List<User> findByGroupAndTitle(Integer groupId, String title) {
+		String sql = "SELECT u.user_id, u.name user_name, b.book_id, b.title book_title, b.author book_author, "
+				+ "b.published_date book_published_date, b.description book_description, b.page_count book_page_count, "
+				+ "b.thumbnail_path book_thumbnail_path, b.status book_status, c.category_id, c.name category_name "
+				+ "FROM users u INNER JOIN books b ON u.user_id=b.user_id INNER JOIN category c ON b.category_id=c.category_id "
+				+ "WHERE u.user_id in (select u.user_id from group_relationship where group_id = :groupId) AND b.title LIKE :title ORDER BY u.user_id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId).addValue("title", "%" + title + "%");
+		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
+		return userList;
+	}
 }

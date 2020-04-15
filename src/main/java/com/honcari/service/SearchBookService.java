@@ -17,18 +17,12 @@ import com.honcari.repository.UserRepository;
  */
 @Service
 @Transactional
-public class UserService {
+public class SearchBookService {
 
 	@Autowired
 	private UserRepository userRepository;
 	
-	/**
-	 * グループIDからユーザー情報を取得するメソッド
-	 * 
-	 * @param groupId グループID
-	 * @return ユーザー情報リスト
-	 */
-	public List<User> findByGroupId(Integer groupId) {
-		return userRepository.findByGroupId(groupId);
+	public List<User> findByGroupAndTitle(Integer groupId, String title) {
+		return userRepository.findByGroupAndTitle(groupId, title);
 	}
 }
