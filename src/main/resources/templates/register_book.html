@@ -11,10 +11,19 @@
 	<script src="../static/js/book.js" th:src="@{/js/book.js}"></script>
 </head>
 <body>
+<nav th:insert="header::frag_header"></nav>
+	<div class="add-book-top">
+	<p class="add-book-theme">Register your books</p>
+		<div class="search-book-for-add">
+	    	<input id="book-name" type="text" name="book-name" placeholder="book's name">	　　
+			<button id="book-button" class="lead">Search</button>
+		</div>
+</div>
 <br>
-	<input id="book-name" type="text" name="book-name">
-	<button id="book-button">書籍検索</button>
+	
 	<ul id="book-list"></ul>
 	<div id="result"></div>
+	<div id="result-1" style="text-align:center"></div>
+	<div id="result-2" style="text-align:center"></div>
 </body>
 </html>
