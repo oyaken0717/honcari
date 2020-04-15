@@ -10,6 +10,41 @@
   background-size: cover;
 }
 
+#book-list{
+	overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
 #book-list li {
   display: inline-block;
+  width: 90%;
+}
+
+.add-book-top {
+  height: 20vh;
+  min-height: 220px;
+  background: no-repeat center center scroll;
+  background-image: url("/img/add_book_top.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  filter: grayscale(100%); 
+}
+
+.search-book-for-add{
+	text-align: center;
+	padding-top: 30px;
+}
+
+.add-book-theme{
+	font-family: Comic Sans MS;
+	font-size: 40px;
+	font-weight: bold;
+	padding-left:20px;
 }
