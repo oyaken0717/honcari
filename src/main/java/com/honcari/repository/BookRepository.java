@@ -44,11 +44,9 @@ public class BookRepository {
 		user.setId(rs.getInt("user_id"));
 		user.setName(rs.getString("user_name"));
 		user.setEmail(rs.getString("user_email"));
-		book.setUser(user);
 		Category category = new Category();
 		category.setId(rs.getInt("category_id"));
 		category.setName(rs.getString("category_name"));
-		book.setCategory(category);
 		return book;
 	};
 

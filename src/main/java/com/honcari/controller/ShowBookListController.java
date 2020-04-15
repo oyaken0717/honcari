@@ -31,8 +31,8 @@ public class ShowBookListController {
 	 */
 	@RequestMapping("/")
 	public String showBookList(Model model) {
-		List<Book> booklList = bookService.findByGroupId(1);
-		model.addAttribute("bookList", booklList);
-		return "list";
+		List<Book> bookList = bookService.findByGroupId(1);
+		model.addAttribute("bookList", bookList);
+		return "home";
 	}
 }
