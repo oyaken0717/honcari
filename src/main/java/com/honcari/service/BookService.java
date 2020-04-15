@@ -23,16 +23,6 @@ public class BookService {
 	private BookRepository bookRepository;
 
 	/**
-	 * グループIDから１グループの本情報を取得するメソッド.
-	 * 
-	 * @param groupId グループID
-	 * @return 本情報リスト
-	 */
-	public List<Book> findByGroupId(Integer groupId) {
-		return bookRepository.findByGroupId(groupId);
-	}
-	
-	/**
 	 * 本IDから本情報を取得するメソッド.
 	 * 
 	 * @param bookId 本ID
