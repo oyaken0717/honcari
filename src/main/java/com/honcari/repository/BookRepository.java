@@ -24,7 +24,7 @@ public class BookRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
-	//本情報に紐づくユーザー・カテゴリーのマッパー
+	// 本情報に紐づくユーザー・カテゴリーのマッパー
 	private final static RowMapper<Book> BOOK_USER_CATEGORY_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
 		book.setId(rs.getInt("book_id"));
@@ -49,7 +49,7 @@ public class BookRepository {
 		return book;
 	};
 
-	//使わなくなったのでコメントアウト、一応残しておく（山田）
+	// 使わなくなったのでコメントアウト、一応残しておく（山田）
 //	private static ResultSetExtractor<List<Book>> BOOK_RESULT = (rs) -> {
 //		List<Book> bookList = new ArrayList<>();
 //
@@ -92,7 +92,7 @@ public class BookRepository {
 	 * @param groupId グループID
 	 * @return 本情報リスト
 	 */
-	//使わなくなったのでコメントアウト、一応残しておく（山田）
+	// 使わなくなったのでコメントアウト、一応残しておく（山田）
 //	public List<Book> findByGroupId(Integer groupId) {
 //		String sql = "SELECT u.user_id, u.name user_name, b.book_id, b.title book_title, b.author book_author, b.published_date "
 //				+ "book_published_date, b.description book_description, b.page_count book_page_count, "
@@ -125,7 +125,7 @@ public class BookRepository {
 		Book book = template.queryForObject(sql, param, BOOK_USER_CATEGORY_ROW_MAPPER);
 		return book;
 	}
-	
+
 	/**
 	 * 引数の書籍情報をbooksテーブルに追加するメソッド.
 	 * 
@@ -138,4 +138,17 @@ public class BookRepository {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
 		template.update(sql, param);
 	}
+
+	/**
+	 * 本の貸出状況を更新する.
+	 * 
+	 * @param status 貸出状況
+	 * @param bookId 本ID
+	 */
+	public void updateStatus(Integer status, Integer bookId) {
+		String sql = "UPDATE books SET status = :status WHERE book_id = :bookId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("status", status).addValue("bookId", bookId);
+		template.update(sql, param);
+	}
+
 }
