@@ -1,12 +1,14 @@
 package com.honcari.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.domain.Book;
+import com.honcari.domain.BookLending;
 import com.honcari.repository.BookLendingRepository;
 import com.honcari.repository.BookRepository;
 
@@ -49,5 +51,34 @@ public class BookService {
 		int status = 2; //貸出承認待ち
 		bookRepository.updateStatus(status, bookId);
 		bookLendingRepository.insert(bookId, lendUserId, borrowUserId, deadline);
+	}
+	
+	
+	/**
+	 * 本の貸出リクエストを承認する.
+	 * 
+	 * @param bookId 本ID
+	 */
+	public void runApprovalLendingBookRequest(Integer bookId) {
+		//book_lendingテーブルの更新処理
+		BookLending bookLending = new BookLending();
+		bookLending.setBookId(bookId);
+		bookLending.setLendingStatus(1); //貸出承認済み
+		bookLendingRepository.update(bookLending);
+		
+		//bookテーブルの更新処理
+		int status = 3; //貸出中
+		bookRepository.updateStatus(status, bookId);
+	}
+	
+	/**
+	 * 貸出リクエストに対し未承認の貸出情報を表示させるメソッド.
+	 * 
+	 * @param userId　ユーザーID
+	 * @return 貸出情報
+	 */
+	public List<BookLending> showWaitApprovalBookLendingList(Integer userId){
+		Integer waitApprovalStatus = 0; //承認待ち
+		return bookLendingRepository.findByLendUserIdAndLendingStatus(userId, waitApprovalStatus);
 	}
 }

@@ -9,7 +9,7 @@ package com.honcari.domain;
 public class Book {
 
 	/** ID */
-	private Integer id;
+	private Integer bookId;
 	/** ISBNコード(13) **/
 	private Long isbnId;
 	/** ユーザーID */
@@ -44,12 +44,12 @@ public class Book {
 		return StatusEnum.of(status).getKey();
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getBookId() {
+		return bookId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
 	}
 
 	public Long getIsbnId() {
@@ -150,7 +150,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
+		return "Book [bookId=" + bookId + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
 				+ ", title=" + title + ", author=" + author + ", publishedDate=" + publishedDate + ", description="
 				+ description + ", pageCount=" + pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status
 				+ ", user=" + user + ", category=" + category + "]";
