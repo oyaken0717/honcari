@@ -7,10 +7,10 @@ package com.honcari.domain;
  *
  */
 public class Book {
-	
+
 	/** ID */
 	private Integer id;
-	/**	ISBNコード(13) **/
+	/** ISBNコード(13) **/
 	private Long isbnId;
 	/** ユーザーID */
 	private Integer userId;
@@ -34,84 +34,120 @@ public class Book {
 	private User user;
 	/** カテゴリー */
 	private Category category;
+
+	/**
+	 * 数字から貸出状況を取得する.
+	 * 
+	 * @return 貸出状況
+	 */
+	public String getBookLendingStatus() {
+		return StatusEnum.of(status).getKey();
+	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Long getIsbnId() {
 		return isbnId;
 	}
+
 	public void setIsbnId(Long isbnId) {
 		this.isbnId = isbnId;
 	}
+
 	public Integer getUserId() {
 		return userId;
 	}
+
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 	public Integer getCategoryId() {
 		return categoryId;
 	}
+
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getAuthor() {
 		return author;
 	}
+
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+
 	public String getPublishedDate() {
 		return publishedDate;
 	}
+
 	public void setPublishedDate(String publishedDate) {
 		this.publishedDate = publishedDate;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Integer getPageCount() {
 		return pageCount;
 	}
+
 	public void setPageCount(Integer pageCount) {
 		this.pageCount = pageCount;
 	}
+
 	public String getThumbnailPath() {
 		return thumbnailPath;
 	}
+
 	public void setThumbnailPath(String thumbnailPath) {
 		this.thumbnailPath = thumbnailPath;
 	}
+
 	public Integer getStatus() {
 		return status;
 	}
+
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public Category getCategory() {
 		return category;
 	}
+
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
@@ -119,8 +155,4 @@ public class Book {
 				+ description + ", pageCount=" + pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status
 				+ ", user=" + user + ", category=" + category + "]";
 	}
-
-	
-
-	
 }
