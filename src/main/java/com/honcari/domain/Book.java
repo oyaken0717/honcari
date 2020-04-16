@@ -30,10 +30,10 @@ public class Book {
 	private String thumbnailPath;
 	/** 貸出状況 */
 	private Integer status;
-//	/** ユーザー */
-//	private User user;
-//	/** カテゴリー */
-//	private Category category;
+	/** ユーザー */
+	private User user;
+	/** カテゴリー */
+	private Category category;
 	public Integer getId() {
 		return id;
 	}
@@ -100,13 +100,27 @@ public class Book {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
 				+ ", title=" + title + ", author=" + author + ", publishedDate=" + publishedDate + ", description="
 				+ description + ", pageCount=" + pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status
-				+ "]";
+				+ ", user=" + user + ", category=" + category + "]";
 	}
+
+	
 
 	
 }
