@@ -1,0 +1,141 @@
+
+@CHARSET "UTF-8";
+
+/* 驛｢�ｽｧ�ｿｽ�ｽｽ�ｽｵ驛｢�ｽｧ�ｿｽ�ｽｽ�ｽ､驛｢�ｽｧ�ｿｽ�ｽｽ�ｽｺ驛｢�ｽｧ陋幢ｽｵ邵ｺ讙趣ｽｹ譎｢�ｽｽ�ｽｬ驛｢譎｢�ｽｽ�ｽｳ驛｢�ｽｧ�ｿｽ�ｽｽ�ｽｸ驍ｵ�ｽｲ�ｿｽ�ｽｿ�ｽｽ驍ｵ�ｽｺ�ｿｽ�ｽｽ�ｽｧ髯懈圜�ｽｽ�ｽｲ驛｢�ｽｧ�ｿｽ�ｽｿ�ｽｽ */
+span.price {
+ /* 驛｢�ｽｧ�ｿｽ�ｽｽ�ｽｵ驛｢�ｽｧ�ｿｽ�ｽｽ�ｽ､驛｢�ｽｧ�ｿｽ�ｽｽ�ｽｺ髫ｰ蜴�ｽｿ�ｽｽ髯橸ｽｳ�ｿｽ�ｽｿ�ｽｽ */
+ width:175px;
+ height:175px;
+ /* 鬮｢�ｽｭ隴ｴ�ｽｧ陷搾ｽｹ雎ｼ�ｽｶ�ｿｽ�ｽｽ�ｽｲ */
+ background-color:#ff4500;
+ /* 鬮ｫ諤懶ｿｽ�ｽｵ�ｿｽ�ｽｽ螳壼初�ｿｽ�ｽｽ�ｽｸ驍ｵ�ｽｺ闕ｳ蟯ｩ�ｿｽ驛｢�ｽｧ�ｿｽ�ｽｿ�ｽｽ */
+ border-radius: 50%;
+ -webkit-border-radius: 50%;
+ -moz-border-radius: 50%;
+ 
+}
+/* 髯ｷ�ｽｷ鬩幢ｿｽ�ｽｽ�ｽｨ騾趣ｽｯ�ｿｽ�ｽｿ�ｽｽ魄�ｽｹ�ｿｽ�ｽｽ�ｽ｡鬮ｦ�ｽｪ�ｿｽ�ｽｿ�ｽｽ�ｿｽ�ｽｽ�ｽｮ髫ｴ�ｿｽ�ｽｿ�ｽｽ髯晢ｿｽ陷会ｽｱ�ｿｽ�ｽｿ�ｽｽ�ｿｽ�ｽｽ�ｽｮ髯樊ｻゑｽｽ�ｽｧ驍ｵ�ｽｺ鬮ｦ�ｽｪ�ｿｽ�ｽｼ�ｿｽ驛｢�ｽｧ髮区ｩｸ�ｽｽ�ｽ､陝ｲ�ｽｨ遶擾ｽｴ驛｢�ｽｧ�ｿｽ�ｽｿ�ｽｽ */
+span#total-price {
+	font-size: 35px;
+}
+span#total-price-border {
+	font-size: 35px;
+     border-bottom: solid 5px #FFCC66;
+}
+tr#comment {
+	font-size:18px;
+	 text-align: center;
+	color:black;	
+	margin: 20px;
+}
+#border{
+	border-bottom: solid 5px #FFCC66;
+}
+
+span#recommend {
+	font-size:30px;
+	color:#FF3366;	
+	background-color: #FFCC66;
+}
+img.image-center{
+	border-radius: 6px;
+  max-width: 100%;
+  height: auto;
+}
+td#show {
+	 text-align: center;
+}
+.showlist {
+	 text-align: center;
+}
+img.disp-block {
+  border-radius: 6px;
+  display: block; /* これでブロック要素の扱いになります */
+}
+.blockcenter{
+  max-width: 100%;
+  height: auto;
+  margin-left: auto;  /* 【ポイント】*/
+  margin-right: auto; /* 【ポイント】*/
+}
+.img-detail{
+  max-width: 100%;
+  height: auto;
+  margin-left: 20px; 
+  margin-right: 30px;
+}
+div#beaf{
+	text-align: center;
+	font-size:12px;
+	color:black;	
+}
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+.center{
+	text-align: center;	
+}
+body{
+	background-image: url("/img_pizza/CorkBoard.jpg");
+}
+.body-clear{
+	background:rgba(255,255,255,0.2);
+}
+.body-color{
+	background-color:#FFFAF0;
+	padding:20px;
+}
+.cream-color{
+	background-color:#FFFAF0;
+}
+tr.head-color{
+	 background-color: #FFDEAD;
+}
+.finished-margin{
+	margin:5px 0px;
+	padding:10px 10px;
+}
+.color-clear{
+	background:rgba(255,255,255,0.5);
+	padding:5px 10px;
+	margin:10px 20px;
+}
+.userlink{
+	margin-right:42%;
+	margin-left:42%;
+	padding:5px 10px;
+	text-align: center;
+}
+.link{
+color:black;
+}
+.btn-color{
+ 	 background-color: #FFCC66;
+	border: 1px solid #FFCC66;
+}
+.cart{
+	margin-right:35%;
+	margin-left:35%;
+	padding:5px 10px;
+	text-align: center;
+}
+.btn-blocks {
+  width: 20%;
+}
+.btn-block2 {
+  width: 40%;
+}
+h5#comment{
+	margin-left:8%;
+}
+.font-size-name{
+	font-size:20px;
+}
+#name-margin{
+	border-bottom: solid 5px #FFCC66;
+}
+.pay-width{
+	width:200px;

@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+.carousel-item {
+  height: 65vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#book-list{
+	overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+#book-list li {
+  display: inline-block;
+  width: 90%;
+}
+
+.add-book-top {
+  height: 20vh;
+  min-height: 220px;
+  background: no-repeat center center scroll;
+  background-image: url("/img/add_book_top.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  filter: grayscale(100%); 
+}
+
+.search-book-for-add{
+	text-align: center;
+	padding-top: 30px;
+}
+
+.add-book-theme{
+	font-family: Comic Sans MS;
+	font-size: 40px;
+	font-weight: bold;
+	padding-left:20px;
+}
+
+.book-img{
+	 width: auto;
+    height: 220px;
+    margin: 0;
+}
+
+.caption {
+	font-size: 180%;
+	margin-top: 110px;
+	color:#fff;
+}
+.mask {
+	width:			90%;
+	height:			100%;
+	position:		absolute;	/* 絶対位置指定 */
+	top:			0;
+	left:			0;
+	opacity:		1;	/* マスクを表示しない */
+	background-color:	rgba(0,0,0,0.4);	/* マスクは半透明 */
+	-webkit-transition:	all 0.2s ease;
+	transition:		all 0.2s ease;
+	font-size: 180%;
+	color:#fff;
+	text-align:center;
+	padding-top: 30%;
+}
+.get-button:hover .mask {
+	opacity:		1;	/* マスクを表示する */
+}
+
+.search-result {
+	margin-top: 20px;
+	padding-left: 60px;
+	font-size: 17px;
+}
