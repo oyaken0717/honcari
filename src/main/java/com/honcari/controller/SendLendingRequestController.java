@@ -26,6 +26,9 @@ public class SendLendingRequestController {
 	@Autowired
 	private BookService bookService;
 
+	@Autowired
+	private ShowBookDetailController showBookDetailController;
+
 	@ModelAttribute
 	public LendingRequestForm setUpForm() {
 		return new LendingRequestForm();
@@ -43,12 +46,14 @@ public class SendLendingRequestController {
 		Integer bookId = form.getBookId();
 		Integer lendUserId = form.getLenderUserId();
 
+		// TODO statusチェックを行う
+
 		if (borrowUserId == lendUserId) {
-			result.rejectValue("deadline", "500", "不正なリクエストが行われました");
+			model.addAttribute("errorMessage", "不正なリクエストが行われました");
 		}
 
 		if (result.hasErrors()) {
-			return "forward:/show_book_detail?bookId=" + bookId;
+			return showBookDetailController.showBookDetai(model, bookId);
 		}
 
 		Date deadline = Date.valueOf(form.getDeadline());

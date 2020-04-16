@@ -1,7 +1,6 @@
 package com.honcari.form;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 /**
  * 貸出リクエストを受け取るフォームクラス.
@@ -17,7 +16,6 @@ public class LendingRequestForm {
 	private Integer lenderUserId;
 	/** 貸出期限 */
 	@NotBlank(message = "貸出期限を入力してください")
-	@NotEmpty(message = "貸出期限を入力してください")
 	private String deadline;
 
 	public Integer getBookId() {
