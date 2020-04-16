@@ -7,6 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.honcari.domain.User;
 import com.honcari.repository.UserRepository;
 
+/**
+ * マイページｊを表示するサービス.
+ * 
+ * @author katsuya.fujishima
+ *
+ */
 @Service
 @Transactional
 public class ShowMyPageService {
@@ -14,8 +20,14 @@ public class ShowMyPageService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public User showUserInfo(Integer userId) {
-		return userRepository.findUserInfoByUserId(userId);
+	/**
+	 * ユーザー情報を取得するメソッド.
+	 * 
+	 * @param userId ユーザーID
+	 * @return ユーザー情報
+	 */
+	public User showUser(Integer userId) {
+		return userRepository.findByUserId(userId);
 	}
 
 }
