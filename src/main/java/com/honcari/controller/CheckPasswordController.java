@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/check_password_api")
-public class CheckPasswordApiController {
+public class CheckPasswordController {
 
 	@ResponseBody
 	@RequestMapping(value = "/passwordcheck", method = RequestMethod.POST)
