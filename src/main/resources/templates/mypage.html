@@ -20,21 +20,25 @@
 	<!-- page content -->
 	<div class="container">
 		<div class="row">
-			<div class="w-75 mx-auto" style="border:1px solid">
-				<h1 class="my-4">マイページ</h1>
+			<div class="w-75 mx-auto">
+				<h1 class="my-4">My Page</h1>
 		
 				<!-- side bar -->
 				<div class="col-lg-3 col-md-4 col-sm-10 col-xs-12 float-left">
 					<div class="list-group">
-						<a href="#" class="list-group-item list-group-item-action active">プロフィール</a>
-						<a href="#" class="list-group-item list-group-item-action">レンタル中の本</a>
-						<a href="#" class="list-group-item list-group-item-action">マイブック</a>
-						<a href="#" class="list-group-item list-group-item-action">貸借履歴</a>
-						<a href="#" class="list-group-item list-group-item-action">レンタルリクエスト</a>
+						<a href="mypage.html" th:href="@{/show_my_page?kindOfMyPage=1}" 
+							class="list-group-item list-group-item-action active">profile</a>
+						<a href="mypage.html" th:href="@{/show_my_page?kindOfMyPage=2}" 
+							class="list-group-item list-group-item-action">my book</a>
+						<a href="mypage.html" th:href="@{/show_my_page?kindOfMyPage=3}" 
+							class="list-group-item list-group-item-action">レンタル管理</a>
+						<a href="mypage.html" th:href="@{/show_my_page?kindOfMyPage=4}" 
+							class="list-group-item list-group-item-action">レンタル履歴</a>
 					</div>
 				</div>
 			
 				<!-- main content -->
+				<!-- profile -->
 				<div class="col-lg-5 col-md-4 col-sm-10 col-xs-12 float-left" th:if="${kindOfMyPage == 1}">
 					<div class="image">
 						<img class="rounded mx-auto d-block" th:if="${user.imagePath}" th:src="${user.imagePath}" width="80px" height="80px">
@@ -54,6 +58,7 @@
 					</div>
 				</div>
 				
+				<!-- my book -->
 				<div class="col-lg-5 col-md-4 col-sm-10 col-xs-12 float-left" th:if="${kindOfMyPage == 2}">
 					<div class="">
 						
