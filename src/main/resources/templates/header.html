@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Honcari -気軽に本をどこへでも-</title>
@@ -41,6 +41,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/show_register_book}">本登録</a>
+        </li>
+        <li class="nav-item">
+          <span sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}">ログアウト</a></span>
         </li>
       </ul>
     </div>

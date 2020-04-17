@@ -24,7 +24,7 @@ public class RegisterUserController {
 		return new RegisterUserForm();
 	}
 	
-	@RequestMapping("/to_register")
+	@RequestMapping("/to_register_user")
 	public String toRegisterUser() {
 		return "register_user";
 	}

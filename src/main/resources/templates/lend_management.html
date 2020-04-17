@@ -5,6 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div th:if="${bookLendingList.size()}==0">リクエストはありません</div>
 <div th:each="bookLending:${bookLendingList}">
 	<form th:action="@{/approval_lending_request}" method="POST">
 	書籍名：<span th:text="${bookLending.book.title}"></span><br>
