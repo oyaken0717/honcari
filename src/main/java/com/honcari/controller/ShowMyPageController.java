@@ -15,7 +15,6 @@ import com.honcari.service.ShowMyPageService;
  *
  */
 @Controller
-@RequestMapping("")
 public class ShowMyPageController {
 	
 	@Autowired
