@@ -130,6 +130,8 @@ public class UserRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
+	
+	
 
 	public void insert(User user) {
 		String sql = "INSERT INTO Users(name,email,password,image_path,profile)VALUES(:name,:email,:password,:imagePath,:profile)";
@@ -153,12 +155,12 @@ public class UserRepository {
 	 * @param userId ユーザーID
 	 * @return ユーザー情報リスト
 	 */
-	public User findUserInfoByUserId(Integer userId) {
+	public User findByUserId(Integer userId) {
 		String sql = "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile,"
 				+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id, b.category_id b_category_id, b.title b_title, b.author b_author, "
 				+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, "
-				+ "b.status b_status, g.group_id g_group_id,g.name g_name,g.description g_description FROM users u INNER JOIN books b ON u.user_id = b.user_id "
-				+ "INNER JOIN group_relationship gr ON u.user_id = gr.user_id INNER JOIN groups g ON g.group_id=gr.group_id WHERE u.user_id = :userId";
+				+ "b.status b_status, g.group_id g_group_id,g.name g_name,g.description g_description FROM users u LEFT JOIN books b ON u.user_id = b.user_id "
+				+ "LEFT JOIN group_relationship gr ON u.user_id = gr.user_id LEFT JOIN groups g ON g.group_id=gr.group_id WHERE u.user_id = :userId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR2);
 		return userList.get(0);
@@ -202,6 +204,22 @@ public class UserRepository {
 				+ "WHERE u.user_id in (select u.user_id from group_relationship where group_id = :groupId) AND b.title LIKE :title ORDER BY u.user_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId).addValue("title", "%" + title + "%");
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
+		return userList;
+	}
+	
+	public User findByName(String name) {
+		String sql = "SELECT user_id,name,email,password,image_path,profile FROM users WHERE name=:name";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+		return template.queryForObject(sql, param, User_ROW_MAPPER);
+	}
+	
+	public List<User> findByNameLike(String name) {
+		String sql = "SELECT user_id,name,email,password,image_path,profile FROM users WHERE name LIKE :name";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
+		if(userList.isEmpty()) {
+			return null;
+		}
 		return userList;
 	}
 }
