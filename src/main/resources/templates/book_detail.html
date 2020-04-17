@@ -14,6 +14,7 @@
 <section>
 <div class="py-5 book-detail-wrapper">
     <div class="container">
+    <div th:if="${errorMessage}"><h4 th:text="${errorMessage}" class="text-center text-danger">エラーメッセージ</h4></div>
         <!-- Row -->
         <div class="row">
             <!-- Column -->
@@ -30,17 +31,15 @@
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.author}">author</h4>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.publishedDate}">published_date</h4>
                     <p th:text="${book.description}">description</p>
-					<a href="#" th:href="@{#}">
-						<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
+					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
 						貸出リクエスト</button>
-					</a>
 				</div>
             </div>
             <!-- Modal -->
-			<div class="modal fade" id="lendering-request-form" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal fade" id="lendering-request-form" tabindex="-1" role="dialog">
   				<div class="modal-dialog modal-dialog-centered" role="document">
  				   <div class="modal-content">
- 				   <form th:action="@{/send-lending-request}">
+ 				   <form method="post" th:action="@{/send_lending_request}" th:object="${lendingRequestForm}">
  				     <div class="modal-header">
   				      <h5 class="modal-title">貸出期限を設定</h5>
   				      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -48,9 +47,11 @@
   				      </button>
   				    </div>
    				   <div class="modal-body">
-   				     <input type="date" name="deadline">
+   				   	<div><label th:errors="*{deadline}" class="text-danger">貸出期限を入力してください</label></div>
+   				    <input type="date" name="deadline" th:field="*{deadline}">
    				     <input type="hidden" name="bookId" th:value="${book.id}">
    				     <input type="hidden" name="lenderUserId" th:value="${book.user.id}">
+   				     <input type="hidden" name="status" th:value="${book.status}">
    				   </div>
     			   <div class="modal-footer">
     				 <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>

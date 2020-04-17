@@ -3,7 +3,7 @@ package com.honcari.form;
 public class RegisterBookForm {
 
 	/** isbn13コード **/
-	private Long isbnId;
+	private String isbnId;
 	/** 著書名 **/
 	private String title;
 	/** 著者名 **/
@@ -13,13 +13,15 @@ public class RegisterBookForm {
 	/**	説明書き **/
 	private String description;
 	/** ページ数 **/
-	private Integer pageCount;
+	private String pageCount;
 	/**	サムネイルのURL **/
 	private String thumbnailPath;
-	public Long getIsbnId() {
+	/**	カテゴリid **/
+	private String categoryId;
+	public String getIsbnId() {
 		return isbnId;
 	}
-	public void setIsbnId(Long isbnId) {
+	public void setIsbnId(String isbnId) {
 		this.isbnId = isbnId;
 	}
 	public String getTitle() {
@@ -46,10 +48,10 @@ public class RegisterBookForm {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Integer getPageCount() {
+	public String getPageCount() {
 		return pageCount;
 	}
-	public void setPageCount(Integer pageCount) {
+	public void setPageCount(String pageCount) {
 		this.pageCount = pageCount;
 	}
 	public String getThumbnailPath() {
@@ -58,10 +60,16 @@ public class RegisterBookForm {
 	public void setThumbnailPath(String thumbnailPath) {
 		this.thumbnailPath = thumbnailPath;
 	}
+	public String getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
 	@Override
 	public String toString() {
 		return "RegisterBookForm [isbnId=" + isbnId + ", title=" + title + ", author=" + author + ", publishedDate="
 				+ publishedDate + ", description=" + description + ", pageCount=" + pageCount + ", thumbnailPath="
-				+ thumbnailPath + "]";
+				+ thumbnailPath + ", categoryId=" + categoryId + "]";
 	}
 }

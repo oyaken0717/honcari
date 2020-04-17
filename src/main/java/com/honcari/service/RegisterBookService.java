@@ -1,5 +1,6 @@
 package com.honcari.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +20,9 @@ public class RegisterBookService {
 	
 	@Autowired
 	private BookRepository bookRepository;
-
+	
 	/**
-	 * booksテーブルに書籍情報を登録する.
+	 * booksテーブルに書籍情報を登録するメソッド.
 	 * 
 	 * @param book 書籍情報
 	 */

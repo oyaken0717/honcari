@@ -46,8 +46,9 @@ public class BookService {
 	 * 
 	 */
 	public void runLendingBookRequest(Integer bookId, Integer lendUserId, Integer borrowUserId, Date deadline) {
-		int status = 2; //貸出承認待ち
-		bookRepository.updateStatus(status, bookId);
-		bookLendingRepository.insert(bookId, lendUserId, borrowUserId, deadline);
+		int bookStatus = 2; //貸出承認待ち
+		int bookLendingStatus = 0; //貸出承認待ち
+		bookRepository.updateStatus(bookStatus, bookId);
+		bookLendingRepository.insert(bookId, lendUserId, borrowUserId, deadline, bookLendingStatus);
 	}
 }
