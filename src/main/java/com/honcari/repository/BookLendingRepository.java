@@ -91,7 +91,7 @@ public class BookLendingRepository {
 				bookLendingList.add(bookLending);
 
 				Book brBook = new Book();
-				brBook.setBookId(rs.getInt("b_book_id"));
+				brBook.setId(rs.getInt("b_book_id"));
 				brBook.setIsbnId(rs.getLong("b_isbn_id"));
 				brBook.setUserId(rs.getInt("b_user_id"));
 				brBook.setCategoryId(rs.getInt("b_category_id"));
@@ -138,7 +138,7 @@ public class BookLendingRepository {
 			int lenderBookId = rs.getInt("b1_book_id");
 			if (lenderBookId != beforeLenderBookId) {
 				lenderBook = new Book();
-				lenderBook.setBookId(rs.getInt("b1_book_id"));
+				lenderBook.setId(rs.getInt("b1_book_id"));
 				lenderBook.setIsbnId(rs.getLong("b1_isbn_id"));
 				lenderBook.setUserId(rs.getInt("b1_user_id"));
 				lenderBook.setCategoryId(rs.getInt("b1_category_id"));
@@ -172,7 +172,7 @@ public class BookLendingRepository {
 			int borrowerBookId = rs.getInt("b2_book_id");
 			if (borrowerBookId != beforeBorrowerBookId) {
 				borrowerBook = new Book();
-				borrowerBook.setBookId(rs.getInt("b2_book_id"));
+				borrowerBook.setId(rs.getInt("b2_book_id"));
 				borrowerBook.setIsbnId(rs.getLong("b2_isbn_id"));
 				borrowerBook.setUserId(rs.getInt("b2_user_id"));
 				borrowerBook.setCategoryId(rs.getInt("b2_category_id"));

@@ -60,7 +60,7 @@ public class UserRepository {
 			int bookId = rs.getInt("b_book_id");
 			if (bookId != beforeBookId) {
 				Book book = new Book();
-				book.setBookId(rs.getInt("b_book_id"));
+				book.setId(rs.getInt("b_book_id"));
 				book.setIsbnId(rs.getLong("b_isbn_id"));
 				book.setUserId(rs.getInt("b_user_id"));
 				book.setCategoryId(rs.getInt("b_category_id"));
@@ -107,7 +107,7 @@ public class UserRepository {
 				userList.add(user);
 			}
 			Book book = new Book();
-			book.setBookId(rs.getInt("book_id"));
+			book.setId(rs.getInt("book_id"));
 			book.setUserId(nowUserId);
 			book.setCategoryId(rs.getInt("category_id"));
 			book.setTitle(rs.getString("book_title"));

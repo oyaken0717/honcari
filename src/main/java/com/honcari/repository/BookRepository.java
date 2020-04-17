@@ -27,7 +27,7 @@ public class BookRepository {
 	// 本情報に紐づくユーザー・カテゴリーのマッパー
 	private final static RowMapper<Book> BOOK_USER_CATEGORY_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
-		book.setBookId(rs.getInt("book_id"));
+		book.setId(rs.getInt("book_id"));
 		book.setUserId(rs.getInt("user_id"));
 		book.setCategoryId(rs.getInt("category_id"));
 		book.setTitle(rs.getString("book_title"));
