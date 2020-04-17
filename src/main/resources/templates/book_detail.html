@@ -47,14 +47,9 @@
   				      </button>
   				    </div>
    				   <div class="modal-body">
-<<<<<<< HEAD
-   				     <input type="date" name="deadline">
-   				     <input type="hidden" name="bookId" th:value="${book.bookId}">
-=======
    				   	<div><label th:errors="*{deadline}" class="text-danger">貸出期限を入力してください</label></div>
    				    <input type="date" name="deadline" th:field="*{deadline}">
-   				     <input type="hidden" name="bookId" th:value="${book.id}">
->>>>>>> origin/develop
+   				     <input type="hidden" name="bookId" th:value="${book.bookId}">
    				     <input type="hidden" name="lenderUserId" th:value="${book.user.id}">
    				     <input type="hidden" name="status" th:value="${book.status}">
    				   </div>

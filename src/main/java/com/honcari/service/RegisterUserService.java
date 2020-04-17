@@ -1,6 +1,7 @@
 package com.honcari.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,12 +15,15 @@ public class RegisterUserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public void registerUser(RegisterUserForm form) {
 		User user = new User();
 		user.setName(form.getName());
 		user.setEmail(form.getEmail());
-		user.setPassword(form.getPassword());
+		user.setPassword(passwordEncoder.encode(form.getPassword()));
 		user.setImagePath(null);
 		user.setProfile(null);
 		userRepository.insert(user);

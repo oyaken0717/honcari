@@ -38,7 +38,6 @@ public class ShowBookDetailController {
 	 */
 	@RequestMapping("/show_book_detail")
 	public String showBookDetai(Model model, Integer bookId) {
-		bookId = 2;
 		Book book = bookService.findByBookId(bookId);
 		model.addAttribute("book", book);
 		return "book_detail";

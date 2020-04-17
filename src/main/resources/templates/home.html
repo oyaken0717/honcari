@@ -63,13 +63,8 @@
 		<div class="col-10" th:each="user: ${userList}">
 			<div class="slider">
 				<span th:each="book: ${user.bookList}" style="margin-right: 5px;"><!-- 間隔を空けるためにmargin(仮) -->
-<<<<<<< HEAD
-					<a th:href="@{'/show-book-detail?bookId=' + ${book.bookId}}"><img src="" th:src="@{${book.thumbnailPath}}"></a><br>
-					<a th:href="@{'/show-book-detail?bookId=' + ${book.bookId}}"><span th:text="${book.title}"></span></a><br>
-=======
-					<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img src="" th:src="@{${book.thumbnailPath}}"></a><br>
-					<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span th:text="${book.title}"></span></a><br>
->>>>>>> origin/develop
+					<a th:href="@{'/show_book_detail?bookId=' + ${book.bookId}}"><img src="" th:src="@{${book.thumbnailPath}}"></a><br>
+					<a th:href="@{'/show_book_detail?bookId=' + ${book.bookId}}"><span th:text="${book.title}"></span></a><br>
 					<span th:text="'所有者：' + ${user.name}"></span><br>			
 				</span>
 			</div>
