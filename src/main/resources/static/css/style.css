@@ -84,3 +84,7 @@
 	padding-left: 60px;
 	font-size: 17px;
 }
+
+.image img{
+	object-fit: cover;
+}
