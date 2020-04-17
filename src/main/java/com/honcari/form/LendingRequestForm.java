@@ -14,6 +14,8 @@ public class LendingRequestForm {
 	private Integer bookId;
 	/** 貸し手ユーザーID */
 	private Integer lenderUserId;
+	/** 貸出状況 */
+	private Integer status;
 	/** 貸出期限 */
 	@NotBlank(message = "貸出期限を入力してください")
 	private String deadline;
@@ -42,10 +44,18 @@ public class LendingRequestForm {
 		this.deadline = deadline;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "LendingRequestForm [bookId=" + bookId + ", lenderUserId=" + lenderUserId + ", deadline=" + deadline
-				+ "]";
+		return "LendingRequestForm [bookId=" + bookId + ", lenderUserId=" + lenderUserId + ", status=" + status
+				+ ", deadline=" + deadline + "]";
 	}
 
 }

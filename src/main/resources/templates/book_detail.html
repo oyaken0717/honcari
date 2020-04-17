@@ -14,6 +14,7 @@
 <section>
 <div class="py-5 book-detail-wrapper">
     <div class="container">
+    <div th:if="${errorMessage}"><h4 th:text="${errorMessage}" class="text-center text-danger">エラーメッセージ</h4></div>
         <!-- Row -->
         <div class="row">
             <!-- Column -->
@@ -50,6 +51,7 @@
    				    <input type="date" name="deadline" th:field="*{deadline}">
    				     <input type="hidden" name="bookId" th:value="${book.id}">
    				     <input type="hidden" name="lenderUserId" th:value="${book.user.id}">
+   				     <input type="hidden" name="status" th:value="${book.status}">
    				   </div>
     			   <div class="modal-footer">
     				 <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
