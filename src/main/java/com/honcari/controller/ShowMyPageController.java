@@ -28,10 +28,24 @@ public class ShowMyPageController {
 	 * @return マイページ画面
 	 */
 	@RequestMapping("/show_my_page")
-	public String showMyPage(Integer userId, Model model) {
+	public String showMyPage(Integer userId, Integer kindOfMyPage, Model model) {
 		userId = 2;
-		User user = showMyPageService.showUser(userId);
-		model.addAttribute("user",user);
+		if(kindOfMyPage == null) {
+			kindOfMyPage = 1;
+		}
+		switch(kindOfMyPage) {
+		case 1:
+			User user = showMyPageService.showUser(userId);
+			model.addAttribute("user",user);
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		}
+		model.addAttribute("kindOfMyPage", kindOfMyPage);
 		return "mypage";
 	}
 
