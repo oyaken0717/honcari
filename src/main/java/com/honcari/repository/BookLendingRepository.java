@@ -27,12 +27,15 @@ public class BookLendingRepository {
 	 * @param lendUserId 貸し手ユーザーID
 	 * @param borrowUserId　借りてユーザーID
 	 * @param deadline　貸出期限
+	 * @param status　貸出状況
+	 * 
 	 */
-	public void insert(Integer bookId, Integer lendUserId, Integer borrowUserId, Date deadline) {
-		String sql = "INSERT INTO book_lending (lend_user_id, borrow_user_id, book_id, deadline) "
-				+ "VALUES (:bookId, :lendUserId, :borrowUserId, :deadline)";
+	public void insert(Integer bookId, Integer lendUserId, Integer borrowUserId, Date deadline, Integer status) {
+		String sql = "INSERT INTO book_lending (lend_user_id, borrow_user_id, book_id, deadline, lending_status) "
+				+ "VALUES (:bookId, :lendUserId, :borrowUserId, :deadline, :status)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId).addValue("lendUserId", lendUserId)
-										.addValue("borrowUserId", borrowUserId).addValue("deadline", deadline);
+										.addValue("borrowUserId", borrowUserId).addValue("deadline", deadline)
+										.addValue("status", status);
 		template.update(sql, param);
 	}
 
