@@ -1,5 +1,7 @@
 package com.honcari.form;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 貸出リクエストを受け取るフォームクラス.
  * 
@@ -10,9 +12,12 @@ public class LendingRequestForm {
 
 	/** 本ID */
 	private Integer bookId;
-	/** 貸してユーザーID */
+	/** 貸し手ユーザーID */
 	private Integer lenderUserId;
+	/** 貸出状況 */
+	private Integer status;
 	/** 貸出期限 */
+	@NotBlank(message = "貸出期限を入力してください")
 	private String deadline;
 
 	public Integer getBookId() {
@@ -39,10 +44,18 @@ public class LendingRequestForm {
 		this.deadline = deadline;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "LendingRequestForm [bookId=" + bookId + ", lenderUserId=" + lenderUserId + ", deadline=" + deadline
-				+ "]";
+		return "LendingRequestForm [bookId=" + bookId + ", lenderUserId=" + lenderUserId + ", status=" + status
+				+ ", deadline=" + deadline + "]";
 	}
 
 }
