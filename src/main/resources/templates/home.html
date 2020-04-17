@@ -16,7 +16,7 @@
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
       <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>      
     </ol>
     <div class="carousel-inner" role="listbox">
       <!-- Slide One - Set the background image for this slide in the line below -->
@@ -63,8 +63,8 @@
 		<div class="col-10" th:each="user: ${userList}">
 			<div class="slider">
 				<span th:each="book: ${user.bookList}" style="margin-right: 5px;"><!-- 間隔を空けるためにmargin(仮) -->
-					<a th:href="@{'/show-book-detail?bookId=' + ${book.id}}"><img src="" th:src="@{${book.thumbnailPath}}"></a><br>
-					<a th:href="@{'/show-book-detail?bookId=' + ${book.id}}"><span th:text="${book.title}"></span></a><br>
+					<a th:href="@{'/show-book-detail?bookId=' + ${book.bookId}}"><img src="" th:src="@{${book.thumbnailPath}}"></a><br>
+					<a th:href="@{'/show-book-detail?bookId=' + ${book.bookId}}"><span th:text="${book.title}"></span></a><br>
 					<span th:text="'所有者：' + ${user.name}"></span><br>			
 				</span>
 			</div>

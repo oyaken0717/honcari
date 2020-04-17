@@ -54,11 +54,10 @@ public class SendLendingRequestController {
 	 * @return 貸出管理画面
 	 */
 	@RequestMapping("/approval_lending_request")
-	public String approvalLendingRequest(LendingRequestForm form) {
-		Integer bookId = form.getBookId();
-		bookService.runApprovalLendingBookRequest(bookId);;
+	public String approvalLendingRequest(Integer bookLendingId,Integer bookId) {
+		bookService.runApprovalLendingBookRequest(bookLendingId,bookId);;
 		//TODO 貸し手にメール送信
-		return "redirect:/";
+		return "redirect:/to_lend_management";
 
 	}
 

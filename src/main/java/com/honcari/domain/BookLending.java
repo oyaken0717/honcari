@@ -13,6 +13,15 @@ public class BookLending {
 	private User lendUser;
 	private User borrowUser;
 	private Book book;
+	
+	/**
+	 * 数字から貸出状況を取得する.
+	 * 
+	 * @return 貸出状況
+	 */
+	public String getBookLendingStatus() {
+		return LendingStatusEnum.of(lendingStatus).getKey();
+	}
 	public Integer getBookLendingId() {
 		return bookLendingId;
 	}

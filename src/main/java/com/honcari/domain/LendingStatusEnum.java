@@ -31,8 +31,8 @@ public enum LendingStatusEnum {
 		return value;
 	}
 	
-	public static StatusEnum of(int value) {
-		for (StatusEnum orderStatus : StatusEnum.values()) {
+	public static LendingStatusEnum of(int value) {
+		for (LendingStatusEnum orderStatus : LendingStatusEnum.values()) {
 			if (orderStatus.getValue() == value) {
 				return orderStatus;
 			}

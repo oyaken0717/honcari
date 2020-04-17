@@ -59,13 +59,15 @@ public class BookService {
 	 * 
 	 * @param bookId 本ID
 	 */
-	public void runApprovalLendingBookRequest(Integer bookId) {
+	public void runApprovalLendingBookRequest(Integer bookLendingId,Integer bookId) {
 		//book_lendingテーブルの更新処理
 		BookLending bookLending = new BookLending();
-		bookLending.setBookId(bookId);
+		bookLending.setBookLendingId(bookLendingId);
 		bookLending.setLendingStatus(1); //貸出承認済み
+//		bookLending.setLendUserId(2);
+//		bookLending.setBorrowUserId(1);
+//		bookLending.setBookId(bookId);
 		bookLendingRepository.update(bookLending);
-		
 		//bookテーブルの更新処理
 		int status = 3; //貸出中
 		bookRepository.updateStatus(status, bookId);

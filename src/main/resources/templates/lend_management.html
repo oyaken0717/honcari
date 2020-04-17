@@ -5,6 +5,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div th:each="bookLending:${bookLendingList}">
+	<form th:action="@{/approval_lending_request}" method="POST">
+	書籍名：<span th:text="${bookLending.book.title}"></span><br>
+	レンタル希望者：<span th:text="${bookLending.borrowUser.name}">さん</span><br>
+	レンタル希望期間：<span th:text="${bookLending.deadline}">まで</span><br>
+	ステータス：<span th:text="${bookLending.getBookLendingStatus()}"></span>
+	<input type="hidden" th:value="${bookLending.bookLendingId}" name="bookLendingId">
+	<input type="hidden" th:value="${bookLending.book.bookId}" name="bookId">
+	<button type="submit">承認する</button>
+	</form>
+	<hr>
+</div>
 </body>
 </html>
