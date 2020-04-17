@@ -259,7 +259,7 @@ public class BookLendingRepository {
 	 */
 	public void insert(Integer bookId, Integer lendUserId, Integer borrowUserId, Date deadline, Integer status) {
 		String sql = "INSERT INTO book_lending (lend_user_id, borrow_user_id, book_id, deadline, lending_status) "
-				+ "VALUES (:bookId, :lendUserId, :borrowUserId, :deadline, :status)";
+				+ "VALUES (:lendUserId, :borrowUserId, :bookId, :deadline, :status)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId).addValue("lendUserId", lendUserId)
 										.addValue("borrowUserId", borrowUserId).addValue("deadline", deadline)
 										.addValue("status", status);
