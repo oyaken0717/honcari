@@ -206,4 +206,20 @@ public class UserRepository {
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
 		return userList;
 	}
+	
+	public User findByName(String name) {
+		String sql = "SELECT user_id,name,email,password,image_path,profile FROM users WHERE name=:name";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+		return template.queryForObject(sql, param, User_ROW_MAPPER);
+	}
+	
+	public List<User> findByNameLike(String name) {
+		String sql = "SELECT user_id,name,email,password,image_path,profile FROM users WHERE name LIKE :name";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
+		if(userList.isEmpty()) {
+			return null;
+		}
+		return userList;
+	}
 }
