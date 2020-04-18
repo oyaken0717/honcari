@@ -3,9 +3,12 @@ package com.honcari.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.common.MyPageType;
 import com.honcari.domain.User;
+import com.honcari.form.EditUserForm;
 import com.honcari.service.ShowMyPageService;
 
 /**
@@ -20,6 +23,11 @@ public class ShowMyPageController {
 	@Autowired
 	private ShowMyPageService showMyPageService;
 	
+	@ModelAttribute
+	public EditUserForm setUpEditUserForm() {
+		return new EditUserForm();
+	}
+	
 	/**
 	 * マイページに遷移するメソッド.
 	 * 
@@ -28,24 +36,24 @@ public class ShowMyPageController {
 	 * @return マイページ画面
 	 */
 	@RequestMapping("/show_my_page")
-	public String showMyPage(Integer userId, Integer kindOfMyPage, Model model) {
+	public String showMyPage(Integer userId, Integer myPageType, Model model) {
 		userId = 2;
-		if(kindOfMyPage == null) {
-			kindOfMyPage = 1;
+		if(myPageType == null) {
+			myPageType = 1;
 		}
-		switch(kindOfMyPage) {
-		case 1:
-			User user = showMyPageService.showUser(userId);
+		User user = null;
+		switch(MyPageType.of(myPageType)) {
+		case MY_BOOK:
+			break;
+		case LENTAL_MANAGEMENT:
+			break;
+		case LENTAL_HISTORY:
+			break;
+		default:
+			user = showMyPageService.showUser(userId);
 			model.addAttribute("user",user);
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
 		}
-		model.addAttribute("kindOfMyPage", kindOfMyPage);
+		model.addAttribute("myPageType", myPageType);
 		return "mypage";
 	}
 
