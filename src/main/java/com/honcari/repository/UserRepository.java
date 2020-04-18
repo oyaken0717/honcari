@@ -222,4 +222,17 @@ public class UserRepository {
 		}
 		return userList;
 	}
+	
+	/**
+	 * ユーザー情報を更新するメソッド.
+	 * 
+	 * @param user ユーザー
+	 */
+	public void update(User user) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
+		String sql = "UPDATE users SET name = :name, email = :email, password = :password, "
+					+ "image_path = :imagePath, profile = :profile WHERE user_id = :id;";
+		template.update(sql, param);
+	}
+	
 }
