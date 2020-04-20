@@ -9,16 +9,9 @@
   -o-background-size: cover;
   background-size: cover;
 }
-
 #book-list{
-	overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-}
-
-#book-list li {
-  display: inline-block;
-  width: 90%;
+	font-size: 14px;
+	text-align: center;
 }
 
 .add-book-top {
@@ -51,36 +44,18 @@
 
 .book-img{
 	 width: auto;
-    height: 220px;
+    height: 160px;
     margin: 0;
 }
 
-.caption {
-	font-size: 180%;
-	margin-top: 110px;
-	color:#fff;
-}
-.mask {
-	width:			90%;
-	height:			100%;
-	position:		absolute;	/* 絶対位置指定 */
-	top:			0;
-	left:			0;
-	opacity:		1;	/* マスクを表示しない */
-	background-color:	rgba(0,0,0,0.4);	/* マスクは半透明 */
-	-webkit-transition:	all 0.2s ease;
-	transition:		all 0.2s ease;
-	font-size: 180%;
-	color:#fff;
-	text-align:center;
-	padding-top: 30%;
-}
-.get-button:hover .mask {
-	opacity:		1;	/* マスクを表示する */
+.image img{
+	object-fit: cover;
 }
 
-.search-result {
-	margin-top: 20px;
-	padding-left: 60px;
-	font-size: 17px;
+.custom-file {
+  max-width: 20rem;
+  overflow: hidden;
+}
+.custom-file-label {
+  white-space: nowrap;
 }
