@@ -11,7 +11,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:fragment="frag_header">
   <div class="container">
-    <a class="navbar-brand" href="#">Honcari</a>
+    <a class="navbar-brand" href="home.html" th:href="@{/}">Honcari</a>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="検索..." aria-label="検索...">
       <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">探す</button>
@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home
+          <a class="nav-link" href="home.html" th:href="@{/}">Home
                 <span class="sr-only">(current)</span>
               </a>
         </li>
