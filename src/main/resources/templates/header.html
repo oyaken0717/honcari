@@ -43,7 +43,7 @@
           <a class="nav-link" th:href="@{/show_register_book}">本登録</a>
         </li>
         <li class="nav-item">
-          <span sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}">ログアウト</a></span>
+          <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/logout}">ログアウト</a>
         </li>
       </ul>
     </div>

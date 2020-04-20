@@ -19,7 +19,6 @@ public class ShowLendingRequestManagementController {
 	
 	@RequestMapping("/to_lend_management")
 	public String toLendManagement(Integer userId,Model model) {
-		userId = 2;
 		List<BookLending> bookLendingList = bookService.showWaitApprovalBookLendingList(userId);
 		model.addAttribute("bookLendingList",bookLendingList);
 		return "lend_management";
