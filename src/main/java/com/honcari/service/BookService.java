@@ -78,7 +78,7 @@ public class BookService {
 		// book_lendingテーブルの更新処理
 		BookLending bookLending = new BookLending();
 		bookLending.setBookLendingId(bookLendingId);
-		bookLending.setLendingStatus(1); // 貸出承認済み
+		bookLending.setLendingStatus(1); //貸出承認済み
 		bookLendingRepository.update(bookLending);
 		// bookテーブルの更新処理
 		int bookStatus = 3; // 貸出中

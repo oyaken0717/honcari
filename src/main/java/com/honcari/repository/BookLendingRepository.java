@@ -58,6 +58,7 @@ public class BookLendingRepository {
 			+ "LEFT OUTER JOIN books b2 ON u2.user_id = b2.user_id LEFT OUTER JOIN group_relationship gr2 ON u2.user_id = gr2.user_id "
 			+ "LEFT OUTER JOIN groups g2 ON g2.group_id=gr2.group_id LEFT OUTER JOIN category c2 ON b2.category_id = c2.category_id ";
 
+
 	private static ResultSetExtractor<List<BookLending>> BR_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<BookLending> bookLendingList = new ArrayList<>();
 		User lendUser = null;
@@ -76,11 +77,12 @@ public class BookLendingRepository {
 
 		while (rs.next()) {
 			int nowBrId = rs.getInt("br_book_lending_id");
+
 			if (nowBrId != beforeBrId) {
 				BookLending bookLending = new BookLending();
 				lendUser = new User();
 				borrowUser = new User();
-				bookLending.setBookLendingId(rs.getInt("br_book_lending_id"));
+				bookLending.setBookLendingId(nowBrId);
 				bookLending.setLendUserId(rs.getInt("br_lend_user_id"));
 				bookLending.setBorrowUserId(rs.getInt("br_borrow_user_id"));
 				bookLending.setBookId(rs.getInt("br_book_id"));
@@ -134,11 +136,11 @@ public class BookLendingRepository {
 
 				beforeBrId = nowBrId;
 			}
-
+			
 			int lenderBookId = rs.getInt("b1_book_id");
 			if (lenderBookId != beforeLenderBookId) {
 				lenderBook = new Book();
-				lenderBook.setId(rs.getInt("b1_book_id"));
+				lenderBook.setId(lenderBookId);
 				lenderBook.setIsbnId(rs.getLong("b1_isbn_id"));
 				lenderBook.setUserId(rs.getInt("b1_user_id"));
 				lenderBook.setCategoryId(rs.getInt("b1_category_id"));
@@ -161,7 +163,7 @@ public class BookLendingRepository {
 			int lenderGroupId = rs.getInt("g1_group_id");
 			if (lenderGroupId != beforeLenderGroupId) {
 				Group lenderGroup = new Group();
-				lenderGroup.setId(rs.getInt("g1_group_id"));
+				lenderGroup.setId(lenderGroupId);
 				lenderGroup.setName(rs.getString("g1_name"));
 				lenderGroup.setDescription(rs.getString("g1_description"));
 				lenderGroupList.add(lenderGroup);
@@ -169,10 +171,11 @@ public class BookLendingRepository {
 				beforeLenderGroupId = lenderGroupId;
 			}
 
+			
 			int borrowerBookId = rs.getInt("b2_book_id");
 			if (borrowerBookId != beforeBorrowerBookId) {
 				borrowerBook = new Book();
-				borrowerBook.setId(rs.getInt("b2_book_id"));
+				borrowerBook.setId(borrowerBookId);
 				borrowerBook.setIsbnId(rs.getLong("b2_isbn_id"));
 				borrowerBook.setUserId(rs.getInt("b2_user_id"));
 				borrowerBook.setCategoryId(rs.getInt("b2_category_id"));
@@ -195,7 +198,7 @@ public class BookLendingRepository {
 			int borrowerGroupId = rs.getInt("g2_group_id");
 			if (lenderGroupId != beforeBorrowerGroupId) {
 				Group borrowerGroup = new Group();
-				borrowerGroup.setId(rs.getInt("g2_group_id"));
+				borrowerGroup.setId(borrowerGroupId);
 				borrowerGroup.setName(rs.getString("g2_name"));
 				borrowerGroup.setDescription(rs.getString("g2_description"));
 				borrowerGroupList.add(borrowerGroup);

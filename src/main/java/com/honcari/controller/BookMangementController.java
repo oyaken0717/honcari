@@ -3,6 +3,8 @@ package com.honcari.controller;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,9 @@ public class BookMangementController {
 
 	@Autowired
 	private ShowBookDetailController showBookDetailController;
+	
+	@Autowired
+	private HttpSession session;
 
 	@ModelAttribute
 	public LendingRequestForm setUpForm() {
@@ -46,21 +51,21 @@ public class BookMangementController {
 	 */
 	@RequestMapping("/send_lending_request")
 	public String sendLendingRequest(Model model, @Validated LendingRequestForm form, BindingResult result) {
-		Integer borrowUserId = 1; // TODO SpringSecurity実装後LoginUserへ置き換え
+		Integer borrowUserId = (Integer) session.getAttribute("userId"); // TODO SpringSecurity実装後LoginUserへ置き換え
 		Integer bookId = form.getBookId();
 		Integer lendUserId = form.getLenderUserId();
 		Integer status = form.getStatus();
 
-		// TODO エラーチェックの段階要検討
-		if (status != 1) {
+		//TODO エラーチェックの段階要検討
+		if(status != 0) {
 			model.addAttribute("errorMessage", "不正なリクエストが行われました");
 			return showBookDetailController.showBookDetai(model, bookId);
 		}
-
-		if (borrowUserId == lendUserId) {
-			model.addAttribute("errorMessage", "不正なリクエストが行われました");
-			return showBookDetailController.showBookDetai(model, bookId);
-		}
+		
+//		if (borrowUserId == lendUserId) {
+//			model.addAttribute("errorMessage", "不正なリクエストが行われました");
+//			return showBookDetailController.showBookDetai(model, bookId);
+//		}
 
 		if (result.hasErrors()) {
 			return showBookDetailController.showBookDetai(model, bookId);

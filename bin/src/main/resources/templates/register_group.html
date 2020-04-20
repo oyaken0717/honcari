@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Honcari -気軽に本をどこへでも-</title>
+<!-- Style CSS -->
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav th:insert="header::frag_header"></nav>
+<div class="container">
+	<div class="row justify-content-md-center">
+		<div class="col-md-8 col-md-offset-4">
+			<h1>グループ作成</h1>
+			<form th:action="@{/register_group}" th:object="${registerGroupForm}" method="post">
+			  <div class="form-group">
+			    <label for="formGroupExampleInput">グループ名</label>
+			    <input type="text" th:field="*{name}" class="form-control" id="formGroupExampleInput" placeholder="グループ名">
+			  </div>
+			  <div class="form-group">
+			    <label for="formGroupExampleInput2">説明文</label>
+			    <input type="text" th:field="*{description}" class="form-control" id="formGroupExampleInput2" placeholder="説明文">
+			  </div>
+			  <div class="form-group">
+			    <label for="formGroupExampleInput2">ユーザー検索</label>
+			    <input type="text" class="form-control searchUser" id="formGroupExampleInput2" placeholder="ユーザー名">
+			  	<div class="addUserList">
+			  		<!-- jqueryで検索したユーザーリストを表示 -->
+			  	</div>
+			  </div>
+			  <div>
+			    <label for="formGroupExampleInput2">追加するユーザー</label>
+			  	<div class="groupUserList">
+			  		<div class="row login-user">
+			  			<span class="col-md-12 text-left">ログインユーザー</span>
+			  			<input type="hidden" value="">
+			  		</div>
+			  	</div>
+			  </div>
+			  <button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
+					グループを作成</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:src="@{/js/register_group.js}"></script>
+</body>
+</html>
