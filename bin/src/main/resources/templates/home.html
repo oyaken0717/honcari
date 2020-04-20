@@ -6,6 +6,8 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link rel="stylesheet" type="text/css" href="css/slick.css"/>
+<link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
 </head>
 <body>
 <nav th:insert="header::frag_header"></nav>
@@ -14,7 +16,7 @@
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
       <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>      
     </ol>
     <div class="carousel-inner" role="listbox">
       <!-- Slide One - Set the background image for this slide in the line below -->
@@ -59,17 +61,21 @@
 			</form>
 		</div>
 		<div class="col-10" th:each="user: ${userList}">
-			<span th:each="book: ${user.bookList}" style="float: left;"><!-- 横並びにするために仮でfloatを追加 -->
-				<img src="" th:src="@{${book.thumbnailPath}}"><br>
-				<span th:text="${book.title}"></span><br>
-				<span th:text="'所有者：' + ${user.name}"></span><br>			
-			</span>
+			<div class="slider">
+				<span th:each="book: ${user.bookList}" style="margin-right: 5px;"><!-- 間隔を空けるためにmargin(仮) -->
+					<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img src="" th:src="@{${book.thumbnailPath}}"></a><br>
+					<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span th:text="${book.title}"></span></a><br>
+					<span th:text="'所有者：' + ${user.name}"></span><br>			
+				</span>
+			</div>
 		</div>
 	</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
+<script type="text/javascript" src="js/slick.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+ 
 </body>
 </html>
