@@ -25,22 +25,22 @@
     	<!-- タブ・コンテント -->
    		<div class="tab-content">
    			<div class="tab-pane active" id="borrowing-list" >
-   				<div th:if="${bookBorrowingList.size()}==0">借受中の本はありません</div>
+   				<div th:if="${bookBorrowingList.size()}==0">借りてる本はありません</div>
 				<div th:each="bookBorrowing:${bookBorrowingList}">
-					<form th:action="@{#}" method="POST">	
+					<form th:action="@{/cancel_lending_request}" method="POST">	
 					書籍名：<span th:text="${bookBorrowing.book.title}"></span><br>
 					所有者：<span th:text="${bookBorrowing.lendUser.name}">さん</span><br>
 					レンタル希望期間：<span th:text="${bookBorrowing.deadline}">まで</span><br>
 					ステータス：<span th:text="${bookBorrowing.getBookLendingStatus()}"></span>
 					<input type="hidden" th:value="${bookBorrowing.bookLendingId}" name="bookLendingId">
 					<input type="hidden" th:value="${bookBorrowing.book.id}" name="bookId">
-					<button type="submit">キャンセル</button>
+					<div><button class="cancel-btn btn btn-primary btn-sm" type="submit">キャンセル</button></div>
 					</form>
 					<hr>
 				</div>
 			</div>
 			<div class="tab-pane" id="lending-list">
-				<div th:if="${bookLendingList.size()}==0">貸出中の本はありません</div>
+				<div th:if="${bookLendingList.size()}==0">貸してる本はありません</div>
 				<div th:each="bookLending:${bookLendingList}">
 					<form th:action="@{/approval_lending_request}" method="POST">
 					書籍名：<span th:text="${bookLending.book.title}"></span><br>
@@ -49,7 +49,7 @@
 					ステータス：<span th:text="${bookLending.getBookLendingStatus()}"></span>
 					<input type="hidden" th:value="${bookLending.bookLendingId}" name="bookLendingId">
 					<input type="hidden" th:value="${bookLending.book.id}" name="bookId">
-					<button type="submit">承認する</button>
+					<div><button class="approval-btn btn btn-warning btn-sm" type="submit">承認する</button></div>
 					</form>
 					<hr>
 				</div>
@@ -59,5 +59,20 @@
 </div>
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+	<script th:inline="javascript">
+	  (function(){
+		  'use strict';
+		  $('.cancel-btn').click(function() {
+			  if(!confirm("キャンセルしてよろしいでしょうか?")){
+				  return false;
+			  }
+		  });
+		  $('.approval-btn').click(function() {
+			  if(!confirm("承認してよろしいでしょうか?")){
+				  return false;
+			  }
+		  });
+	  })();
+	</script>
 </body>
 </html>

@@ -234,9 +234,4 @@ public class UserRepository {
 					+ "image_path = :imagePath, profile = :profile WHERE user_id = :id;";
 		template.update(sql, param);
 	}
-	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> feature

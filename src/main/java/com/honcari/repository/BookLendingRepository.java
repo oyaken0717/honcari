@@ -241,7 +241,7 @@ public class BookLendingRepository {
 	}
 
 	/**
-	 * 本の貸出リクエストに対し承認する.
+	 * 本の貸出状況を更新する.
 	 * 
 	 * @param bookLending 本貸出に関する情報
 	 */
@@ -265,7 +265,6 @@ public class BookLendingRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("lendUserId", lendUserId)
 				.addValue("lendingStatus", lendingStatus);
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
-		System.out.println(bookLendingList);
 		return bookLendingList;
 	}
 
@@ -283,7 +282,6 @@ public class BookLendingRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId)
 				.addValue("lendingStatus", lendingStatus);
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
-		System.out.println(bookLendingList);
 		return bookLendingList;
 	}
 
