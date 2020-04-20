@@ -65,9 +65,6 @@ public class BookService {
 		BookLending bookLending = new BookLending();
 		bookLending.setBookLendingId(bookLendingId);
 		bookLending.setLendingStatus(1); //貸出承認済み
-//		bookLending.setLendUserId(2);
-//		bookLending.setBorrowUserId(1);
-//		bookLending.setBookId(bookId);
 		bookLendingRepository.update(bookLending);
 		//bookテーブルの更新処理
 		int status = 3; //貸出中
@@ -76,12 +73,31 @@ public class BookService {
 	
 	/**
 	 * 貸出リクエストに対し未承認の貸出情報を表示させるメソッド.
+	 * （所有者側）
 	 * 
 	 * @param userId　ユーザーID
 	 * @return 貸出情報
 	 */
-	public List<BookLending> showWaitApprovalBookLendingList(Integer userId){
+	public List<BookLending> showWaitApprovalBookLendingList(Integer lendUserId){
 		Integer waitApprovalStatus = 0; //承認待ち
-		return bookLendingRepository.findByLendUserIdAndLendingStatus(userId, waitApprovalStatus);
+		return bookLendingRepository.findByLendUserIdAndLendingStatus(lendUserId, waitApprovalStatus);
 	}
+	
+	/**
+	 * 貸出リクエストに対し未承認の貸出情報を表示させるメソッド.
+	 * （申請者側）
+	 * 
+	 * @param userId　ユーザーID
+	 * @return 貸出情報
+	 */
+	public List<BookLending> showWaitApprovalBookBorrowingList(Integer borrowUserId){
+		Integer waitApprovalStatus = 0; //承認待ち
+		return bookLendingRepository.findByBorrowUserIdAndLendingStatus(borrowUserId, waitApprovalStatus);
+	}
+	
+	
+	
+	
+	
+	
 }

@@ -2,6 +2,8 @@ package com.honcari.controller;
 
 import java.sql.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.domain.BookLending;
 import com.honcari.form.LendingRequestForm;
 import com.honcari.service.BookService;
 
@@ -29,6 +30,9 @@ public class SendLendingRequestController {
 
 	@Autowired
 	private ShowBookDetailController showBookDetailController;
+	
+	@Autowired
+	private HttpSession session;
 
 	@ModelAttribute
 	public LendingRequestForm setUpForm() {
@@ -46,13 +50,13 @@ public class SendLendingRequestController {
 	 */
 	@RequestMapping("/send_lending_request")
 	public String sendLendingRequest(Model model, @Validated LendingRequestForm form, BindingResult result) {
-		Integer borrowUserId = 1; // TODO SpringSecurity実装後LoginUserへ置き換え
+		Integer borrowUserId = (Integer) session.getAttribute("userId"); // TODO SpringSecurity実装後LoginUserへ置き換え
 		Integer bookId = form.getBookId();
 		Integer lendUserId = form.getLenderUserId();
 		Integer status = form.getStatus();
 
 		//TODO エラーチェックの段階要検討
-		if(status != 1) {
+		if(status != 0) {
 			model.addAttribute("errorMessage", "不正なリクエストが行われました");
 			return showBookDetailController.showBookDetai(model, bookId);
 		}
@@ -69,8 +73,7 @@ public class SendLendingRequestController {
 		Date deadline = Date.valueOf(form.getDeadline());
 		bookService.runLendingBookRequest(bookId, lendUserId, borrowUserId, deadline);
 		// TODO 貸し手にメール送信
-		// TODO 申請状況一覧画面へ遷移
-		return "redirect:/";
+		return "redirect:/to_lend_management";
 	}
 	
 	/**

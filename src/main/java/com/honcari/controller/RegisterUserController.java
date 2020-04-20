@@ -31,6 +31,7 @@ public class RegisterUserController {
 	
 	@RequestMapping("/register")
 	public String register(@Validated RegisterUserForm form, BindingResult result,Model mode) {
+		System.out.println("ここまで");
 		if (!form.getPassword().equals(form.getConfirmPassword())) {
 			result.rejectValue("password", null, "パスワードと確認用パスワードが一致していません。");
 		}
