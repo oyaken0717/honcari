@@ -24,45 +24,127 @@
 				<h1 class="my-4">My Page</h1>
 		
 				<!-- side bar -->
-				<div class="col-lg-3 col-md-4 col-sm-10 col-xs-12 float-left">
+				<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 float-left">
 					<div class="list-group">
-						<a href="mypage.html" th:href="@{/show_my_page?kindOfMyPage=1}" 
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=1}" 
 							class="list-group-item list-group-item-action active">profile</a>
-						<a href="mypage.html" th:href="@{/show_my_page?kindOfMyPage=2}" 
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=2}" 
 							class="list-group-item list-group-item-action">my book</a>
-						<a href="mypage.html" th:href="@{/show_my_page?kindOfMyPage=3}" 
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=3}" 
 							class="list-group-item list-group-item-action">レンタル管理</a>
-						<a href="mypage.html" th:href="@{/show_my_page?kindOfMyPage=4}" 
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=4}" 
 							class="list-group-item list-group-item-action">レンタル履歴</a>
 					</div>
 				</div>
 			
 				<!-- main content -->
 				<!-- profile -->
-				<div class="col-lg-5 col-md-4 col-sm-10 col-xs-12 float-left" th:if="${kindOfMyPage == 1}">
-					<div class="image">
-						<img class="rounded mx-auto d-block" th:if="${user.imagePath}" th:src="${user.imagePath}" width="80px" height="80px">
-						<img class="rounded mx-auto d-block" th:unless="${user.imagePath}" th:src="@{/img/12.jpg}" width="80px" height="80px">
+				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${myPageType == 1}">
+					<div class="image mb-3">
+						<img class="rounded-lg mx-auto d-block border border-secondary" 
+							th:if="${user.imagePath}" th:src="${user.imagePath}" width="100px" height="100px">
+						<img class="rounded-lg mx-auto d-block border border-secondary" 
+							th:unless="${user.imagePath}" th:src="@{/img/user_default.png}" width="100px" height="100px">
+					</div>
+					<div class="table-responsible">
+						<table class="table">
+							<tr>
+								<th width="30%">名前</th>
+								<td width="70%" th:text="${user.name}">本</td>
+							</tr>
+							<tr>
+								<th class="profile-item">メールアドレス</th>
+								<td th:text="${user.email}"></td>
+							</tr>
+							<tr>
+								<th class="profile-item">プロフィール</th>
+								<td th:text="${user.profile}"></td>
+							</tr>
+						</table>
 					</div>
 					<div class="">
-						<div>名前</div>
-						<div th:text="${user.name}"></div>
-					</div>
-					<div class="">
-						<div>メールアドレス</div>
-						<div th:text="${user.email}"></div>
-					</div>
-					<div class="">
-						<div>プロフィール</div>
-						<div th:text="${user.profile}"></div>
+						<a class="btn btn-warning" th:href="@{/show_my_page?myPageType=5}">プロフィール編集</a>
 					</div>
 				</div>
 				
-				<!-- my book -->
-				<div class="col-lg-5 col-md-4 col-sm-10 col-xs-12 float-left" th:if="${kindOfMyPage == 2}">
-					<div class="">
-						
-					</div>
+				<!-- edit profile -->
+				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${myPageType == 5}">
+					<form action="mypage.html" th:action="@{/edit_user}" method="post" 
+						th:object="${editUserForm}" enctype="multipart/form-data">
+						<input type="hidden" name="id" th:value="${user.id}">
+						<input type="hidden" name="defaultPassword" th:value="${user.password}">
+						<div class="form-group image mb-3">
+							<img class="rounded-lg mx-auto d-block border border-secondary" 
+								th:if="${user.imagePath}" th:src="${user.imagePath}" width="100px" height="100px">
+							<img class="rounded-lg mx-auto d-block border border-secondary" 
+								th:unless="${user.imagePath}" th:src="@{/img/user_default.png}" width="100px" height="100px">
+							<div id="file" class="input-group">
+								<div class="custom-file">
+									<input type="file" id="custom-file" class="custom-file-input" name="imagePath">
+									<label class="custom-file-label" for="custom-file" data-browse="参照">ファイル選択...</label>
+								</div>
+								<div class="input-group-append">
+									<button type="button" class="btn btn-outline-secondary reset">取消</button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-4" th:if="${#fields.hasErrors('name')}"></div>
+							<div class="col-sm-8" th:if="${#fields.hasErrors('name')}">
+								<label class="col-form-label" style="color:red" th:errors="*{name}"></label>
+							</div>
+							<label class="col-sm-4 col-form-label" for="name">名前</label>
+							<div class="col-sm-8">
+								<input id="name" class="form-control" type="text" name="name" th:value="${user.name}" required>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-4" th:if="${#fields.hasErrors('email')}"></div>
+							<div class="col-sm-8" th:if="${#fields.hasErrors('email')}">
+								<label class="col-form-label" style="color:red" th:errors="*{email}"></label>
+							</div>
+							<label class="col-sm-4 col-form-label" for="email">メールアドレス</label>
+							<div class="col-sm-8">
+								<input id="email" class="form-control" type="email" name="email" th:value="${user.email}" required>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-4" th:if="${#fields.hasErrors('profile')}"></div>
+							<div class="col-sm-8" th:if="${#fields.hasErrors('profile')}">
+								<label class="col-form-label" style="color:red" th:errors="*{profile}"></label>
+							</div>
+							<label class="col-sm-4 col-form-label" for="profile">プロフィール</label>
+							<div class="col-sm-8">
+								<textarea id="profile" class="form-control" name="profile" th:text="${user.profile}" rows="5"></textarea>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-6 col-form-label" for="password" style="font-weight:bold">パスワードを更新する場合</label>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-4" th:if="${#fields.hasErrors('password')}"></div>
+							<div class="col-sm-8" th:if="${#fields.hasErrors('password')}">
+								<label class="col-form-label" style="color:red" th:errors="*{password}"></label>
+							</div>
+							<label class="col-sm-4 col-form-label" for="password">新しいパスワード</label>
+							<div class="col-sm-8">
+								<input id="password" class="form-control" type="password" name="password">
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-4" th:if="${#fields.hasErrors('confirmPassword')}"></div>
+							<div class="col-sm-8" th:if="${#fields.hasErrors('confirmPassword')}">
+								<label class="col-form-label" style="color:red" th:errors="*{confirmPassword}"></label>
+							</div>
+							<label class="col-sm-4 col-form-label" for="confirmPassword">確認用パスワード</label>
+							<div class="col-sm-8">
+								<input id="confirmPassword" class="form-control" type="password" name="confirmPassword">
+							</div>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-warning">登録</button>
+						</div>
+					</form>
 				</div>
 				
 				
@@ -73,5 +155,6 @@
 	<!-- script -->
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+	<script src="../static/js/file_reader.js" th:src="@{/js/file_reader.js}"></script>
 </body>
 </html>
