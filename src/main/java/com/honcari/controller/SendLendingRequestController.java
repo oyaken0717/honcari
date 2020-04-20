@@ -61,10 +61,10 @@ public class SendLendingRequestController {
 			return showBookDetailController.showBookDetai(model, bookId);
 		}
 		
-		if (borrowUserId == lendUserId) {
-			model.addAttribute("errorMessage", "不正なリクエストが行われました");
-			return showBookDetailController.showBookDetai(model, bookId);
-		}
+//		if (borrowUserId == lendUserId) {
+//			model.addAttribute("errorMessage", "不正なリクエストが行われました");
+//			return showBookDetailController.showBookDetai(model, bookId);
+//		}
 
 		if (result.hasErrors()) {
 			return showBookDetailController.showBookDetai(model, bookId);
