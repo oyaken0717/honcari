@@ -7,15 +7,15 @@ package com.honcari.common;
  *
  */
 public enum MyPageType {
-	/** 商品一覧 */
+	/** プロフィール */
 	PROFILE(1),
-	/** 商品詳細 */
+	/** マイブック */
 	MY_BOOK(2),
-	/** 商品編集 */
+	/** レンタル管理 */
 	LENTAL_MANAGEMENT(3),
-	/** 商品登録 */
+	/** レンタル履歴 */
 	LENTAL_HISTORY(4),
-	/** カテゴリー一覧 */
+	/** プロフィール編集 */
 	EDIT_PROFILE(5),
 	;
 	

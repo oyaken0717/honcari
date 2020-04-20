@@ -48,7 +48,8 @@
     margin: 0;
 }
 
-.image img{
+.image img,
+input[type="image"]{
 	object-fit: cover;
 }
 
@@ -58,4 +59,13 @@
 }
 .custom-file-label {
   white-space: nowrap;
+}
+
+.dropdown .dropdown-menu {
+    position: relative;
+    top: 48px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
