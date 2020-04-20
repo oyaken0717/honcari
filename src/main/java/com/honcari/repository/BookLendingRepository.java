@@ -33,7 +33,7 @@ public class BookLendingRepository {
 			+ "br.lending_status br_lending_status,b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id,b.category_id b_category_id, b.title b_title, b.author b_author,"
 			+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count,"
 			+ "b.thumbnail_path b_thumbnail_path, b.status b_status,c.category_id c_category_id,c.name c_name,"
-			// bookLendingのlendUserIdを元にlendUserドメイを取得↓
+			// bookLendingのlendUserIdを元にlendUserドメインを取得↓
 			+ "u1.user_id u1_user_id,u1.name u1_name,u1.email "
 			+ "u1_email,u1.password u1_password,u1.image_path u1_image_path,u1.profile u1_profile,b1.book_id b1_book_id,"
 			+ "b1.isbn_id b1_isbn_id,b1.user_id b1_user_id, b1.category_id b1_category_id, b1.title b1_title, b1.author b1_author,"
@@ -48,10 +48,10 @@ public class BookLendingRepository {
 			+ "b2_thumbnail_path,b2.status b2_status, g2.group_id g2_group_id,g2.name g2_name,g2.description g2_description,"
 			+ "c2.category_id c2_category_id,c2.name c2_name "
 			// bookLendingとbook（＋カテゴリー）の結合↓
-			+ "FROM book_lending br LEFT OUTER JOIN books b ON br.book_id = b.book_id LEFT OUTER JOIN category c ON b.category_id = b.category_id "
+			+ "FROM book_lending br LEFT OUTER JOIN books b ON br.book_id = b.book_id LEFT OUTER JOIN category c ON b.category_id = c.category_id "
 			// lendUser（u1)の結合↓
 			+ "LEFT OUTER JOIN users u1 ON br.lend_user_id = u1.user_id LEFT OUTER JOIN books b1 ON u1.user_id = b1.user_id "
-			+ "LEFT OUTER JOIN group_relationship gr1 ON u1.user_id = gr1.user_id LEFT OUTER JOIN groups g1 ON g1.group_id=gr1.group_id "
+			+ "LEFT OUTER JOIN group_relationship gr1 ON u1.user_id = gr1.user_id LEFT OUTER JOIN groups g1 ON g1.group_id = gr1.group_id "
 			+ "LEFT OUTER JOIN category c1 ON b1.category_id = c1.category_id "
 			// borrowUser（u2)の結合↓
 			+ "LEFT OUTER JOIN users u2 ON br.borrow_user_id = u2.user_id "
