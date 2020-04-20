@@ -130,8 +130,6 @@ public class UserRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-	
-	
 
 	public void insert(User user) {
 		String sql = "INSERT INTO Users(name,email,password,image_path,profile)VALUES(:name,:email,:password,:imagePath,:profile)";
@@ -193,7 +191,7 @@ public class UserRepository {
 	 * 本のタイトルとグループIDからユーザー情報を取得するメソッド(あいまい検索).
 	 * 
 	 * @param groupId グループID
-	 * @param title タイトル
+	 * @param title   タイトル
 	 * @return ユーザー情報リスト
 	 */
 	public List<User> findByGroupAndTitle(Integer groupId, String title) {
@@ -202,27 +200,28 @@ public class UserRepository {
 				+ "b.thumbnail_path book_thumbnail_path, b.status book_status, c.category_id, c.name category_name "
 				+ "FROM users u INNER JOIN books b ON u.user_id=b.user_id INNER JOIN category c ON b.category_id=c.category_id "
 				+ "WHERE u.user_id in (select u.user_id from group_relationship where group_id = :groupId) AND b.title LIKE :title ORDER BY u.user_id";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId).addValue("title", "%" + title + "%");
+		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId).addValue("title",
+				"%" + title + "%");
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
 		return userList;
 	}
-	
+
 	public User findByName(String name) {
 		String sql = "SELECT user_id,name,email,password,image_path,profile FROM users WHERE name=:name";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
 		return template.queryForObject(sql, param, User_ROW_MAPPER);
 	}
-	
+
 	public List<User> findByNameLike(String name) {
 		String sql = "SELECT user_id,name,email,password,image_path,profile FROM users WHERE name LIKE :name";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
-		if(userList.isEmpty()) {
+		if (userList.isEmpty()) {
 			return null;
 		}
 		return userList;
 	}
-	
+
 	/**
 	 * ユーザー情報を更新するメソッド.
 	 * 
@@ -231,12 +230,7 @@ public class UserRepository {
 	public void update(User user) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
 		String sql = "UPDATE users SET name = :name, email = :email, password = :password, "
-					+ "image_path = :imagePath, profile = :profile WHERE user_id = :id;";
+				+ "image_path = :imagePath, profile = :profile WHERE user_id = :id;";
 		template.update(sql, param);
 	}
-	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> feature
