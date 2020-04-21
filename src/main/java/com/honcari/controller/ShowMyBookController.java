@@ -34,8 +34,8 @@ public class ShowMyBookController {
 	public EditUserForm setUpEditUserForm() {
 		return new EditUserForm();
 	}
-//	
-//	
+//
+//TODO 動作確認後問題なければ消します	
 //	/**
 //	 * マイブックに遷移するメソッド
 //	 * 
@@ -116,8 +116,7 @@ public class ShowMyBookController {
 	 */
 	@RequestMapping("/show_my_book")
 	public String ShowMyBook(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		Integer userId = 1; //TODO SpringSecurity実装後に変更する
-		User user = showMyPageService.showUser(userId);
+		User user = showMyPageService.showUser(loginUser.getUser().getId());
 		model.addAttribute("user",user);
 		return "mybook";
 	}
@@ -132,11 +131,10 @@ public class ShowMyBookController {
 	 */
 	@RequestMapping("/show_my_book_category")
 	public String showMyBookGroupByCategory(Integer categoryId, Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		Integer userId = 1; //TODO SpringSecurity実装後に変更する
 		if(categoryId == null) {
 			categoryId = 0;
 		}
-		List<User> userList = showMyBookService.findByCategoryId(userId, categoryId);
+		List<User> userList = showMyBookService.findByCategoryId(loginUser.getUser().getId(), categoryId);
 		if(userList.size() == 0) {
 			model.addAttribute("errorMessage", "該当カテゴリの書籍が登録されていません。");
 		}else {
