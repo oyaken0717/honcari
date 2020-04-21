@@ -60,12 +60,13 @@
 				<button>検索</button>
 			</form>
 		</div>
-		<div class="col-10" th:each="user: ${userList}">
+		<div class="col-10" th:each="category: ${categoryList}">
+			<div th:text="${category.name}"></div>
 			<div class="slider">
-				<span th:each="book: ${user.bookList}" style="margin-right: 5px;"><!-- 間隔を空けるためにmargin(仮) -->
+				<span th:each="book: ${category.bookList}" style="margin-right: 5px;"><!-- 間隔を空けるためにmargin(仮) -->
 					<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img src="" th:src="@{${book.thumbnailPath}}"></a><br>
 					<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span th:text="${book.title}"></span></a><br>
-					<span th:text="'所有者：' + ${user.name}"></span><br>			
+					<span th:text="'所有者：' + ${book.user.name}"></span><br>			
 				</span>
 			</div>
 		</div>
