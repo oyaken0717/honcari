@@ -1,6 +1,5 @@
 package com.honcari.controller;
 
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +22,6 @@ public class RegisterBookController {
 
 	@Autowired
 	private RegisterBookService registerBookService;
-	
 
 	/**
 	 * 書籍登録画面で送られたリクエストパラメータ情報をbooksテーブルに登録する

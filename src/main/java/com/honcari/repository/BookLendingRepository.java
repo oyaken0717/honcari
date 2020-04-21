@@ -58,6 +58,7 @@ public class BookLendingRepository {
 			+ "LEFT OUTER JOIN books b2 ON u2.user_id = b2.user_id LEFT OUTER JOIN group_relationship gr2 ON u2.user_id = gr2.user_id "
 			+ "LEFT OUTER JOIN groups g2 ON g2.group_id=gr2.group_id LEFT OUTER JOIN category c2 ON b2.category_id = c2.category_id ";
 
+
 	private static ResultSetExtractor<List<BookLending>> BR_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<BookLending> bookLendingList = new ArrayList<>();
 		User lendUser = null;
@@ -76,11 +77,12 @@ public class BookLendingRepository {
 
 		while (rs.next()) {
 			int nowBrId = rs.getInt("br_book_lending_id");
+
 			if (nowBrId != beforeBrId) {
 				BookLending bookLending = new BookLending();
 				lendUser = new User();
 				borrowUser = new User();
-				bookLending.setBookLendingId(rs.getInt("br_book_lending_id"));
+				bookLending.setBookLendingId(nowBrId);
 				bookLending.setLendUserId(rs.getInt("br_lend_user_id"));
 				bookLending.setBorrowUserId(rs.getInt("br_borrow_user_id"));
 				bookLending.setBookId(rs.getInt("br_book_id"));
@@ -134,11 +136,11 @@ public class BookLendingRepository {
 
 				beforeBrId = nowBrId;
 			}
-
+			
 			int lenderBookId = rs.getInt("b1_book_id");
 			if (lenderBookId != beforeLenderBookId) {
 				lenderBook = new Book();
-				lenderBook.setId(rs.getInt("b1_book_id"));
+				lenderBook.setId(lenderBookId);
 				lenderBook.setIsbnId(rs.getLong("b1_isbn_id"));
 				lenderBook.setUserId(rs.getInt("b1_user_id"));
 				lenderBook.setCategoryId(rs.getInt("b1_category_id"));
@@ -161,7 +163,7 @@ public class BookLendingRepository {
 			int lenderGroupId = rs.getInt("g1_group_id");
 			if (lenderGroupId != beforeLenderGroupId) {
 				Group lenderGroup = new Group();
-				lenderGroup.setId(rs.getInt("g1_group_id"));
+				lenderGroup.setId(lenderGroupId);
 				lenderGroup.setName(rs.getString("g1_name"));
 				lenderGroup.setDescription(rs.getString("g1_description"));
 				lenderGroupList.add(lenderGroup);
@@ -169,10 +171,11 @@ public class BookLendingRepository {
 				beforeLenderGroupId = lenderGroupId;
 			}
 
+			
 			int borrowerBookId = rs.getInt("b2_book_id");
 			if (borrowerBookId != beforeBorrowerBookId) {
 				borrowerBook = new Book();
-				borrowerBook.setId(rs.getInt("b2_book_id"));
+				borrowerBook.setId(borrowerBookId);
 				borrowerBook.setIsbnId(rs.getLong("b2_isbn_id"));
 				borrowerBook.setUserId(rs.getInt("b2_user_id"));
 				borrowerBook.setCategoryId(rs.getInt("b2_category_id"));
@@ -195,7 +198,7 @@ public class BookLendingRepository {
 			int borrowerGroupId = rs.getInt("g2_group_id");
 			if (lenderGroupId != beforeBorrowerGroupId) {
 				Group borrowerGroup = new Group();
-				borrowerGroup.setId(rs.getInt("g2_group_id"));
+				borrowerGroup.setId(borrowerGroupId);
 				borrowerGroup.setName(rs.getString("g2_name"));
 				borrowerGroup.setDescription(rs.getString("g2_description"));
 				borrowerGroupList.add(borrowerGroup);
@@ -241,7 +244,7 @@ public class BookLendingRepository {
 	}
 
 	/**
-	 * 本の貸出リクエストに対し承認する.
+	 * 本の貸出状況を更新する.
 	 * 
 	 * @param bookLending 本貸出に関する情報
 	 */
@@ -251,6 +254,23 @@ public class BookLendingRepository {
 		template.update(sql, param);
 	}
 
+	/**
+	 * 賃借情報一覧を取得する. 
+	 * 貸し手（所有者）側からの情報
+	 * 
+	 * @param lendUserId    貸し手ユーザーID
+	 * @param lendingStatus 貸出状況
+	 * @return 貸借情報一覧
+	 */
+	public List<BookLending> findByLendUserIdAndLendingStatus(Integer lendUserId) {
+		String strSql = sql;
+		strSql = strSql + " WHERE br.lend_user_id = :lendUserId AND br.lending_status = 0 " 
+						+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.lending_status ";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("lendUserId", lendUserId);
+		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
+		return bookLendingList;
+	}
+	
 	/**
 	 * 貸出承認待ちの賃借情報一覧を取得する. 
 	 * 貸し手（所有者）側からの情報
@@ -265,10 +285,25 @@ public class BookLendingRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("lendUserId", lendUserId)
 				.addValue("lendingStatus", lendingStatus);
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
-		System.out.println(bookLendingList);
 		return bookLendingList;
 	}
 
+	/**
+	 * 賃借情報一覧を取得する. 
+	 * 借り手側からの情報
+	 * 
+	 * @param borrowUserId  借り手ユーザーID
+	 * @return 貸出情報一覧
+	 */
+	public List<BookLending> findByBorrowUserIdAndLendingStatus(Integer borrowUserId) {
+		String strSql = sql;
+		strSql = strSql + " WHERE br.borrow_user_id = :borrowUserId AND br.lending_status = 0 "
+						+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.lending_status";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId);
+		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
+		return bookLendingList;
+	}
+	
 	/**
 	 * 貸出申請中の賃借情報一覧を取得する. 
 	 * 借り手側からの情報
@@ -283,7 +318,6 @@ public class BookLendingRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId)
 				.addValue("lendingStatus", lendingStatus);
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
-		System.out.println(bookLendingList);
 		return bookLendingList;
 	}
 

@@ -48,7 +48,8 @@
     margin: 0;
 }
 
-.image img{
+.image img,
+input[type="image"]{
 	object-fit: cover;
 }
 
@@ -60,6 +61,15 @@
   white-space: nowrap;
 }
 
+.dropdown .dropdown-menu {
+    position: relative;
+    top: 48px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
 #book-card{
 	width:85%;
 	height: auto;
@@ -68,3 +78,4 @@
 #my-book-category{
 	margin-top: 40px;
 }
+

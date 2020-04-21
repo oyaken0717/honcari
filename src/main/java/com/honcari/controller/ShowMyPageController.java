@@ -1,12 +1,14 @@
 package com.honcari.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.common.MyPageType;
+import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.EditUserForm;
 import com.honcari.service.ShowMyPageService;
@@ -36,8 +38,8 @@ public class ShowMyPageController {
 	 * @return マイページ画面
 	 */
 	@RequestMapping("/show_my_page")
-	public String showMyPage(Integer userId, Integer myPageType, Model model) {
-		userId = 1;
+	public String showMyPage(Integer myPageType, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		Integer userId = 2;
 		if(myPageType == null) {
 			myPageType = 1;
 		}
@@ -88,11 +90,10 @@ public class ShowMyPageController {
 			model.addAttribute("user", user);
 			break;
 		default:
-			user = showMyPageService.showUser(userId);
+			user = showMyPageService.showUser(loginUser.getUser().getId());
 			model.addAttribute("user",user);
 		}
 		model.addAttribute("myPageType", myPageType);
 		return "mypage";
 	}
-
 }
