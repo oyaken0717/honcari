@@ -35,10 +35,15 @@ public class RegisterBookController {
 	@RequestMapping("/register_book")
 	public String registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser) {
 		Book book = new Book();
+		Integer userId = 1;
+//TODO　ログイン機能完成時に外します
+//		if(loginUser.getUser().getId() != null) {
+//			userId = loginUser.getUser().getId();
+//		}
 		book.setIsbnId(Long.parseLong(registerBookForm.getIsbnId()));
 		book.setCategoryId(Integer.parseInt(registerBookForm.getCategoryId()));
 		book.setPageCount(Integer.parseInt(registerBookForm.getPageCount()));
-		book.setUserId(loginUser.getUser().getId());
+		book.setUserId(userId);
 		book.setStatus(0); //statusの各値が未確定の為、仮登録
 		BeanUtils.copyProperties(registerBookForm, book);
 		registerBookService.registerBook(book);
