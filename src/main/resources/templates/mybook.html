@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Honcari -気軽に本をどこへでも-</title>
+	<!-- Style CSS -->
+	<link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+	<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<!-- navbar -->
+	<nav th:insert="header::frag_header"></nav>
+
+	<!-- page content -->
+	<div class="container">
+		<div class="row">
+			<div class="w-100 mx-auto">
+				<h1 class="my-4">My Page</h1>
+		
+				<!-- side bar -->
+				<div class="col-lg-2 col-md-3 col-sm-11 col-xs-11 float-left">
+					<div class="list-group">
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=1}" 
+							class="list-group-item list-group-item-action active">profile</a>
+						<a href="mypage.html" th:href="@{/show_my_book}" 
+							class="list-group-item list-group-item-action">my book</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=3}" 
+							class="list-group-item list-group-item-action">レンタル管理</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=4}" 
+							class="list-group-item list-group-item-action">レンタル履歴</a>
+					</div>
+
+					<!-- 書籍カテゴリ選択リスト(デザイン要検討) -->
+					<div class="list-group" id="my-book-category">
+						<span class="list-group-item">カテゴリ選択</span>
+						<a href="mybook.html" th:href="@{/show_my_book}" 
+							class="list-group-item list-group-item-action">書籍一覧</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=1}" 
+							class="list-group-item list-group-item-action">文学・小説</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=2}" 
+							class="list-group-item list-group-item-action">社会・ビジネス</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=3}" 
+							class="list-group-item list-group-item-action">実用・教育</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=4}" 
+							class="list-group-item list-group-item-action">旅行・地図</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=5}" 
+							class="list-group-item list-group-item-action">趣味</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=6}" 
+							class="list-group-item list-group-item-action">アート・教養・エンタメ</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=7}" 
+							class="list-group-item list-group-item-action">辞典・図鑑・語学・辞書</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=8}" 
+							class="list-group-item list-group-item-action">こども</a>
+						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=9}" 
+							class="list-group-item list-group-item-action">その他</a>
+					</div>					
+				</div>
+				
+				
+			
+				<!-- main content -->
+				<!-- 書籍一覧を表示する(デザイン要検討) -->
+				<!-- <div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${myBookType} == 0">
+					<div class="col-lg-4 col-md-5 col-sm-7 mb-5 float-left" th:each="book : ${user.bookList}">
+     					<div class="card" id="book-card">
+      						<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
+      						<div class="card-body">
+							<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
+							<p class="card-text" th:text="${book.author}"></p>
+							<p class="card-text" th:text="${book.publishedDate}"></p>
+      						</div>
+      					</div>
+      				</div>
+				</div> -->
+				
+				<!-- カテゴリ選択ボタンを押下後に表示されるカテゴリ別の書籍一覧(デザイン要検討)一部動作上手くいってません。 -->
+ 				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${user}">
+					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="book : ${user.bookList}" id="book-card">
+     					<div class="card">
+      						<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
+      						<div class="card-body">
+							<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
+							<p class="card-text" th:text="${book.author}"></p>
+							<p class="card-text" th:text="${book.publishedDate}"></p>
+      						</div>
+      					</div>
+      				</div>
+				</div>
+				
+				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${errorMessage}">
+					<div th:text="${errorMessage}" style="text-align:center"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- script -->
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+	<script src="../static/js/file_reader.js" th:src="@{/js/file_reader.js}"></script>
+</body>
+</html>
