@@ -71,8 +71,8 @@ input[type="image"]{
 }
 
 #book-card{
-	width:85%;
-	height: auto;
+	width: 80%;
+	height: 450px;
 }
 
 #my-book-category{
