@@ -2,6 +2,7 @@ package com.honcari.controller;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,7 +33,7 @@ public class BookMangementController {
 
 	@Autowired
 	private ShowBookDetailController showBookDetailController;
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -56,12 +57,12 @@ public class BookMangementController {
 		Integer lendUserId = form.getLenderUserId();
 		Integer status = form.getStatus();
 
-		//TODO エラーチェックの段階要検討
-		if(status != 0) {
+		// TODO エラーチェックの段階要検討
+		if (status != 0) {
 			model.addAttribute("errorMessage", "不正なリクエストが行われました");
 			return showBookDetailController.showBookDetai(model, bookId);
 		}
-		
+
 //		if (borrowUserId == lendUserId) {
 //			model.addAttribute("errorMessage", "不正なリクエストが行われました");
 //			return showBookDetailController.showBookDetai(model, bookId);
@@ -78,26 +79,43 @@ public class BookMangementController {
 	}
 
 	/**
-	 * 貸出管理一覧画面を表示する.
+	 * 貸出管理画面を表示する.
 	 * 
-	 * @param userId
-	 * @param model
-	 * @return
+	 * @param userId ユーザーID
+	 * @param model  リクエストスコープ
+	 * @return 貸出管理画面
 	 */
 	@RequestMapping("/to_lend_management")
 	public String toLendManagement(Integer userId, Model model) {
 		userId = 1; // TODO SS導入後にログインユーザーへ変更
-		List<BookLending> bookLendingList = bookService.showWaitApprovalBookLendingList(userId);
-		List<BookLending> bookBorrowingList = bookService.showWaitApprovalBookBorrowingList(userId);
-		model.addAttribute("bookLendingList", bookLendingList);
-		model.addAttribute("bookBorrowingList", bookBorrowingList);
+		List<BookLending> lendBookLendingList = bookService.searchBookLendingListByLendUserId(userId);
+		List<BookLending> borrowBookLendingList = bookService.searchBookLendingListByBorrowUserId(userId);
+
+		// 貸出承認待ち本リスト
+		List<BookLending> lendingBookListPendingApproval = lendBookLendingList.stream()
+				.filter(bookLending -> bookLending.getLendingStatus() == 0).collect(Collectors.toList());
+		// 貸し出し中本リスト
+		List<BookLending> lendingBookList = lendBookLendingList.stream()
+				.filter(bookLending -> bookLending.getLendingStatus() != 0).collect(Collectors.toList());
+		// レンタル承認待ち本リスト
+		List<BookLending> borrowingBookListPendingApproval = borrowBookLendingList.stream()
+				.filter(bookLending -> bookLending.getLendingStatus() == 0).collect(Collectors.toList());
+		// レンタル中本リスト
+		List<BookLending> borrowingBookList = borrowBookLendingList.stream()
+				.filter(bookLending -> bookLending.getLendingStatus() != 0).collect(Collectors.toList());
+
+		model.addAttribute("lendingBookListPendingApproval", lendingBookListPendingApproval);
+		model.addAttribute("lendingBookList", lendingBookList);
+		model.addAttribute("borrowingBookListPendingApproval", borrowingBookListPendingApproval);
+		model.addAttribute("borrowingBookList", borrowingBookList);
 		return "lend_management";
 	}
 
 	/**
 	 * 貸出リクエストをキャンセルする.
 	 * 
-	 * @param form フォーム
+	 * @param bookLendingId 本の貸出状況ID
+	 * @param bookId        本ID
 	 * @return 貸出管理画面
 	 */
 	@RequestMapping("/cancel_lending_request")
@@ -110,12 +128,28 @@ public class BookMangementController {
 	/**
 	 * 貸出リクエストに対し承認する.
 	 * 
-	 * @param form フォーム
+	 * @param bookLendingId 本の貸出状況ID
+	 * @param bookId        本ID
 	 * @return 貸出管理画面
 	 */
 	@RequestMapping("/approval_lending_request")
 	public String approvalLendingRequest(Integer bookLendingId, Integer bookId) {
 		bookService.runApprovalLendingBookRequest(bookLendingId, bookId);
+		// TODO 借り手にメール送信
+		return "redirect:/to_lend_management";
+	}
+
+	/**
+	 * 本の返却を登録する.
+	 * 
+	 * @param bookLendingId 本の貸出状況ID
+	 * @param bookId        本ID
+	 * @param updateStatus  更新後の本貸出状況
+	 * @return 貸出管理画面
+	 */
+	@RequestMapping("/confirm_book_return")
+	public String confirmBookReturn(Integer bookLendingId, Integer bookId, Integer updateStatus) {
+		bookService.confirmBookReturn(bookLendingId, bookId, updateStatus);
 		// TODO 借り手にメール送信
 		return "redirect:/to_lend_management";
 	}

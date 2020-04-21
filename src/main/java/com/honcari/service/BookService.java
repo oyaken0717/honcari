@@ -72,6 +72,7 @@ public class BookService {
 	/**
 	 * 本の貸出リクエストを承認する.
 	 * 
+	 * @param bookLendingId 本の貸出状況ID
 	 * @param bookId 本ID
 	 */
 	public void runApprovalLendingBookRequest(Integer bookLendingId, Integer bookId) {
@@ -84,6 +85,41 @@ public class BookService {
 		int bookStatus = 3; // 貸出中
 		bookRepository.updateStatus(bookStatus, bookId);
 	}
+	
+	/**
+	 * 本の返却を確認する.
+	 * 
+	 * @param bookLendingId 本の貸出状況ID
+	 * @param bookId 本ID
+	 */
+	public void confirmBookReturn(Integer bookLendingId, Integer bookId, Integer bookStatus) {
+		BookLending bookLending = new BookLending();
+		bookLending.setBookLendingId(bookLendingId);
+		bookLending.setLendingStatus(3); // 返却済み
+		bookLendingRepository.update(bookLending);
+		bookRepository.updateStatus(bookStatus, bookId);
+	}
+	
+	/**
+	 * 貸し手から貸出状況一覧を取得する.
+	 * 
+	 * @param lendUserId 貸し手ID
+	 * @return　貸出状況一覧
+	 */
+	public List<BookLending> searchBookLendingListByLendUserId(Integer lendUserId){
+		return bookLendingRepository.findByLendUserIdAndLendingStatus(lendUserId);
+	}
+	
+	/**
+	 * 借り手から貸出状況一覧を取得する.
+	 * 
+	 * @param borrowUserId 借り手ID
+	 * @return 貸出状況一覧
+	 */
+	public List<BookLending> searchBookLendingListByBorrowUserId(Integer borrowUserId){
+		return bookLendingRepository.findByBorrowUserIdAndLendingStatus(borrowUserId);
+	}
+	
 
 	/**
 	 * 貸出リクエストに対し未承認の貸出情報を表示させるメソッド. （所有者側）

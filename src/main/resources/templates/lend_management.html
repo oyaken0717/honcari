@@ -25,8 +25,10 @@
     	<!-- タブ・コンテント -->
    		<div class="tab-content">
    			<div class="tab-pane active" id="borrowing-list" >
-   				<div th:if="${bookBorrowingList.size()}==0">借りてる本はありません</div>
-				<div th:each="bookBorrowing:${bookBorrowingList}">
+   				<!-- レンタル承認待ち -->
+   				<div class="pt-3 pb-3 mt-4 mb-4 border-bottom">
+   				<div th:if="${borrowingBookListPendingApproval.size()}==0"><p class="text-center">申請中の本はありません</p></div>
+				<div th:each="bookBorrowing:${borrowingBookListPendingApproval}">
 					<form th:action="@{/cancel_lending_request}" method="POST">	
 					書籍名：<span th:text="${bookBorrowing.book.title}"></span><br>
 					所有者：<span th:text="${bookBorrowing.lendUser.name}">さん</span><br>
@@ -36,12 +38,26 @@
 					<input type="hidden" th:value="${bookBorrowing.book.id}" name="bookId">
 					<div><button class="cancel-btn btn btn-primary btn-sm" type="submit">キャンセル</button></div>
 					</form>
-					<hr>
+				</div>
+				</div>
+				<!-- レンタル中 -->
+				<div th:each="bookBorrowing:${borrowingBookList}">
+					<form th:action="@{#}" method="POST">	
+					書籍名：<span th:text="${bookBorrowing.book.title}"></span><br>
+					所有者：<span th:text="${bookBorrowing.lendUser.name}">さん</span><br>
+					レンタル希望期間：<span th:text="${bookBorrowing.deadline}">まで</span><br>
+					ステータス：<span th:text="${bookBorrowing.getBookLendingStatus()}"></span>
+					<input type="hidden" th:value="${bookBorrowing.bookLendingId}" name="bookLendingId">
+					<input type="hidden" th:value="${bookBorrowing.book.id}" name="bookId">
+					<div><button class="btn btn-primary btn-sm" type="submit">延長申請</button></div>
+					</form>
 				</div>
 			</div>
 			<div class="tab-pane" id="lending-list">
-				<div th:if="${bookLendingList.size()}==0">貸してる本はありません</div>
-				<div th:each="bookLending:${bookLendingList}">
+				<!-- 貸出承認待ち -->
+				<div class="pt-3 pb-3 mt-4 mb-4 border-bottom">
+				<div th:if="${lendingBookListPendingApproval.size()}==0"><p class="text-center">申請中の本はありません</p></div>
+				<div th:each="bookLending:${lendingBookListPendingApproval}">
 					<form th:action="@{/approval_lending_request}" method="POST">
 					書籍名：<span th:text="${bookLending.book.title}"></span><br>
 					レンタル希望者：<span th:text="${bookLending.borrowUser.name}">さん</span><br>
@@ -49,10 +65,26 @@
 					ステータス：<span th:text="${bookLending.getBookLendingStatus()}"></span>
 					<input type="hidden" th:value="${bookLending.bookLendingId}" name="bookLendingId">
 					<input type="hidden" th:value="${bookLending.book.id}" name="bookId">
-					<div><button class="approval-btn btn btn-warning btn-sm" type="submit">承認する</button></div>
+					<div><button class="approval-btn btn btn-warning btn-sm" type="submit">承認</button></div>
 					</form>
-					<hr>
+				</div>				
 				</div>
+				<!-- 貸出中 -->
+				<div th:each="bookLending:${lendingBookList}">
+					<form th:action="@{/confirm_book_return}" method="POST">
+					書籍名：<span th:text="${bookLending.book.title}"></span><br>
+					レンタル希望者：<span th:text="${bookLending.borrowUser.name}">さん</span><br>
+					レンタル希望期間：<span th:text="${bookLending.deadline}">まで</span><br>
+					ステータス：<span th:text="${bookLending.getBookLendingStatus()}"></span>
+					<input type="hidden" th:value="${bookLending.bookLendingId}" name="bookLendingId">
+					<input type="hidden" th:value="${bookLending.book.id}" name="bookId">
+					<div><button class="btn btn-warning btn-sm" type="submit">返却確認</button></div>
+					</form>
+				</div>
+				
+				
+				
+				
 			</div>
    		</div>
     </div>

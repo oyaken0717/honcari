@@ -255,6 +255,23 @@ public class BookLendingRepository {
 	}
 
 	/**
+	 * 賃借情報一覧を取得する. 
+	 * 貸し手（所有者）側からの情報
+	 * 
+	 * @param lendUserId    貸し手ユーザーID
+	 * @param lendingStatus 貸出状況
+	 * @return 貸借情報一覧
+	 */
+	public List<BookLending> findByLendUserIdAndLendingStatus(Integer lendUserId) {
+		String strSql = sql;
+		strSql = strSql + " WHERE br.lend_user_id = :lendUserId AND br.lending_status = 0 " 
+						+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.lending_status ";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("lendUserId", lendUserId);
+		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
+		return bookLendingList;
+	}
+	
+	/**
 	 * 貸出承認待ちの賃借情報一覧を取得する. 
 	 * 貸し手（所有者）側からの情報
 	 * 
@@ -271,6 +288,22 @@ public class BookLendingRepository {
 		return bookLendingList;
 	}
 
+	/**
+	 * 賃借情報一覧を取得する. 
+	 * 借り手側からの情報
+	 * 
+	 * @param borrowUserId  借り手ユーザーID
+	 * @return 貸出情報一覧
+	 */
+	public List<BookLending> findByBorrowUserIdAndLendingStatus(Integer borrowUserId) {
+		String strSql = sql;
+		strSql = strSql + " WHERE br.borrow_user_id = :borrowUserId AND br.lending_status = 0 "
+						+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.lending_status";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId);
+		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
+		return bookLendingList;
+	}
+	
 	/**
 	 * 貸出申請中の賃借情報一覧を取得する. 
 	 * 借り手側からの情報
