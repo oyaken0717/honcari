@@ -20,7 +20,7 @@
 	<!-- page content -->
 	<div class="container">
 		<div class="row">
-			<div class="w-75 mx-auto">
+			<div class="w-90 mx-auto">
 				<h1 class="my-4">My Page</h1>
 		
 				<!-- side bar -->
@@ -35,7 +35,34 @@
 						<a href="mypage.html" th:href="@{/show_my_page?myPageType=4}" 
 							class="list-group-item list-group-item-action">レンタル履歴</a>
 					</div>
+
+					<!-- 書籍カテゴリ選択リスト(デザイン要検討) -->
+					<div class="list-group" id="my-book-category">
+						<span class="list-group-item">カテゴリ選択</span>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=2}" 
+							class="list-group-item list-group-item-action">書籍一覧</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=6}" 
+							class="list-group-item list-group-item-action">文学・小説</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=7}" 
+							class="list-group-item list-group-item-action">社会・ビジネス</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=8}" 
+							class="list-group-item list-group-item-action">実用・教育</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=9}" 
+							class="list-group-item list-group-item-action">旅行・地図</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=10}" 
+							class="list-group-item list-group-item-action">趣味</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=11}" 
+							class="list-group-item list-group-item-action">アート・教養・エンタメ</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=12}" 
+							class="list-group-item list-group-item-action">辞典・図鑑・語学・辞書</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=13}" 
+							class="list-group-item list-group-item-action">こども</a>
+						<a href="mypage.html" th:href="@{/show_my_page?myPageType=14}" 
+							class="list-group-item list-group-item-action">その他</a>
+					</div>					
 				</div>
+				
+				
 			
 				<!-- main content -->
 				<!-- profile -->
@@ -145,9 +172,35 @@
 							<button class="btn btn-warning">登録</button>
 						</div>
 					</form>
+				</div>				
+				
+				<!-- 書籍一覧を表示する(デザイン要検討) -->
+				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${myPageType == 2}">
+					<div class="col-lg-4 col-md-5 col-sm-7 mb-5 float-left" th:each="book : ${user.bookList}">
+     					<div class="card" id="book-card">
+      						<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
+      						<div class="card-body">
+							<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
+							<p class="card-text" th:text="${book.author}"></p>
+							<p class="card-text" th:text="${book.publishedDate}"></p>
+      						</div>
+      					</div>
+      				</div>
 				</div>
 				
-				
+				<!-- カテゴリ選択ボタンを押下後に表示されるカテゴリ別の書籍一覧(デザイン要検討)一部動作上手くいってません。 -->
+ 				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${myPageType == '[6-14]'}">
+					<div class="col-lg-4 col-md-5 col-sm-7 mb-5 float-left" th:each="book : ${user.bookList}">
+     					<div class="card" id="book-card">
+      						<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
+      						<div class="card-body">
+							<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
+							<p class="card-text" th:text="${book.author}"></p>
+							<p class="card-text" th:text="${book.publishedDate}"></p>
+      						</div>
+      					</div>
+      				</div>
+				</div>
 			</div>
 		</div>
 	</div>

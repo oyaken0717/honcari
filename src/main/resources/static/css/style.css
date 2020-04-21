@@ -59,3 +59,12 @@
 .custom-file-label {
   white-space: nowrap;
 }
+
+#book-card{
+	width:85%;
+	height: auto;
+}
+
+#my-book-category{
+	margin-top: 40px;
+}
