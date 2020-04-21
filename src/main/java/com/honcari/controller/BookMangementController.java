@@ -52,7 +52,7 @@ public class BookMangementController {
 	 */
 	@RequestMapping("/send_lending_request")
 	public String sendLendingRequest(Model model, @Validated LendingRequestForm form, BindingResult result) {
-		Integer borrowUserId = 1; // TODO SpringSecurity実装後LoginUserへ置き換え
+		Integer borrowUserId = (Integer) session.getAttribute("userId"); // TODO SpringSecurity実装後LoginUserへ置き換え
 		Integer bookId = form.getBookId();
 		Integer lendUserId = form.getLenderUserId();
 		Integer status = form.getStatus();
