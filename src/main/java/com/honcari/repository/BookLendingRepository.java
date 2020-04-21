@@ -27,6 +27,9 @@ import com.honcari.domain.User;
  */
 @Repository
 public class BookLendingRepository {
+	
+	
+	
 
 	private static String sql = "SELECT br.id br_book_lending_id,br.lend_user_id br_lend_user_id,"
 			+ "br.borrow_user_id br_borrow_user_id, br.book_id br_book_id, br.deadline br_deadline,"
@@ -48,15 +51,15 @@ public class BookLendingRepository {
 			+ "b2_thumbnail_path,b2.status b2_status, g2.group_id g2_group_id,g2.name g2_name,g2.description g2_description,"
 			+ "c2.category_id c2_category_id,c2.name c2_name "
 			// bookLendingとbook（＋カテゴリー）の結合↓
-			+ "FROM book_lending br LEFT OUTER JOIN books b ON br.book_id = b.book_id LEFT OUTER JOIN category c ON b.category_id = c.category_id "
+			+ "FROM book_lending br INNER JOIN books b ON br.book_id = b.book_id INNER JOIN category c ON b.category_id = c.category_id "
 			// lendUser（u1)の結合↓
-			+ "LEFT OUTER JOIN users u1 ON br.lend_user_id = u1.user_id LEFT OUTER JOIN books b1 ON u1.user_id = b1.user_id "
-			+ "LEFT OUTER JOIN group_relationship gr1 ON u1.user_id = gr1.user_id LEFT OUTER JOIN groups g1 ON g1.group_id = gr1.group_id "
-			+ "LEFT OUTER JOIN category c1 ON b1.category_id = c1.category_id "
+			+ "INNER JOIN users u1 ON br.lend_user_id = u1.user_id INNER JOIN books b1 ON u1.user_id = b1.user_id "
+			+ "INNER JOIN group_relationship gr1 ON u1.user_id = gr1.user_id INNER JOIN groups g1 ON g1.group_id = gr1.group_id "
+			+ "INNER JOIN category c1 ON b1.category_id = c1.category_id "
 			// borrowUser（u2)の結合↓
-			+ "LEFT OUTER JOIN users u2 ON br.borrow_user_id = u2.user_id "
-			+ "LEFT OUTER JOIN books b2 ON u2.user_id = b2.user_id LEFT OUTER JOIN group_relationship gr2 ON u2.user_id = gr2.user_id "
-			+ "LEFT OUTER JOIN groups g2 ON g2.group_id=gr2.group_id LEFT OUTER JOIN category c2 ON b2.category_id = c2.category_id ";
+			+ "INNER JOIN users u2 ON br.borrow_user_id = u2.user_id "
+			+ "INNER JOIN books b2 ON u2.user_id = b2.user_id INNER JOIN group_relationship gr2 ON u2.user_id = gr2.user_id "
+			+ "INNER JOIN groups g2 ON g2.group_id = gr2.group_id INNER JOIN category c2 ON b2.category_id = c2.category_id ";
 
 
 	private static ResultSetExtractor<List<BookLending>> BR_RESULT_SET_EXTRACTOR = (rs) -> {
@@ -134,7 +137,7 @@ public class BookLendingRepository {
 				borrowUser.setGroupList(borrowerGroupList);
 				bookLending.setBorrowUser(borrowUser);
 
-				beforeBrId = nowBrId;
+				
 			}
 			
 			int lenderBookId = rs.getInt("b1_book_id");
@@ -157,7 +160,6 @@ public class BookLendingRepository {
 				lenderBook.setCategory(lenderCategory);
 				lenderBookList.add(lenderBook);
 
-				beforeLenderBookId = lenderBookId;
 			}
 
 			int lenderGroupId = rs.getInt("g1_group_id");
@@ -168,7 +170,6 @@ public class BookLendingRepository {
 				lenderGroup.setDescription(rs.getString("g1_description"));
 				lenderGroupList.add(lenderGroup);
 
-				beforeLenderGroupId = lenderGroupId;
 			}
 
 			
@@ -192,7 +193,6 @@ public class BookLendingRepository {
 				borrowerBook.setCategory(borrowerCategory);
 				borrowerBookList.add(borrowerBook);
 
-				beforeBorrowerBookId = borrowerBookId;
 			}
 
 			int borrowerGroupId = rs.getInt("g2_group_id");
@@ -203,9 +203,12 @@ public class BookLendingRepository {
 				borrowerGroup.setDescription(rs.getString("g2_description"));
 				borrowerGroupList.add(borrowerGroup);
 
-				beforeBorrowerGroupId = borrowerGroupId;
 			}
-
+			beforeLenderGroupId = lenderGroupId;
+			beforeBorrowerBookId = borrowerBookId;
+			beforeBorrowerGroupId = borrowerGroupId;
+			beforeBrId = nowBrId;
+			beforeLenderBookId = lenderBookId;
 		}
 		return bookLendingList;
 	};
@@ -265,7 +268,7 @@ public class BookLendingRepository {
 	public List<BookLending> findByLendUserIdAndLendingStatus(Integer lendUserId) {
 		String strSql = sql;
 		strSql = strSql + " WHERE br.lend_user_id = :lendUserId AND br.lending_status = 0 " 
-						+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.lending_status ";
+						+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("lendUserId", lendUserId);
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
@@ -298,7 +301,7 @@ public class BookLendingRepository {
 	public List<BookLending> findByBorrowUserIdAndLendingStatus(Integer borrowUserId) {
 		String strSql = sql;
 		strSql = strSql + " WHERE br.borrow_user_id = :borrowUserId AND br.lending_status = 0 "
-						+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.lending_status";
+						+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId);
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
