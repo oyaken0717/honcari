@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +25,8 @@ public class EditUserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	/**
 	 * メールアドレスが登録済か否かを確認するメソッド.
@@ -52,7 +53,7 @@ public class EditUserService {
 	public void editUser(EditUserForm editUserForm) {
 		User user = new User();
 		BeanUtils.copyProperties(editUserForm, user);
-//		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		if(editUserForm.getPassword().isEmpty()) {
 			user.setPassword(editUserForm.getDefaultPassword());
 		}
