@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.honcari.domain.User;
-import com.honcari.repository.UserRepository;
+import com.honcari.domain.Category;
+import com.honcari.repository.CategoryRepository;
 
 /**
  * 本一覧を表示させるサービスクラス.
@@ -20,15 +20,15 @@ import com.honcari.repository.UserRepository;
 public class ShowBookListService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private CategoryRepository categoryRepository;
 	
 	/**
-	 * グループIDからユーザー情報を取得するメソッド
+	 * グループIDからカテゴリー情報を取得するメソッド
 	 * 
 	 * @param groupId グループID
 	 * @return ユーザー情報リスト
 	 */
-	public List<User> findByGroupId(Integer groupId) {
-		return userRepository.findByGroupId(groupId);
+	public List<Category> findByGroupId(Integer groupId) {
+		return categoryRepository.findByGroupId(groupId);
 	}
 }
