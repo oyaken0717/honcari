@@ -71,20 +71,38 @@
 				</div>
 				<!-- 貸出中 -->
 				<div th:each="bookLending:${lendingBookList}">
-					<form th:action="@{/confirm_book_return}" method="POST">
 					書籍名：<span th:text="${bookLending.book.title}"></span><br>
 					レンタル希望者：<span th:text="${bookLending.borrowUser.name}">さん</span><br>
 					レンタル希望期間：<span th:text="${bookLending.deadline}">まで</span><br>
 					ステータス：<span th:text="${bookLending.getBookLendingStatus()}"></span>
-					<input type="hidden" th:value="${bookLending.bookLendingId}" name="bookLendingId">
-					<input type="hidden" th:value="${bookLending.book.id}" name="bookId">
-					<div><button class="btn btn-warning btn-sm" type="submit">返却確認</button></div>
-					</form>
+					<div><button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#return-confirm-form">返却確認</button>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="return-confirm-form" tabindex="-1" role="dialog">
+  						<div class="modal-dialog modal-dialog-centered" role="document">
+ 							<div class="modal-content">
+ 							  <form method="post" th:action="@{/confirm_book_return}">
+ 							   <div class="modal-header">
+  							   		<h5 class="modal-title">本の貸出状況を選択</h5>
+  						    	  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  					        			<span aria-hidden="true">&times;</span>
+  						       		</button>
+  					     	   </div>
+   							   <div class="modal-body">
+   								    <input type="radio" name="updateStatus" th:value="0">&nbsp;貸出不可&nbsp;&nbsp;
+   								    <input type="radio" name="updateStatus" th:value="1">&nbsp;貸出可
+   								    <input type="hidden" th:value="${bookLending.bookLendingId}" name="bookLendingId">
+							       	<input type="hidden" th:value="${bookLending.book.id}" name="bookId">
+  	 						   </div>
+    						  	<div class="modal-footer">
+    								<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+    								<button type="submit" class="btn btn-primary">リクエストを送信</button>
+  							  	</div>
+  							  </form>
+  							</div>
+  						</div>	
+					</div>
 				</div>
-				
-				
-				
-				
 			</div>
    		</div>
     </div>

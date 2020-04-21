@@ -52,13 +52,13 @@ public class BookMangementController {
 	 */
 	@RequestMapping("/send_lending_request")
 	public String sendLendingRequest(Model model, @Validated LendingRequestForm form, BindingResult result) {
-		Integer borrowUserId = (Integer) session.getAttribute("userId"); // TODO SpringSecurity実装後LoginUserへ置き換え
+		Integer borrowUserId = 1; // TODO SpringSecurity実装後LoginUserへ置き換え
 		Integer bookId = form.getBookId();
 		Integer lendUserId = form.getLenderUserId();
 		Integer status = form.getStatus();
 
 		// TODO エラーチェックの段階要検討
-		if (status != 0) {
+		if (status != 1) {
 			model.addAttribute("errorMessage", "不正なリクエストが行われました");
 			return showBookDetailController.showBookDetai(model, bookId);
 		}
