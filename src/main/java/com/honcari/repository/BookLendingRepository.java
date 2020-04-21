@@ -203,8 +203,8 @@ public class BookLendingRepository {
 	 */
 	public List<BookLending> findByLendUserIdAndLendingStatus(Integer lendUserId) {
 		String strSql = SQL;
-		strSql = strSql + " WHERE br.lend_user_id = :lendUserId AND br.lending_status = 0 "
-				+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.id";
+		strSql = strSql + " WHERE br.lend_user_id = :lendUserId AND (br.lending_status = 0 "
+				+ "OR br.lending_status = 1 OR br.lending_status = 2) ORDER BY br.id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("lendUserId", lendUserId);
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
@@ -234,8 +234,8 @@ public class BookLendingRepository {
 	 */
 	public List<BookLending> findByBorrowUserIdAndLendingStatus(Integer borrowUserId) {
 		String strSql = SQL;
-		strSql = strSql + " WHERE br.borrow_user_id = :borrowUserId AND br.lending_status = 0 "
-				+ "OR br.lending_status = 1 OR br.lending_status = 2 ORDER BY br.id";
+		strSql = strSql + " WHERE br.borrow_user_id = :borrowUserId AND (br.lending_status = 0 "
+				+ "OR br.lending_status = 1 OR br.lending_status = 2) ORDER BY br.id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId);
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
