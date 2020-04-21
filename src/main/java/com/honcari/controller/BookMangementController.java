@@ -87,7 +87,7 @@ public class BookMangementController {
 	 */
 	@RequestMapping("/to_lend_management")
 	public String toLendManagement(Integer userId, Model model) {
-		userId = 1; // TODO SS導入後にログインユーザーへ変更
+		userId = 2; // TODO SS導入後にログインユーザーへ変更
 		List<BookLending> lendBookLendingList = bookService.searchBookLendingListByLendUserId(userId);
 		List<BookLending> borrowBookLendingList = bookService.searchBookLendingListByBorrowUserId(userId);
 
