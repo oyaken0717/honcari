@@ -56,9 +56,11 @@ public class CategoryRepository {
 			User user = new User();
 			user.setId(rs.getInt("user_id"));
 			user.setName(rs.getString("user_name"));
+			user.setDeleted(rs.getBoolean("user_deleted"));
 			
 			Book book = new Book();
 			book.setId(rs.getInt("book_id"));
+			book.setIsbnId(rs.getString("isbn_id"));
 			book.setUserId(rs.getInt("user_id"));
 			book.setCategoryId(rs.getInt("category_id"));
 			book.setTitle(rs.getString("book_title"));
@@ -68,6 +70,8 @@ public class CategoryRepository {
 			book.setPageCount(rs.getInt("book_page_count"));
 			book.setThumbnailPath(rs.getString("book_thumbnail_path"));
 			book.setStatus(rs.getInt("book_status"));
+			book.setComment(rs.getString("book_comment"));
+			book.setDeleted(rs.getBoolean("book_boolean"));
 			bookList.add(book);
 			book.setUser(user);
 
@@ -93,12 +97,13 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByGroupId(Integer groupId) {
-		String sql = "SELECT u.user_id, u.name user_name, b.book_id, b.title book_title, b.author book_author, b.published_date "
-				+ "book_published_date, b.description book_description, b.page_count book_page_count, "
-				+ "b.thumbnail_path book_thumbnail_path, b.status book_status, c.category_id, c.name category_name "
+		String sql = "SELECT u.user_id, u.name user_name, u.deleted user_deleted, b.book_id, b.isbn_id b_isbn_id, b.title book_title, "
+				+ "b.author book_author, b.published_date book_published_date, b.description book_description, b.page_count book_page_count, "
+				+ "b.thumbnail_path book_thumbnail_path, b.status book_status, b.comment book_comment, b.deleted book_deleted, "
+				+ "c.category_id, c.name category_name "
 				+ "FROM users u INNER JOIN books b ON u.user_id=b.user_id INNER JOIN category c "
 				+ "ON b.category_id=c.category_id INNER JOIN group_relationship gr ON u.user_id=gr.user_id "
-				+ "INNER JOIN groups g ON g.group_id=gr.group_id WHERE g.group_id=:groupId ORDER BY c.category_id";
+				+ "INNER JOIN groups g ON g.group_id=gr.group_id WHERE g.group_id=:groupId AND book_deleted = false AND user_deleted = false ORDER BY c.category_id";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);

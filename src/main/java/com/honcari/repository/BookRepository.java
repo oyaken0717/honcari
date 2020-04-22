@@ -28,6 +28,7 @@ public class BookRepository {
 	private final static RowMapper<Book> BOOK_USER_CATEGORY_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
 		book.setId(rs.getInt("book_id"));
+		book.setIsbnId(rs.getString("isbn_id"));
 		book.setUserId(rs.getInt("user_id"));
 		book.setCategoryId(rs.getInt("category_id"));
 		book.setTitle(rs.getString("book_title"));
@@ -37,10 +38,13 @@ public class BookRepository {
 		book.setPageCount(rs.getInt("book_page_count"));
 		book.setThumbnailPath(rs.getString("book_thumbnail_path"));
 		book.setStatus(rs.getInt("book_status"));
+		book.setComment(rs.getString("book_comment"));
+		book.setDeleted(rs.getBoolean("book_deleted"));
 		User user = new User();
 		user.setId(rs.getInt("user_id"));
 		user.setName(rs.getString("user_name"));
 		user.setEmail(rs.getString("user_email"));
+		user.setDeleted(rs.getBoolean("user_deleted"));
 		book.setUser(user);
 		Category category = new Category();
 		category.setId(rs.getInt("category_id"));
@@ -116,11 +120,12 @@ public class BookRepository {
 	 * @return 本情報＋カテゴリ情報＋所有者情報
 	 */
 	public Book findByBookId(Integer bookId) {
-		String sql = "SELECT u.user_id user_id, u.name user_name, u.email user_email, b.book_id book_id, "
+		String sql = "SELECT u.user_id user_id, u.name user_name, u.email user_email, u.deleted user_deleted, b.book_id book_id, b.isbn_id book_isbn_id,"
 				+ "b.title book_title, b.author book_author, b.published_date book_published_date, "
 				+ "b.description book_description, b.page_count book_page_count, b.thumbnail_path book_thumbnail_path, "
-				+ "b.status book_status, c.category_id category_id, c.name category_name FROM users u INNER JOIN books b "
-				+ "ON u.user_id = b.user_id INNER JOIN category c ON b.category_id = c.category_id WHERE book_id = :bookId";
+				+ "b.status book_status, b.comment book_comment, b.deleted book_deleted, c.category_id category_id, "
+				+ "c.name category_name FROM users u INNER JOIN books b ON u.user_id = b.user_id INNER JOIN "
+				+ "category c ON b.category_id = c.category_id WHERE book_id = :bookId AND book_deleted = false AND user_deleted = false;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId);
 		Book book = template.queryForObject(sql, param, BOOK_USER_CATEGORY_ROW_MAPPER);
 		return book;
@@ -132,9 +137,8 @@ public class BookRepository {
 	 * @param book 書籍情報
 	 */
 	public void insert(Book book) {
-		System.out.println("kitenai?");
-		String sql = "INSERT INTO books(book_id, isbn_id, user_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status)"
-				+ " VALUES(DEFAULT, :isbnId, :userId, :categoryId, :title, :author, :publishedDate, :description, :pageCount, :thumbnailPath, :status);";
+		String sql = "INSERT INTO books(book_id, isbn_id, user_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status, comment)"
+				+ " VALUES(DEFAULT, :isbnId, :userId, :categoryId, :title, :author, :publishedDate, :description, :pageCount, :thumbnailPath, :status, :comment);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
 		template.update(sql, param);
 	}
@@ -159,7 +163,6 @@ public class BookRepository {
 	 * @param comment コメント
 	 */
 	public void editBook(Integer bookId, Integer categoryId, String comment) {
-		System.out.println("kitenai??" + bookId + categoryId + comment);
 		String sql = "UPDATE books SET category_id = :categoryId, comment = :comment WHERE book_id = :bookId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId).addValue("categoryId", categoryId).addValue("comment", comment);
 		template.update(sql, param);

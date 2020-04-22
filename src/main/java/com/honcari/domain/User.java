@@ -11,6 +11,7 @@ public class User {
 	private String profile;
 	private List<Book>bookList;
 	private List<Group>groupList;
+	private Boolean deleted;
 	public Integer getId() {
 		return id;
 	}
@@ -59,12 +60,16 @@ public class User {
 	public void setGroupList(List<Group> groupList) {
 		this.groupList = groupList;
 	}
+	public Boolean getDeleted() {
+		return deleted;
+	}
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", imagePath="
-				+ imagePath + ", profile=" + profile + ", bookList=" + bookList + ", groupList=" + groupList + "]";
+				+ imagePath + ", profile=" + profile + ", bookList=" + bookList + ", groupList=" + groupList
+				+ ", deleted=" + deleted + "]";
 	}
-	
-	
-	
 }

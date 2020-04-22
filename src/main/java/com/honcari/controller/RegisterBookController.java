@@ -35,7 +35,6 @@ public class RegisterBookController {
 	@RequestMapping("/register_book")
 	public String registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
 		Book book = new Book();
-		System.out.println(registerBookForm);
 		book.setIsbnId(registerBookForm.getIsbnId());
 		book.setCategoryId(Integer.parseInt(registerBookForm.getCategoryId()));
 		Integer pageCount = null;

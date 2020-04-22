@@ -36,6 +36,8 @@ public class Book {
 	private Category category;
 	/**	コメント */
 	private String comment;
+	/**	削除フラグ */
+	private Boolean deleted;
 
 	/**
 	 * 数字から貸出状況を取得する.
@@ -158,11 +160,18 @@ public class Book {
 		this.comment = comment;
 	}
 
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
 				+ ", title=" + title + ", author=" + author + ", publishedDate=" + publishedDate + ", description="
 				+ description + ", pageCount=" + pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status
-				+ ", user=" + user + ", category=" + category + ", comment=" + comment + "]";
+				+ ", user=" + user + ", category=" + category + ", comment=" + comment + ", deleted=" + deleted + "]";
 	}
 }

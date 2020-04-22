@@ -33,7 +33,7 @@ public class BookLendingRepository {
 			// 本情報
 			+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id,b.category_id b_category_id, b.title b_title, "
 			+ "b.author b_author, b.published_date b_published_date, b.description b_description, "
-			+ "b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, b.status b_status,"
+			+ "b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, b.status b_status, b.comment b_comment, b.deleted b_deleted,"
 			// カテゴリ情報
 			+ "c.category_id c_category_id,c.name c_name,"
 			// bookLendingのlendUserIdを元にlendUserドメインを取得↓
@@ -96,6 +96,8 @@ public class BookLendingRepository {
 				book.setPageCount(rs.getInt("b_page_count"));
 				book.setThumbnailPath(rs.getString("b_thumbnail_path"));
 				book.setStatus(rs.getInt("b_status"));
+				book.setComment(rs.getString("b_comment"));
+				book.setDeleted(rs.getBoolean("b_deleted"));
 				// カテゴリー情報をインスタンス化
 				Category category = new Category();
 				category.setId(rs.getInt("c_category_id"));
