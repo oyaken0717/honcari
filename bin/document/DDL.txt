@@ -8,6 +8,7 @@ create table users(
   , password text not null
   , image_path text
   , profile character varying(100)
+  , deleted boolean default false not null
 );
 ​
 -- category
@@ -43,6 +44,7 @@ create table books (
   , page_count integer  not null
   , thumbnail_path text not null
   , status integer not null
+  , deleted boolean default false not null
 );
 ​
 -- group

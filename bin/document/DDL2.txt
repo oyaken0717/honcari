@@ -8,6 +8,7 @@ create table users(
   , password text not null
   , image_path text
   , profile character varying(100)
+  , deleted boolean default false not null
 );
 ​
 -- category
