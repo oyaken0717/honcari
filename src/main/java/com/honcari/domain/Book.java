@@ -34,6 +34,8 @@ public class Book {
 	private User user;
 	/** カテゴリー */
 	private Category category;
+	/**	コメント */
+	private String comment;
 
 	/**
 	 * 数字から貸出状況を取得する.
@@ -148,11 +150,19 @@ public class Book {
 		this.category = category;
 	}
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
 				+ ", title=" + title + ", author=" + author + ", publishedDate=" + publishedDate + ", description="
 				+ description + ", pageCount=" + pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status
-				+ ", user=" + user + ", category=" + category + "]";
+				+ ", user=" + user + ", category=" + category + ", comment=" + comment + "]";
 	}
 }

@@ -31,34 +31,39 @@
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.author}">author</h4>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.publishedDate}">published_date</h4>
                     <p th:text="${book.description}">description</p>
-					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
-						貸出リクエスト</button>
+					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#book-edit-form">
+						登録情報を変更する</button>
+					<a th:href="@{'/delete_book?bookId=' + ${book.id}}" class="btn btn-warning btn-lg btn-block">
+						登録を解除する</a>
 				</div>
             </div>
-            <!-- Modal -->
-			<div class="modal fade" id="lendering-request-form" tabindex="-1" role="dialog">
-  				<div class="modal-dialog modal-dialog-centered" role="document">
- 				   <div class="modal-content">
- 				   <form method="post" th:action="@{/send_lending_request}" th:object="${lendingRequestForm}">
- 				     <div class="modal-header">
-  				      <h5 class="modal-title">貸出期限を設定</h5>
-  				      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  				        <span aria-hidden="true">&times;</span>
-  				      </button>
-  				    </div>
-   				   <div class="modal-body">
-   				   	<div><label th:errors="*{deadline}" class="text-danger">貸出期限を入力してください</label></div>
-   				    <input type="date" name="deadline" th:field="*{deadline}">
-   				     <input type="hidden" name="bookId" th:value="${book.id}">
-   				     <input type="hidden" name="lenderUserId" th:value="${book.user.id}">
-   				     <input type="hidden" name="status" th:value="${book.status}">
-   				   </div>
-    			   <div class="modal-footer">
-    				 <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-    				 <button type="submit" class="btn btn-primary">リクエストを送信</button>
-  				   </div>
-  				  </form>
-  				  </div>
+			<!-- モーダル -->
+			<div class="modal fade" id="book-edit-form" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<form th:action="@{/edit_book}" method="POST">
+							<div class="modal-header">
+								<h5 class="modal-title">書籍情報を編集する</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">	
+								<select name="categoryId">
+									<option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.id}" th:selected="${book.categoryId == category.id}"></option>
+								</select>
+							</div>
+							<div class="modal-body">
+								<textarea name="comment" rows="4" cols="30"></textarea>
+							</div>
+							<input type="hidden" name="bookId" th:value="${book.id}">
+							<div id="book-request-parameter"></div>
+								<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+								<button type="submit" class="btn btn-primary">登録する</button>
+  							</div>
+			  			</form>
+			  		</div>
   				</div>	
 			</div>
         </div>
