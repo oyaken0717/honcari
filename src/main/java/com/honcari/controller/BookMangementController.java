@@ -4,9 +4,10 @@ import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.BookLending;
+import com.honcari.domain.LoginUser;
 import com.honcari.form.LendingRequestForm;
 import com.honcari.service.BookService;
 
@@ -34,8 +36,8 @@ public class BookMangementController {
 	@Autowired
 	private ShowBookDetailController showBookDetailController;
 
-	@Autowired
-	private HttpSession session;
+//	@Autowired
+//	private HttpSession session;
 
 	@ModelAttribute
 	public LendingRequestForm setUpForm() {
@@ -51,8 +53,8 @@ public class BookMangementController {
 	 * @return 申請状況一覧画面
 	 */
 	@RequestMapping("/send_lending_request")
-	public String sendLendingRequest(Model model, @Validated LendingRequestForm form, BindingResult result) {
-		Integer borrowUserId = (Integer) session.getAttribute("userId"); // TODO SpringSecurity実装後LoginUserへ置き換え
+	public String sendLendingRequest(Model model, @AuthenticationPrincipal LoginUser loginUser, @Validated LendingRequestForm form, BindingResult result) {
+		Integer borrowUserId = loginUser.getUser().getId();
 		Integer bookId = form.getBookId();
 		Integer lendUserId = form.getLenderUserId();
 		Integer status = form.getStatus();
@@ -63,10 +65,10 @@ public class BookMangementController {
 			return showBookDetailController.showBookDetai(model, bookId);
 		}
 
-//		if (borrowUserId == lendUserId) {
-//			model.addAttribute("errorMessage", "不正なリクエストが行われました");
-//			return showBookDetailController.showBookDetai(model, bookId);
-//		}
+		if (borrowUserId == lendUserId) {
+			model.addAttribute("errorMessage", "不正なリクエストが行われました");
+			return showBookDetailController.showBookDetai(model, bookId);
+		}
 
 		if (result.hasErrors()) {
 			return showBookDetailController.showBookDetai(model, bookId);
@@ -86,8 +88,8 @@ public class BookMangementController {
 	 * @return 貸出管理画面
 	 */
 	@RequestMapping("/to_lend_management")
-	public String toLendManagement(Integer userId, Model model) {
-		userId = 2; // TODO SS導入後にログインユーザーへ変更
+	public String toLendManagement(@AuthenticationPrincipal LoginUser loginUser, Model model) {
+		Integer userId = loginUser.getUser().getId();
 		List<BookLending> lendBookLendingList = bookService.searchBookLendingListByLendUserId(userId);
 		List<BookLending> borrowBookLendingList = bookService.searchBookLendingListByBorrowUserId(userId);
 
