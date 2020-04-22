@@ -135,7 +135,7 @@ public class ShowMyBookController {
 			categoryId = 0;
 		}
 		List<User> userList = showMyBookService.findByCategoryId(loginUser.getUser().getId(), categoryId);
-		if(userList.size() == 0) {
+		if(userList.size() == 0 || userList.get(0).getBookList().size() == 0) {
 			model.addAttribute("errorMessage", "該当カテゴリの書籍が登録されていません。");
 		}else {
 			model.addAttribute("user", userList.get(0));

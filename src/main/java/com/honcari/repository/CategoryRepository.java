@@ -43,35 +43,35 @@ public class CategoryRepository {
 
 		while (rs.next()) {
 			
-			int nowCategoryId = rs.getInt("category_id");
+			int nowCategoryId = rs.getInt("c_category_id");
 			if(nowCategoryId != beforeCategoryId) {
 				Category category = new Category();
 				bookList = new ArrayList<>();
-				category.setId(rs.getInt("category_id"));
-				category.setName(rs.getString("category_name"));
+				category.setId(rs.getInt("c_category_id"));
+				category.setName(rs.getString("c_name"));
 				category.setBookList(bookList);
 				categoryList.add(category);
 			}
 			
 			User user = new User();
-			user.setId(rs.getInt("user_id"));
-			user.setName(rs.getString("user_name"));
-			user.setDeleted(rs.getBoolean("user_deleted"));
+			user.setId(rs.getInt("u_user_id"));
+			user.setName(rs.getString("u_name"));
+			user.setDeleted(rs.getBoolean("u_deleted"));
 			
 			Book book = new Book();
-			book.setId(rs.getInt("book_id"));
-			book.setIsbnId(rs.getString("isbn_id"));
-			book.setUserId(rs.getInt("user_id"));
-			book.setCategoryId(rs.getInt("category_id"));
-			book.setTitle(rs.getString("book_title"));
-			book.setAuthor(rs.getString("book_author"));
-			book.setPublishedDate(rs.getString("book_published_date"));
-			book.setDescription(rs.getString("book_description"));
-			book.setPageCount(rs.getInt("book_page_count"));
-			book.setThumbnailPath(rs.getString("book_thumbnail_path"));
-			book.setStatus(rs.getInt("book_status"));
-			book.setComment(rs.getString("book_comment"));
-			book.setDeleted(rs.getBoolean("book_boolean"));
+			book.setId(rs.getInt("b_book_id"));
+			book.setUserId(rs.getInt("b_user_id"));
+			book.setIsbnId(rs.getString("b_isbn_id"));
+			book.setCategoryId(rs.getInt("b_category_id"));
+			book.setTitle(rs.getString("b_title"));
+			book.setAuthor(rs.getString("b_author"));
+			book.setPublishedDate(rs.getString("b_published_date"));
+			book.setDescription(rs.getString("b_description"));
+			book.setPageCount(rs.getInt("b_page_count"));
+			book.setThumbnailPath(rs.getString("b_thumbnail_path"));
+			book.setStatus(rs.getInt("b_status"));
+			book.setComment(rs.getString("b_comment"));
+			book.setDeleted(rs.getBoolean("b_deleted"));
 			bookList.add(book);
 			book.setUser(user);
 
@@ -79,7 +79,7 @@ public class CategoryRepository {
 		}
 		return categoryList;
 	};
-	
+
 	/**
 	 * カテゴリ一覧を取得するメソッド.
 	 * 
@@ -90,6 +90,17 @@ public class CategoryRepository {
 		return template.query(sql, CATEGORY_ROW_MAPPER);
 	}
 	
+	/**	CATEGORY_RESULT_SET_EXTRACTORを使用する際に全件取得するためのSELECT文 */
+	private static final String SELECT_SQL = "SELECT u.user_id u_user_id, u.name u_name, u.deleted u_deleted,"
+			+ "b.book_id b_book_id, b.user_id b_user_id, b.isbn_id b_isbn_id, b.category_id b_category_id, b.title b_title,"
+			+ "b.author b_author, b.published_date b_published_date, b.description b_description, b.page_count b_page_count,"
+			+ "b.thumbnail_path b_thumbnail_path, b.status b_status, b.comment b_comment, b.deleted b_deleted,"
+			+ "c.category_id c_category_id, c.name c_name FROM users u INNER JOIN books b ON u.user_id = b.user_id "
+			+ "AND b.deleted <> true INNER JOIN category c ON b.category_id = c.category_id WHERE u.user_id in ("
+			+ "SELECT user_id FROM group_relationship WHERE user_id != :userId AND group_id IN ("
+			+ "SELECT group_id FROM group_relationship WHERE user_id = :userId)) AND u.deleted = false ORDER BY c.category_id;";
+	
+	
 	/**
 	 * ユーザーが所属しているグループ全てのカテゴリ一覧にある本情報を取得するメソッド.
 	 * 
@@ -97,13 +108,7 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserId(Integer userId) {
-		String sql = "SELECT u.user_id, u.name user_name, b.book_id, c.category_id, b.title book_title, b.author book_author, "
-				+ "b.published_date book_published_date, b.description book_description, b.page_count book_page_count, "
-				+ "b.thumbnail_path book_thumbnail_path, b.status book_status, c.category_id, c.name category_name "
-				+ "FROM users u INNER JOIN books b ON u.user_id=b.user_id INNER JOIN category c ON b.category_id=c.category_id "
-				+ "WHERE u.user_id in (select u.user_id from group_relationship where u.user_id!=:userId AND group_id IN "
-				+ "(select group_id FROM group_relationship where user_id=:userId)) order by c.category_id";
-
+		String sql = SELECT_SQL;
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
 		if (categoryList.isEmpty()) {

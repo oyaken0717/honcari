@@ -21,7 +21,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="w-100 mx-auto">
-				<h1 class="my-4">My Page</h1>
+				<h1 class="my-4">My Book</h1>
 		
 				<!-- side bar -->
 				<div class="col-lg-2 col-md-3 col-sm-11 col-xs-11 float-left">
@@ -71,7 +71,7 @@
 				</div> -->
 				
 				<!-- カテゴリ選択ボタンを押下後に表示されるカテゴリ別の書籍一覧(デザイン要検討)一部動作上手くいってません。 -->
- 				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${user}">
+ 				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${user.bookList}">
 					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="book : ${user.bookList}" id="book-card">
      					<div class="card">
       						<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>

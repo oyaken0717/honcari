@@ -27,28 +27,28 @@ public class BookRepository {
 	// 本情報に紐づくユーザー・カテゴリーのマッパー
 	private final static RowMapper<Book> BOOK_USER_CATEGORY_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
-		book.setId(rs.getInt("book_id"));
-		book.setIsbnId(rs.getString("isbn_id"));
-		book.setUserId(rs.getInt("user_id"));
-		book.setCategoryId(rs.getInt("category_id"));
-		book.setTitle(rs.getString("book_title"));
-		book.setAuthor(rs.getString("book_author"));
-		book.setPublishedDate(rs.getString("book_published_date"));
-		book.setDescription(rs.getString("book_description"));
-		book.setPageCount(rs.getInt("book_page_count"));
-		book.setThumbnailPath(rs.getString("book_thumbnail_path"));
-		book.setStatus(rs.getInt("book_status"));
-		book.setComment(rs.getString("book_comment"));
-		book.setDeleted(rs.getBoolean("book_deleted"));
+		book.setId(rs.getInt("b_book_id"));
+		book.setUserId(rs.getInt("b_user_id"));
+		book.setIsbnId(rs.getString("b_isbn_id"));
+		book.setCategoryId(rs.getInt("b_category_id"));
+		book.setTitle(rs.getString("b_title"));
+		book.setAuthor(rs.getString("b_author"));
+		book.setPublishedDate(rs.getString("b_published_date"));
+		book.setDescription(rs.getString("b_description"));
+		book.setPageCount(rs.getInt("b_page_count"));
+		book.setThumbnailPath(rs.getString("b_thumbnail_path"));
+		book.setStatus(rs.getInt("b_status"));
+		book.setComment(rs.getString("b_comment"));
+		book.setDeleted(rs.getBoolean("b_deleted"));
 		User user = new User();
-		user.setId(rs.getInt("user_id"));
-		user.setName(rs.getString("user_name"));
-		user.setEmail(rs.getString("user_email"));
-		user.setDeleted(rs.getBoolean("user_deleted"));
+		user.setId(rs.getInt("u_user_id"));
+		user.setName(rs.getString("u_name"));
+		user.setEmail(rs.getString("u_email"));
+		user.setDeleted(rs.getBoolean("u_deleted"));
 		book.setUser(user);
 		Category category = new Category();
-		category.setId(rs.getInt("category_id"));
-		category.setName(rs.getString("category_name"));
+		category.setId(rs.getInt("c_category_id"));
+		category.setName(rs.getString("c_name"));
 		book.setCategory(category);
 		return book;
 	};
@@ -112,6 +112,15 @@ public class BookRepository {
 //		}
 //		return bookList;
 //	}
+	
+	/**	BOOK_USER_CATEGORY_ROW_MAPPERを使用する際に全件取得するためのSELECT文 */
+	private static final String SELECT_SQL = "SELECT u.user_id u_user_id, u.name u_name, u.email u_email, u.deleted u_deleted,"
+			+ "b.book_id b_book_id, b.user_id b_user_id, b.isbn_id b_isbn_id, b.category_id b_category_id, b.title b_title, b.author b_author, b.published_date b_published_date,"
+			+ "b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path,"
+			+ "b.status b_status, b.comment b_comment, b.deleted b_deleted,"
+			+ "c.category_id c_category_id, c.name c_name "
+			+ "FROM users u INNER JOIN books b ON u.user_id = b.user_id AND b.deleted <> true INNER JOIN category c ON b.category_id = c.category_id "
+			+ "WHERE b.book_id = :bookId AND u.deleted = false;";
 
 	/**
 	 * 本IDから本情報と付随するカテゴリ情報・所有者情報を取得する.
@@ -120,12 +129,7 @@ public class BookRepository {
 	 * @return 本情報＋カテゴリ情報＋所有者情報
 	 */
 	public Book findByBookId(Integer bookId) {
-		String sql = "SELECT u.user_id user_id, u.name user_name, u.email user_email, u.deleted user_deleted, b.book_id book_id, b.isbn_id book_isbn_id,"
-				+ "b.title book_title, b.author book_author, b.published_date book_published_date, "
-				+ "b.description book_description, b.page_count book_page_count, b.thumbnail_path book_thumbnail_path, "
-				+ "b.status book_status, b.comment book_comment, b.deleted book_deleted, c.category_id category_id, "
-				+ "c.name category_name FROM users u INNER JOIN books b ON u.user_id = b.user_id INNER JOIN "
-				+ "category c ON b.category_id = c.category_id WHERE book_id = :bookId AND book_deleted = false AND user_deleted = false;";
+		String sql = SELECT_SQL;
 		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId);
 		Book book = template.queryForObject(sql, param, BOOK_USER_CATEGORY_ROW_MAPPER);
 		return book;

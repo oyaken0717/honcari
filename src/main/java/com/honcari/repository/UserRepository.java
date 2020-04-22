@@ -63,8 +63,8 @@ public class UserRepository {
 			if (bookId != beforeBookId) {
 				Book book = new Book();
 				book.setId(rs.getInt("b_book_id"));
-				book.setIsbnId(rs.getString("b_isbn_id"));
 				book.setUserId(rs.getInt("b_user_id"));
+				book.setIsbnId(rs.getString("b_isbn_id"));
 				book.setCategoryId(rs.getInt("b_category_id"));
 				book.setTitle(rs.getString("b_title"));
 				book.setAuthor(rs.getString("b_author"));
@@ -101,34 +101,36 @@ public class UserRepository {
 		int beforeUserId = 0;
 
 		while (rs.next()) {
-			int nowUserId = rs.getInt("user_id");
+			int nowUserId = rs.getInt("u_user_id");
 			if (nowUserId != beforeUserId) {
 				User user = new User();
 				bookList = new ArrayList<>();
 				user.setId(nowUserId);
-				user.setName(rs.getString("user_name"));
-				user.setDeleted(rs.getBoolean("user_deleted"));
+				user.setName(rs.getString("u_name"));
+				user.setDeleted(rs.getBoolean("u_deleted"));
 				user.setBookList(bookList);
 				userList.add(user);
 			}
 			Book book = new Book();
-			book.setId(rs.getInt("book_id"));
+			book.setId(rs.getInt("b_book_id"));
 			book.setUserId(nowUserId);
-			book.setCategoryId(rs.getInt("category_id"));
-			book.setTitle(rs.getString("book_title"));
-			book.setAuthor(rs.getString("book_author"));
-			book.setPublishedDate(rs.getString("book_published_date"));
-			book.setDescription(rs.getString("book_description"));
-			book.setPageCount(rs.getInt("book_page_count"));
-			book.setThumbnailPath(rs.getString("book_thumbnail_path"));
-			book.setStatus(rs.getInt("book_status"));
-			book.setComment(rs.getString("book_comment"));
-			book.setDeleted(rs.getBoolean("book_deleted"));
+			book.setUserId(rs.getInt("b_user_id"));
+			book.setIsbnId(rs.getString("b_isbn_id"));
+			book.setCategoryId(rs.getInt("b_category_id"));
+			book.setTitle(rs.getString("b_title"));
+			book.setAuthor(rs.getString("b_author"));
+			book.setPublishedDate(rs.getString("b_published_date"));
+			book.setDescription(rs.getString("b_description"));
+			book.setPageCount(rs.getInt("b_page_count"));
+			book.setThumbnailPath(rs.getString("b_thumbnail_path"));
+			book.setStatus(rs.getInt("b_status"));
+			book.setComment(rs.getString("b_comment"));
+			book.setDeleted(rs.getBoolean("b_deleted"));
 			bookList.add(book);
 
 			Category category = new Category();
-			category.setId(rs.getInt("category_id"));
-			category.setName(rs.getString("category_name"));
+			category.setId(rs.getInt("c_category_id"));
+			category.setName(rs.getString("c_name"));
 
 			beforeUserId = nowUserId;
 		}
@@ -145,7 +147,7 @@ public class UserRepository {
 	}
 
 	public User findByEmail(String email) {
-		String sql = "SELECT user_id,name,email,password,image_path,profile,deleted from Users where email = :email";
+		String sql = "SELECT user_id,name,email,password,image_path,profile,deleted from Users where email = :email AND deleted = false;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
 		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
 		if (userList.size() == 0) {
@@ -165,8 +167,8 @@ public class UserRepository {
 				+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id, b.category_id b_category_id, b.title b_title, b.author b_author, "
 				+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, "
 				+ "b.status b_status, b.comment b_comment, b.deleted b_deleted, g.group_id g_group_id,g.name g_name,g.description g_description "
-				+ "FROM users u LEFT JOIN books b ON u.user_id = b.user_id LEFT JOIN group_relationship gr ON u.user_id = gr.user_id LEFT JOIN groups g ON g.group_id=gr.group_id "
-				+ "WHERE u.user_id = :userId AND u.deleted = false AND b.deleted = false";
+				+ "FROM users u LEFT JOIN books b ON u.user_id = b.user_id AND b.deleted <> true LEFT JOIN group_relationship gr ON u.user_id = gr.user_id LEFT JOIN groups g ON g.group_id=gr.group_id "
+				+ "WHERE u.user_id = :userId AND u.deleted = false;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR2);
 		return userList.get(0);
@@ -180,13 +182,13 @@ public class UserRepository {
 	 * @return ユーザー情報リスト
 	 */
 	public List<User> findByGroupId(Integer groupId) {
-		String sql = "SELECT u.user_id, u.name user_name, b.book_id, b.title book_title, b.author book_author, b.published_date "
-				+ "book_published_date, b.description book_description, b.page_count book_page_count, "
-				+ "b.thumbnail_path book_thumbnail_path, b.status book_status, c.category_id, c.name category_name "
-				+ "FROM users u INNER JOIN books b ON u.user_id=b.user_id INNER JOIN category c "
-				+ "ON b.category_id=c.category_id INNER JOIN group_relationship gr ON u.user_id=gr.user_id "
-				+ "INNER JOIN groups g ON g.group_id=gr.group_id WHERE g.group_id=:groupId ORDER BY u.user_id";
-
+		String sql =  "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile, u.deleted u_deleted,"
+				+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id, b.category_id b_category_id, b.title b_title, b.author b_author, "
+				+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, "
+				+ "b.status b_status, b.comment b_comment, b.deleted b_deleted, c.category_id c_category_id, c.name c_name "
+				+ "FROM users u INNER JOIN books b ON u.user_id = b.user_id AND b.deleted <> true INNER JOIN category c "
+				+ "ON b.category_id = c.category_id INNER JOIN group_relationship gr ON u.user_id = gr.user_id "
+				+ "INNER JOIN groups g ON g.group_id=gr.group_id WHERE g.group_id = :groupId AND u.deleted = false ORDER BY u.user_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
 		if (userList.isEmpty()) {
@@ -203,11 +205,12 @@ public class UserRepository {
 	 * @return ユーザー情報リスト
 	 */
 	public List<User> findByGroupAndTitle(Integer groupId, String title) {
-		String sql = "SELECT u.user_id, u.name user_name, b.book_id, b.title book_title, b.author book_author, "
-				+ "b.published_date book_published_date, b.description book_description, b.page_count book_page_count, "
-				+ "b.thumbnail_path book_thumbnail_path, b.status book_status, c.category_id, c.name category_name "
-				+ "FROM users u INNER JOIN books b ON u.user_id=b.user_id INNER JOIN category c ON b.category_id=c.category_id "
-				+ "WHERE u.user_id in (select u.user_id from group_relationship where group_id = :groupId) AND b.title LIKE :title ORDER BY u.user_id";
+		String sql = "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile, u.deleted u_deleted,"
+				+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id, b.category_id b_category_id, b.title b_title, b.author b_author, "
+				+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, "
+				+ "b.status b_status, b.comment b_comment, b.deleted b_deleted, c.category_id c_category_id, c.name c_name "
+				+ "FROM users u INNER JOIN books b ON u.user_id = b.user_id AND b.deleted <> true INNER JOIN category c ON b.category_id = c.category_id "
+				+ "WHERE u.user_id in (SELECT u.user_id FROM group_relationship WHERE group_id = :groupId) AND b.title LIKE :title AND u.deleted = false ORDER BY u.user_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId).addValue("title",
 				"%" + title + "%");
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
@@ -215,13 +218,13 @@ public class UserRepository {
 	}
 
 	public User findByName(String name) {
-		String sql = "SELECT user_id,name,email,password,image_path,profile FROM users WHERE name=:name";
+		String sql = "SELECT user_id,name,email,password,image_path,profile,deleted FROM users WHERE name=:name AND deleted = false;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
 		return template.queryForObject(sql, param, User_ROW_MAPPER);
 	}
 
 	public List<User> findByNameLike(String name) {
-		String sql = "SELECT user_id,name,email,password,image_path,profile FROM users WHERE name LIKE :name";
+		String sql = "SELECT user_id,name,email,password,image_path,profile,deleted FROM users WHERE name LIKE :name AND deleted = false;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
 		if (userList.isEmpty()) {
@@ -250,11 +253,11 @@ public class UserRepository {
 	 * @return ユーザidとカテゴリidに一致したユーザ情報
 	 */
 	public List<User> findByCategoryId(Integer userId, Integer categoryId){
-		String sql = "SELECT u.user_id u_user_id,u.name u_name, u.email u_email, u.password u_password,u.image_path u_image_path,u.profile u_profile,"
+		String sql = "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile, u.deleted u_deleted,"
 				+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id, b.category_id b_category_id, b.title b_title, b.author b_author, "
 				+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, "
-				+ "b.status b_status, g.group_id g_group_id,g.name g_name,g.description g_description FROM users u LEFT JOIN books b ON u.user_id = b.user_id "
-				+ "LEFT JOIN group_relationship gr ON u.user_id = gr.user_id LEFT JOIN groups g ON g.group_id=gr.group_id WHERE u.user_id = :userId AND b.category_id = :categoryId;";
+				+ "b.status b_status, b.comment b_comment, b.deleted b_deleted, g.group_id g_group_id,g.name g_name,g.description g_description FROM users u LEFT JOIN books b ON u.user_id = b.user_id "
+				+ "AND b.deleted <> true LEFT JOIN group_relationship gr ON u.user_id = gr.user_id LEFT JOIN groups g ON g.group_id=gr.group_id WHERE u.user_id = :userId AND b.category_id = :categoryId AND u.deleted = false;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
 		return template.query(sql, param, USER_RESULT_SET_EXTRACTOR2);
 	}

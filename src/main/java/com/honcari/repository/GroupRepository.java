@@ -76,8 +76,8 @@ public class GroupRepository {
 			if (bookId != beforeBookId) {
 				Book book = new Book();
 				book.setId(rs.getInt("b_book_id"));
-				book.setIsbnId(rs.getString("b_isbn_id"));
 				book.setUserId(rs.getInt("b_user_id"));
+				book.setIsbnId(rs.getString("b_isbn_id"));
 				book.setCategoryId(rs.getInt("b_category_id"));
 				book.setTitle(rs.getString("b_title"));
 				book.setAuthor(rs.getString("b_author"));
@@ -113,7 +113,7 @@ public class GroupRepository {
 			+ "b_thumbnail_path, b.status b_status, b.comment b_comment, b.deleted b_deleted "
 			+ "FROM groups g LEFT OUTER JOIN group_relationship gr ON "
 			+ "g.group_id = gr.group_id LEFT OUTER JOIN users u ON gr.user_id = u.user_id LEFT OUTER JOIN "
-			+ "books b ON u.user_id = b.user_id ";
+			+ "books b ON u.user_id = b.user_id AND b.deleted <> true ";
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
@@ -151,7 +151,7 @@ public class GroupRepository {
 	
 	public Group findByGroupId(Integer groupId) {
 		String sql = SQL;
-		sql += " WHERE g.group_id = :groupId ORDER BY g.group_id";
+		sql += " WHERE g.group_id = :groupId AND u.deleted = false ORDER BY g.group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
 		List<Group> groupList = template.query(sql, param, GROUP_RESULT_SET_EXTRACTOR);
 		return groupList.get(0);
