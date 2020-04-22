@@ -87,20 +87,20 @@ public class CategoryRepository {
 	}
 	
 	/**
-	 * グループごとのカテゴリ一覧を取得するメソッド.
+	 * ユーザーが所属しているグループ全てのカテゴリ一覧にある本情報を取得するメソッド.
 	 * 
-	 * @param groupId グループID
+	 * @param userId ユーザーID
 	 * @return カテゴリ一覧
 	 */
-	public List<Category> findByGroupId(Integer groupId) {
-		String sql = "SELECT u.user_id, u.name user_name, b.book_id, b.title book_title, b.author book_author, b.published_date "
-				+ "book_published_date, b.description book_description, b.page_count book_page_count, "
+	public List<Category> findByUserId(Integer userId) {
+		String sql = "SELECT u.user_id, u.name user_name, b.book_id, c.category_id, b.title book_title, b.author book_author, "
+				+ "b.published_date book_published_date, b.description book_description, b.page_count book_page_count, "
 				+ "b.thumbnail_path book_thumbnail_path, b.status book_status, c.category_id, c.name category_name "
-				+ "FROM users u INNER JOIN books b ON u.user_id=b.user_id INNER JOIN category c "
-				+ "ON b.category_id=c.category_id INNER JOIN group_relationship gr ON u.user_id=gr.user_id "
-				+ "INNER JOIN groups g ON g.group_id=gr.group_id WHERE g.group_id=:groupId ORDER BY c.category_id";
+				+ "FROM users u INNER JOIN books b ON u.user_id=b.user_id INNER JOIN category c ON b.category_id=c.category_id "
+				+ "WHERE u.user_id in (select u.user_id from group_relationship where u.user_id!=:userId AND group_id IN "
+				+ "(select group_id FROM group_relationship where user_id=:userId)) order by c.category_id";
 
-		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
 		if (categoryList.isEmpty()) {
 			return null;

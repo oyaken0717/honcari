@@ -28,7 +28,8 @@ public class ShowBookListService {
 	 * @param groupId グループID
 	 * @return ユーザー情報リスト
 	 */
-	public List<Category> findByGroupId(Integer groupId) {
-		return categoryRepository.findByGroupId(groupId);
+	public List<Category> findByUserId(Integer userId) {
+		System.out.println(categoryRepository.findByUserId(userId));
+		return categoryRepository.findByUserId(userId);
 	}
 }
