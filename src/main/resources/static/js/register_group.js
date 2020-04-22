@@ -39,7 +39,7 @@ $(function() {
 		});
 	});
 	
-	var listCount = 0;//ログインユーザーを0にするから、あとで1に変更
+	var listCount = 1;
 	//追加ボタンを押した時に発火
 	$(document).on("click", ".addUser", function() {
 		//ユーザー名を取得
@@ -67,8 +67,8 @@ $(function() {
 			return user !== userName;
 		});
 		
-		listCount = 0;//ログインユーザーを0にするから、あとで1に変更
-		//リスト番号を0から採番
+		listCount = 1;
+		//リスト番号を1から採番
 		$(".group-user").each(function() {
 			var inputName = $(this).find("input").attr("name");
 			inputName = inputName.replace(/userNameList\[[0-9]{1,2}/g, "userNameList[" + listCount);
