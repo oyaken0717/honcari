@@ -287,4 +287,5 @@ public class BookLendingRepository {
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
 	}
+	
 }

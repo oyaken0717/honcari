@@ -31,7 +31,7 @@ public class ShowBookListController {
 	 */
 	@RequestMapping("/")
 	public String showBookList(Model model) {
-		List<User> userList = showBookListService.findByGroupId(1);
+		List<User> userList = showBookListService.findByGroupId(2);
 		model.addAttribute("userList", userList);
 		return "home";
 	}

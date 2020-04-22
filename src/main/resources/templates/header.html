@@ -28,22 +28,19 @@
               </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" th:href="@{'/to_lend_management?userId=' + ${session.userId}}">レンタル管理</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/show_register_book}">本登録</a>
         </li>
         <li class="nav-item">
-          <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/logout}">ログアウト</a>
+          <a class="nav-link" th:href="@{/to_register_group}">グループ作成</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/to_search_group}">グループを探す</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="hasRole('ROLE_USER')" th:href="@{/logout}">ログアウト</a>
         </li>
       </ul>
     </div>

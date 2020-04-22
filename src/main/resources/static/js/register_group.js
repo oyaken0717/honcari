@@ -8,7 +8,7 @@ $(function() {
 		var url = 'http://localhost:8080/search_user_api';
 		$.ajax({
 			url : url,
-			type : 'POST',
+			type : 'GET',
 			dataType : 'json',
 			data : {
 				name : searchName
