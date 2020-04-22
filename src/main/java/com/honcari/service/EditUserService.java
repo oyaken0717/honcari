@@ -29,6 +29,16 @@ public class EditUserService {
 	private PasswordEncoder passwordEncoder;
 	
 	/**
+	 * ユーザー情報を取得するメソッド.
+	 * 
+	 * @param userId ユーザーID
+	 * @return ユーザー情報
+	 */
+	public User showUser(Integer userId) {
+		return userRepository.findByUserId(userId);
+	}
+	
+	/**
 	 * メールアドレスが登録済か否かを確認するメソッド.
 	 * 
 	 * @param email メールアドレス
