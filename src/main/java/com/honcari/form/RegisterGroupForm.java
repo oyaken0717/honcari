@@ -2,6 +2,8 @@ package com.honcari.form;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * グループ作成フォーム.
  * 
@@ -9,17 +11,13 @@ import java.util.List;
  *
  */
 public class RegisterGroupForm {
-	/**
-	 * グループ名
-	 */
+	/** グループ名 */
+	@NotBlank(message="入力必須項目です")
 	private String name;
-	/**
-	 * 説明
-	 */
+	/** 説明 */
+	@NotBlank(message="入力必須項目です")
 	private String description;
-	/**
-	 * ユーザー名のリスト
-	 */
+	/** ユーザー名のリスト */
 	private List<String> userNameList;
 
 	public String getName() {

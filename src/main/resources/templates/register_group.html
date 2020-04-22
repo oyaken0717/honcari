@@ -15,12 +15,14 @@
 			<h1>グループ作成</h1>
 			<form th:action="@{/register_group}" th:object="${registerGroupForm}" method="post">
 			  <div class="form-group">
-			    <label for="formGroupExampleInput">グループ名</label>
-			    <input type="text" th:field="*{name}" class="form-control" id="formGroupExampleInput" placeholder="グループ名">
+			    <label for="InputGroupName">グループ名</label>
+			    <label th:errors="*{name}"  class="control-label" style="color: red" for="InputGroupName"></label>
+			    <input type="text" th:field="*{name}" class="form-control" id="InputGroupName" placeholder="グループ名">
 			  </div>
 			  <div class="form-group">
-			    <label for="formGroupExampleInput2">説明文</label>
-			    <input type="text" th:field="*{description}" class="form-control" id="formGroupExampleInput2" placeholder="説明文">
+			    <label for="InputGroupDescription">説明文</label>
+			    <label th:errors="*{description}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
+			    <input type="text" th:field="*{description}" class="form-control" id="InputGroupDescription" placeholder="説明文">
 			  </div>
 			  <div class="form-group">
 			    <label for="formGroupExampleInput2">ユーザー検索</label>
@@ -33,8 +35,8 @@
 			    <label for="formGroupExampleInput2">追加するユーザー</label>
 			  	<div class="groupUserList">
 			  		<div class="row login-user">
-			  			<span class="col-md-12 text-left">ログインユーザー</span>
-			  			<input type="hidden" value="">
+			  			<span th:text="${user.name}" class="col-md-12 text-left">ログインユーザー</span>
+			  			<input type="hidden" name="userNameList[0]" th:value="${user.name}">
 			  		</div>
 			  	</div>
 			  </div>
