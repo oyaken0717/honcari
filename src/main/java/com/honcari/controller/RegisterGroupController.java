@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.Group;
+import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.RegisterGroupForm;
 import com.honcari.service.RegisterGroupService;
@@ -35,7 +38,8 @@ public class RegisterGroupController {
 	}
 	
 	@RequestMapping("/to_register_group")
-	public String toRegisterGroup() {
+	public String toRegisterGroup(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		model.addAttribute("user", loginUser.getUser());
 		return "register_group";
 	}
 	
@@ -48,9 +52,10 @@ public class RegisterGroupController {
 	 * @return トップページ（仮）
 	 */
 	@RequestMapping("/register_group")
-	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result, RedirectAttributes redirectAttributes) {
+	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result, RedirectAttributes redirectAttributesm, 
+			Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
-			return toRegisterGroup();
+			return toRegisterGroup(model, loginUser);
 		}
 		
 		List<User> userList = new ArrayList<>();

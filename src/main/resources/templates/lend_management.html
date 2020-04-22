@@ -9,8 +9,19 @@
 </head>
 <body>
 <header>
-	<nav th:insert="header::frag_header"></nav>
+	<nav th:replace="header::frag_header"></nav>
 </header>
+
+<!-- page content -->
+<div class="container">
+	<div class="row">
+		<div class="w-100 mx-auto">
+			<h1 class="my-4">レンタル管理</h1>
+	
+			<!-- side bar -->
+			<div th:replace="mypage_side_menu::frag_mypage_side_menu(3)"></div>
+
+<!-- main content -->
 <div class="py-5 book-detail-wrapper">
     <div class="container">
     	<!-- タブ・メニュー -->
@@ -141,6 +152,10 @@
 			</div>
    		  </div>
     </div>
+</div>
+
+		</div>
+	</div>
 </div>
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>

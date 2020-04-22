@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.LoginUser;
+import com.honcari.domain.User;
 import com.honcari.form.EditUserForm;
 import com.honcari.service.EditUserService;
 
@@ -27,12 +28,23 @@ public class EditUserController {
 	@Autowired
 	private EditUserService editUserService;
 	
-	@Autowired
-	private ShowMyPageController showMyPageController;
-	
 	@ModelAttribute
 	public EditUserForm setUpEditUserForm() {
 		return new EditUserForm();
+	}
+	
+	/**
+	 * プロフィール編集画面に遷移するメソッド.
+	 * 
+	 * @param loginUser ログイン中のユーザー
+	 * @param model  リクエストスコープ
+	 * @return プロフィール編集画面
+	 */
+	@RequestMapping("/show_edit_user")
+	public String showEditUser(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		User user = editUserService.showUser(loginUser.getUser().getId());
+		model.addAttribute("user", user);
+		return "edit_user";
 	}
 	
 	/**
@@ -60,21 +72,10 @@ public class EditUserController {
 		}
 		if(result.getErrorCount() > 1 
 				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getImagePath()))) {
-			return showMyPageController.showMyPage(model, loginUser);
+			return showEditUser(model, loginUser);
 		}
 		editUserService.editUser(editUserForm);
-		return "redirect:/to_show_my_page";
+		return "redirect:/show_my_page";
 	}
 	
-	/**
-	 * リダイレクトの際マイページを表示するために呼ばれるメソッド.
-	 * 
-	 * @param model リクエストスコープ
-	 * @return マイページ
-	 */
-	@RequestMapping("/to_show_my_page")
-	public String toShowMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		return showMyPageController.showMyPage(model, loginUser);
-	}
-
 }
