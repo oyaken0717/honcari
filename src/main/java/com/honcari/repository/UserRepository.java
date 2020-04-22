@@ -61,7 +61,7 @@ public class UserRepository {
 			if (bookId != beforeBookId) {
 				Book book = new Book();
 				book.setId(rs.getInt("b_book_id"));
-				book.setIsbnId(rs.getLong("b_isbn_id"));
+				book.setIsbnId(rs.getString("b_isbn_id"));
 				book.setUserId(rs.getInt("b_user_id"));
 				book.setCategoryId(rs.getInt("b_category_id"));
 				book.setTitle(rs.getString("b_title"));
@@ -241,14 +241,13 @@ public class UserRepository {
 	 * @param categoryId カテゴリid
 	 * @return ユーザidとカテゴリidに一致したユーザ情報
 	 */
-	public User findByCategoryId(Integer userId, Integer categoryId){
+	public List<User> findByCategoryId(Integer userId, Integer categoryId){
 		String sql = "SELECT u.user_id u_user_id,u.name u_name, u.email u_email, u.password u_password,u.image_path u_image_path,u.profile u_profile,"
 				+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id, b.category_id b_category_id, b.title b_title, b.author b_author, "
 				+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, "
 				+ "b.status b_status, g.group_id g_group_id,g.name g_name,g.description g_description FROM users u LEFT JOIN books b ON u.user_id = b.user_id "
 				+ "LEFT JOIN group_relationship gr ON u.user_id = gr.user_id LEFT JOIN groups g ON g.group_id=gr.group_id WHERE u.user_id = :userId AND b.category_id = :categoryId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
-		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR2);
-		return userList.get(0);
+		return template.query(sql, param, USER_RESULT_SET_EXTRACTOR2);
 	}
 }

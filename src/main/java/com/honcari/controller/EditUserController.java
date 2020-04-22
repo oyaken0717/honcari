@@ -60,7 +60,7 @@ public class EditUserController {
 		}
 		if(result.getErrorCount() > 1 
 				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getImagePath()))) {
-			return showMyPageController.showMyPage(5, model, loginUser);
+			return showMyPageController.showMyPage(model, loginUser);
 		}
 		editUserService.editUser(editUserForm);
 		return "redirect:/to_show_my_page";
@@ -74,7 +74,7 @@ public class EditUserController {
 	 */
 	@RequestMapping("/to_show_my_page")
 	public String toShowMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		return showMyPageController.showMyPage(1, model, loginUser);
+		return showMyPageController.showMyPage(model, loginUser);
 	}
 
 }

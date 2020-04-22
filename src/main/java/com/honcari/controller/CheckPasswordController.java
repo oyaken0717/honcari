@@ -23,7 +23,7 @@ public class CheckPasswordController {
 	public Map<String, String> passwordcheck(String password, String confirmationPassword) {
 		Map<String, String> map = new HashMap<>();
 
-		// 8文字以上チェック
+		// 6文字以上チェック
 		final int PASSWORD_MAX_LENGTH = 6;
 		String robustnessMessage = null;
 		if (password.length() >= PASSWORD_MAX_LENGTH) {
