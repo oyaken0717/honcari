@@ -1,10 +1,13 @@
 package com.honcari.domain;
 
+import java.util.List;
+
 public class Group {
 	
 	private Integer id;
 	private String name;
 	private String description;
+	private List<User> userList;
 	public Integer getId() {
 		return id;
 	}
@@ -23,10 +26,20 @@ public class Group {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public List<User> getUserList() {
+		return userList;
+	}
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
 	@Override
 	public String toString() {
-		return "Group [id=" + id + ", name=" + name + ", description=" + description + "]";
+		return "Group [id=" + id + ", name=" + name + ", description=" + description + ", userList=" + userList + "]";
 	}
+	
+	
+	
+	
 	
 	
 

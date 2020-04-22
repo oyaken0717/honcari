@@ -256,12 +256,4 @@ public class BookLendingRepository {
 		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
 	}
-
-	public List<BookLending> findByLendUserIdAndLendingStatus2(Integer lendUserId, Integer lendingStatus) {
-		String sql = "SELECT lend_user_id, borrow_user_id, book_id, deadline, lendingStatus FROM book_lending WHERE lend_user_id = :lendUserId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("lend_user_id", lendUserId)
-				.addValue("lendingStatus", lendingStatus);
-		List<BookLending> bookLendingList = template.query(sql, param, BOOK_LENDING_ROW_MAPPER);
-		return bookLendingList;
-	}
 }

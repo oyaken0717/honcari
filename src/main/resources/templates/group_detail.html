@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<script>
+$(function(){
+	var url = 'http://localhost:8080/check_user_in_group';
+	var groupId = $('#groupId').val();
+	$.ajax({
+		url : url,
+		type : 'GET',
+		dataType : 'json',
+		data : {
+			groupId : groupId
+		},
+		async : true
+	})
+	  .done(function(jsonGr){
+		gr = jsonGr;
+		console.log(gr)
+		if(gr != null){
+		let formElements = document.forms.form;
+		formElements.submit.disabled = true;
+		document.getElementById('button').innerText = '参加済み'
+		}
+	})
+	.fail(function() {
+        console.log('失敗');
+    })
+    .always(function() {
+    });	
+});
+</script>
+	<form name="form" th:action="@{/join_group}">
+	グループ名：<div th:text="${group.name}"></div>
+	グループについて：<div th:text="${group.description}"></div>
+	参加ユーザー：<br>
+	<div th:each="user : ${group.userList}">
+		<span th:text="${user.name}"></span>
+	</div>
+	<input type="hidden" id="groupId" name="groupId" th:value="${group.id}">
+	<button id="button" name="submit">このグループに参加する</button>
+	<hr>
+	</form>
+	<a th:href="@{/to_search_group}">戻る</a>
+</body>
+</html>
