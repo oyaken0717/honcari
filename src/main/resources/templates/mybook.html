@@ -15,7 +15,7 @@
 </head>
 <body>
 	<!-- navbar -->
-	<nav th:insert="header::frag_header"></nav>
+	<nav th:replace="header::frag_header"></nav>
 
 	<!-- page content -->
 	<div class="container">
@@ -25,16 +25,7 @@
 		
 				<!-- side bar -->
 				<div class="col-lg-2 col-md-3 col-sm-11 col-xs-11 float-left">
-					<div class="list-group">
-						<a href="mypage.html" th:href="@{/show_my_page?myPageType=1}" 
-							class="list-group-item list-group-item-action active">profile</a>
-						<a href="mypage.html" th:href="@{/show_my_book}" 
-							class="list-group-item list-group-item-action">my book</a>
-						<a href="mypage.html" th:href="@{/show_my_page?myPageType=3}" 
-							class="list-group-item list-group-item-action">レンタル管理</a>
-						<a href="mypage.html" th:href="@{/show_my_page?myPageType=4}" 
-							class="list-group-item list-group-item-action">レンタル履歴</a>
-					</div>
+					<div th:replace="mypage_side_menu::frag_mypage_side_menu_for_my_book(2)"></div>
 
 					<!-- 書籍カテゴリ選択リスト(デザイン要検討) -->
 					<div class="list-group" id="my-book-category">
@@ -104,6 +95,5 @@
 	<!-- script -->
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-	<script src="../static/js/file_reader.js" th:src="@{/js/file_reader.js}"></script>
 </body>
 </html>
