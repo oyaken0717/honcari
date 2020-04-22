@@ -26,6 +26,7 @@ $(function(){
 		if(gr != null){
 		let formElements = document.forms.form;
 		formElements.submit.disabled = true;
+		document.getElementById('button').innerText = '参加済み'
 		}
 	})
 	.fail(function() {
