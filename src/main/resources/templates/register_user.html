@@ -5,15 +5,15 @@
 <title>Honcari -気軽に本をどこへでも-</title>
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
-<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link rel="stylesheet" href="../static/css/signup.css" th:href="@{/css/signup.css}">
 </head>
-<body>
+<body th:style="'background-image:url(/img/home.jpeg)'">
 
-    <div class="main">
+    <div class="main" >
 
         <section class="signup">
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
-            <div class="container2">
+            <div class="container">
                 <div class="signup-content">
                     <form method="POST" id="signup-form" class="signup-form" th:action="@{/register_user}" th:object="${registerUserForm}">
                         <h2 class="my-3 title text-black text-uppercase">Create account</h2>
@@ -56,4 +56,5 @@
     <script src="js/main.js"></script>
     <script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
 </html>
