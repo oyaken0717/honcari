@@ -150,5 +150,29 @@ public class BookRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("status", status).addValue("bookId", bookId);
 		template.update(sql, param);
 	}
-
+	
+	/**
+	 * 書籍情報を編集する(カテゴリid,コメント)
+	 * 
+	 * @param bookId 書籍ID
+	 * @param categoryId カテゴリID
+	 * @param comment コメント
+	 */
+	public void editBook(Integer bookId, Integer categoryId, String comment) {
+		System.out.println("kitenai??" + bookId + categoryId + comment);
+		String sql = "UPDATE books SET category_id = :categoryId, comment = :comment WHERE book_id = :bookId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId).addValue("categoryId", categoryId).addValue("comment", comment);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 書籍情報を削除する(deletedフラグをtrueに変更する).
+	 * 
+	 * @param bookId 書籍ID
+	 */
+	public void deleteBook(Integer bookId) {
+		String sql = "UPDATE books SET deleted = true WHERE book_id = :bookId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId);
+		template.update(sql, param);
+	}
 }

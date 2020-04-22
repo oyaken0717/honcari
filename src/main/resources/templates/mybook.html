@@ -88,6 +88,7 @@
 							<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
 							<p class="card-text" th:text="${book.author}"></p>
 							<p class="card-text" th:text="${book.publishedDate}"></p>
+							<a id="edit-button" class="btn btn-primary" th:href="@{'/show_edit_book?bookId=' + ${book.id}}"><span>書籍情報を変更</span></a>
       						</div>
       					</div>
       				</div>

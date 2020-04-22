@@ -90,7 +90,7 @@ h3.section-subheading {
 
 #book-card{
 	width: 80%;
-	height: 450px;
+	height: 550px;
 }
 
 #my-book-category {
@@ -138,4 +138,8 @@ h3.section-subheading {
 
 .top-head-wrapper .op-8 {
 	opacity: 0.8;
+}
+
+#edit-button{
+	font-size: 16px;
 }

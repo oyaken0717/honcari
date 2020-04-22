@@ -3,11 +3,13 @@ package com.honcari.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.Category;
+import com.honcari.domain.LoginUser;
 import com.honcari.service.ShowBookListService;
 
 /**
@@ -30,8 +32,8 @@ public class ShowBookListController {
 	 * @return 本一覧画面
 	 */
 	@RequestMapping("/")
-	public String showBookList(Model model) {
-		List<Category> categoryList = showBookListService.findByGroupId(3);
+	public String showBookList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		List<Category> categoryList = showBookListService.findByUserId(loginUser.getUser().getId());
 		model.addAttribute("categoryList", categoryList);
 		return "home";
 	}

@@ -1,0 +1,98 @@
+-- users
+drop table if exists users cascade;
+​
+create table users(
+  user_id serial primary key
+  , name character varying(100) not null
+  , email character varying(100) not null unique
+  , password text not null
+  , image_path text
+  , profile character varying(100)
+);
+​
+-- category
+drop table if exists category cascade;
+​
+create table category (
+  category_id serial primary key
+  , name character varying(100) not null
+);
+​
+insert into category values(1, '文学・小説');
+insert into category values(2, '社会・ビジネス');
+insert into category values(3, '実用・教育');
+insert into category values(4, '旅行・地図');
+insert into category values(5, '趣味');
+insert into category values(6, 'アート・教養・エンタメ');
+insert into category values(7, '事典・図鑑・語学・辞書');
+insert into category values(8, 'こども');
+insert into category values(9, 'その他');
+​
+-- books
+drop table if exists books cascade;
+​
+create table books (
+  book_id serial primary key
+  , isbn_id text not null
+  , title text  not null
+  , author text  not null
+  , published_date character varying(10) not null
+  , description text  not null
+  , page_count integer  not null
+  , thumbnail_path text not null
+);
+
+-- book ownership
+drop table if exists book_ownerships cascade;
+
+create table book_ownerships(
+  book_ownership_id serial primary key
+   , user_id integer not null references users(user_id)
+   , book_id integer not null references books(book_id)
+   , category_id integer not null references category(category_id)
+   , status integer not null
+   , comment text
+);
+
+​
+-- group
+drop table if exists groups cascade;
+​
+create table groups (
+  group_id serial primary key
+  , name character varying(100) not null
+  , description text
+);
+​
+​
+-- group_relationship
+drop table if exists group_relationship cascade;
+​
+create table group_relationship (
+  id serial primary key
+  , user_id integer not null references users(user_id)
+  , group_id integer not null references groups(group_id)
+);​
+​
+-- book_lending
+drop table if exists book_lending cascade;
+create table book_lending(
+  id serial primary key
+  , lend_user_id integer not null references users(user_id)
+  , borrow_user_id integer not null references users(user_id)
+  , book_id integer not null references books(book_id)
+  , deadline date
+);
+
+-- 本登録​（ユーザー2登録後）
+INSERT INTO books (user_id, isbn_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status) 
+VALUES (2, 9784781603476, 1, '吾輩は猫である', '夏目漱石', '2020-04', '英語教師・珍野苦沙弥の家に住みついた一匹の猫。自らを「吾輩」と称し、
+発達した知識を持つ名無し猫が、自身の視点から見た人間世界の滑稽さや、珍野家を取り巻く個性的な人物たちの生態を面白おかしく、鋭く風刺的に批評してゆく...
+夏目漱石の処女小説であり、出世作ともなった近代日本を代表する不朽のユーモア小説を漫画化。', 184, 'http://books.google.com/books/content?id=
+Bdh_RQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 1);
+
+INSERT INTO books (user_id, isbn_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status) 
+VALUES (2, 9784781603476, 1, '吾輩は猫である', '夏目漱石', '2020-04', '英語教師・珍野苦沙弥の家に住みついた一匹の猫。自らを「吾輩」と称し、
+発達した知識を持つ名無し猫が、自身の視点から見た人間世界の滑稽さや、珍野家を取り巻く個性的な人物たちの生態を面白おかしく、鋭く風刺的に批評してゆく...
+夏目漱石の処女小説であり、出世作ともなった近代日本を代表する不朽のユーモア小説を漫画化。', 184, 'http://books.google.com/books/content?id=
+Bdh_RQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 1)
