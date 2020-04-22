@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.Book;
 import com.honcari.domain.LoginUser;
@@ -28,10 +29,11 @@ public class RegisterBookController {
 	 * 
 	 * @param registerBookForm 書籍登録画面で送られたリクエストパラメータ
 	 * @param loginUser ログインしているユーザ情報
-	 * @return トップ(あとで修正予定) //TODO 登録後、登録画面に戻しバナーを出す
+	 * @param redirectAttributes リダイレクト先へリクエストスコープを格納する
+	 * @return 書籍登録画面
 	 */
 	@RequestMapping("/register_book")
-	public String registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser) {
+	public String registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
 		Book book = new Book();
 		System.out.println(registerBookForm);
 		book.setIsbnId(registerBookForm.getIsbnId());
@@ -47,6 +49,7 @@ public class RegisterBookController {
 		book.setStatus(0); //statusの各値が未確定の為、仮登録
 		BeanUtils.copyProperties(registerBookForm, book);
 		registerBookService.registerBook(book);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("check", "check");
+		return "redirect:show_register_book";
 	}
 }

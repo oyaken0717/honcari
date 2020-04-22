@@ -12,6 +12,12 @@
 </head>
 <body>
 <nav th:insert="header::frag_header"></nav>
+<div th:if="${check}" class="alert alert-info alert-dismissible fade show" role="alert">
+  <strong>登録完了</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <header>
 	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 		<div class="add-book-top">
