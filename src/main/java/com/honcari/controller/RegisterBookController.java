@@ -45,7 +45,7 @@ public class RegisterBookController {
 		}
 		book.setPageCount(pageCount);
 		book.setUserId(loginUser.getUser().getId());
-		book.setStatus(0); //statusの各値が未確定の為、仮登録
+		book.setStatus(1); //statusの各値が未確定の為、仮登録　←登録時には貸出可になるように勝手に変更したby藤島
 		BeanUtils.copyProperties(registerBookForm, book);
 		registerBookService.registerBook(book);
 		redirectAttributes.addFlashAttribute("check", "check");

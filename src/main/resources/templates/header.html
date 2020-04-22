@@ -9,7 +9,7 @@
 </head>
 <body>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:fragment="frag_header">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:fragment="frag_header(page)">
   <div class="container">
     <a class="navbar-brand" href="home.html" th:href="@{/}">Honcari</a>
     <form class="form-inline">
@@ -22,11 +22,27 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
+      
+        <li class="nav-item active" th:if="${page == 1}">
           <a class="nav-link" href="home.html" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item" th:unless="${page == 1}">
+          <a class="nav-link" href="home.html" th:href="@{/}">Home</a>
+        </li>
+        
+		<li class="nav-item active" th:if="${page == 2}">
+          <a class="nav-link" href="register_book.html" th:href="@{/show_register_book}">マイブック登録</a>
+        </li>
+		<li class="nav-item" th:unless="${page == 2}">
+          <a class="nav-link" href="register_book.html" th:href="@{/show_register_book}">マイブック登録</a>
+        </li>
         <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" id="dropdownMenuLink" th:src="@{/img/user_default.png}" 
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">グループ</a>
+			<a class="nav-link dropdown-toggle active" th:if="${page == 3}" id="dropdownMenuLink" 
+				th:src="@{/img/user_default.png}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				グループ</a>
+			<a class="nav-link dropdown-toggle" th:unless="${page == 3}" id="dropdownMenuLink" 
+				th:src="@{/img/user_default.png}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				グループ</a>
 			<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuLink">
 				<a class="dropdown-item" href="register_group.html" th:href="@{/to_register_group}">グループ作成</a>
 				<a class="dropdown-item" href="search_group.html" th:href="@{/to_search_group}">グループを探す</a>
@@ -38,10 +54,12 @@
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuLink">
 				<a class="dropdown-item" href="mypage.html" th:href="@{/show_my_page}">マイページ</a>
+				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="mybook.html" th:href="@{/show_my_book}">マイブック</a>
 				<a class="dropdown-item" href="lend_management.html" th:href="@{/to_lend_management}">レンタル管理</a>
 				<a class="dropdown-item" href="lental_history.html" th:href="@{/show_lental_history}">レンタル履歴</a>
 				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="help.html" th:href="@{/show_help}">ヘルプ</a>
 				<a class="dropdown-item" href="login.html" th:href="@{/logout}">ログアウト</a>
 			</div>
         </li>
