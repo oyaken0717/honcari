@@ -11,7 +11,7 @@ public class Book {
 	/** ID */
 	private Integer id;
 	/** ISBNコード(13) **/
-	private Long isbnId;
+	private String isbnId;
 	/** ユーザーID */
 	private Integer userId;
 	/** カテゴリーID */
@@ -52,11 +52,11 @@ public class Book {
 		this.id = id;
 	}
 
-	public Long getIsbnId() {
+	public String getIsbnId() {
 		return isbnId;
 	}
 
-	public void setIsbnId(Long isbnId) {
+	public void setIsbnId(String isbnId) {
 		this.isbnId = isbnId;
 	}
 
