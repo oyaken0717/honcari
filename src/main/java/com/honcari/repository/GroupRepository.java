@@ -75,7 +75,7 @@ public class GroupRepository {
 			if (bookId != beforeBookId) {
 				Book book = new Book();
 				book.setId(rs.getInt("b_book_id"));
-				book.setIsbnId(rs.getLong("b_isbn_id"));
+				book.setIsbnId(rs.getString("b_isbn_id"));
 				book.setUserId(rs.getInt("b_user_id"));
 				book.setCategoryId(rs.getInt("b_category_id"));
 				book.setTitle(rs.getString("b_title"));

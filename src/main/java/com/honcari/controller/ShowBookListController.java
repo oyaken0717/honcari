@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.domain.User;
+import com.honcari.domain.Category;
 import com.honcari.service.ShowBookListService;
 
 /**
@@ -31,8 +31,8 @@ public class ShowBookListController {
 	 */
 	@RequestMapping("/")
 	public String showBookList(Model model) {
-		List<User> userList = showBookListService.findByGroupId(2);
-		model.addAttribute("userList", userList);
+		List<Category> categoryList = showBookListService.findByGroupId(1);
+		model.addAttribute("categoryList", categoryList);
 		return "home";
 	}
 }

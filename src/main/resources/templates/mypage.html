@@ -28,7 +28,7 @@
 					<div class="list-group">
 						<a href="mypage.html" th:href="@{/show_my_page?myPageType=1}" 
 							class="list-group-item list-group-item-action active">profile</a>
-						<a href="mypage.html" th:href="@{/show_my_page?myPageType=2}" 
+						<a href="mybook.html" th:href="@{/show_my_book?myBookType=0}" 
 							class="list-group-item list-group-item-action">my book</a>
 						<a href="mypage.html" th:href="@{/show_my_page?myPageType=3}" 
 							class="list-group-item list-group-item-action">レンタル管理</a>
@@ -36,7 +36,7 @@
 							class="list-group-item list-group-item-action">レンタル履歴</a>
 					</div>
 				</div>
-			
+
 				<!-- main content -->
 				<!-- profile -->
 				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${myPageType == 1}">
@@ -145,9 +145,7 @@
 							<button class="btn btn-warning">登録</button>
 						</div>
 					</form>
-				</div>
-				
-				
+				</div>							
 			</div>
 		</div>
 	</div>

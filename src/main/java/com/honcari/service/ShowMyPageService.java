@@ -8,7 +8,7 @@ import com.honcari.domain.User;
 import com.honcari.repository.UserRepository;
 
 /**
- * マイページｊを表示するサービス.
+ * マイページを表示するサービス.
  * 
  * @author katsuya.fujishima
  *
@@ -29,5 +29,4 @@ public class ShowMyPageService {
 	public User showUser(Integer userId) {
 		return userRepository.findByUserId(userId);
 	}
-
 }

@@ -23,24 +23,26 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="home.html" th:href="@{/}">Home
-                <span class="sr-only">(current)</span>
-              </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{'/to_lend_management?userId=' + ${session.userId}}">レンタル管理</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/show_register_book}">本登録</a>
-        </li>
+          <a class="nav-link" href="home.html" th:href="@{/}">Home</a>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/to_register_group}">グループ作成</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/to_search_group}">グループを探す</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" sec:authorize="hasRole('ROLE_USER')" th:href="@{/logout}">ログアウト</a>
+        <li class="nav-item dropdown">
+			<input class="nav-link dropdown-toggle rounded-lg mx-auto d-block border border-secondary" type="image" 
+				id="dropdownMenuLink" width="50px" height="50px" th:src="@{/img/user_default.png}" 
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuLink">
+				<a class="dropdown-item" href="mypage.html" th:href="@{/show_my_page?myPageType=1}">マイページ</a>
+				<a class="dropdown-item" href="mypage.html">マイブック</a>
+				<a class="dropdown-item" href="mypage.html" 
+					th:href="@{'/to_lend_management?userId=' + ${session.userId}}">レンタル管理</a>
+				<a class="dropdown-item" href="mypage.html">レンタル履歴</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="login.html" th:href="@{/logout}">ログアウト</a>
+			</div>
         </li>
       </ul>
     </div>
