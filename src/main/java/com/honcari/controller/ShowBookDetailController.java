@@ -1,4 +1,3 @@
-
 package com.honcari.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class ShowBookDetailController {
 	 * @return　本詳細ページ
 	 */
 	@RequestMapping("/show_book_detail")
-	public String showBookDetai(Model model, Integer bookId) {
+	public String showBookDetail(Model model, Integer bookId) {
 		Book book = bookService.findByBookId(bookId);
 		model.addAttribute("book", book);
 		return "book_detail";

@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
@@ -56,12 +57,13 @@ public class EditUserController {
 	 * @param redirectAttributes リダイレクトスコープ
 	 * @return マイページへリダイレクト
 	 */
-	@RequestMapping("/edit_user")
+	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
 	public String editUser(@Validated EditUserForm editUserForm, BindingResult result, 
 			Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(editUserService.isExistOtherUserByEmail(editUserForm)) {
 			result.rejectValue("email", null, "入力されたメールアドレスは登録済のため使用できません");
 		}
+		//パスワードの入力があるときだけチェックを実施するためにFormでなくこちらでチェック
 		if(!editUserForm.getPassword().isEmpty() 
 				&& !editUserForm.getPassword().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,32}$")) {
 			result.rejectValue("password", null, "パスワードの条件を満たしていません");

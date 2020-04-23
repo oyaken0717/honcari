@@ -59,19 +59,19 @@ public class BookMangementController {
 		Integer lendUserId = form.getLenderUserId();
 		Integer status = form.getStatus();
 
-		// TODO エラーチェックの段階要検討
+		// TODO エラーチェックの段階要検討　returnはhasErrors()に統一したら？by藤島
 		if (status != 1) {
 			model.addAttribute("errorMessage", "不正なリクエストが行われました");
-			return showBookDetailController.showBookDetai(model, bookId);
+			return showBookDetailController.showBookDetail(model, bookId);
 		}
 
 		if (borrowUserId == lendUserId) {
 			model.addAttribute("errorMessage", "不正なリクエストが行われました");
-			return showBookDetailController.showBookDetai(model, bookId);
+			return showBookDetailController.showBookDetail(model, bookId);
 		}
 
 		if (result.hasErrors()) {
-			return showBookDetailController.showBookDetai(model, bookId);
+			return showBookDetailController.showBookDetail(model, bookId);
 		}
 
 		Date deadline = Date.valueOf(form.getDeadline());
