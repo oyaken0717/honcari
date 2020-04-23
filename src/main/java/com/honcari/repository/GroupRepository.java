@@ -17,7 +17,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.Book;
-import com.honcari.domain.BookLending;
 import com.honcari.domain.Group;
 import com.honcari.domain.GroupRealationship;
 import com.honcari.domain.User;
@@ -31,7 +30,7 @@ import com.honcari.domain.User;
 @Repository
 public class GroupRepository {
 
-	private static ResultSetExtractor<List<Group>> GROUP_RESULT_SET_EXTRACTOR = (rs) -> {
+	private static final ResultSetExtractor<List<Group>> GROUP_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<Group> groupList = new ArrayList<>();
 		List<User> userList = new ArrayList<>();
 		List<Book> bookList = new ArrayList<>();
@@ -105,7 +104,7 @@ public class GroupRepository {
 		return group;
 	};
 	
-	private static String SQL = "SELECT g.group_id g_group_id, g.name g_name, g.description g_description,"
+	private static final String SQL = "SELECT g.group_id g_group_id, g.name g_name, g.description g_description,"
 			+ " u.user_id u_user_id, u.name u_name, u.email u_email, u.password u_password, u.image_path "
 			+ "u_image_path, u.profile u_profile, u.deleted u_deleted, b.book_id b_book_id, b.isbn_id b_isbn_id, b.user_id b_user_id, "
 			+ "b.category_id b_category_id, b.title b_title, b.author b_author, b.published_date "
