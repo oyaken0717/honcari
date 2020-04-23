@@ -82,6 +82,7 @@ create table book_lending(
   , lend_user_id integer not null references users(user_id)
   , borrow_user_id integer not null references users(user_id)
   , book_id integer not null references books(book_id)
+  , lending_status integer not null
   , deadline date
 );
 
