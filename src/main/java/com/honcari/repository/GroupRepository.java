@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import com.honcari.domain.Book;
+import com.honcari.domain.BookOwner;
 import com.honcari.domain.Group;
 import com.honcari.domain.GroupRelation;
 import com.honcari.domain.User;
@@ -30,26 +30,27 @@ import com.honcari.domain.User;
 @Repository
 public class GroupRepository {
 
-	//yamadadai
 	private static final ResultSetExtractor<List<Group>> GROUP_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<Group> groupList = new ArrayList<>();
 		List<User> userList = new ArrayList<>();
-		List<Book> bookList = new ArrayList<>();
+		List<BookOwner> bookOwnerList = new ArrayList<>();
 
 		Group group = new Group();
 		User user = new User();
 		int beforeGroupId = 0;
 		int beforeUserId = 0;
-		int beforeBookId = 0;
+		int beforeBookOwnerId = 0;
 
 		while (rs.next()) {
 			int nowGroupId = rs.getInt("g_group_id");
 			if (beforeGroupId != nowGroupId) {
 				group = new Group();
-				group.setId(rs.getInt("g_group_id"));
+				group.setId(nowGroupId);
 				group.setName(rs.getString("g_name"));
 				group.setDescription(rs.getString("g_description"));
-				group.setUserId(rs.getInt("g_user_id"));
+				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
+				group.setIsPrivate(rs.getBoolean("g_is_private"));
+				group.setDeleted(rs.getBoolean("g_deleted"));
 				group.setUserList(userList);
 				groupList.add(group);
 				
@@ -59,7 +60,7 @@ public class GroupRepository {
 			int nowUserId = rs.getInt("u_user_id");
 			if (nowUserId != beforeUserId) {
 				user = new User();
-				bookList = new ArrayList<>();
+				bookOwnerList = new ArrayList<>();
 				user.setId(nowUserId);
 				user.setName(rs.getString("u_name"));
 				user.setEmail(rs.getString("u_email"));
@@ -67,31 +68,24 @@ public class GroupRepository {
 				user.setImagePath(rs.getString("u_image_path"));
 				user.setProfile(rs.getString("u_profile"));
 				user.setDeleted(rs.getBoolean("u_deleted"));
-				user.setBookList(bookList);
+				user.setBookOwnerList(bookOwnerList);
 				userList.add(user);
 
 				beforeUserId = nowUserId;
 			}
 
-			int bookId = rs.getInt("b_book_id");
-			if (bookId != beforeBookId) {
-				Book book = new Book();
-				book.setId(rs.getInt("b_book_id"));
-				book.setUserId(rs.getInt("b_user_id"));
-				book.setIsbnId(rs.getString("b_isbn_id"));
-				book.setCategoryId(rs.getInt("b_category_id"));
-				book.setTitle(rs.getString("b_title"));
-				book.setAuthor(rs.getString("b_author"));
-				book.setPublishedDate(rs.getString("b_published_date"));
-				book.setDescription(rs.getString("b_description"));
-				book.setPageCount(rs.getInt("b_page_count"));
-				book.setThumbnailPath(rs.getString("b_thumbnail_path"));
-				book.setStatus(rs.getInt("b_status"));
-				book.setComment(rs.getString("b_comment"));
-				book.setDeleted(rs.getBoolean("b_deleted"));
-				bookList.add(book);
+			int bookOwnerId = rs.getInt("bo_book_owner_id");
+			if (bookOwnerId != beforeBookOwnerId) {
+				BookOwner bookOwner = new BookOwner();
+				bookOwner.setBookOwnerId(bookOwnerId);
+				bookOwner.setUserId(rs.getInt("bo_user_id"));
+				bookOwner.setBookId(rs.getInt("bo_book_id"));
+				bookOwner.setCategoryId(rs.getInt("bo_category_id"));
+				bookOwner.setBookStatus(rs.getInt("bo_book_status"));
+				bookOwner.setComment(rs.getString("bo_comment"));
+				bookOwnerList.add(bookOwner);
 
-				beforeBookId = bookId;
+				beforeBookOwnerId = bookOwnerId;
 			}
 
 		}
@@ -107,16 +101,23 @@ public class GroupRepository {
 		return group;
 	};
 	
-	private static final String SQL = "SELECT g.group_id g_group_id, g.name g_name, g.description g_description, g.user_id g_user_id,"
-			+ " u.user_id u_user_id, u.name u_name, u.email u_email, u.password u_password, u.image_path "
-			+ "u_image_path, u.profile u_profile, u.deleted u_deleted, b.book_id b_book_id, b.isbn_id b_isbn_id, b.user_id b_user_id, "
-			+ "b.category_id b_category_id, b.title b_title, b.author b_author, b.published_date "
-			+ "b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path "
-			+ "b_thumbnail_path, b.status b_status, b.comment b_comment, b.deleted b_deleted "
-			+ "FROM groups g LEFT OUTER JOIN group_relationship gr ON "
-			+ "g.group_id = gr.group_id LEFT OUTER JOIN users u ON gr.user_id = u.user_id LEFT OUTER JOIN "
-			+ "books b ON u.user_id = b.user_id AND b.deleted <> true ";
-
+	/**
+	 * SQL文を取得するメソッド.
+	 * 
+	 * @return 定数化したSQL文
+	 */
+	private static final StringBuilder getSQL() {
+		StringBuilder SQL = new StringBuilder();
+		SQL.append("Select g.group_id g_group_id, g.name g_name, g.description g_description, g.owner_user_id g_owner_user_id, ");
+		SQL.append("g.is_private g_is_private, g.deleted g_deleted, u.user_id u_user_id, u.name u_name, u.email u_email, ");
+		SQL.append("u.password u_password, u.image_path u_image_path, u.profile u_profile, u.deleted u_deleted, ");
+		SQL.append("bo.book_owner_id bo_book_owner_id, bo.user_id bo_user_id, bo.book_id bo_book_id, bo.category_id bo_category_id, ");
+		SQL.append("bo.book_status bo_book_status, bo.comment bo_comment ");
+		SQL.append("FROM groups g LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id LEFT OUTER JOIN users u ");
+		SQL.append("ON gr.user_id = u.user_id LEFT OUTER JOIN book_owners bo ON u.user_id = bo.user_id AND bo.book_status <> 0");
+		return SQL;
+	}
+	
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
@@ -129,6 +130,12 @@ public class GroupRepository {
 		insert = withtableName.usingGeneratedKeyColumns("group_id");
 	}
 
+	/**
+	 * グループ情報をDBに格納するメソッド.
+	 * 
+	 * @param group グループ情報
+	 * @return グループ情報
+	 */
 	public Group insertGroup(Group group) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(group);
 		if (group.getId() == null) {
@@ -139,39 +146,40 @@ public class GroupRepository {
 		return null;
 	}
 
-	public void insertGroupRelation(GroupRelation realationship) {
+	/**
+	 * グループとユーザーを紐づけた情報をDBに格納するメソッド.
+	 * 
+	 * @param realation グループとユーザーを紐付けた情報
+	 */
+	public void insertGroupRelation(GroupRelation realation) {
 		String sql = "INSERT INTO group_relationship(user_id, group_id) VALUES(:userId, :groupId)";
-		SqlParameterSource param = new BeanPropertySqlParameterSource(realationship);
+		SqlParameterSource param = new BeanPropertySqlParameterSource(realation);
 		template.update(sql, param);
 	}
 
+	/**
+	 * 受け取ったパラメータからグループ情報を取得するメソッド.
+	 * 
+	 * @param name 検索パラメータ
+	 * @return グループ情報リスト
+	 */
 	public List<Group> findByLikeName(String name) {
 		String sql = "SELECT group_id,name,description,user_id FROM groups WHERE name LIKE :name ORDER BY group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		return template.query(sql, param, GROUP_ROW_MAPPER);
 	}
 	
+	/**
+	 * グループIDからグループ情報を取得するメソッド.
+	 * 
+	 * @param groupId グループID
+	 * @return グループ情報
+	 */
 	public Group findByGroupId(Integer groupId) {
-		String sql = SQL;
-		sql += " WHERE g.group_id = :groupId AND u.deleted = false ORDER BY g.group_id";
+		StringBuilder sql = getSQL();
+		sql.append(" WHERE g.group_id = :groupId AND u.deleted = false ORDER BY g.group_id");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
-		List<Group> groupList = template.query(sql, param, GROUP_RESULT_SET_EXTRACTOR);
+		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
 		return groupList.get(0);
-	}
-	
-	public List<Group> findByBelongUserId(Integer userId) {
-		String sql = SQL;
-		sql += " WHERE gr.user_id = :userId AND u.deleted = false ORDER BY g.group_id";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
-		List<Group> groupList = template.query(sql, param, GROUP_RESULT_SET_EXTRACTOR);
-		return groupList;
-	}
-	
-	public List<Group> findByUserId(Integer userId) {
-		String sql = SQL;
-		sql += " WHERE g.user_id = :userId AND u.deleted = false ORDER BY g.group_id";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
-		List<Group> groupList = template.query(sql, param, GROUP_RESULT_SET_EXTRACTOR);
-		return groupList;
 	}
 }
