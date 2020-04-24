@@ -8,7 +8,7 @@ import com.honcari.common.BookStatusEnum;
  * @author shumpei
  *
  */
-public class BookOwner {
+public class OwnedBookInfo {
 
 	/** ID */
 	private Integer bookOwnerId;
@@ -29,11 +29,11 @@ public class BookOwner {
 	/** カテゴリー */
 	private Category category;
 
-	public BookOwner() {
+	public OwnedBookInfo() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BookOwner(Integer bookOwnerId, Integer userId, Integer bookId, Integer categoryId, Integer bookStatus,
+	public OwnedBookInfo(Integer bookOwnerId, Integer userId, Integer bookId, Integer categoryId, Integer bookStatus,
 			String comment, User user, Book book, Category category) {
 		super();
 		this.bookOwnerId = bookOwnerId;

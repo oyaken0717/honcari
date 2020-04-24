@@ -2,15 +2,20 @@ package com.honcari.repository;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.Book;
+import com.honcari.domain.OwnedBookInfo;
 
 /**
  * booksテーブルを操作するリポジトリ.
@@ -23,7 +28,9 @@ public class BookRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-
+	
+	private SimpleJdbcInsert insert;
+	
 	/** bookドメインのローマッパー */
 	private final static RowMapper<Book> BOOK_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
@@ -41,18 +48,27 @@ public class BookRepository {
 	/**	SELECT文用のSQL定数 */
 	private static final String SELECT_SQL = "SELECT book_id, isbn_id, title, author, published_date, description, page_count, thumbnail_path FROM books";
 	
+	@PostConstruct
+	public void init() {
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcTemplate());
+		SimpleJdbcInsert withtableName = simpleJdbcInsert.withTableName("book_owners");
+		insert = withtableName.usingGeneratedKeyColumns("book_owner_id");
+	}
+	
 	/**
-	 * booksテーブルに書籍情報を登録する為のメソッド.
+	 * booksテーブルにデータを挿入する
 	 * 
-	 * @param book
+	 * @param book 書籍情報
+	 * @return 書籍情報
 	 */
-	public void insert(Book book) {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("INSERT INTO books(book_id, isbn_id, title, author, published_date, description, page_count, thumbnail_path) ")
-		.append("VALUES(DEFAULT, :isbnId, :title, :author, :publishedDate, :description, :pageCount, :thumbnailPath);");
-		String sql = stringBuilder.toString();
+	public Book insertBook(Book book) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(book);
-		template.update(sql, param);
+		if (book.getBookId() == null) {
+			Number key = insert.executeAndReturnKey(param);
+			book.setBookId(key.intValue());
+			return book;
+		}
+		return null;
 	}
 	
 	/**

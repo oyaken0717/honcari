@@ -13,10 +13,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.honcari.domain.Book;
 import com.honcari.domain.Category;
 import com.honcari.domain.LoginUser;
+import com.honcari.domain.OwnedBookInfo;
 import com.honcari.form.RegisterBookForm;
 import com.honcari.service.book.GetAllCategoryService;
 import com.honcari.service.book.GetByIsbnIdService;
 import com.honcari.service.book.RegisterBookService;
+import com.honcari.service.book.RegisterOwnedBookInfoService;
 
 /**
  * 書籍情報を登録するコントローラ.
@@ -36,6 +38,8 @@ public class RegisterBookController {
 	@Autowired
 	private GetByIsbnIdService getByIsbnIdService;
 	
+	@Autowired
+	private RegisterOwnedBookInfoService registerOwnedBookInfoService;
 	/**
 	 * 書籍登録画面を表示する.
 	 * 
@@ -45,7 +49,7 @@ public class RegisterBookController {
 	public String showRegisterBook(Model model) {
 		List<Category> categoryList = getAllCategoryService.findAll();
 		model.addAttribute("categoryList", categoryList);
-		return "/register_book";
+		return "book/register_book";
 	}
 	
 	/**
@@ -58,12 +62,15 @@ public class RegisterBookController {
 	 */
 	@RequestMapping("/register_book")
 	public String registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
+		Integer bookId = null;
+		Book book = new Book();
+		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 		//booksテーブルに既に該当の書籍が登録されているかISBNコードを用いて検索する
 		List<Book> bookList = getByIsbnIdService.getByIsbnId(registerBookForm.getIsbnId());
 		
-		//検索出来ない場合、書籍情報をbooksテーブルに挿入する
+		//検索出来ない場合、書籍情報をbooksテーブルに挿入しbook_idを戻り値として取得しbookIdに代入する
+		//検索出来た場合、bookList0番目のbook_idを取得しbookIdに代入する
 		if(bookList.isEmpty()) {
-			Book book = new Book();
 			Integer pageCount = null;
 			if(registerBookForm.getPageCount().equals("undefined")) {
 				pageCount = 0; //TODO テーブル側でdefault値入れてnullでも対応出来るようにする？
@@ -72,9 +79,18 @@ public class RegisterBookController {
 			}
 			book.setPageCount(pageCount);
 			BeanUtils.copyProperties(registerBookForm, book);
-			registerBookService.registerBook(book);
+			Book registeredBook = registerBookService.registerBook(book);
+			bookId = registeredBook.getBookId();
+		}else {
+			bookId = bookList.get(0).getBookId();
 		}
+		ownedBookInfo.setUserId(loginUser.getUser().getId());
+		ownedBookInfo.setBookId(bookId);
+		ownedBookInfo.setCategoryId(Integer.parseInt(registerBookForm.getCategoryId()));
+		ownedBookInfo.setBookStatus(1);
+		ownedBookInfo.setComment(registerBookForm.getComment());
+		registerOwnedBookInfoService.registerOwnedBookInfo(ownedBookInfo);
 		redirectAttributes.addFlashAttribute("check", "check");
-		return "redirect:show_register_book";
+		return "redirect:/show_register_book";
 	}
 }

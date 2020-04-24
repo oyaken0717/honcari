@@ -9,7 +9,7 @@ public class User {
 	private String password;
 	private String imagePath;
 	private String profile;
-	private List<BookOwner> bookOwnerList;
+	private List<OwnedBookInfo> bookOwnerList;
 	private List<Group> groupList;
 	private Boolean deleted;
 
@@ -61,11 +61,11 @@ public class User {
 		this.profile = profile;
 	}
 
-	public List<BookOwner> getBookOwnerList() {
+	public List<OwnedBookInfo> getBookOwnerList() {
 		return bookOwnerList;
 	}
 
-	public void setBookOwnerList(List<BookOwner> bookOwnerList) {
+	public void setBookOwnerList(List<OwnedBookInfo> bookOwnerList) {
 		this.bookOwnerList = bookOwnerList;
 	}
 

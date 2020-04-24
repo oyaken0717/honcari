@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import com.honcari.domain.BookOwner;
+import com.honcari.domain.OwnedBookInfo;
 import com.honcari.domain.Group;
 import com.honcari.domain.GroupRelation;
 import com.honcari.domain.User;
@@ -33,7 +33,7 @@ public class GroupRepository {
 	private static final ResultSetExtractor<List<Group>> GROUP_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<Group> groupList = new ArrayList<>();
 		List<User> userList = new ArrayList<>();
-		List<BookOwner> bookOwnerList = new ArrayList<>();
+		List<OwnedBookInfo> bookOwnerList = new ArrayList<>();
 
 		Group group = new Group();
 		User user = new User();
@@ -76,7 +76,7 @@ public class GroupRepository {
 
 			int bookOwnerId = rs.getInt("bo_book_owner_id");
 			if (bookOwnerId != beforeBookOwnerId) {
-				BookOwner bookOwner = new BookOwner();
+				OwnedBookInfo bookOwner = new OwnedBookInfo();
 				bookOwner.setBookOwnerId(bookOwnerId);
 				bookOwner.setUserId(rs.getInt("bo_user_id"));
 				bookOwner.setBookId(rs.getInt("bo_book_id"));

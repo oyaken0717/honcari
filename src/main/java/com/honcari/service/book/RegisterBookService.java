@@ -25,8 +25,9 @@ public class RegisterBookService {
 	 * booksテーブルに書籍情報を登録するメソッド.
 	 * 
 	 * @param book 書籍情報
+	 * @return 書籍情報
 	 */
-	public void registerBook(Book book) {
-		bookRepository.insert(book);
+	public Book registerBook(Book book) {
+		return bookRepository.insertBook(book);
 	}
 }

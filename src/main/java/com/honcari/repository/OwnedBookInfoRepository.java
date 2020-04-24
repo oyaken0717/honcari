@@ -1,9 +1,6 @@
 package com.honcari.repository;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,12 +9,11 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.honcari.domain.Book;
-import com.honcari.domain.BookOwner;
 import com.honcari.domain.Category;
-import com.honcari.domain.Group;
+import com.honcari.domain.OwnedBookInfo;
 import com.honcari.domain.User;
 
-public class BookOwnerRepository {
+public class OwnedBookInfoRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
@@ -124,26 +120,15 @@ public class BookOwnerRepository {
 		template.update(sql, param);
 	}
 	
-	@PostConstruct
-	public void init() {
-		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcTemplate());
-		SimpleJdbcInsert withtableName = simpleJdbcInsert.withTableName("book_owners");
-		insert = withtableName.usingGeneratedKeyColumns("book_owner_id");
-	}
-	
 	/**
-	 * book_ownersテーブルにデータを挿入する
+	 * owned_book_infoテーブルにデータを挿入する.
 	 * 
-	 * @param bookOwner 書籍所持者情報
-	 * @return 書籍所持者情報
+	 * @param ownedBookInfo 書籍情報
 	 */
-	public BookOwner insertBookOwner(BookOwner bookOwner) {
-		SqlParameterSource param = new BeanPropertySqlParameterSource(bookOwner);
-		if (bookOwner.getBookOwnerId() == null) {
-			Number key = insert.executeAndReturnKey(param);
-			bookOwner.setBookOwnerId(key.intValue());
-			return bookOwner;
-		}
-		return null;
+	public void insertOwnedBookInfo(OwnedBookInfo ownedBookInfo) {
+		String sql = "INSERT INTO owned_book_info(owened_book_info_id, user_id, book_id, category_id, book_status, comment) "
+				+ "VALUES(DEFAULT, :userId, :bookId, :categoryId, :bookStatus, :comment);";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(ownedBookInfo);
+		template.update(sql, param);
 	}
 }
