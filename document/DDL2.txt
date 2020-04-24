@@ -58,7 +58,7 @@ create table book_owners(
 -- book_rentals
 drop table if exists book_rentals cascade;
 create table book_rentals(
-  id serial primary key
+  book_rental_id serial primary key
   , lend_user_id integer not null references users(user_id)
   , borrow_user_id integer not null references users(user_id)
   , book_id integer not null references books(book_id)

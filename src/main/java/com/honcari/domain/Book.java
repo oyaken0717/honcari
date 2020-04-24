@@ -1,7 +1,5 @@
 package com.honcari.domain;
 
-import com.honcari.common.BookStatusEnum;
-
 /**
  * 本情報を管理するエンティティ.
  * 
@@ -11,13 +9,9 @@ import com.honcari.common.BookStatusEnum;
 public class Book {
 
 	/** ID */
-	private Integer id;
+	private Integer bookId;
 	/** ISBNコード(13) **/
 	private String isbnId;
-	/** ユーザーID */
-	private Integer userId;
-	/** カテゴリーID */
-	private Integer categoryId;
 	/** タイトル */
 	private String title;
 	/** 著者 */
@@ -30,32 +24,29 @@ public class Book {
 	private Integer pageCount;
 	/** サムネイル画像パス */
 	private String thumbnailPath;
-	/** 貸出状況 */
-	private Integer status;
-	/** ユーザー */
-	private User user;
-	/** カテゴリー */
-	private Category category;
-	/**	コメント */
-	private String comment;
-	/**	削除フラグ */
-	private Boolean deleted;
 
-	/**
-	 * 数字から貸出状況を取得する.
-	 * 
-	 * @return 貸出状況
-	 */
-	public String getBookLendingStatus() {
-		return BookStatusEnum.of(status).getKey();
+	public Book() {
 	}
 
-	public Integer getId() {
-		return id;
+	public Book(Integer bookId, String isbnId, String title, String author, String publishedDate, String description,
+			Integer pageCount, String thumbnailPath) {
+		super();
+		this.bookId = bookId;
+		this.isbnId = isbnId;
+		this.title = title;
+		this.author = author;
+		this.publishedDate = publishedDate;
+		this.description = description;
+		this.pageCount = pageCount;
+		this.thumbnailPath = thumbnailPath;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public Integer getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
 	}
 
 	public String getIsbnId() {
@@ -64,22 +55,6 @@ public class Book {
 
 	public void setIsbnId(String isbnId) {
 		this.isbnId = isbnId;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Integer getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(Integer categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	public String getTitle() {
@@ -130,50 +105,11 @@ public class Book {
 		this.thumbnailPath = thumbnailPath;
 	}
 
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", isbnId=" + isbnId + ", userId=" + userId + ", categoryId=" + categoryId
-				+ ", title=" + title + ", author=" + author + ", publishedDate=" + publishedDate + ", description="
-				+ description + ", pageCount=" + pageCount + ", thumbnailPath=" + thumbnailPath + ", status=" + status
-				+ ", user=" + user + ", category=" + category + ", comment=" + comment + ", deleted=" + deleted + "]";
+		return "Book [bookId=" + bookId + ", isbnId=" + isbnId + ", title=" + title + ", author=" + author
+				+ ", publishedDate=" + publishedDate + ", description=" + description + ", pageCount=" + pageCount
+				+ ", thumbnailPath=" + thumbnailPath + "]";
 	}
+
 }
