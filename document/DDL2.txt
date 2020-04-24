@@ -35,56 +35,61 @@ drop table if exists books cascade;
 create table books (
   book_id serial primary key
   , isbn_id text not null
-  , title text  not null
-  , author text  not null
+  , title text not null
+  , author text not null
   , published_date character varying(10) not null
   , description text  not null
   , page_count integer  not null
   , thumbnail_path text not null
 );
 
--- book ownership
-drop table if exists book_ownerships cascade;
+-- book_owners
+drop table if exists book_owners cascade;
 
-create table book_ownerships(
+create table book_owners(
   book_ownership_id serial primary key
    , user_id integer not null references users(user_id)
    , book_id integer not null references books(book_id)
    , category_id integer not null references category(category_id)
-   , status integer not null
+   , book_status integer not null
    , comment text
 );
 
+-- book_rentals
+drop table if exists book_rentals cascade;
+create table book_rentals(
+  id serial primary key
+  , lend_user_id integer not null references users(user_id)
+  , borrow_user_id integer not null references users(user_id)
+  , book_id integer not null references books(book_id)
+  , rental_status integer not null
+  , deadline date
+);
+
 ​
--- group
+-- groups
 drop table if exists groups cascade;
 ​
 create table groups (
   group_id serial primary key
   , name character varying(100) not null
   , description text
+  , owner_user_id integer
+  , is_private boolean default false
+  , deleted boolean
 );
+
 ​
+-- group_relations
+drop table if exists group_relations cascade;
 ​
--- group_relationship
-drop table if exists group_relationship cascade;
-​
-create table group_relationship (
-  id serial primary key
+create table group_relations (
+  group_relation_id serial primary key
   , user_id integer not null references users(user_id)
   , group_id integer not null references groups(group_id)
+  , relation_status integer not null 
 );​
 ​
--- book_lending
-drop table if exists book_lending cascade;
-create table book_lending(
-  id serial primary key
-  , lend_user_id integer not null references users(user_id)
-  , borrow_user_id integer not null references users(user_id)
-  , book_id integer not null references books(book_id)
-  , lending_status integer not null
-  , deadline date
-);
 
 -- 本登録​（ユーザー2登録後）
 INSERT INTO books (user_id, isbn_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status) 
