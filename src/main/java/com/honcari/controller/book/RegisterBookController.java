@@ -15,8 +15,8 @@ import com.honcari.domain.Category;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.form.RegisterBookForm;
-import com.honcari.service.book.GetAllCategoryService;
-import com.honcari.service.book.GetByIsbnIdService;
+import com.honcari.service.book.FindAllCategoryService;
+import com.honcari.service.book.FindByIsbnIdService;
 import com.honcari.service.book.RegisterBookService;
 import com.honcari.service.book.RegisterOwnedBookInfoService;
 
@@ -33,13 +33,14 @@ public class RegisterBookController {
 	private RegisterBookService registerBookService;
 
 	@Autowired
-	private GetAllCategoryService getAllCategoryService;
+	private FindAllCategoryService getAllCategoryService;
 	
 	@Autowired
-	private GetByIsbnIdService getByIsbnIdService;
+	private FindByIsbnIdService findByIsbnIdService;
 	
 	@Autowired
 	private RegisterOwnedBookInfoService registerOwnedBookInfoService;
+	
 	/**
 	 * 書籍登録画面を表示する.
 	 * 
@@ -53,7 +54,7 @@ public class RegisterBookController {
 	}
 	
 	/**
-	 * 書籍登録画面で送られたリクエストパラメータ情報をbooksテーブルに登録する
+	 * 書籍登録画面で送られたリクエストパラメータ情報をowned_book_infoテーブルに登録する
 	 * 
 	 * @param registerBookForm 書籍登録画面で送られたリクエストパラメータ
 	 * @param loginUser ログインしているユーザ情報
@@ -66,7 +67,7 @@ public class RegisterBookController {
 		Book book = new Book();
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 		//booksテーブルに既に該当の書籍が登録されているかISBNコードを用いて検索する
-		List<Book> bookList = getByIsbnIdService.getByIsbnId(registerBookForm.getIsbnId());
+		List<Book> bookList = findByIsbnIdService.getByIsbnId(registerBookForm.getIsbnId());
 		
 		//検索出来ない場合、書籍情報をbooksテーブルに挿入しbook_idを戻り値として取得しbookIdに代入する
 		//検索出来た場合、bookList0番目のbook_idを取得しbookIdに代入する
