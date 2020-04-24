@@ -15,6 +15,7 @@ import com.honcari.domain.Category;
 import com.honcari.domain.LoginUser;
 import com.honcari.form.RegisterBookForm;
 import com.honcari.service.book.GetAllCategoryService;
+import com.honcari.service.book.GetByIsbnIdService;
 import com.honcari.service.book.RegisterBookService;
 
 /**
@@ -31,6 +32,9 @@ public class RegisterBookController {
 
 	@Autowired
 	private GetAllCategoryService getAllCategoryService;
+	
+	@Autowired
+	private GetByIsbnIdService getByIsbnIdService;
 	
 	/**
 	 * 書籍登録画面を表示する.
@@ -54,20 +58,22 @@ public class RegisterBookController {
 	 */
 	@RequestMapping("/register_book")
 	public String registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
-		Book book = new Book();
-		book.setIsbnId(registerBookForm.getIsbnId());
-		book.setCategoryId(Integer.parseInt(registerBookForm.getCategoryId()));
-		Integer pageCount = null;
-		if(registerBookForm.getPageCount().equals("undefined")) {
-			pageCount = 0; //TODO値が取れなかった時の処理方法を考える
-		}else {
-			pageCount = Integer.parseInt(registerBookForm.getPageCount());
+		//booksテーブルに既に該当の書籍が登録されているかISBNコードを用いて検索する
+		List<Book> bookList = getByIsbnIdService.getByIsbnId(registerBookForm.getIsbnId());
+		
+		//検索出来ない場合、書籍情報をbooksテーブルに挿入する
+		if(bookList.isEmpty()) {
+			Book book = new Book();
+			Integer pageCount = null;
+			if(registerBookForm.getPageCount().equals("undefined")) {
+				pageCount = 0; //TODO テーブル側でdefault値入れてnullでも対応出来るようにする？
+			}else {
+				pageCount = Integer.parseInt(registerBookForm.getPageCount());
+			}
+			book.setPageCount(pageCount);
+			BeanUtils.copyProperties(registerBookForm, book);
+			registerBookService.registerBook(book);
 		}
-		book.setPageCount(pageCount);
-		book.setUserId(loginUser.getUser().getId());
-		book.setStatus(1); //statusの各値が未確定の為、仮登録　←登録時には貸出可になるように勝手に変更したby藤島
-		BeanUtils.copyProperties(registerBookForm, book);
-		registerBookService.registerBook(book);
 		redirectAttributes.addFlashAttribute("check", "check");
 		return "redirect:show_register_book";
 	}

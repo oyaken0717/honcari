@@ -1,20 +1,28 @@
 package com.honcari.repository;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.honcari.domain.Book;
+import com.honcari.domain.BookOwner;
 import com.honcari.domain.Category;
+import com.honcari.domain.Group;
 import com.honcari.domain.User;
 
 public class BookOwnerRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
+	
+	private SimpleJdbcInsert insert;
 	
 	//hatake
 	// 本情報に紐づくユーザー・カテゴリーのマッパー
@@ -114,5 +122,28 @@ public class BookOwnerRepository {
 		String sql = "UPDATE books SET deleted = true WHERE book_id = :bookId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("bookId", bookId);
 		template.update(sql, param);
+	}
+	
+	@PostConstruct
+	public void init() {
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcTemplate());
+		SimpleJdbcInsert withtableName = simpleJdbcInsert.withTableName("book_owners");
+		insert = withtableName.usingGeneratedKeyColumns("book_owner_id");
+	}
+	
+	/**
+	 * book_ownersテーブルにデータを挿入する
+	 * 
+	 * @param bookOwner 書籍所持者情報
+	 * @return 書籍所持者情報
+	 */
+	public BookOwner insertBookOwner(BookOwner bookOwner) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(bookOwner);
+		if (bookOwner.getBookOwnerId() == null) {
+			Number key = insert.executeAndReturnKey(param);
+			bookOwner.setBookOwnerId(key.intValue());
+			return bookOwner;
+		}
+		return null;
 	}
 }
