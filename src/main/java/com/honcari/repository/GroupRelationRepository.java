@@ -21,7 +21,7 @@ public class GroupRelationRepository {
 		gr.setId(rs.getInt("id"));
 		gr.setUserId(rs.getInt("user_id"));
 		gr.setGroupId(rs.getInt("group_id"));
-		gr.setRelationStatus(rs.getInt("relation_status"));
+		gr.setRelation_status(rs.getInt("relation_status"));
 		return gr;
 	};
 	

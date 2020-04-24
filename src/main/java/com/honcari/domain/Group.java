@@ -7,13 +7,10 @@ public class Group {
 	private Integer id;
 	private String name;
 	private String description;
-<<<<<<< HEAD
 	private Integer userId;
-=======
 	private Integer ownerUserId;
 	private Boolean isPrivate;
 	private Boolean deleted;
->>>>>>> origin/develop
 	private List<User> userList;
 
 	public Integer getId() {
@@ -39,14 +36,12 @@ public class Group {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-<<<<<<< HEAD
 	public Integer getUserId() {
 		return userId;
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-=======
 
 	public Integer getOwnerUserId() {
 		return ownerUserId;
@@ -72,7 +67,6 @@ public class Group {
 		this.deleted = deleted;
 	}
 
->>>>>>> origin/develop
 	public List<User> getUserList() {
 		return userList;
 	}
@@ -83,22 +77,9 @@ public class Group {
 
 	@Override
 	public String toString() {
-<<<<<<< HEAD
-		return "Group [id=" + id + ", name=" + name + ", description=" + description + ", userId=" + userId
-				+ ", userList=" + userList + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-=======
+
 		return "Group [id=" + id + ", name=" + name + ", description=" + description + ", ownerUserId=" + ownerUserId
 				+ ", isPrivate=" + isPrivate + ", deleted=" + deleted + ", userList=" + userList + "]";
 	}
->>>>>>> origin/develop
 
 }
