@@ -30,7 +30,6 @@ public class OwnedBookInfo {
 	private Category category;
 
 	public OwnedBookInfo() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public OwnedBookInfo(Integer ownedBookInfoId, Integer userId, Integer bookId, Integer categoryId,
