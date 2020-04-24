@@ -45,9 +45,10 @@ create table books (
 
 -- book_owners
 drop table if exists book_owners cascade;
+drop table if exists owned_book_info cascade;
 
-create table book_owners(
-  book_owner_id serial primary key
+create table owned_book_info(
+  owned_book_info_id serial primary key
    , user_id integer not null references users(user_id)
    , book_id integer not null references books(book_id)
    , category_id integer not null references category(category_id)
