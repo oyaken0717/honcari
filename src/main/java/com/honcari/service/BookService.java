@@ -35,7 +35,7 @@ public class BookService {
 	 * @return 本情報
 	 */
 	public Book findByBookId(Integer bookId) {
-		return bookRepository.findByBookId(bookId);
+		return bookRentalRepository.findByBookId(bookId);
 	}
 
 	/**
