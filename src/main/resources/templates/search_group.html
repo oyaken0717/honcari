@@ -42,7 +42,8 @@
 			var groupHtml = "";
 			for(let i = 0; i < groupList.length; i++){
 				let group =  groupList[i];
-				groupHtml += '<div>グループ名：<a href="/show_group_detail?id='+group.id+'">'+group.name+'</a><br>グループについて:'+group.description+'</div><hr>'
+				groupHtml += '<div>グループ名：<a href="/show_group_detail?id='+group.id+'">'
+						+group.name+'</a><br>グループについて:'+group.description+'</div><hr>'
 			}
 			$('#group').html(groupHtml);
 		}
@@ -59,6 +60,7 @@
 			</div>
 		</div>
 		<div id="group"></div>
+
 	</div>
 </header>
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

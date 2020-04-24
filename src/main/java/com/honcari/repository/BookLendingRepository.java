@@ -40,12 +40,12 @@ public class BookLendingRepository {
 			+ "u1.user_id u1_user_id,u1.name u1_name,u1.email "
 			+ "u1_email,u1.password u1_password,u1.image_path u1_image_path,u1.profile u1_profile,"
 			// 貸し手のグループ情報
-			+ "g1.group_id g1_group_id,g1.name g1_name,g1.description g1_description,"
+			+ "g1.group_id g1_group_id,g1.name g1_name,g1.description g1_description,g1.user_id g1_user_id,"
 			// bookLendingのborrowUserIdを元にborrowUserドメインを取得↓
 			+ "u2.user_id u2_user_id,u2.name u2_name,u2.email "
 			+ "u2_email,u2.password u2_password,u2.image_path u2_image_path,u2.profile u2_profile,"
 			// 借り手のグループ情報
-			+ "g2.group_id g2_group_id,g2.name g2_name,g2.description g2_description "
+			+ "g2.group_id g2_group_id,g2.name g2_name,g2.description g2_description,g2.user_id g2_user_id "
 			// テーブル選択
 			+ "FROM book_lending br "
 			// bookと結合↓
@@ -134,6 +134,7 @@ public class BookLendingRepository {
 				lenderGroup.setId(lenderGroupId);
 				lenderGroup.setName(rs.getString("g1_name"));
 				lenderGroup.setDescription(rs.getString("g1_description"));
+				lenderGroup.setUserId(rs.getInt("g1_user_id"));
 				lenderGroupList.add(lenderGroup);
 			}
 			// 借り手ユーザーグループを取得
@@ -143,6 +144,7 @@ public class BookLendingRepository {
 				borrowerGroup.setId(borrowerGroupId);
 				borrowerGroup.setName(rs.getString("g2_name"));
 				borrowerGroup.setDescription(rs.getString("g2_description"));
+				borrowerGroup.setUserId(rs.getInt("g1_user_id"));
 				borrowerGroupList.add(borrowerGroup);
 			}
 			beforeLenderGroupId = lenderGroupId;

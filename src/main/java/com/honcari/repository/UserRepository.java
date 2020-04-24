@@ -86,6 +86,7 @@ public class UserRepository {
 				group.setId(rs.getInt("g_group_id"));
 				group.setName(rs.getString("g_name"));
 				group.setDescription(rs.getString("g_description"));
+				group.setUserId(rs.getInt("g_user_id"));
 				groupList.add(group);
 
 				beforeGroupId = groupId;
@@ -166,7 +167,7 @@ public class UserRepository {
 		String sql = "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile, u.deleted u_deleted,"
 				+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id, b.category_id b_category_id, b.title b_title, b.author b_author, "
 				+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, "
-				+ "b.status b_status, b.comment b_comment, b.deleted b_deleted, g.group_id g_group_id,g.name g_name,g.description g_description "
+				+ "b.status b_status, b.comment b_comment, b.deleted b_deleted, g.group_id g_group_id,g.name g_name,g.description g_description,g.user_id g_user_id "
 				+ "FROM users u LEFT JOIN books b ON u.user_id = b.user_id AND b.deleted <> true LEFT JOIN group_relationship gr ON u.user_id = gr.user_id LEFT JOIN groups g ON g.group_id=gr.group_id "
 				+ "WHERE u.user_id = :userId AND u.deleted = false;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
@@ -256,7 +257,7 @@ public class UserRepository {
 		String sql = "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile, u.deleted u_deleted,"
 				+ "b.book_id b_book_id,b.isbn_id b_isbn_id,b.user_id b_user_id, b.category_id b_category_id, b.title b_title, b.author b_author, "
 				+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, "
-				+ "b.status b_status, b.comment b_comment, b.deleted b_deleted, g.group_id g_group_id,g.name g_name,g.description g_description FROM users u LEFT JOIN books b ON u.user_id = b.user_id "
+				+ "b.status b_status, b.comment b_comment, b.deleted b_deleted, g.group_id g_group_id,g.name g_name,g.description g_description g.user_id g_user_id FROM users u LEFT JOIN books b ON u.user_id = b.user_id "
 				+ "AND b.deleted <> true LEFT JOIN group_relationship gr ON u.user_id = gr.user_id LEFT JOIN groups g ON g.group_id=gr.group_id WHERE u.user_id = :userId AND b.category_id = :categoryId AND u.deleted = false;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
 		return template.query(sql, param, USER_RESULT_SET_EXTRACTOR2);

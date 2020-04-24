@@ -49,6 +49,7 @@ public class GroupRepository {
 				group.setId(rs.getInt("g_group_id"));
 				group.setName(rs.getString("g_name"));
 				group.setDescription(rs.getString("g_description"));
+				group.setUserId(rs.getInt("g_user_id"));
 				group.setUserList(userList);
 				groupList.add(group);
 				
@@ -102,10 +103,11 @@ public class GroupRepository {
 		group.setId(rs.getInt("group_id"));
 		group.setName(rs.getString("name"));
 		group.setDescription(rs.getString("description"));
+		group.setUserId(rs.getInt("user_id"));
 		return group;
 	};
 	
-	private static String SQL = "SELECT g.group_id g_group_id, g.name g_name, g.description g_description,"
+	private static String SQL = "SELECT g.group_id g_group_id, g.name g_name, g.description g_description, g.user_id g_user_id,"
 			+ " u.user_id u_user_id, u.name u_name, u.email u_email, u.password u_password, u.image_path "
 			+ "u_image_path, u.profile u_profile, u.deleted u_deleted, b.book_id b_book_id, b.isbn_id b_isbn_id, b.user_id b_user_id, "
 			+ "b.category_id b_category_id, b.title b_title, b.author b_author, b.published_date "
@@ -144,7 +146,7 @@ public class GroupRepository {
 	}
 
 	public List<Group> findByLikeName(String name) {
-		String sql = "SELECT group_id,name,description FROM groups WHERE name LIKE :name ORDER BY group_id";
+		String sql = "SELECT group_id,name,description,user_id FROM groups WHERE name LIKE :name ORDER BY group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		return template.query(sql, param, GROUP_ROW_MAPPER);
 	}
@@ -155,5 +157,21 @@ public class GroupRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
 		List<Group> groupList = template.query(sql, param, GROUP_RESULT_SET_EXTRACTOR);
 		return groupList.get(0);
+	}
+	
+	public List<Group> findByBelongUserId(Integer userId) {
+		String sql = SQL;
+		sql += " WHERE gr.user_id = :userId AND u.deleted = false ORDER BY g.group_id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		List<Group> groupList = template.query(sql, param, GROUP_RESULT_SET_EXTRACTOR);
+		return groupList;
+	}
+	
+	public List<Group> findByUserId(Integer userId) {
+		String sql = SQL;
+		sql += " WHERE g.user_id = :userId AND u.deleted = false ORDER BY g.group_id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		List<Group> groupList = template.query(sql, param, GROUP_RESULT_SET_EXTRACTOR);
+		return groupList;
 	}
 }

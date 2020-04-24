@@ -27,6 +27,7 @@ $(function(){
 		let formElements = document.forms.form;
 		formElements.submit.disabled = true;
 		document.getElementById('button').innerText = '参加済み'
+		$('#invite').html('<a href="#">招待する<a>');
 		}
 	})
 	.fail(function() {
@@ -37,16 +38,19 @@ $(function(){
 });
 </script>
 	<form name="form" th:action="@{/join_group}">
-	グループ名：<div th:text="${group.name}"></div>
-	グループについて：<div th:text="${group.description}"></div>
+	グループ名：<span th:text="${group.name}"></span><br>
+	グループについて：<span th:text="${group.description}"></span><br>
 	参加ユーザー：<br>
 	<div th:each="user : ${group.userList}">
 		<span th:text="${user.name}"></span>
-	</div>
-	<input type="hidden" id="groupId" name="groupId" th:value="${group.id}">
-	<button id="button" name="submit">このグループに参加する</button>
+	</div>	
+	<input type="hidden" id="groupId" name="groupId" th:value="${group.id}"><br>
+	<a href="" th:if="${userId}==${group.userId}"><button>グループを編集する</button></a><br>
+	<button id="button" name="submit">このグループに参加する</button><br>
+	<div id="invite"></div>
 	<hr>
 	</form>
 	<a th:href="@{/to_search_group}">戻る</a>
+
 </body>
 </html>

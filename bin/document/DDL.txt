@@ -1,6 +1,5 @@
 -- users
 drop table if exists users cascade;
-​
 create table users(
   user_id serial primary key
   , name character varying(100) not null
@@ -13,7 +12,6 @@ create table users(
 ​
 -- category
 drop table if exists category cascade;
-​
 create table category (
   category_id serial primary key
   , name character varying(100) not null
@@ -31,7 +29,6 @@ insert into category values(9, 'その他');
 ​
 -- books
 drop table if exists books cascade;
-​
 create table books (
   book_id serial primary key
   , user_id integer not null references users(user_id)
@@ -44,23 +41,23 @@ create table books (
   , page_count integer  not null
   , thumbnail_path text not null
   , status integer not null
+  , comment text
   , deleted boolean default false not null
 );
 ​
 -- group
 drop table if exists groups cascade;
-​
 create table groups (
   group_id serial primary key
   , name character varying(100) not null
   , description text
+  , user_id Integer not null
 );
 ​
 insert into groups values(1,'グループ','');
 ​
 -- group_relationship
 drop table if exists group_relationship cascade;
-​
 create table group_relationship (
   id serial primary key
   , user_id integer not null references users(user_id)
@@ -74,18 +71,19 @@ create table book_lending(
   , lend_user_id integer not null references users(user_id)
   , borrow_user_id integer not null references users(user_id)
   , book_id integer not null references books(book_id)
+  , lending_status Integer default 0
   , deadline date
 );
 
 -- 本登録​（ユーザー2人登録後）
 INSERT INTO books (user_id, isbn_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status) 
-VALUES (2, 9784781603476, 1, '吾輩は猫である', '夏目漱石', '2020-04', '英語教師・珍野苦沙弥の家に住みついた一匹の猫。自らを「吾輩」と称し、
+VALUES (1, 9784781603476, 1, '吾輩は猫である', '夏目漱石', '2020-04', '英語教師・珍野苦沙弥の家に住みついた一匹の猫。自らを「吾輩」と称し、
 発達した知識を持つ名無し猫が、自身の視点から見た人間世界の滑稽さや、珍野家を取り巻く個性的な人物たちの生態を面白おかしく、鋭く風刺的に批評してゆく...
 夏目漱石の処女小説であり、出世作ともなった近代日本を代表する不朽のユーモア小説を漫画化。', 184, 'http://books.google.com/books/content?id=
 Bdh_RQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 1);
 
 INSERT INTO books (user_id, isbn_id, category_id, title, author, published_date, description, page_count, thumbnail_path, status) 
-VALUES (1, 9784781603476, 1, '吾輩は猫である', '夏目漱石', '2020-04', '英語教師・珍野苦沙弥の家に住みついた一匹の猫。自らを「吾輩」と称し、
+VALUES (2, 9784781603476, 1, '吾輩は猫である', '夏目漱石', '2020-04', '英語教師・珍野苦沙弥の家に住みついた一匹の猫。自らを「吾輩」と称し、
 発達した知識を持つ名無し猫が、自身の視点から見た人間世界の滑稽さや、珍野家を取り巻く個性的な人物たちの生態を面白おかしく、鋭く風刺的に批評してゆく...
 夏目漱石の処女小説であり、出世作ともなった近代日本を代表する不朽のユーモア小説を漫画化。', 184, 'http://books.google.com/books/content?id=
-Bdh_RQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 1)
+Bdh_RQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 1);
