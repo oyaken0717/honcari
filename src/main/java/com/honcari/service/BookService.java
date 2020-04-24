@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.domain.Book;
-import com.honcari.domain.BookLending;
-import com.honcari.repository.BookLendingRepository;
+import com.honcari.domain.BookRental;
+import com.honcari.repository.BookRentalRepository;
 import com.honcari.repository.BookRepository;
 
 /**
@@ -26,7 +26,7 @@ public class BookService {
 	private BookRepository bookRepository;
 
 	@Autowired
-	private BookLendingRepository bookLendingRepository;
+	private BookRentalRepository bookLendingRepository;
 
 	/**
 	 * 本IDから本情報を取得するメソッド.
@@ -61,7 +61,7 @@ public class BookService {
 	 * @param bookId        本ID
 	 */
 	public void cancelLendingBookRequest(Integer bookLendingId, Integer bookId) {
-		BookLending bookLending = new BookLending();
+		BookRental bookLending = new BookRental();
 		bookLending.setBookLendingId(bookLendingId);
 		bookLending.setLendingStatus(8); // 申請キャンセル
 		bookLendingRepository.update(bookLending);
@@ -77,7 +77,7 @@ public class BookService {
 	 */
 	public void runApprovalLendingBookRequest(Integer bookLendingId, Integer bookId) {
 		// book_lendingテーブルの更新処理
-		BookLending bookLending = new BookLending();
+		BookRental bookLending = new BookRental();
 		bookLending.setBookLendingId(bookLendingId);
 		bookLending.setLendingStatus(1); //貸出承認済み
 		bookLendingRepository.update(bookLending);
@@ -93,7 +93,7 @@ public class BookService {
 	 * @param bookId 本ID
 	 */
 	public void confirmBookReturn(Integer bookLendingId, Integer bookId, Integer bookStatus) {
-		BookLending bookLending = new BookLending();
+		BookRental bookLending = new BookRental();
 		bookLending.setBookLendingId(bookLendingId);
 		bookLending.setLendingStatus(3); // 返却済み
 		bookLendingRepository.update(bookLending);
@@ -106,7 +106,7 @@ public class BookService {
 	 * @param lendUserId 貸し手ID
 	 * @return　貸出状況一覧
 	 */
-	public List<BookLending> searchBookLendingListByLendUserId(Integer lendUserId){
+	public List<BookRental> searchBookLendingListByLendUserId(Integer lendUserId){
 		return bookLendingRepository.findByLendUserIdAndLendingStatus(lendUserId);
 	}
 	
@@ -116,7 +116,7 @@ public class BookService {
 	 * @param borrowUserId 借り手ID
 	 * @return 貸出状況一覧
 	 */
-	public List<BookLending> searchBookLendingListByBorrowUserId(Integer borrowUserId){
+	public List<BookRental> searchBookLendingListByBorrowUserId(Integer borrowUserId){
 		return bookLendingRepository.findByBorrowUserIdAndLendingStatus(borrowUserId);
 	}
 	
@@ -127,7 +127,7 @@ public class BookService {
 	 * @param userId ユーザーID
 	 * @return 貸出情報
 	 */
-	public List<BookLending> showWaitApprovalBookLendingList(Integer lendUserId) {
+	public List<BookRental> showWaitApprovalBookLendingList(Integer lendUserId) {
 		Integer waitApprovalStatus = 0; // 承認待ち
 		return bookLendingRepository.findByLendUserIdAndLendingStatus(lendUserId, waitApprovalStatus);
 	}
@@ -138,7 +138,7 @@ public class BookService {
 	 * @param userId ユーザーID
 	 * @return 貸出情報
 	 */
-	public List<BookLending> showWaitApprovalBookBorrowingList(Integer borrowUserId) {
+	public List<BookRental> showWaitApprovalBookBorrowingList(Integer borrowUserId) {
 		Integer waitApprovalStatus = 0; // 承認待ち
 		return bookLendingRepository.findByBorrowUserIdAndLendingStatus(borrowUserId, waitApprovalStatus);
 	}

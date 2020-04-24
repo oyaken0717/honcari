@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.Book;
 import com.honcari.domain.Group;
-import com.honcari.domain.GroupRealationship;
+import com.honcari.domain.GroupRelation;
 import com.honcari.domain.User;
 
 /**
@@ -30,6 +30,7 @@ import com.honcari.domain.User;
 @Repository
 public class GroupRepository {
 
+	//yamadadai
 	private static final ResultSetExtractor<List<Group>> GROUP_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<Group> groupList = new ArrayList<>();
 		List<User> userList = new ArrayList<>();
@@ -136,7 +137,7 @@ public class GroupRepository {
 		return null;
 	}
 
-	public void insertGroupRelation(GroupRealationship realationship) {
+	public void insertGroupRelation(GroupRelation realationship) {
 		String sql = "INSERT INTO group_relationship(user_id, group_id) VALUES(:userId, :groupId)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(realationship);
 		template.update(sql, param);
