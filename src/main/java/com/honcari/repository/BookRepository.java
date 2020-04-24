@@ -24,6 +24,7 @@ public class BookRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
+	//hatake
 	// 本情報に紐づくユーザー・カテゴリーのマッパー
 	private final static RowMapper<Book> BOOK_USER_CATEGORY_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
