@@ -13,7 +13,7 @@ import com.honcari.repository.BookRepository;
  * @author hatakeyamakouta
  *
  */
-public class GetByIsbnIdService {
+public class FindByIsbnIdService {
 
 	@Autowired
 	private BookRepository bookRepository;

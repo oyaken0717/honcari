@@ -13,7 +13,7 @@ import com.honcari.repository.CategoryRepository;
  * @author hatakeyamakouta
  *
  */
-public class GetAllCategoryService {
+public class FindAllCategoryService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;

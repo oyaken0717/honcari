@@ -11,7 +11,7 @@ import com.honcari.common.BookStatusEnum;
 public class OwnedBookInfo {
 
 	/** ID */
-	private Integer bookOwnerId;
+	private Integer ownedBookInfoId;
 	/** ユーザーID */
 	private Integer userId;
 	/** 本ID */
@@ -33,10 +33,10 @@ public class OwnedBookInfo {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OwnedBookInfo(Integer bookOwnerId, Integer userId, Integer bookId, Integer categoryId, Integer bookStatus,
-			String comment, User user, Book book, Category category) {
+	public OwnedBookInfo(Integer ownedBookInfoId, Integer userId, Integer bookId, Integer categoryId,
+			Integer bookStatus, String comment, User user, Book book, Category category) {
 		super();
-		this.bookOwnerId = bookOwnerId;
+		this.ownedBookInfoId = ownedBookInfoId;
 		this.userId = userId;
 		this.bookId = bookId;
 		this.categoryId = categoryId;
@@ -56,12 +56,12 @@ public class OwnedBookInfo {
 		return BookStatusEnum.of(bookStatus).getKey();
 	}
 
-	public Integer getBookOwnerId() {
-		return bookOwnerId;
+	public Integer getOwnedBookInfoId() {
+		return ownedBookInfoId;
 	}
 
-	public void setBookOwnerId(Integer bookOwnerId) {
-		this.bookOwnerId = bookOwnerId;
+	public void setOwnedBookInfoId(Integer ownedBookInfoId) {
+		this.ownedBookInfoId = ownedBookInfoId;
 	}
 
 	public Integer getUserId() {
@@ -130,9 +130,8 @@ public class OwnedBookInfo {
 
 	@Override
 	public String toString() {
-		return "BookOwner [bookOwnerId=" + bookOwnerId + ", userId=" + userId + ", bookId=" + bookId + ", categoryId="
-				+ categoryId + ", bookStatus=" + bookStatus + ", comment=" + comment + ", user=" + user + ", book="
-				+ book + ", category=" + category + "]";
+		return "OwnedBookInfo [ownedBookInfoId=" + ownedBookInfoId + ", userId=" + userId + ", bookId=" + bookId
+				+ ", categoryId=" + categoryId + ", bookStatus=" + bookStatus + ", comment=" + comment + ", user="
+				+ user + ", book=" + book + ", category=" + category + "]";
 	}
-
 }

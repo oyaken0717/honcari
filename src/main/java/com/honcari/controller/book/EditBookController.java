@@ -7,10 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.domain.Book;
 import com.honcari.domain.Category;
-import com.honcari.service.BookService;
-import com.honcari.service.book.GetAllCategoryService;
+import com.honcari.domain.OwnedBookInfo;
+import com.honcari.service.book.EditOwnedBookInfoService;
+import com.honcari.service.book.FindByOwnedBookInfoService;
+import com.honcari.service.book.FindAllCategoryService;
 
 /**
  * 書籍情報を編集するコントローラ.
@@ -22,23 +23,27 @@ import com.honcari.service.book.GetAllCategoryService;
 public class EditBookController {
 
 	@Autowired
-	private BookService bookService;
+	private EditOwnedBookInfoService editOwnedBookInfoService;
 	
 	@Autowired
-	private GetAllCategoryService getAllCategoryService;
+	private FindAllCategoryService findAllCategoryService;
+	
+	@Autowired
+	private FindByOwnedBookInfoService findByOwnedBookInfoService;
+	
 	
 	/**
-	 * 本編集ページを表示する.
+	 * 書籍編集ページを表示する.
 	 * 
 	 * @param model リクエストスコープ
-	 * @param bookId 本ID
-	 * @return　本詳細ページ
+	 * @param ownedBookInfoId ユーザが所有している書籍情報
+	 * @return 書籍編集ページ
 	 */
 	@RequestMapping("/show_edit_book")
-	public String showEditBook(Model model, Integer bookId) {
-		Book book = bookService.findByBookId(bookId);
-		model.addAttribute("book", book);
-		List<Category> categoryList = getAllCategoryService.findAll();
+	public String showEditBook(Model model, Integer ownedBookInfoId) {
+		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
+		model.addAttribute("ownedBookInfo", ownedBookInfo);
+		List<Category> categoryList = findAllCategoryService.findAll();
 		model.addAttribute("categoryList", categoryList);
 		return "book/edit_book";
 	}
@@ -53,8 +58,11 @@ public class EditBookController {
 	 * @return マイブック
 	 */
 	@RequestMapping("/edit_book")
-	public String editBook(Integer bookId, Integer categoryId, String comment) {
-		bookService.editBook(bookId, categoryId, comment);
+	public String editBook(Integer ownedBookInfoId, Integer categoryId, String comment) {
+		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
+		ownedBookInfo.setCategoryId(categoryId);
+		ownedBookInfo.setComment(comment);
+		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
 		return "redirect:/show_my_book";
 	}
 	
@@ -65,8 +73,10 @@ public class EditBookController {
 	 * @return マイブック
 	 */
 	@RequestMapping("/delete_book")
-	public String deleteBook(Integer bookId) {
-		bookService.deleteBook(bookId);
+	public String deleteBook(Integer ownedBookInfoId) {
+		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
+		ownedBookInfo.setBookStatus(4);
+		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
 		return "redirect:/show_my_book";
 	}
 }
