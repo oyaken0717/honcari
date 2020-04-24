@@ -27,7 +27,7 @@ public class BookRepository {
 	/** bookドメインのローマッパー */
 	private final static RowMapper<Book> BOOK_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
-		book.setId(rs.getInt("b_book_id"));
+		book.setBookId(rs.getInt("b_book_id"));
 		book.setIsbnId(rs.getString("b_isbn_id"));
 		book.setTitle(rs.getString("b_title"));
 		book.setAuthor(rs.getString("b_author"));
