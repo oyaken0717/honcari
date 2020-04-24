@@ -10,13 +10,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.honcari.domain.GroupRealationship;
+import com.honcari.domain.GroupRelation;
 
 @Repository
 public class GroupRelationshipRepository {
 	
-	private static final RowMapper<GroupRealationship> GROUP_R_ROW_MAPPER = (rs, i) -> {
-		GroupRealationship gr = new GroupRealationship();
+	private static final RowMapper<GroupRelation> GROUP_R_ROW_MAPPER = (rs, i) -> {
+		GroupRelation gr = new GroupRelation();
 		gr.setId(rs.getInt("id"));
 		gr.setUserId(rs.getInt("user_id"));
 		gr.setGroupId(rs.getInt("group_id"));
@@ -27,10 +27,10 @@ public class GroupRelationshipRepository {
 	private NamedParameterJdbcTemplate template;
 	
 	
-	public GroupRealationship findByUserIdAndGroupId(Integer userId, Integer groupId) {
+	public GroupRelation findByUserIdAndGroupId(Integer userId, Integer groupId) {
 		String sql = "SELECT id,user_id,group_id FROM group_relationship WHERE user_id = :userId AND group_id = :groupId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
-		List<GroupRealationship> grList = template.query(sql, param, GROUP_R_ROW_MAPPER);	
+		List<GroupRelation> grList = template.query(sql, param, GROUP_R_ROW_MAPPER);	
 		if(grList.isEmpty()) {
 			return null;
 		}

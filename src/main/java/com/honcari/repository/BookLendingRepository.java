@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.Book;
-import com.honcari.domain.BookLending;
+import com.honcari.domain.BookRental;
 import com.honcari.domain.Category;
 import com.honcari.domain.Group;
 import com.honcari.domain.User;
@@ -61,8 +61,8 @@ public class BookLendingRepository {
 			// グループと結合
 			+ "INNER JOIN group_relationship gr2 ON u2.user_id = gr2.user_id INNER JOIN groups g2 ON g2.group_id = gr2.group_id ";
 
-	private static ResultSetExtractor<List<BookLending>> BR_RESULT_SET_EXTRACTOR = (rs) -> {
-		List<BookLending> bookLendingList = new ArrayList<>();
+	private static ResultSetExtractor<List<BookRental>> BR_RESULT_SET_EXTRACTOR = (rs) -> {
+		List<BookRental> bookLendingList = new ArrayList<>();
 		List<Group> lenderGroupList = null;
 		List<Group> borrowerGroupList = null;
 		int beforeBrId = 0;
@@ -73,7 +73,7 @@ public class BookLendingRepository {
 			int nowBrId = rs.getInt("br_book_lending_id");
 			if (nowBrId != beforeBrId) {
 				// 貸し借り情報をインスタンス化
-				BookLending bookLending = new BookLending();
+				BookRental bookLending = new BookRental();
 				bookLending.setBookLendingId(nowBrId);
 				bookLending.setLendUserId(rs.getInt("br_lend_user_id"));
 				bookLending.setBorrowUserId(rs.getInt("br_borrow_user_id"));
@@ -152,8 +152,8 @@ public class BookLendingRepository {
 		return bookLendingList;
 	};
 
-	private static final RowMapper<BookLending> BOOK_LENDING_ROW_MAPPER = (rs, i) -> {
-		BookLending bookLending = new BookLending();
+	private static final RowMapper<BookRental> BOOK_LENDING_ROW_MAPPER = (rs, i) -> {
+		BookRental bookLending = new BookRental();
 		bookLending.setBookId(rs.getInt("id"));
 		bookLending.setLendUserId(rs.getInt("lend_user_id"));
 		bookLending.setBorrowUserId(rs.getInt("borrow_user_id"));
@@ -190,7 +190,7 @@ public class BookLendingRepository {
 	 * 
 	 * @param bookLending 本貸出に関する情報
 	 */
-	public void update(BookLending bookLending) {
+	public void update(BookRental bookLending) {
 		String sql = "UPDATE book_lending SET lending_status = :lendingStatus WHERE id = :bookLendingId";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(bookLending);
 		template.update(sql, param);
@@ -203,12 +203,12 @@ public class BookLendingRepository {
 	 * @param lendingStatus 貸出状況
 	 * @return 貸借情報一覧
 	 */
-	public List<BookLending> findByLendUserIdAndLendingStatus(Integer lendUserId) {
+	public List<BookRental> findByLendUserIdAndLendingStatus(Integer lendUserId) {
 		String strSql = SQL;
 		strSql = strSql + " WHERE br.lend_user_id = :lendUserId AND (br.lending_status = 0 "
 				+ "OR br.lending_status = 1 OR br.lending_status = 2) ORDER BY br.id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("lendUserId", lendUserId);
-		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
+		List<BookRental> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
 	}
 
@@ -219,12 +219,12 @@ public class BookLendingRepository {
 	 * @param lendingStatus 貸出状況
 	 * @return 貸借情報一覧
 	 */
-	public List<BookLending> findByLendUserIdAndLendingStatus(Integer lendUserId, Integer lendingStatus) {
+	public List<BookRental> findByLendUserIdAndLendingStatus(Integer lendUserId, Integer lendingStatus) {
 		String strSql = SQL;
 		strSql = strSql + " WHERE br.lend_user_id = :lendUserId AND br.lending_status = :lendingStatus";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("lendUserId", lendUserId)
 				.addValue("lendingStatus", lendingStatus);
-		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
+		List<BookRental> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
 	}
 
@@ -234,12 +234,12 @@ public class BookLendingRepository {
 	 * @param borrowUserId 借り手ユーザーID
 	 * @return 貸出情報一覧
 	 */
-	public List<BookLending> findByBorrowUserIdAndLendingStatus(Integer borrowUserId) {
+	public List<BookRental> findByBorrowUserIdAndLendingStatus(Integer borrowUserId) {
 		String strSql = SQL;
 		strSql = strSql + " WHERE br.borrow_user_id = :borrowUserId AND (br.lending_status = 0 "
 				+ "OR br.lending_status = 1 OR br.lending_status = 2) ORDER BY br.id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId);
-		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
+		List<BookRental> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
 	}
 
@@ -250,12 +250,12 @@ public class BookLendingRepository {
 	 * @param lendingStatus 貸出状況
 	 * @return 貸出情報一覧
 	 */
-	public List<BookLending> findByBorrowUserIdAndLendingStatus(Integer borrowUserId, Integer lendingStatus) {
+	public List<BookRental> findByBorrowUserIdAndLendingStatus(Integer borrowUserId, Integer lendingStatus) {
 		String strSql = SQL;
 		strSql = strSql + " WHERE br.borrow_user_id = :borrowUserId AND br.lending_status = :lendingStatus";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId)
 				.addValue("lendingStatus", lendingStatus);
-		List<BookLending> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
+		List<BookRental> bookLendingList = template.query(strSql, param, BR_RESULT_SET_EXTRACTOR);
 		return bookLendingList;
 	}
 }

@@ -1,5 +1,7 @@
 package com.honcari.domain;
 
+import com.honcari.common.BookStatusEnum;
+
 /**
  * 本情報を管理するエンティティ.
  * 
@@ -45,7 +47,7 @@ public class Book {
 	 * @return 貸出状況
 	 */
 	public String getBookLendingStatus() {
-		return StatusEnum.of(status).getKey();
+		return BookStatusEnum.of(status).getKey();
 	}
 
 	public Integer getId() {
