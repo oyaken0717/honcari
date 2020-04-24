@@ -7,18 +7,14 @@ package com.honcari.domain;
  *
  */
 public class GroupRelation {
-	/**
-	 * ID
-	 */
+	/** ID */
 	private Integer id;
-	/**
-	 * ユーザーID
-	 */
+	/** ユーザーID */
 	private Integer userId;
-	/**
-	 * グループID
-	 */
+	/** グループID */
 	private Integer GroupId;
+	/** 参加状況 */
+	private Integer relation_status;
 
 	public Integer getId() {
 		return id;
@@ -44,9 +40,20 @@ public class GroupRelation {
 		GroupId = groupId;
 	}
 
+	public Integer getRelation_status() {
+		return relation_status;
+	}
+
+	public void setRelation_status(Integer relation_status) {
+		this.relation_status = relation_status;
+	}
+
 	@Override
 	public String toString() {
-		return "GroupRealationship [id=" + id + ", userId=" + userId + ", GroupId=" + GroupId + "]";
+		return "GroupRelation [id=" + id + ", userId=" + userId + ", GroupId=" + GroupId + ", relation_status="
+				+ relation_status + "]";
 	}
+
+	
 
 }
