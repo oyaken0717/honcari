@@ -144,17 +144,6 @@ public class BookService {
 	}
 	
 	/**
-	 * 書籍情報を編集するメソッド.
-	 * 
-	 * @param bookId 書籍id
-	 * @param categoryId カテゴリid
-	 * @param comment コメント
-	 */
-	public void editBook(Integer bookId, Integer categoryId, String comment) {
-		bookRepository.editBook(bookId, categoryId, comment);
-	}
-	
-	/**
 	 * 書籍情報を削除するメソッド.
 	 * 
 	 * @param bookId
