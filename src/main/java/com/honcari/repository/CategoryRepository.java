@@ -27,6 +27,7 @@ public class CategoryRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 	
+	//fujishima
 	// カテゴリのローマッパー
 	private static final RowMapper<Category> CATEGORY_ROW_MAPPER = (rs, i) ->{
 		Category category = new Category();

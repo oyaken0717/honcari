@@ -12,8 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.GroupRelation;
 
+//yamaseki
 @Repository
-public class GroupRelationshipRepository {
+public class GroupRelationRepository {
 	
 	private static final RowMapper<GroupRelation> GROUP_R_ROW_MAPPER = (rs, i) -> {
 		GroupRelation gr = new GroupRelation();

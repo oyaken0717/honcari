@@ -26,7 +26,8 @@ import com.honcari.domain.User;
  *
  */
 @Repository
-public class BookLendingRepository {
+public class BookRentalRepository {
+	//yuguchi
 	private final static String SQL = "SELECT br.id br_book_lending_id,br.lend_user_id br_lend_user_id,"
 			+ "br.borrow_user_id br_borrow_user_id, br.book_id br_book_id, br.deadline br_deadline,"
 			+ "br.lending_status br_lending_status, "

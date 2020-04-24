@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.domain.Book;
 import com.honcari.domain.BookRental;
-import com.honcari.repository.BookLendingRepository;
+import com.honcari.repository.BookRentalRepository;
 import com.honcari.repository.BookRepository;
 
 /**
@@ -26,7 +26,7 @@ public class BookService {
 	private BookRepository bookRepository;
 
 	@Autowired
-	private BookLendingRepository bookLendingRepository;
+	private BookRentalRepository bookLendingRepository;
 
 	/**
 	 * 本IDから本情報を取得するメソッド.

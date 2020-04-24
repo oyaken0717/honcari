@@ -30,6 +30,7 @@ import com.honcari.domain.User;
 @Repository
 public class GroupRepository {
 
+	//yamadadai
 	private static final ResultSetExtractor<List<Group>> GROUP_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<Group> groupList = new ArrayList<>();
 		List<User> userList = new ArrayList<>();

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.common.RentalStatusEnum;
 import com.honcari.domain.BookRental;
-import com.honcari.repository.BookLendingRepository;
+import com.honcari.repository.BookRentalRepository;
 
 /**
  * レンタル履歴を表示するサービス.
@@ -21,7 +21,7 @@ import com.honcari.repository.BookLendingRepository;
 public class ShowRentalHistoryService {
 	
 	@Autowired
-	private BookLendingRepository bookLendingRepository;
+	private BookRentalRepository bookLendingRepository;
 	
 	/**
 	 * 借りた履歴のリストを取得するメソッド.
