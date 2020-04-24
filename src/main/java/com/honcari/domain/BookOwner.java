@@ -30,7 +30,6 @@ public class BookOwner {
 	private Category category;
 
 	public BookOwner() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public BookOwner(Integer bookOwnerId, Integer userId, Integer bookId, Integer categoryId, Integer bookStatus,

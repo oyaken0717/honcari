@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.Book;
+import com.honcari.domain.BookOwner;
 import com.honcari.domain.Category;
 import com.honcari.domain.User;
 
@@ -27,54 +28,46 @@ public class CategoryRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 	
-	//fujishima
-	// カテゴリのローマッパー
 	private static final RowMapper<Category> CATEGORY_ROW_MAPPER = (rs, i) ->{
 		Category category = new Category();
-		category.setId(rs.getInt("category_id"));
+		category.setCategoryId(rs.getInt("category_id"));
 		category.setName(rs.getString("name"));
 		return category;
 	};
 	
 	private static final ResultSetExtractor<List<Category>> CATEGORY_RESULT_SET_EXTRACTOR = (rs) -> {
-		List<Book> bookList = new ArrayList<>();
+		List<BookOwner> bookOwnerList = null;
 		List<Category> categoryList = new ArrayList<>();
-
 		int beforeCategoryId = 0;
-
 		while (rs.next()) {
 			
 			int nowCategoryId = rs.getInt("c_category_id");
 			if(nowCategoryId != beforeCategoryId) {
 				Category category = new Category();
-				bookList = new ArrayList<>();
-				category.setId(rs.getInt("c_category_id"));
+				bookOwnerList = new ArrayList<>();
+				category.setCategoryId(rs.getInt("c_category_id"));
 				category.setName(rs.getString("c_name"));
-				category.setBookList(bookList);
+				category.setBookOwnerList(bookOwnerList);
 				categoryList.add(category);
 			}
-			
+			BookOwner bookOwner = new BookOwner();
 			User user = new User();
-			user.setId(rs.getInt("u_user_id"));
+			user.setUserId(rs.getInt("u_user_id"));
 			user.setName(rs.getString("u_name"));
-			user.setDeleted(rs.getBoolean("u_deleted"));
+			user.setStatus(rs.getInt("u_status"));
+			bookOwner.setUser(user);
 			
 			Book book = new Book();
-			book.setId(rs.getInt("b_book_id"));
-			book.setUserId(rs.getInt("b_user_id"));
+			book.setBookId(rs.getInt("b_book_id"));
 			book.setIsbnId(rs.getString("b_isbn_id"));
-			book.setCategoryId(rs.getInt("b_category_id"));
 			book.setTitle(rs.getString("b_title"));
 			book.setAuthor(rs.getString("b_author"));
 			book.setPublishedDate(rs.getString("b_published_date"));
 			book.setDescription(rs.getString("b_description"));
 			book.setPageCount(rs.getInt("b_page_count"));
 			book.setThumbnailPath(rs.getString("b_thumbnail_path"));
-			book.setStatus(rs.getInt("b_status"));
-			book.setComment(rs.getString("b_comment"));
-			book.setDeleted(rs.getBoolean("b_deleted"));
-			bookList.add(book);
-			book.setUser(user);
+			bookOwner.setBook(book);
+			bookOwnerList.add(bookOwner);
 
 			beforeCategoryId = nowCategoryId;
 		}
@@ -91,17 +84,6 @@ public class CategoryRepository {
 		return template.query(sql, CATEGORY_ROW_MAPPER);
 	}
 	
-	/**	CATEGORY_RESULT_SET_EXTRACTORを使用する際に全件取得するためのSELECT文 */
-	private static final String SELECT_SQL = "SELECT u.user_id u_user_id, u.name u_name, u.deleted u_deleted,"
-			+ "b.book_id b_book_id, b.user_id b_user_id, b.isbn_id b_isbn_id, b.category_id b_category_id, b.title b_title,"
-			+ "b.author b_author, b.published_date b_published_date, b.description b_description, b.page_count b_page_count,"
-			+ "b.thumbnail_path b_thumbnail_path, b.status b_status, b.comment b_comment, b.deleted b_deleted,"
-			+ "c.category_id c_category_id, c.name c_name FROM users u INNER JOIN books b ON u.user_id = b.user_id "
-			+ "AND b.deleted <> true INNER JOIN category c ON b.category_id = c.category_id WHERE u.user_id in ("
-			+ "SELECT user_id FROM group_relationship WHERE user_id != :userId AND group_id IN ("
-			+ "SELECT group_id FROM group_relationship WHERE user_id = :userId)) AND u.deleted = false ORDER BY c.category_id;";
-	
-	
 	/**
 	 * ユーザーが所属しているグループ全てのカテゴリ一覧にある本情報を取得するメソッド.
 	 * 
@@ -109,7 +91,17 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserId(Integer userId) {
-		String sql = SELECT_SQL;
+		String sql = "SELECT u.user_id u_user_id, u.name u_name, u.status u_status,b.book_id b_book_id,"
+				+ "b.isbn_id b_isbn_id,b.title b_title,b.author b_author, b.published_date b_published_date,"
+				+ "b.description b_description,b.page_count b_page_count,b.thumbnail_path b_thumbnail_path,"
+				+ "o.comment o_comment, o.book_status b_book_status,c.category_id c_category_id, c.name c_name "
+				+ "FROM users u INNER JOIN owned_book_info o ON u.user_id = o.user_id AND o.book_status != 9 "
+				+ "INNER JOIN books b ON o.book_id = b.book_id AND b.deleted = false "
+				+ "INNER JOIN category c ON b.category_id = c.category_id "
+				+ "WHERE u.status != 9 AND u.user_id in ("
+					+ "SELECT user_id FROM group_relationship WHERE user_id != :userId AND group_id IN ("
+						+ "SELECT group_id FROM group_relationship WHERE user_id = :userId)) "
+				+ "ORDER BY c.category_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
 		if (categoryList.isEmpty()) {
