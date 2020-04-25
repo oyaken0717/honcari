@@ -33,13 +33,13 @@ public class GroupRepository {
 	private static final ResultSetExtractor<List<Group>> GROUP_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<Group> groupList = new ArrayList<>();
 		List<User> userList = new ArrayList<>();
-		List<OwnedBookInfo> bookOwnerList = new ArrayList<>();
+		List<OwnedBookInfo> ownedBookInfoList = new ArrayList<>();
 
 		Group group = new Group();
 		User user = new User();
 		int beforeGroupId = 0;
 		int beforeUserId = 0;
-		int beforeBookOwnerId = 0;
+		int beforeOwnedBookInfoId = 0;
 
 		while (rs.next()) {
 			int nowGroupId = rs.getInt("g_group_id");
@@ -60,32 +60,32 @@ public class GroupRepository {
 			int nowUserId = rs.getInt("u_user_id");
 			if (nowUserId != beforeUserId) {
 				user = new User();
-				bookOwnerList = new ArrayList<>();
-				user.setId(nowUserId);
+				ownedBookInfoList = new ArrayList<>();
+				user.setUserId(nowUserId);
 				user.setName(rs.getString("u_name"));
 				user.setEmail(rs.getString("u_email"));
 				user.setPassword(rs.getString("u_password"));
 				user.setImagePath(rs.getString("u_image_path"));
 				user.setProfile(rs.getString("u_profile"));
-				user.setDeleted(rs.getBoolean("u_deleted"));
-				user.setBookOwnerList(bookOwnerList);
+				user.setStatus(rs.getInt("u_status"));
+				user.setOwnedBookInfoList(ownedBookInfoList);
 				userList.add(user);
 
 				beforeUserId = nowUserId;
 			}
 
-			int bookOwnerId = rs.getInt("bo_book_owner_id");
-			if (bookOwnerId != beforeBookOwnerId) {
-				OwnedBookInfo bookOwner = new OwnedBookInfo();
-				bookOwner.setBookOwnerId(bookOwnerId);
-				bookOwner.setUserId(rs.getInt("bo_user_id"));
-				bookOwner.setBookId(rs.getInt("bo_book_id"));
-				bookOwner.setCategoryId(rs.getInt("bo_category_id"));
-				bookOwner.setBookStatus(rs.getInt("bo_book_status"));
-				bookOwner.setComment(rs.getString("bo_comment"));
-				bookOwnerList.add(bookOwner);
+			int OwnedBookInfoId = rs.getInt("ob_owned_book_info_id");
+			if (OwnedBookInfoId != beforeOwnedBookInfoId) {
+				OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
+				ownedBookInfo.setOwnedBookInfoId(OwnedBookInfoId);
+				ownedBookInfo.setUserId(rs.getInt("ob_user_id"));
+				ownedBookInfo.setBookId(rs.getInt("ob_book_id"));
+				ownedBookInfo.setCategoryId(rs.getInt("ob_category_id"));
+				ownedBookInfo.setBookStatus(rs.getInt("ob_book_status"));
+				ownedBookInfo.setComment(rs.getString("ob_comment"));
+				ownedBookInfoList.add(ownedBookInfo);
 
-				beforeBookOwnerId = bookOwnerId;
+				beforeOwnedBookInfoId = OwnedBookInfoId;
 			}
 
 		}
@@ -111,10 +111,10 @@ public class GroupRepository {
 		SQL.append("Select g.group_id g_group_id, g.name g_name, g.description g_description, g.owner_user_id g_owner_user_id, ");
 		SQL.append("g.is_private g_is_private, g.deleted g_deleted, u.user_id u_user_id, u.name u_name, u.email u_email, ");
 		SQL.append("u.password u_password, u.image_path u_image_path, u.profile u_profile, u.deleted u_deleted, ");
-		SQL.append("bo.book_owner_id bo_book_owner_id, bo.user_id bo_user_id, bo.book_id bo_book_id, bo.category_id bo_category_id, ");
-		SQL.append("bo.book_status bo_book_status, bo.comment bo_comment ");
+		SQL.append("ob.owned_book_info_id ob_owned_book_info_id, ob.user_id ob_user_id, ob.book_id ob_book_id, ob.category_id ob_category_id, ");
+		SQL.append("ob.book_status ob_book_status, ob.comment bo_comment ");
 		SQL.append("FROM groups g LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id LEFT OUTER JOIN users u ");
-		SQL.append("ON gr.user_id = u.user_id LEFT OUTER JOIN book_owners bo ON u.user_id = bo.user_id AND bo.book_status <> 0");
+		SQL.append("ON gr.user_id = u.user_id LEFT OUTER JOIN owned_book_info ob ON u.user_id = ob.user_id AND ob.book_status <> 0");
 		return SQL;
 	}
 	
