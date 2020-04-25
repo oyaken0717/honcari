@@ -3,6 +3,7 @@ package com.honcari.service.book;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.honcari.domain.Book;
 import com.honcari.repository.BookRepository;
@@ -13,6 +14,7 @@ import com.honcari.repository.BookRepository;
  * @author hatakeyamakouta
  *
  */
+@Service
 public class FindByIsbnIdService {
 
 	@Autowired
