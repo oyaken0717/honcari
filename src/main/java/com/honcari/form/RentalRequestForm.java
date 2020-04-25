@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
  * @author shumpei
  *
  */
-public class LendingRequestForm {
+public class RentalRequestForm {
 
 	/** 本ID */
 	private Integer bookId;

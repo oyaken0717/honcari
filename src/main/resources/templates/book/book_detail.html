@@ -25,21 +25,21 @@
             <!-- Column -->
             <div class="col-lg-6 mt-4 mt-md-0">
                 <div class="text-box">
-                	<p>貸出状況：<span th:text="${book.getBookLendingStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                		所有者：<span th:text="${book.user.name}">status</span></p>
+                	<p>貸出状況：<span th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                		所有者：<span th:text="${ownedBookInfo.user.name}">status</span></p>
                     <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.author}">author</h4>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.publishedDate}">published_date</h4>
                     <p th:text="${book.description}">description</p>
-					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
+					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#rental-request-form">
 						貸出リクエスト</button>
 				</div>
             </div>
             <!-- Modal -->
-			<div class="modal fade" id="lendering-request-form" tabindex="-1" role="dialog">
+			<div class="modal fade" id="rental-request-form" tabindex="-1" role="dialog">
   				<div class="modal-dialog modal-dialog-centered" role="document">
  				   <div class="modal-content">
- 				   <form method="post" th:action="@{/send_lending_request}" th:object="${lendingRequestForm}">
+ 				   <form method="post" th:action="@{/send_lending_request}" th:object="${rentalRequestForm}">
  				     <div class="modal-header">
   				      <h5 class="modal-title">貸出期限を設定</h5>
   				      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -49,9 +49,8 @@
    				   <div class="modal-body">
    				   	<div><label th:errors="*{deadline}" class="text-danger">貸出期限を入力してください</label></div>
    				    <input type="date" name="deadline" th:field="*{deadline}">
-   				     <input type="hidden" name="bookId" th:value="${book.id}">
-   				     <input type="hidden" name="lenderUserId" th:value="${book.user.id}">
-   				     <input type="hidden" name="status" th:value="${book.status}">
+   				     <input type="hidden" name="ownedBookInfoId" th:value="${ownedBookInfo.id}">
+   				     <input type="hidden" name="bookStatus" th:value="${ownedBookInfo.bookStatus}">
    				   </div>
     			   <div class="modal-footer">
     				 <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
