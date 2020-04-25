@@ -30,7 +30,7 @@ public class ShowRentalHistoryService {
 	 * @return 借りた履歴のリスト
 	 */
 	public List<BookRental> showBorrowedList(Integer userId) {
-		return bookLendingRepository.findByBorrowUserIdAndLendingStatus(userId, RentalStatusEnum.RETURNED.getValue());
+		return bookLendingRepository.findByBorrowUserIdAndRentalStatus(userId, RentalStatusEnum.RETURNED.getValue());
 	}
 	
 	/**
@@ -40,7 +40,7 @@ public class ShowRentalHistoryService {
 	 * @return 貸した履歴のリスト
 	 */
 	public List<BookRental> showlentList(Integer userId) {
-		return bookLendingRepository.findByLendUserIdAndLendingStatus(userId, RentalStatusEnum.RETURNED.getValue());
+		return bookLendingRepository.findByOwnerUserIdAndRentalStatus(userId, RentalStatusEnum.RETURNED.getValue());
 	}
 
 }

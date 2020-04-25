@@ -28,7 +28,7 @@ public class RegisterGroupService {
 		//グループに入れるuser数だけ登録.
 		userList.forEach(user -> {
 			GroupRelation realationship = new GroupRelation();
-			realationship.setUserId(user.getId());
+			realationship.setUserId(user.getUserId());
 			realationship.setGroupId(groupInId.getId());
 			groupRepository.insertGroupRelation(realationship);
 		});

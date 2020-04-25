@@ -51,7 +51,7 @@ public class OwnedBookInfo {
 	 * 
 	 * @return 貸出状況
 	 */
-	public String getBookLendingStatus() {
+	public String getStatus() {
 		return BookStatusEnum.of(bookStatus).getKey();
 	}
 

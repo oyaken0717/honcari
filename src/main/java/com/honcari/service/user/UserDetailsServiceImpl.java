@@ -47,7 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		authorityList.add(new SimpleGrantedAuthority("ROLE_USER")); // ユーザ権限付与
 		
 		//ログイン成功時にuser情報をsessionスコープに格納する
-		session.setAttribute("userId",user.getId());
+		session.setAttribute("userId",user.getUserId());
 			
 		return new LoginUser(user,authorityList);
 	}

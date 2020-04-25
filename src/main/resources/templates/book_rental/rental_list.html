@@ -17,7 +17,7 @@
 	<div class="row">
 		<div class="w-100 mx-auto">
 			<h1 class="my-4">レンタル管理</h1>
-	
+
 			<!-- side bar -->
 			<div th:replace="mypage_side_menu::frag_mypage_side_menu(3)"></div>
 
@@ -38,21 +38,20 @@
    			<div class="tab-pane active" id="borrowing-list" >
    				<!-- レンタル承認待ち -->
    				<div class="pt-3 pb-3 mt-4 mb-4 border-bottom">
-   			 		<div th:if="${borrowingBookListPendingApproval.size()}==0"><p class="text-center">申請中の本はありません</p></div>
-					<div class="mt-3 mb-3" th:each="bookBorrowing:${borrowingBookListPendingApproval}">
+   			 		<div th:if="${borrowPendingList.size()}==0"><p class="text-center">申請中の本はありません</p></div>
+					<div class="mt-3 mb-3" th:each="bookRental:${borrowPendingList}">
 						<div class="row">
 				  			<div class="col-lg-6">
-								<img th:src="@{${bookBorrowing.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
+								<img th:src="@{${bookRental.ownedBookInfo.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
 							</div>
 							<div class="col-lg-6">
 								<div class="text-box">
-									<form th:action="@{/cancel_lending_request}" method="POST">	
-									書籍名：<span th:text="${bookBorrowing.book.title}"></span><br>
-									所有者：<span th:text="${bookBorrowing.lendUser.name}">さん</span><br>
-									レンタル希望期間：<span th:text="${bookBorrowing.deadline}">まで</span><br>
-									ステータス：<span th:text="${bookBorrowing.getBookLendingStatus()}"></span>
-									<input type="hidden" th:value="${bookBorrowing.bookLendingId}" name="bookLendingId">
-									<input type="hidden" th:value="${bookBorrowing.book.id}" name="bookId">
+									<form th:action="@{/book_rental/cancel}" method="POST">	
+									書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
+									所有者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
+									レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
+									ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
+									<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
 									<div><button class="cancel-btn btn btn-primary btn-sm" type="submit">キャンセル</button></div>
 									</form>
 								</div>
@@ -61,20 +60,19 @@
 					</div>
 				</div>
 				<!-- レンタル中 -->
-				<div class="mt-3 mb-3" th:each="bookBorrowing:${borrowingBookList}">
+				<div class="mt-3 mb-3" th:each="bookRental:${borrowList}">
 					<div class="row">
 						<div class="col-lg-6">
-							<img th:src="@{${bookBorrowing.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
+							<img th:src="@{${bookRental.ownedBookInfo.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
 						</div>
 						<div class="col-lg-6">
 							<div class="text-box">
 								<form th:action="@{#}" method="POST">	
-								書籍名：<span th:text="${bookBorrowing.book.title}"></span><br>
-								所有者：<span th:text="${bookBorrowing.lendUser.name}">さん</span><br>
-								レンタル希望期間：<span th:text="${bookBorrowing.deadline}">まで</span><br>
-								ステータス：<span th:text="${bookBorrowing.getBookLendingStatus()}"></span>
-								<input type="hidden" th:value="${bookBorrowing.bookLendingId}" name="bookLendingId">
-								<input type="hidden" th:value="${bookBorrowing.book.id}" name="bookId">
+								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
+								所有者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
+								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
+								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
+								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
 								<div><button class="btn btn-primary btn-sm" type="submit">延長申請</button></div>
 								</form>
 							</div>
@@ -85,21 +83,21 @@
 			<div class="tab-pane" id="lending-list">
 				<!-- 貸出承認待ち -->
 		      <div class="pt-3 pb-3 mt-4 mb-4 border-bottom">
-				<div th:if="${lendingBookListPendingApproval.size()}==0"><p class="text-center">申請中の本はありません</p></div>
-				<div class="mt-3 mb-3" th:each="bookLending:${lendingBookListPendingApproval}">
+				<div th:if="${lendPendingList.size()}==0"><p class="text-center">申請中の本はありません</p></div>
+				<div class="mt-3 mb-3" th:each="bookRental:${lendPendingList}">
 					<div class="row">
 						<div class="col-lg-6">
-							<img th:src="@{${bookLending.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
+							<img th:src="@{${bookRental.ownedBookInfo.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
 						</div>
 						<div class="col-lg-6">
 							<div class="text-box">
-								<form th:action="@{/approval_lending_request}" method="POST">
-								書籍名：<span th:text="${bookLending.book.title}"></span><br>
-								レンタル希望者：<span th:text="${bookLending.borrowUser.name}">さん</span><br>
-								レンタル希望期間：<span th:text="${bookLending.deadline}">まで</span><br>
-								ステータス：<span th:text="${bookLending.getBookLendingStatus()}"></span>
-								<input type="hidden" th:value="${bookLending.bookLendingId}" name="bookLendingId">
-								<input type="hidden" th:value="${bookLending.book.id}" name="bookId">
+								<form th:action="@{/book_rental/accept}" method="POST">
+								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
+								レンタル希望者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
+								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
+								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
+								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
+								<input type="hidden" th:value="${bookRental.ownedBookInfo.book.id}" name="bookId">
 								<div><button class="approval-btn btn btn-warning btn-sm" type="submit">承認</button></div>
 								</form>
 							</div>
@@ -108,17 +106,17 @@
 				  </div>
 				</div>
 				<!-- 貸出中 -->
-				<div class="mt-3 mb-3" th:each="bookLending:${lendingBookList}">
+				<div class="mt-3 mb-3" th:each="bookRental:${lendList}">
 					<div class="row">
 						<div class="col-lg-6">
-							<img th:src="@{${bookLending.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
+							<img th:src="@{${bookRental.ownedBookInfo.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
 						</div>
 						<div class="col-lg-6">
 							<div class="text-box">
-								書籍名：<span th:text="${bookLending.book.title}"></span><br>
-								レンタル希望者：<span th:text="${bookLending.borrowUser.name}">さん</span><br>
-								レンタル希望期間：<span th:text="${bookLending.deadline}">まで</span><br>
-								ステータス：<span th:text="${bookLending.getBookLendingStatus()}"></span>
+								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
+								レンタル希望者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
+								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
+								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
 								<div><button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#return-confirm-form">返却確認</button></div>
 							</div>
 						</div>
@@ -127,7 +125,7 @@
 					<div class="modal fade" id="return-confirm-form" tabindex="-1" role="dialog">
   						<div class="modal-dialog modal-dialog-centered" role="document">
  							<div class="modal-content">
- 							  <form method="post" th:action="@{/confirm_book_return}">
+ 							  <form method="post" th:action="@{/book_rental/confirm_return}">
  							   <div class="modal-header">
   							   		<h5 class="modal-title">本の貸出状況を選択</h5>
   						    	  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -137,8 +135,7 @@
    							   <div class="modal-body">
    								    <input type="radio" name="updateStatus" th:value="0">&nbsp;貸出不可&nbsp;&nbsp;
    								    <input type="radio" name="updateStatus" th:value="1">&nbsp;貸出可
-   								    <input type="hidden" th:value="${bookLending.bookLendingId}" name="bookLendingId">
-							       	<input type="hidden" th:value="${bookLending.book.id}" name="bookId">
+   								    <input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
   	 						   </div>
     						  	<div class="modal-footer">
     								<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
@@ -175,4 +172,4 @@
 	  })();
 	</script>
 </body>
-</html>
+</html> 

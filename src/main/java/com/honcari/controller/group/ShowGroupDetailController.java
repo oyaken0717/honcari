@@ -21,7 +21,7 @@ public class ShowGroupDetailController {
 	public String showGroupDetail(Integer id,Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		Group group = showGroupDetailService.showGroupDetail(id);
 		model.addAttribute("group",group);
-		model.addAttribute("userId",loginUser.getUser().getId());
+		model.addAttribute("userId",loginUser.getUser().getUserId());
 		return "group/group_detail";
 	}
 

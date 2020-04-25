@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.domain.Book;
-import com.honcari.form.LendingRequestForm;
-import com.honcari.service.BookService;
+import com.honcari.domain.OwnedBookInfo;
+import com.honcari.form.RentalRequestForm;
+import com.honcari.service.book.ShowBookDetailService;
 
 /**
  * 本の詳細ページを表示するコントローラ.
@@ -16,16 +16,16 @@ import com.honcari.service.BookService;
  * @author shumpei
  *
  */
-@RequestMapping("")
+@RequestMapping("/book")
 @Controller
 public class ShowBookDetailController {
 	
 	@Autowired
-	private BookService bookService;
+	private ShowBookDetailService showBookDetailService;
 	
 	@ModelAttribute
-	public LendingRequestForm setUpForm() {
-		return new LendingRequestForm();
+	public RentalRequestForm setUpForm() {
+		return new RentalRequestForm();
 	}
 	
 	/**
@@ -35,10 +35,11 @@ public class ShowBookDetailController {
 	 * @param bookId 本ID
 	 * @return　本詳細ページ
 	 */
-	@RequestMapping("/show_book_detail")
-	public String showBookDetail(Model model, Integer bookId) {
-		Book book = bookService.findByBookId(bookId);
-		model.addAttribute("book", book);
+	@RequestMapping("/show_detail")
+	public String showBookDetail(Model model, Integer ownedBookInfoId) {
+		OwnedBookInfo ownedBookInfo = showBookDetailService.searchByOwnedBookId(ownedBookInfoId);
+		model.addAttribute("ownedBookInfo", ownedBookInfo);
+		model.addAttribute("book", ownedBookInfo.getBook());
 		return "book_detail";
 	}
 	

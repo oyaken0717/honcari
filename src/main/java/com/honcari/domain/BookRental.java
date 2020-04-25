@@ -5,41 +5,35 @@ import java.util.Date;
 import com.honcari.common.RentalStatusEnum;
 
 public class BookRental {
-	
+
 	/** ID */
 	private Integer bookRentalId;
-	/** 貸し手ユーザーID */
-	private Integer lendUserId;
+	/** 所有情報ID */
+	private Integer ownedBookInfoId;
 	/** 借り手ユーザーID */
 	private Integer borrowUserId;
-	/** 本ID */
-	private Integer bookId;
 	/** 貸し借り状況 */
 	private Integer rentalStatus;
 	/** 貸出期限 */
 	private Date deadline;
-	/** 貸し手ユーザー */
-	private User lendUser;
+	/** 本所有情報 */
+	private OwnedBookInfo ownedBookInfo;
 	/** 借り手ユーザー */
 	private User borrowUser;
-	/** 本 */
-	private Book book;
 
 	public BookRental() {
 	}
 
-	public BookRental(Integer bookRentalId, Integer lendUserId, Integer borrowUserId, Integer bookId,
-			Integer rentalStatus, Date deadline, User lendUser, User borrowUser, Book book) {
+	public BookRental(Integer bookRentalId, Integer ownedBookInfoId, Integer borrowUserId, Integer rentalStatus,
+			Date deadline, OwnedBookInfo ownedBookInfo, User borrowUser) {
 		super();
 		this.bookRentalId = bookRentalId;
-		this.lendUserId = lendUserId;
+		this.ownedBookInfoId = ownedBookInfoId;
 		this.borrowUserId = borrowUserId;
-		this.bookId = bookId;
 		this.rentalStatus = rentalStatus;
 		this.deadline = deadline;
-		this.lendUser = lendUser;
+		this.ownedBookInfo = ownedBookInfo;
 		this.borrowUser = borrowUser;
-		this.book = book;
 	}
 
 	/**
@@ -59,12 +53,12 @@ public class BookRental {
 		this.bookRentalId = bookRentalId;
 	}
 
-	public Integer getLendUserId() {
-		return lendUserId;
+	public Integer getOwnedBookInfoId() {
+		return ownedBookInfoId;
 	}
 
-	public void setLendUserId(Integer lendUserId) {
-		this.lendUserId = lendUserId;
+	public void setOwnedBookInfoId(Integer ownedBookInfoId) {
+		this.ownedBookInfoId = ownedBookInfoId;
 	}
 
 	public Integer getBorrowUserId() {
@@ -73,14 +67,6 @@ public class BookRental {
 
 	public void setBorrowUserId(Integer borrowUserId) {
 		this.borrowUserId = borrowUserId;
-	}
-
-	public Integer getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
 	}
 
 	public Integer getRentalStatus() {
@@ -99,12 +85,12 @@ public class BookRental {
 		this.deadline = deadline;
 	}
 
-	public User getLendUser() {
-		return lendUser;
+	public OwnedBookInfo getOwnedBookInfo() {
+		return ownedBookInfo;
 	}
 
-	public void setLendUser(User lendUser) {
-		this.lendUser = lendUser;
+	public void setOwnedBookInfo(OwnedBookInfo ownedBookInfo) {
+		this.ownedBookInfo = ownedBookInfo;
 	}
 
 	public User getBorrowUser() {
@@ -115,19 +101,11 @@ public class BookRental {
 		this.borrowUser = borrowUser;
 	}
 
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
-	}
-
 	@Override
 	public String toString() {
-		return "BookRental [bookRentalId=" + bookRentalId + ", lendUserId=" + lendUserId + ", borrowUserId="
-				+ borrowUserId + ", bookId=" + bookId + ", rentalStatus=" + rentalStatus + ", deadline=" + deadline
-				+ ", lendUser=" + lendUser + ", borrowUser=" + borrowUser + ", book=" + book + "]";
+		return "BookRental [bookRentalId=" + bookRentalId + ", ownedBookInfoId=" + ownedBookInfoId + ", borrowUserId="
+				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", deadline=" + deadline + ", ownedBookInfo="
+				+ ownedBookInfo + ", borrowUser=" + borrowUser + "]";
 	}
 
 }

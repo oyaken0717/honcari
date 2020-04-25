@@ -45,16 +45,16 @@ public class OwnedBookInfoRepository {
 		book.setThumbnailPath(rs.getString("b_thumbnail_path"));
 		ownedBookInfo.setBook(book);
 		User user = new User();
-		user.setId(rs.getInt("u_user_id"));
+		user.setUserId(rs.getInt("u_user_id"));
 		user.setName(rs.getString("u_name"));
 		user.setEmail(rs.getString("u_email"));
 		user.setPassword(rs.getString("u_password"));
 		user.setImagePath(rs.getString("u_image_path"));
 		user.setProfile(rs.getString("u_profile"));
-		user.setDeleted(rs.getBoolean("u_deleted"));
+		user.setStatus(rs.getInt("u_status"));
 		ownedBookInfo.setBook(book);
 		Category category = new Category();
-		category.setId(rs.getInt("c_category_id"));
+		category.setCategoryId(rs.getInt("c_category_id"));
 		category.setName(rs.getString("c_name"));
 		ownedBookInfo.setCategory(category);
 		return ownedBookInfo;
@@ -64,7 +64,7 @@ public class OwnedBookInfoRepository {
 	private static final String SELECT_SQL = "SELECT o.owned_book_info_id o_owned_book_info_id, o.user_id o_userid, o.book_id o_book_id, o.category_id o_category_id,"
 			+ "o.book_status o_book_status, o.comment o_comment, b.book_id b_book_id, b.isbn_id b_isbn_id, b.title b_title, b.author b_author, b.published_date b_published_date,"
 			+ "b.description b_description, b.page_count b_pagecount, b.thumbnail_path b_thumbnail_path, u.user_id u_user_id, u.name u_name, u.email u_emai,"
-			+ "u.password u_password, u.image_path u_image_path, u.profile u_profile, u.deleted u_deleted, c.category_id c_category_id, c.name c_name FROM owned_book_info o "
+			+ "u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, c.category_id c_category_id, c.name c_name FROM owned_book_info o "
 			+ "INNER JOIN books b ON o.book_id = b.book_id INNER JOIN users u ON o.user_id = u.user_id INNER JOIN category c ON o.category_id = c.category_id";
 
 	/**
@@ -80,16 +80,17 @@ public class OwnedBookInfoRepository {
 		return ownedBookInfo;
 	}
 
+	
 	/**
-	 * 本の貸出状況を更新する.
+	 * ユーザーが所有している書籍情報を更新する.
 	 * 
-	 * @param status 貸出状況
-	 * @param bookId 本ID
+	 * @param ownedBookInfoId ユーザーが所有している書籍情報
 	 */
-	//TODO BookRentalRepositoryに移動する？？？
-	public void updateStatus(Integer bookStatus, Integer ownedBookInfoId) {
-		String sql = "UPDATE owned_book_info SET book_status = :bookStatus WHERE owned_book_info_id = :bookId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("bookStatus", bookStatus).addValue("ownedBookInfoId", ownedBookInfoId);
+	//TODO 下記のeditメソッドと一本化
+	public void update(OwnedBookInfo ownedBookInfo) {
+		String sql = "UPDATE owned_book_info SET user_id = :userId, book_id = bookId, category_id = categoryId, "
+				+ "book_status = :bookStatus, comment = :comment WHERE owned_book_info_id = :ownedBookInfoId";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(ownedBookInfo);
 		template.update(sql, param);
 	}
 	
