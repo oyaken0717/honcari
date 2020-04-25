@@ -33,8 +33,8 @@ public class ShowRentalHistoryController {
 	 */
 	@RequestMapping("/show_lental_history")
 	public String showLentalHistory(@AuthenticationPrincipal LoginUser loginUser, Model model) {
-		List<BookRental> borrowedList = showLentalHistoryService.showBorrowedList(loginUser.getUser().getId());
-		List<BookRental> lentList = showLentalHistoryService.showlentList(loginUser.getUser().getId());
+		List<BookRental> borrowedList = showLentalHistoryService.showBorrowedList(loginUser.getUser().getUserId());
+		List<BookRental> lentList = showLentalHistoryService.showlentList(loginUser.getUser().getUserId());
 		model.addAttribute("borrowedList", borrowedList);
 		model.addAttribute("lentList", lentList);
 		return "lental_history";
