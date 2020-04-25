@@ -43,7 +43,7 @@ public class EditUserController {
 	 */
 	@RequestMapping("/show_edit_user")
 	public String showEditUser(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = editUserService.showUser(loginUser.getUser().getId());
+		User user = editUserService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);
 		return "edit_user";
 	}

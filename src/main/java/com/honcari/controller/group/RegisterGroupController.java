@@ -68,7 +68,7 @@ public class RegisterGroupController {
 		Group group = new Group();
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());
-		group.setUserId(loginUser.getUser().getId());
+		group.setUserId(loginUser.getUser().getUserId());
 		registerGroupService.insertGroup(group, userList);
 		return "home";
 	}

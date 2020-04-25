@@ -22,8 +22,8 @@ public class ShowGroupManagementController {
 	
 	@RequestMapping(value="/to_group_management")
 	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser,Model model) {
-		List<Group> belongGroupList = showGroupListService.showGroupListByBelongUserId(loginUser.getUser().getId());
-		List<Group> ownGroupList = showGroupListService.showGroupListByUserId(loginUser.getUser().getId());
+		List<Group> belongGroupList = showGroupListService.showGroupListByBelongUserId(loginUser.getUser().getUserId());
+		List<Group> ownGroupList = showGroupListService.showGroupListByUserId(loginUser.getUser().getUserId());
 
 		model.addAttribute("belongGroupList",belongGroupList);
 		model.addAttribute("ownGroupList",ownGroupList);

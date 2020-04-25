@@ -38,7 +38,7 @@ public class ShowMyPageController {
 	 */
 	@RequestMapping("/show_my_page")
 	public String showMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = showMyPageService.showUser(loginUser.getUser().getId());
+		User user = showMyPageService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);
 		return "mypage";
 	}

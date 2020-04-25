@@ -85,7 +85,7 @@ public class RegisterBookController {
 		}else {
 			bookId = bookList.get(0).getBookId();
 		}
-		ownedBookInfo.setUserId(loginUser.getUser().getId());
+		ownedBookInfo.setUserId(loginUser.getUser().getUserId());
 		ownedBookInfo.setBookId(bookId);
 		ownedBookInfo.setCategoryId(Integer.parseInt(registerBookForm.getCategoryId()));
 		ownedBookInfo.setBookStatus(1);

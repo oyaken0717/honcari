@@ -27,13 +27,13 @@ public class JoinGroupController {
 	@RequestMapping("/check_user_in_group")
 	@ResponseBody
 	public GroupRelation checkUserInGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser) {
-		GroupRelation gr = searchUserInGroupService.searchUser(loginUser.getUser().getId(), groupId);
+		GroupRelation gr = searchUserInGroupService.searchUser(loginUser.getUser().getUserId(), groupId);
 		return gr;
 	}
 	
 	@RequestMapping("/join_group")
 	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser,Model model) {
-		joinGroupService.joinGroup(loginUser.getUser().getId(), groupId);
+		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);
 		System.out.println("グループ参加成功");
 		return "redirect:/to_search_group";
 	}

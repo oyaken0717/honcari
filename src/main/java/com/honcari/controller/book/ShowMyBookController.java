@@ -39,7 +39,7 @@ public class ShowMyBookController {
 	 */
 	@RequestMapping("/show_my_book")
 	public String ShowMyBook(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = showMyPageService.showUser(loginUser.getUser().getId());
+		User user = showMyPageService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user",user);
 		return "mybook";
 	}
@@ -57,8 +57,8 @@ public class ShowMyBookController {
 		if(categoryId == null) {
 			categoryId = 0;
 		}
-		List<User> userList = showMyBookService.findByCategoryId(loginUser.getUser().getId(), categoryId);
-		if(userList.size() == 0 || userList.get(0).getBookList().size() == 0) {
+		List<User> userList = showMyBookService.findByCategoryId(loginUser.getUser().getUserId(), categoryId);
+		if(userList.size() == 0 || userList.get(0).getOwnedBookInfoList().size() == 0) { //getBookListから修正by湯口
 			model.addAttribute("errorMessage", "該当カテゴリの書籍が登録されていません。");
 		}else {
 			model.addAttribute("user", userList.get(0));
