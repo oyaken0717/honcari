@@ -39,7 +39,7 @@
 			<div class="modal fade" id="rental-request-form" tabindex="-1" role="dialog">
   				<div class="modal-dialog modal-dialog-centered" role="document">
  				   <div class="modal-content">
- 				   <form method="post" th:action="@{/send_lending_request}" th:object="${rentalRequestForm}">
+ 				   <form method="post" th:action="@{/book_rental/send}" th:object="${rentalRequestForm}">
  				     <div class="modal-header">
   				      <h5 class="modal-title">貸出期限を設定</h5>
   				      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
