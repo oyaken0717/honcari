@@ -8,8 +8,8 @@ public class BookRental {
 
 	/** ID */
 	private Integer bookRentalId;
-	/** 貸し手ユーザーID */
-	private Integer bookOwnerId;
+	/** 所有情報ID */
+	private Integer ownedBookInfoId;
 	/** 借り手ユーザーID */
 	private Integer borrowUserId;
 	/** 貸し借り状況 */
@@ -17,22 +17,22 @@ public class BookRental {
 	/** 貸出期限 */
 	private Date deadline;
 	/** 本所有情報 */
-	private BookOwner bookOwner;
+	private OwnedBookInfo ownedBookInfo;
 	/** 借り手ユーザー */
 	private User borrowUser;
 
 	public BookRental() {
 	}
 
-	public BookRental(Integer bookRentalId, Integer bookOwnerId, Integer borrowUserId, Integer rentalStatus,
-			Date deadline, BookOwner bookOwner, User borrowUser) {
+	public BookRental(Integer bookRentalId, Integer ownedBookInfoId, Integer borrowUserId, Integer rentalStatus,
+			Date deadline, OwnedBookInfo ownedBookInfo, User borrowUser) {
 		super();
 		this.bookRentalId = bookRentalId;
-		this.bookOwnerId = bookOwnerId;
+		this.ownedBookInfoId = ownedBookInfoId;
 		this.borrowUserId = borrowUserId;
 		this.rentalStatus = rentalStatus;
 		this.deadline = deadline;
-		this.bookOwner = bookOwner;
+		this.ownedBookInfo = ownedBookInfo;
 		this.borrowUser = borrowUser;
 	}
 
@@ -53,12 +53,12 @@ public class BookRental {
 		this.bookRentalId = bookRentalId;
 	}
 
-	public Integer getBookOwnerId() {
-		return bookOwnerId;
+	public Integer getOwnedBookInfoId() {
+		return ownedBookInfoId;
 	}
 
-	public void setBookOwnerId(Integer bookOwnerId) {
-		this.bookOwnerId = bookOwnerId;
+	public void setOwnedBookInfoId(Integer ownedBookInfoId) {
+		this.ownedBookInfoId = ownedBookInfoId;
 	}
 
 	public Integer getBorrowUserId() {
@@ -85,12 +85,12 @@ public class BookRental {
 		this.deadline = deadline;
 	}
 
-	public BookOwner getBookOwner() {
-		return bookOwner;
+	public OwnedBookInfo getOwnedBookInfo() {
+		return ownedBookInfo;
 	}
 
-	public void setBookOwner(BookOwner bookOwner) {
-		this.bookOwner = bookOwner;
+	public void setOwnedBookInfo(OwnedBookInfo ownedBookInfo) {
+		this.ownedBookInfo = ownedBookInfo;
 	}
 
 	public User getBorrowUser() {
@@ -103,9 +103,9 @@ public class BookRental {
 
 	@Override
 	public String toString() {
-		return "BookRental [bookRentalId=" + bookRentalId + ", bookOwnerId=" + bookOwnerId + ", borrowUserId="
-				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", deadline=" + deadline + ", bookOwner="
-				+ bookOwner + ", borrowUser=" + borrowUser + "]";
+		return "BookRental [bookRentalId=" + bookRentalId + ", ownedBookInfoId=" + ownedBookInfoId + ", borrowUserId="
+				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", deadline=" + deadline + ", ownedBookInfo="
+				+ ownedBookInfo + ", borrowUser=" + borrowUser + "]";
 	}
 
 }
