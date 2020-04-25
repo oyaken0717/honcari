@@ -8,7 +8,7 @@ create table users(
   , password text not null
   , image_path text
   , profile character varying(100)
-  , deleted boolean default false not null
+  , status integer not null default 0
 );
 ​
 -- category
@@ -43,7 +43,7 @@ create table books (
   , thumbnail_path text not null
 );
 
--- book_owners
+-- owned_book_info
 drop table if exists book_owners cascade;
 drop table if exists owned_book_info cascade;
 
@@ -60,7 +60,7 @@ create table owned_book_info(
 drop table if exists book_rentals cascade;
 create table book_rentals(
   book_rental_id serial primary key
-  , book_owner_id integer not null references book_owners(book_owner_id)
+  , owned_book_info_id integer not null references owned_book_info(owned_book_info_id)
   , borrow_user_id integer not null references users(user_id)
   , rental_status integer not null
   , deadline date
