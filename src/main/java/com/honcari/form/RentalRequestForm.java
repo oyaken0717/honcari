@@ -10,30 +10,28 @@ import javax.validation.constraints.NotBlank;
  */
 public class RentalRequestForm {
 
-	/** 本ID */
-	private Integer bookId;
-	/** 貸し手ユーザーID */
-	private Integer lenderUserId;
+	/** ユーザーが所有する本情報ID */
+	private Integer ownedBookInfoId;
 	/** 貸出状況 */
-	private Integer status;
+	private Integer bookStatus;
 	/** 貸出期限 */
 	@NotBlank(message = "貸出期限を入力してください")
 	private String deadline;
 
-	public Integer getBookId() {
-		return bookId;
+	public Integer getOwnedBookInfoId() {
+		return ownedBookInfoId;
 	}
 
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
+	public void setOwnedBookInfoId(Integer ownedBookInfoId) {
+		this.ownedBookInfoId = ownedBookInfoId;
 	}
 
-	public Integer getLenderUserId() {
-		return lenderUserId;
+	public Integer getBookStatus() {
+		return bookStatus;
 	}
 
-	public void setLenderUserId(Integer lenderUserId) {
-		this.lenderUserId = lenderUserId;
+	public void setBookStatus(Integer bookStatus) {
+		this.bookStatus = bookStatus;
 	}
 
 	public String getDeadline() {
@@ -44,18 +42,10 @@ public class RentalRequestForm {
 		this.deadline = deadline;
 	}
 
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
 	@Override
 	public String toString() {
-		return "LendingRequestForm [bookId=" + bookId + ", lenderUserId=" + lenderUserId + ", status=" + status
-				+ ", deadline=" + deadline + "]";
+		return "RentalRequestForm [ownedBookInfoId=" + ownedBookInfoId + ", bookStatus=" + bookStatus + ", deadline="
+				+ deadline + "]";
 	}
 
 }
