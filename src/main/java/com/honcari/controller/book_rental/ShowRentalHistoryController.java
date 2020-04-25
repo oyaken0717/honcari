@@ -18,6 +18,7 @@ import com.honcari.service.book_rental.ShowRentalHistoryService;
  * @author katsuya.fujishima
  *
  */
+@RequestMapping("/book_rental")
 @Controller
 public class ShowRentalHistoryController {
 	
@@ -31,13 +32,13 @@ public class ShowRentalHistoryController {
 	 * @param model リクエストスコープ
 	 * @return レンタル履歴画面
 	 */
-	@RequestMapping("/show_lental_history")
+	@RequestMapping("/show_history")
 	public String showLentalHistory(@AuthenticationPrincipal LoginUser loginUser, Model model) {
 		List<BookRental> borrowedList = showLentalHistoryService.showBorrowedList(loginUser.getUser().getUserId());
 		List<BookRental> lentList = showLentalHistoryService.showlentList(loginUser.getUser().getUserId());
 		model.addAttribute("borrowedList", borrowedList);
 		model.addAttribute("lentList", lentList);
-		return "lental_history";
+		return "/book_rental/rental_history";
 	}
 
 }
