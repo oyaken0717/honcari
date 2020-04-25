@@ -21,6 +21,7 @@ public class GroupRelationRepository {
 		gr.setId(rs.getInt("id"));
 		gr.setUserId(rs.getInt("user_id"));
 		gr.setGroupId(rs.getInt("group_id"));
+		gr.setRelation_status(rs.getInt("relation_status"));
 		return gr;
 	};
 	
@@ -29,7 +30,7 @@ public class GroupRelationRepository {
 	
 	
 	public GroupRelation findByUserIdAndGroupId(Integer userId, Integer groupId) {
-		String sql = "SELECT id,user_id,group_id FROM group_relationship WHERE user_id = :userId AND group_id = :groupId";
+		String sql = "SELECT id,user_id,group_id,relation_status FROM group_relations WHERE user_id = :userId AND group_id = :groupId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
 		List<GroupRelation> grList = template.query(sql, param, GROUP_R_ROW_MAPPER);	
 		if(grList.isEmpty()) {
@@ -39,7 +40,7 @@ public class GroupRelationRepository {
 	}
 	
 	public void insert(Integer userId, Integer groupId) {
-		String sql = "INSERT INTO group_relationship (user_id,group_id) VALUES (:userId,:groupId)";
+		String sql = "INSERT INTO group_relations (user_id,group_id,relation_status) VALUES (:userId,:groupId)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
 		template.update(sql, param);	
 	}

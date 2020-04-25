@@ -25,7 +25,7 @@ public class SearchGroupController {
 	@RequestMapping("/to_search_group")
 	public String toSearchGroup() {
 		
-		return "search_group";
+		return "group/search_group";
 	}
 	
 	

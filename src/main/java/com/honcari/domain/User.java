@@ -2,21 +2,36 @@ package com.honcari.domain;
 
 import java.util.List;
 
+/**
+ * ユーザードメイン.
+ * 
+ * @author katsuya.fujishima
+ *
+ */
 public class User {
-	private Integer id;
+	/**	ID */
+	private Integer userId;
+	/**	名前 */
 	private String name;
+	/**	メールアドレス */
 	private String email;
+	/**	パスワード */
 	private String password;
+	/**	画像パス */
 	private String imagePath;
+	/**	プロフィール文 */
 	private String profile;
-	private List<Book>bookList;
+	/**	ステータス */
+	private Integer status;
+	/**	所有している本リスト */
+	private List<OwnedBookInfo> ownedBookInfoList;
+	/**	所属しているグループリスト */
 	private List<Group>groupList;
-	private Boolean deleted;
-	public Integer getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getName() {
 		return name;
@@ -48,11 +63,17 @@ public class User {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
-	public List<Book> getBookList() {
-		return bookList;
+	public Integer getStatus() {
+		return status;
 	}
-	public void setBookList(List<Book> bookList) {
-		this.bookList = bookList;
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public List<OwnedBookInfo> getOwnedBookInfoList() {
+		return ownedBookInfoList;
+	}
+	public void setOwnedBookInfoList(List<OwnedBookInfo> ownedBookInfoList) {
+		this.ownedBookInfoList = ownedBookInfoList;
 	}
 	public List<Group> getGroupList() {
 		return groupList;
@@ -60,16 +81,10 @@ public class User {
 	public void setGroupList(List<Group> groupList) {
 		this.groupList = groupList;
 	}
-	public Boolean getDeleted() {
-		return deleted;
-	}
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", imagePath="
-				+ imagePath + ", profile=" + profile + ", bookList=" + bookList + ", groupList=" + groupList
-				+ ", deleted=" + deleted + "]";
+		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", imagePath=" + imagePath + ", profile=" + profile + ", status=" + status + ", ownedBookInfoList="
+				+ ownedBookInfoList + ", groupList=" + groupList + "]";
 	}
 }

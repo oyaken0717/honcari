@@ -35,7 +35,7 @@ public class BookService {
 	 * @return 本情報
 	 */
 	public Book findByBookId(Integer bookId) {
-		return bookRepository.findByBookId(bookId);
+		return bookRentalRepository.findByBookId(bookId);
 	}
 
 	/**
@@ -141,17 +141,6 @@ public class BookService {
 	public List<BookRental> showWaitApprovalBookBorrowingList(Integer borrowUserId) {
 		Integer waitApprovalStatus = 0; // 承認待ち
 		return bookLendingRepository.findByBorrowUserIdAndLendingStatus(borrowUserId, waitApprovalStatus);
-	}
-	
-	/**
-	 * 書籍情報を編集するメソッド.
-	 * 
-	 * @param bookId 書籍id
-	 * @param categoryId カテゴリid
-	 * @param comment コメント
-	 */
-	public void editBook(Integer bookId, Integer categoryId, String comment) {
-		bookRepository.editBook(bookId, categoryId, comment);
 	}
 	
 	/**

@@ -1,29 +1,25 @@
-package com.honcari.service;
+package com.honcari.service.book;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.domain.Category;
 import com.honcari.repository.CategoryRepository;
 
 /**
- * category情報に関するサービス.
+ * 全てのカテゴリ情報を取得するサービス.
  * 
  * @author hatakeyamakouta
  *
  */
-@Service
-@Transactional
-public class CategoryService {
-	
+public class FindAllCategoryService {
+
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
 	/**
-	 * categoryテーブルの一覧を取得するメソッド.
+	 * categoryテーブルの全情報を取得するメソッド.
 	 * 
 	 * @return カテゴリ一覧
 	 */

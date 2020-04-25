@@ -13,6 +13,7 @@ public enum BookStatusEnum {
 	RENTABLE("貸出可", 1), 
 	BEFORE_LENDING("貸出承認待ち", 2),
 	LENDING("貸出中", 3),
+	DELETE("登録解除", 4),
 	CANCELED("キャンセル", 9),;
 
 	private final String key;
