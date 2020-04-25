@@ -66,7 +66,7 @@ public class SendRequestController {
 	
 		sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, deadline);
 		// TODO 貸し手にメール送信
-		return "redirect:/to_lend_management";
+		return "redirect:/book_rental/rental_list";
 	}
 
 }
