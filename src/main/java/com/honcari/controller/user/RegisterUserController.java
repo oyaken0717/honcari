@@ -26,7 +26,7 @@ public class RegisterUserController {
 	
 	@RequestMapping("/to_register_user")
 	public String toRegisterUser() {
-		return "register_user";
+		return "user/register_user";
 	}
 	
 	@RequestMapping("/register_user")

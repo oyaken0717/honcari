@@ -50,7 +50,7 @@
 				</div>
 				<div class="modal-body">
 					<select name="categoryId">
-						<option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.id}"></option>
+						<option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.categoryId}"></option>
 					</select>
 				</div>
 				<div id="book-request-parameter"></div>

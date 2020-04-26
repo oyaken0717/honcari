@@ -34,14 +34,14 @@ public class BookRepository {
 	/** bookドメインのローマッパー */
 	private final static RowMapper<Book> BOOK_ROW_MAPPER = (rs, i) -> {
 		Book book = new Book();
-		book.setBookId(rs.getInt("b_book_id"));
-		book.setIsbnId(rs.getString("b_isbn_id"));
-		book.setTitle(rs.getString("b_title"));
-		book.setAuthor(rs.getString("b_author"));
-		book.setPublishedDate(rs.getString("b_published_date"));
-		book.setDescription(rs.getString("b_description"));
-		book.setPageCount(rs.getInt("b_page_count"));
-		book.setThumbnailPath(rs.getString("b_thumbnail_path"));
+		book.setBookId(rs.getInt("book_id"));
+		book.setIsbnId(rs.getString("isbn_id"));
+		book.setTitle(rs.getString("title"));
+		book.setAuthor(rs.getString("author"));
+		book.setPublishedDate(rs.getString("published_date"));
+		book.setDescription(rs.getString("description"));
+		book.setPageCount(rs.getInt("page_count"));
+		book.setThumbnailPath(rs.getString("thumbnail_path"));
 		return book;
 	};
 	
@@ -51,8 +51,8 @@ public class BookRepository {
 	@PostConstruct
 	public void init() {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcTemplate());
-		SimpleJdbcInsert withtableName = simpleJdbcInsert.withTableName("book_owners");
-		insert = withtableName.usingGeneratedKeyColumns("book_owner_id");
+		SimpleJdbcInsert withtableName = simpleJdbcInsert.withTableName("books");
+		insert = withtableName.usingGeneratedKeyColumns("book_id");
 	}
 	
 	/**
