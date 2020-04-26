@@ -45,7 +45,7 @@ $(function(){
 		<span th:text="${user.name}"></span>
 	</div>	
 	<input type="hidden" id="groupId" name="groupId" th:value="${group.id}"><br>
-	<a href="" th:if="${userId}==${group.userId}"><button>グループを編集する</button></a><br>
+	<a href="" th:if="${userId}==${group.ownerUserId}"><button>グループを編集する</button></a><br>
 	<button id="button" name="submit">このグループに参加する</button><br>
 	<div id="invite"></div>
 	<hr>

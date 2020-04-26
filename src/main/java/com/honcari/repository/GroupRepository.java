@@ -16,9 +16,8 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import com.honcari.domain.OwnedBookInfo;
 import com.honcari.domain.Group;
-import com.honcari.domain.GroupRelation;
+import com.honcari.domain.OwnedBookInfo;
 import com.honcari.domain.User;
 
 /**
@@ -74,15 +73,15 @@ public class GroupRepository {
 				beforeUserId = nowUserId;
 			}
 
-			int OwnedBookInfoId = rs.getInt("ob_owned_book_info_id");
+			int OwnedBookInfoId = rs.getInt("o_owned_book_info_id");
 			if (OwnedBookInfoId != beforeOwnedBookInfoId) {
 				OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 				ownedBookInfo.setOwnedBookInfoId(OwnedBookInfoId);
-				ownedBookInfo.setUserId(rs.getInt("ob_user_id"));
-				ownedBookInfo.setBookId(rs.getInt("ob_book_id"));
-				ownedBookInfo.setCategoryId(rs.getInt("ob_category_id"));
-				ownedBookInfo.setBookStatus(rs.getInt("ob_book_status"));
-				ownedBookInfo.setComment(rs.getString("ob_comment"));
+				ownedBookInfo.setUserId(rs.getInt("o_user_id"));
+				ownedBookInfo.setBookId(rs.getInt("o_book_id"));
+				ownedBookInfo.setCategoryId(rs.getInt("o_category_id"));
+				ownedBookInfo.setBookStatus(rs.getInt("o_book_status"));
+				ownedBookInfo.setComment(rs.getString("o_comment"));
 				ownedBookInfoList.add(ownedBookInfo);
 
 				beforeOwnedBookInfoId = OwnedBookInfoId;
@@ -97,7 +96,9 @@ public class GroupRepository {
 		group.setId(rs.getInt("group_id"));
 		group.setName(rs.getString("name"));
 		group.setDescription(rs.getString("description"));
-		group.setUserId(rs.getInt("user_id"));
+		group.setOwnerUserId(rs.getInt("owner_user_id"));
+		group.setIsPrivate(rs.getBoolean("is_private"));
+		group.setDeleted(rs.getBoolean("deleted"));
 		return group;
 	};
 	
@@ -108,13 +109,13 @@ public class GroupRepository {
 	 */
 	private static final StringBuilder getSQL() {
 		StringBuilder SQL = new StringBuilder();
-		SQL.append("Select g.group_id g_group_id, g.name g_name, g.description g_description, g.owner_user_id g_owner_user_id, ");
+		SQL.append("SELECT g.group_id g_group_id, g.name g_name, g.description g_description, g.owner_user_id g_owner_user_id, ");
 		SQL.append("g.is_private g_is_private, g.deleted g_deleted, u.user_id u_user_id, u.name u_name, u.email u_email, ");
-		SQL.append("u.password u_password, u.image_path u_image_path, u.profile u_profile, u.deleted u_deleted, ");
-		SQL.append("ob.owned_book_info_id ob_owned_book_info_id, ob.user_id ob_user_id, ob.book_id ob_book_id, ob.category_id ob_category_id, ");
-		SQL.append("ob.book_status ob_book_status, ob.comment bo_comment ");
-		SQL.append("FROM groups g LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id LEFT OUTER JOIN users u ");
-		SQL.append("ON gr.user_id = u.user_id LEFT OUTER JOIN owned_book_info ob ON u.user_id = ob.user_id AND ob.book_status <> 0");
+		SQL.append("u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, ");
+		SQL.append("o.owned_book_info_id o_owned_book_info_id, o.user_id o_user_id, o.book_id o_book_id, o.category_id o_category_id, ");
+		SQL.append("o.book_status o_book_status, o.comment o_comment FROM groups g LEFT OUTER JOIN group_relations gr ");
+		SQL.append("ON g.group_id = gr.group_id LEFT OUTER JOIN users u ON gr.user_id = u.user_id LEFT OUTER JOIN owned_book_info o ");
+		SQL.append("ON u.user_id = o.user_id AND o.book_status <> 1 ");
 		return SQL;
 	}
 	
@@ -147,24 +148,13 @@ public class GroupRepository {
 	}
 
 	/**
-	 * グループとユーザーを紐づけた情報をDBに格納するメソッド.
-	 * 
-	 * @param realation グループとユーザーを紐付けた情報
-	 */
-	public void insertGroupRelation(GroupRelation realation) {
-		String sql = "INSERT INTO group_relationship(user_id, group_id) VALUES(:userId, :groupId)";
-		SqlParameterSource param = new BeanPropertySqlParameterSource(realation);
-		template.update(sql, param);
-	}
-
-	/**
 	 * 受け取ったパラメータからグループ情報を取得するメソッド.
 	 * 
 	 * @param name 検索パラメータ
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByLikeName(String name) {
-		String sql = "SELECT group_id,name,description,user_id FROM groups WHERE name LIKE :name ORDER BY group_id";
+		String sql = "SELECT group_id,name,description,owner_user_id,is_private,deleted FROM groups WHERE name LIKE :name ORDER BY group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		return template.query(sql, param, GROUP_ROW_MAPPER);
 	}
@@ -177,7 +167,7 @@ public class GroupRepository {
 	 */
 	public Group findByGroupId(Integer groupId) {
 		StringBuilder sql = getSQL();
-		sql.append(" WHERE g.group_id = :groupId AND u.deleted = false ORDER BY g.group_id");
+		sql.append("WHERE g.group_id = :groupId AND u.status <> 1 ORDER BY g.group_id");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
 		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
 		return groupList.get(0);

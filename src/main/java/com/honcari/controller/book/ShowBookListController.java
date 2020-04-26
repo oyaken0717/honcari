@@ -35,6 +35,6 @@ public class ShowBookListController {
 	public String showBookList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Category> categoryList = showBookListService.findByUserId(loginUser.getUser().getUserId());
 		model.addAttribute("categoryList", categoryList);
-		return "book/home";
+		return "book/book_list";
 	}
 }

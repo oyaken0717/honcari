@@ -96,11 +96,11 @@ public class CategoryRepository {
 				+ "b.description b_description,b.page_count b_page_count,b.thumbnail_path b_thumbnail_path,"
 				+ "o.comment o_comment, o.book_status b_book_status,c.category_id c_category_id, c.name c_name "
 				+ "FROM users u INNER JOIN owned_book_info o ON u.user_id = o.user_id AND o.book_status != 9 "
-				+ "INNER JOIN books b ON o.book_id = b.book_id AND b.deleted = false "
-				+ "INNER JOIN category c ON b.category_id = c.category_id "
+				+ "INNER JOIN books b ON o.book_id = b.book_id "
+				+ "INNER JOIN category c ON o.category_id = c.category_id "
 				+ "WHERE u.status != 9 AND u.user_id in ("
-					+ "SELECT user_id FROM group_relationship WHERE user_id != :userId AND group_id IN ("
-						+ "SELECT group_id FROM group_relationship WHERE user_id = :userId)) "
+					+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
+						+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
 				+ "ORDER BY c.category_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);

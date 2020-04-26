@@ -68,8 +68,8 @@ public class RegisterGroupController {
 		Group group = new Group();
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());
-		group.setUserId(loginUser.getUser().getUserId());
+		group.setOwnerUserId(loginUser.getUser().getUserId());
 		registerGroupService.insertGroup(group, userList);
-		return "book/home";
+		return "redirect:/book/book_list";
 	}
 }

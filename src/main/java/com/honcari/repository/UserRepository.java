@@ -94,7 +94,7 @@ public class UserRepository {
 				group.setId(rs.getInt("g_group_id"));
 				group.setName(rs.getString("g_name"));
 				group.setDescription(rs.getString("g_description"));
-				group.setUserId(rs.getInt("g_user_id"));
+				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
 				groupList.add(group);
 
 				beforeGroupId = groupId;
