@@ -40,7 +40,7 @@ public class ShowBookDetailController {
 		OwnedBookInfo ownedBookInfo = showBookDetailService.searchByOwnedBookId(ownedBookInfoId);
 		model.addAttribute("ownedBookInfo", ownedBookInfo);
 		model.addAttribute("book", ownedBookInfo.getBook());
-		return "book_detail";
+		return "book/book_detail";
 	}
 	
 	

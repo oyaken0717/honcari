@@ -41,7 +41,7 @@ public class ShowMyBookController {
 	public String ShowMyBook(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user = showMyPageService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user",user);
-		return "mybook";
+		return "book/mybook";
 	}
 	
 	/**
@@ -63,6 +63,6 @@ public class ShowMyBookController {
 		}else {
 			model.addAttribute("user", userList.get(0));
 		}
-		return "mybook";
+		return "book/mybook";
 	}
 }
