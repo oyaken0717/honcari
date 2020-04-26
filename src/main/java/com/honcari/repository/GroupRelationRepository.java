@@ -40,7 +40,7 @@ public class GroupRelationRepository {
 	}
 	
 	public void insert(Integer userId, Integer groupId) {
-		String sql = "INSERT INTO group_relations (user_id,group_id,relation_status) VALUES (:userId,:groupId)";
+		String sql = "INSERT INTO group_relations (user_id,group_id,relation_status) VALUES (:userId,:groupId, 0)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
 		template.update(sql, param);	
 	}
