@@ -7,7 +7,6 @@ public class Group {
 	private Integer id;
 	private String name;
 	private String description;
-	private Integer userId;
 	private Integer ownerUserId;
 	private Boolean isPrivate;
 	private Boolean deleted;
@@ -35,12 +34,6 @@ public class Group {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 
 	public Integer getOwnerUserId() {
