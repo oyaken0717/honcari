@@ -110,7 +110,7 @@ public class UserRepository {
 	private static final String BASE_SQL_FROM_5 = "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile, u.status u_status,"
 			+ "b.book_id b_book_id,b.isbn_id b_isbn_id, b.title b_title, b.author b_author,"
 			+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path,"
-			+ "o.comment o_comment, o.book_status o_book_status, o.category_id o_category_id, g.group_id g_group_id,g.name g_name,g.description g_description "
+			+ "o.comment o_comment, o.book_status o_book_status, o.category_id o_category_id, g.group_id g_group_id,g.name g_name,g.description g_description,g.owner_user_id g_owner_user_id "
 			+ "FROM users u	LEFT JOIN owned_book_info o ON u.user_id = o.user_id AND o.book_status != 9 "
 			+ "LEFT JOIN books b ON o.book_id = b.book_id LEFT JOIN group_relations gr ON u.user_id = gr.user_id "
 			+ "LEFT JOIN groups g ON g.group_id=gr.group_id AND g.group_status != 9 ";
