@@ -71,8 +71,8 @@
 				</div> -->
 				
 				<!-- カテゴリ選択ボタンを押下後に表示されるカテゴリ別の書籍一覧(デザイン要検討)一部動作上手くいってません。 -->
- 				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${user.bookList}">
-					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="book : ${user.bookList}" id="book-card">
+ 				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${user.ownedBookInfoList}">
+					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="book : ${user.ownedBookInfoList}" id="book-card">
      					<div class="card">
       						<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
       						<div class="card-body">
