@@ -69,7 +69,9 @@ public class RegisterGroupController {
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());
 		group.setOwnerUserId(loginUser.getUser().getUserId());
+		group.setGroupStatus(0);
 		registerGroupService.insertGroup(group, userList);
-		return "redirect:/book/book_list";
+		redirectAttributesm.addFlashAttribute("complete", "complete");
+		return "redirect:/";
 	}
 }
