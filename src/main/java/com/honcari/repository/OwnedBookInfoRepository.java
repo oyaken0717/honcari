@@ -1,5 +1,7 @@
 package com.honcari.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -61,9 +63,9 @@ public class OwnedBookInfoRepository {
 	};
 	
 	/**	OWNED_BOOK_INFO_ROW_MAPPERを使用する際に全件取得するためのSELECT文 */
-	private static final String SELECT_SQL = "SELECT o.owned_book_info_id o_owned_book_info_id, o.user_id o_userid, o.book_id o_book_id, o.category_id o_category_id,"
+	private static final String SELECT_SQL = "SELECT o.owned_book_info_id o_owned_book_info_id, o.user_id o_user_id, o.book_id o_book_id, o.category_id o_category_id,"
 			+ "o.book_status o_book_status, o.comment o_comment, b.book_id b_book_id, b.isbn_id b_isbn_id, b.title b_title, b.author b_author, b.published_date b_published_date,"
-			+ "b.description b_description, b.page_count b_pagecount, b.thumbnail_path b_thumbnail_path, u.user_id u_user_id, u.name u_name, u.email u_emai,"
+			+ "b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, u.user_id u_user_id, u.name u_name, u.email u_email,"
 			+ "u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, c.category_id c_category_id, c.name c_name FROM owned_book_info o "
 			+ "INNER JOIN books b ON o.book_id = b.book_id INNER JOIN users u ON o.user_id = u.user_id INNER JOIN category c ON o.category_id = c.category_id";
 
@@ -126,5 +128,30 @@ public class OwnedBookInfoRepository {
 				+ "VALUES(DEFAULT, :userId, :bookId, :categoryId, :bookStatus, :comment);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(ownedBookInfo);
 		template.update(sql, param);
+	}
+	
+	/**
+	 * ユーザidとcategoryIDにてユーザ情報を取得する.
+	 * 
+	 * @param userId ユーザid
+	 * @param categoryId カテゴリid
+	 * @return ユーザidとカテゴリidに一致したユーザ情報
+	 */
+	public List<OwnedBookInfo> findByCategoryId(Integer userId, Integer categoryId){
+		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
+		return template.query(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
+	}
+	
+	/**
+	 * ユーザーIDから検索するメソッド.
+	 * 
+	 * @param userId ユーザーID
+	 * @return ユーザー情報リスト
+	 */
+	public List<OwnedBookInfo> findByUserId(Integer userId) {
+		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND u.status != 9;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		return template.query(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
 	}
 }
