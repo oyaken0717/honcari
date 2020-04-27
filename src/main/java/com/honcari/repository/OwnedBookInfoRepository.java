@@ -1,5 +1,7 @@
 package com.honcari.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -74,7 +76,7 @@ public class OwnedBookInfoRepository {
 	 * @return ユーザーが所有している本の情報
 	 */
 	public OwnedBookInfo findByOwnedBookInfoId(Integer ownedBookInfoId) {
-		String sql = SELECT_SQL + " WHERE o.owned_book_info_id = :ownedBookInfoId;";
+		String sql = SELECT_SQL + " WHERE o.owned_book_info_id = :ownedBookInfoId AND o.book_status != 4;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("ownedBookInfoId", ownedBookInfoId);
 		OwnedBookInfo ownedBookInfo = template.queryForObject(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
 		return ownedBookInfo;
@@ -88,7 +90,7 @@ public class OwnedBookInfoRepository {
 	 */
 	//TODO 下記のeditメソッドと一本化
 	public void update(OwnedBookInfo ownedBookInfo) {
-		String sql = "UPDATE owned_book_info SET user_id = :userId, book_id = bookId, category_id = categoryId, "
+		String sql = "UPDATE owned_book_info SET user_id = :userId, book_id = :bookId, category_id = :categoryId, "
 				+ "book_status = :bookStatus, comment = :comment WHERE owned_book_info_id = :ownedBookInfoId";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(ownedBookInfo);
 		template.update(sql, param);
@@ -126,5 +128,30 @@ public class OwnedBookInfoRepository {
 				+ "VALUES(DEFAULT, :userId, :bookId, :categoryId, :bookStatus, :comment);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(ownedBookInfo);
 		template.update(sql, param);
+	}
+	
+	/**
+	 * ユーザidとcategoryIDにてユーザ情報を取得する.
+	 * 
+	 * @param userId ユーザid
+	 * @param categoryId カテゴリid
+	 * @return ユーザidとカテゴリidに一致したユーザ情報
+	 */
+	public List<OwnedBookInfo> findByCategoryId(Integer userId, Integer categoryId){
+		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9 AND o.book_status != 4;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
+		return template.query(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
+	}
+	
+	/**
+	 * ユーザーIDから検索するメソッド.
+	 * 
+	 * @param userId ユーザーID
+	 * @return ユーザー情報リスト
+	 */
+	public List<OwnedBookInfo> findByUserId(Integer userId) {
+		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND u.status != 9 AND o.book_status != 4;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		return template.query(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
 	}
 }

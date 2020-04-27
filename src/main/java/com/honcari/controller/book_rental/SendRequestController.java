@@ -1,6 +1,7 @@
 package com.honcari.controller.book_rental;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.honcari.controller.book.ShowBookDetailController;
 import com.honcari.domain.LoginUser;
@@ -25,18 +27,18 @@ import com.honcari.service.book_rental.SendRentalRequestService;
 @Controller
 @RequestMapping("/book_rental")
 public class SendRequestController {
-	
+
 	@Autowired
 	private ShowBookDetailController showBookDetailController;
-	
+
 	@Autowired
 	private SendRentalRequestService sendRentalRequestService;
-	
+
 	@ModelAttribute
 	public RentalRequestForm setUpForm() {
 		return new RentalRequestForm();
 	}
-	
+
 	/**
 	 * 貸出リクエストを送る.
 	 * 
@@ -45,25 +47,39 @@ public class SendRequestController {
 	 * @param result エラーチェック
 	 * @return 申請状況一覧画面
 	 */
-	@RequestMapping("/send")
-	public String sendLendingRequest(Model model, @AuthenticationPrincipal LoginUser loginUser, @Validated RentalRequestForm form, BindingResult result) {
+	@RequestMapping(value = "/send", method = RequestMethod.POST)
+	public String sendLendingRequest(Model model, @AuthenticationPrincipal LoginUser loginUser,
+			@Validated RentalRequestForm form, BindingResult result) {
 		Integer borrowUserId = loginUser.getUser().getUserId();
 		Integer ownedBookInfoId = form.getOwnedBookInfoId();
 		Integer bookStatus = form.getBookStatus();
-		
-
-		// TODO エラーチェックの段階要検討　returnはhasErrors()に統一したら？by藤島
-		if (bookStatus != 1) {
-			model.addAttribute("errorMessage", "不正なリクエストが行われました");
-			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
+		Integer ownerId = form.getOwnerId();
+		if (bookStatus != 1 || ownerId == borrowUserId) {
+			result.rejectValue("deadline", "500", "不正なリクエストが行われました");
 		}
 
 		if (result.hasErrors()) {
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
 
-		Date deadline = Date.valueOf(form.getDeadline());
-	
+		String inputDeadline = form.getDeadline();
+		Date deadline = Date.valueOf(inputDeadline);
+		LocalDate requestDate = LocalDate.now();
+		LocalDate deadlineDate = LocalDate.parse(inputDeadline);
+		LocalDate maxRequestDate = requestDate.plusMonths(2);
+		
+		if (deadlineDate.isBefore(requestDate)) {
+			result.rejectValue("deadline", "500", "貸出期限は今日以降の日付を入力してください");
+		}
+
+		if (deadlineDate.isAfter(maxRequestDate)) {
+			result.rejectValue("deadline", "500", "貸出期限は本日から2か月以内の日付を入力してください");
+		}
+
+		if (result.hasErrors()) {
+			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
+		}
+
 		sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, deadline);
 		// TODO 貸し手にメール送信
 		return "redirect:/book_rental/show_list";
