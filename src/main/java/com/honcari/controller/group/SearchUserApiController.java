@@ -31,9 +31,9 @@ public class SearchUserApiController {
 	 * @return
 	 */
 	@RequestMapping("/search_user_api")
-	public Map<String, List<User>> searchUser(String name) {
+	public Map<String, List<User>> searchUser(String name, Integer userId) {
 		Map<String, List<User>> map = new HashMap<>();
-		List<User> userList = registerGroupService.findByNameLike(name);
+		List<User> userList = registerGroupService.findByNameLike(name, userId);
 		map.put("userList", userList);
 		return map;
 	}

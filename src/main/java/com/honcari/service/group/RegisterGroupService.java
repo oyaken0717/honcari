@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.domain.Group;
-import com.honcari.domain.GroupRelation;
 import com.honcari.domain.User;
+import com.honcari.repository.GroupRelationRepository;
 import com.honcari.repository.GroupRepository;
 import com.honcari.repository.UserRepository;
 
@@ -20,6 +20,9 @@ public class RegisterGroupService {
 	private GroupRepository groupRepository;
 	
 	@Autowired
+	private GroupRelationRepository groupRelationRepository;
+	
+	@Autowired
 	private UserRepository userRepository;
 	
 	public void insertGroup(Group group, List<User> userList) {
@@ -27,10 +30,7 @@ public class RegisterGroupService {
 		Group groupInId = groupRepository.insertGroup(group);
 		//グループに入れるuser数だけ登録.
 		userList.forEach(user -> {
-			GroupRelation realationship = new GroupRelation();
-			realationship.setUserId(user.getUserId());
-			realationship.setGroupId(groupInId.getId());
-			groupRepository.insertGroupRelation(realationship);
+			groupRelationRepository.insert(user.getUserId(), groupInId.getId());
 		});
 	}
 	
@@ -38,7 +38,7 @@ public class RegisterGroupService {
 		return userRepository.findByName(name);
 	}
 	
-	public List<User> findByNameLike(String name) {
-		return userRepository.findByNameLike(name);
+	public List<User> findByNameLike(String name, Integer userId) {
+		return userRepository.findByNameLike(name, userId);
 	}
 }

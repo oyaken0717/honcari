@@ -35,6 +35,6 @@ public class ShowMyPageController {
 	public String showMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user = showMyPageService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);
-		return "mypage";
+		return "user/mypage";
 	}
 }

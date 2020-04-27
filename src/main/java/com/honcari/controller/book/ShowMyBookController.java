@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.service.book.ShowMyBookService;
-import com.honcari.service.user.ShowMyPageService;
 
 /**
  * マイブックを表示するコントローラ.
@@ -25,9 +24,6 @@ public class ShowMyBookController {
 	@Autowired
 	private ShowMyBookService showMyBookService;
 	
-	@Autowired
-	private ShowMyPageService showMyPageService;
-	
 	/**
 	 * 自身が登録している書籍一覧を表示する.
 	 * 
@@ -37,9 +33,9 @@ public class ShowMyBookController {
 	 */
 	@RequestMapping("/show_my_book")
 	public String ShowMyBook(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = showMyPageService.showUser(loginUser.getUser().getUserId());
+		User user = showMyBookService.ShowMyAllBook(loginUser.getUser().getUserId());
 		model.addAttribute("user",user);
-		return "mybook";
+		return "book/mybook";
 	}
 	
 	/**
@@ -61,6 +57,6 @@ public class ShowMyBookController {
 		}else {
 			model.addAttribute("user", userList.get(0));
 		}
-		return "mybook";
+		return "book/mybook";
 	}
 }

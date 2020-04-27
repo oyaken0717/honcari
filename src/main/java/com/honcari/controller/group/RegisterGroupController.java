@@ -40,7 +40,7 @@ public class RegisterGroupController {
 	@RequestMapping("/to_register_group")
 	public String toRegisterGroup(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		model.addAttribute("user", loginUser.getUser());
-		return "register_group";
+		return "group/register_group";
 	}
 	
 	/**
@@ -68,8 +68,10 @@ public class RegisterGroupController {
 		Group group = new Group();
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());
-		group.setUserId(loginUser.getUser().getUserId());
+		group.setOwnerUserId(loginUser.getUser().getUserId());
+		group.setGroupStatus(0);
 		registerGroupService.insertGroup(group, userList);
-		return "home";
+		redirectAttributesm.addFlashAttribute("complete", "complete");
+		return "redirect:/";
 	}
 }

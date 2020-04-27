@@ -122,7 +122,7 @@ public class OwnedBookInfoRepository {
 	 * @param ownedBookInfo 書籍情報
 	 */
 	public void insertOwnedBookInfo(OwnedBookInfo ownedBookInfo) {
-		String sql = "INSERT INTO owned_book_info(owened_book_info_id, user_id, book_id, category_id, book_status, comment) "
+		String sql = "INSERT INTO owned_book_info(owned_book_info_id, user_id, book_id, category_id, book_status, comment) "
 				+ "VALUES(DEFAULT, :userId, :bookId, :categoryId, :bookStatus, :comment);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(ownedBookInfo);
 		template.update(sql, param);
