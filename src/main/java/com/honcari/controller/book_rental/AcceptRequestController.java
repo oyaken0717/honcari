@@ -12,8 +12,8 @@ import com.honcari.service.book_rental.AcceptRentalRequestService;
  * @author shumpei
  *
  */
-@RequestMapping("/book_rental")
 @Controller
+@RequestMapping("/book_rental")
 public class AcceptRequestController {
 	
 	@Autowired
@@ -30,7 +30,7 @@ public class AcceptRequestController {
 	public String acceptRequest(Integer bookRentalId) {
 		acceptRentalRequestService.acceptRentalRequest(bookRentalId);
 		// TODO 借り手にメール送信
-		return "redirect:/book_rental/rental_list";
+		return "redirect:/book_rental/show_list";
 	}
 
 }

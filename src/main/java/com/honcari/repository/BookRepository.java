@@ -15,7 +15,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.Book;
-import com.honcari.domain.OwnedBookInfo;
 
 /**
  * booksテーブルを操作するリポジトリ.

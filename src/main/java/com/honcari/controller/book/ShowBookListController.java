@@ -19,7 +19,6 @@ import com.honcari.service.book.ShowBookListService;
  *
  */
 @Controller
-@RequestMapping("")
 public class ShowBookListController {
 
 	@Autowired

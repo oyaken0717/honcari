@@ -22,8 +22,8 @@ import com.honcari.service.book_rental.SendRentalRequestService;
  * @author shumpei
  *
  */
-@RequestMapping("/book_rental")
 @Controller
+@RequestMapping("/book_rental")
 public class SendRequestController {
 	
 	@Autowired
@@ -66,7 +66,7 @@ public class SendRequestController {
 	
 		sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, deadline);
 		// TODO 貸し手にメール送信
-		return "redirect:/book_rental/rental_list";
+		return "redirect:/book_rental/show_list";
 	}
 
 }

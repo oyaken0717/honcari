@@ -31,10 +31,10 @@
         </li>
         
 		<li class="nav-item active" th:if="${page == 2}">
-          <a class="nav-link" href="register_book.html" th:href="@{/show_register_book}">マイブック登録</a>
+          <a class="nav-link" href="register_book.html" th:href="@{/book/show_register}">マイブック登録</a>
         </li>
 		<li class="nav-item" th:unless="${page == 2}">
-          <a class="nav-link" href="register_book.html" th:href="@{/show_register_book}">マイブック登録</a>
+          <a class="nav-link" href="register_book.html" th:href="@{/book/show_register}">マイブック登録</a>
         </li>
         <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle active" th:if="${page == 3}" id="dropdownMenuLink" 
@@ -44,9 +44,9 @@
 				th:src="@{/img/user_default.png}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				グループ</a>
 			<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item" href="register_group.html" th:href="@{/to_register_group}">グループ作成</a>
-				<a class="dropdown-item" href="search_group.html" th:href="@{/to_search_group}">グループを探す</a>
-				<a class="dropdown-item" href="group_management.html" th:href="@{/to_group_management}">グループ管理</a>
+				<a class="dropdown-item" href="register_group.html" th:href="@{/group/to_register}">グループ作成</a>
+				<a class="dropdown-item" href="search_group.html" th:href="@{/group/to_search}">グループを探す</a>
+				<a class="dropdown-item" href="group_management.html" th:href="@{/group/to_management}">グループ管理</a>
 			</div>
         </li>
         <li class="nav-item dropdown">
@@ -54,11 +54,11 @@
 				id="dropdownMenuLink" width="50px" height="50px" th:src="@{/img/user_default.png}" 
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item" href="mypage.html" th:href="@{/show_my_page}">マイページ</a>
+				<a class="dropdown-item" href="mypage.html" th:href="@{/user/show_mypage}">マイページ</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="mybook.html" th:href="@{/show_my_book}">マイブック</a>
-				<a class="dropdown-item" href="lend_management.html" th:href="@{book_rental/show_list}">レンタル管理</a>
-				<a class="dropdown-item" href="lental_history.html" th:href="@{/show_lental_history}">レンタル履歴</a>
+				<a class="dropdown-item" href="mybook.html" th:href="@{/book/show_mybook}">マイブック</a>
+				<a class="dropdown-item" href="lend_management.html" th:href="@{/book_rental/show_list}">レンタル管理</a>
+				<a class="dropdown-item" href="lental_history.html" th:href="@{/book_rental/show_history}">レンタル履歴</a>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="help.html" th:href="@{/show_help}">ヘルプ</a>
 				<a class="dropdown-item" href="login.html" th:href="@{/logout}">ログアウト</a>

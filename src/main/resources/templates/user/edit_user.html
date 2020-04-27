@@ -28,7 +28,7 @@
 
 				<!-- main content -->
 				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left">
-					<form action="mypage.html" th:action="@{/edit_user}" method="post" 
+					<form action="mypage.html" th:action="@{/user/edit}" method="post" 
 						th:object="${editUserForm}" enctype="multipart/form-data">
 						<input type="hidden" name="id" th:value="${user.id}">
 						<input type="hidden" name="defaultPassword" th:value="${user.password}">

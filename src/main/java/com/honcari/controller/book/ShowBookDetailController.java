@@ -16,8 +16,8 @@ import com.honcari.service.book.ShowBookDetailService;
  * @author shumpei
  *
  */
-@RequestMapping("/book")
 @Controller
+@RequestMapping("/book")
 public class ShowBookDetailController {
 	
 	@Autowired

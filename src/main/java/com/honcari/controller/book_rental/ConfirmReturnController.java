@@ -12,8 +12,8 @@ import com.honcari.service.book_rental.ConfirmReturnService;
  * @author shumpei
  *
  */
-@RequestMapping("/book_rental")
 @Controller
+@RequestMapping("/book_rental")
 public class ConfirmReturnController {
 	
 	@Autowired
@@ -30,7 +30,7 @@ public class ConfirmReturnController {
 	public String confirmReturn(Integer bookRentalId, Integer updateStatus) {
 		confirmReturnService.confirmReturn(bookRentalId, updateStatus);
 		// TODO 借り手にメール送信
-		return "redirect:/book_rental/rental_list";
+		return "redirect:/book_rental/show_list";
 	}
 
 }

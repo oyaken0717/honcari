@@ -24,6 +24,7 @@ import com.honcari.service.user.EditUserService;
  *
  */
 @Controller
+@RequestMapping("/user")
 public class EditUserController {
 	
 	@Autowired
@@ -41,7 +42,7 @@ public class EditUserController {
 	 * @param model  リクエストスコープ
 	 * @return プロフィール編集画面
 	 */
-	@RequestMapping("/show_edit_user")
+	@RequestMapping("/show_edit")
 	public String showEditUser(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user = editUserService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);
@@ -57,7 +58,7 @@ public class EditUserController {
 	 * @param redirectAttributes リダイレクトスコープ
 	 * @return マイページへリダイレクト
 	 */
-	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String editUser(@Validated EditUserForm editUserForm, BindingResult result, 
 			Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(editUserService.isExistOtherUserByEmail(editUserForm)) {
@@ -77,7 +78,7 @@ public class EditUserController {
 			return showEditUser(model, loginUser);
 		}
 		editUserService.editUser(editUserForm);
-		return "redirect:/show_my_page";
+		return "redirect:/user/show_mypage";
 	}
 	
 }

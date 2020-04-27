@@ -12,8 +12,8 @@ import com.honcari.service.book_rental.CancelRentalRequestService;
  * @author shumpei
  *
  */
-@RequestMapping("/book_rental")
 @Controller
+@RequestMapping("/book_rental")
 public class CancelRequestController {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class CancelRequestController {
 	public String cancelRequest(Integer bookRentalId) {
 		cancelRentalRequestService.cancelRentalRequest(bookRentalId);
 		// TODO 貸し手にメール送信
-		return "redirect:/book_rental/rental_list";
+		return "redirect:/book_rental/show_list";
 	}
 
 }
