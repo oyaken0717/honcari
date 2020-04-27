@@ -1,6 +1,5 @@
 -- users
 drop table if exists users cascade;
-
 create table users(
   user_id serial primary key
   , name character varying(100) not null
@@ -13,7 +12,6 @@ create table users(
 
 -- category
 drop table if exists category cascade;
-
 create table category (
   category_id serial primary key
   , name character varying(100) not null
@@ -31,7 +29,6 @@ insert into category values(9, 'その他');
 
 -- books
 drop table if exists books cascade;
-
 create table books (
   book_id serial primary key
   , isbn_id text not null
@@ -46,7 +43,6 @@ create table books (
 -- owned_book_info
 drop table if exists book_owners cascade;
 drop table if exists owned_book_info cascade;
-
 create table owned_book_info(
   owned_book_info_id serial primary key
    , user_id integer not null references users(user_id)
@@ -69,7 +65,6 @@ create table book_rentals(
 
 -- groups
 drop table if exists groups cascade;
-
 create table groups (
   group_id serial primary key
   , name character varying(100) not null
@@ -81,7 +76,6 @@ create table groups (
 
 -- group_relations
 drop table if exists group_relations cascade;
-
 create table group_relations (
   group_relation_id serial primary key
   , user_id integer not null references users(user_id)

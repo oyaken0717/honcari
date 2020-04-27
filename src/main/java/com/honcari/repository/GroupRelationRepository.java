@@ -18,7 +18,7 @@ public class GroupRelationRepository {
 	
 	private static final RowMapper<GroupRelation> GROUP_R_ROW_MAPPER = (rs, i) -> {
 		GroupRelation gr = new GroupRelation();
-		gr.setId(rs.getInt("id"));
+		gr.setId(rs.getInt("group_relation_id"));
 		gr.setUserId(rs.getInt("user_id"));
 		gr.setGroupId(rs.getInt("group_id"));
 		gr.setRelation_status(rs.getInt("relation_status"));
@@ -30,7 +30,7 @@ public class GroupRelationRepository {
 	
 	
 	public GroupRelation findByUserIdAndGroupId(Integer userId, Integer groupId) {
-		String sql = "SELECT id,user_id,group_id,relation_status FROM group_relations WHERE user_id = :userId AND group_id = :groupId";
+		String sql = "SELECT group_relation_id,user_id,group_id,relation_status FROM group_relations WHERE user_id = :userId AND group_id = :groupId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
 		List<GroupRelation> grList = template.query(sql, param, GROUP_R_ROW_MAPPER);	
 		if(grList.isEmpty()) {
