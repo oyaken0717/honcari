@@ -1,6 +1,9 @@
 package com.honcari.controller.book_rental;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,18 +29,18 @@ import com.honcari.service.book_rental.SendRentalRequestService;
 @Controller
 @RequestMapping("/book_rental")
 public class SendRequestController {
-	
+
 	@Autowired
 	private ShowBookDetailController showBookDetailController;
-	
+
 	@Autowired
 	private SendRentalRequestService sendRentalRequestService;
-	
+
 	@ModelAttribute
 	public RentalRequestForm setUpForm() {
 		return new RentalRequestForm();
 	}
-	
+
 	/**
 	 * 貸出リクエストを送る.
 	 * 
@@ -47,19 +50,38 @@ public class SendRequestController {
 	 * @return 申請状況一覧画面
 	 */
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
-	public String sendLendingRequest(Model model, @AuthenticationPrincipal LoginUser loginUser, @Validated RentalRequestForm form, BindingResult result) {
+	public String sendLendingRequest(Model model, @AuthenticationPrincipal LoginUser loginUser,
+			@Validated RentalRequestForm form, BindingResult result) {
 		Integer borrowUserId = loginUser.getUser().getUserId();
 		Integer ownedBookInfoId = form.getOwnedBookInfoId();
 		Integer bookStatus = form.getBookStatus();
 		Integer ownerId = form.getOwnerId();
+		if (bookStatus != 1 || ownerId == borrowUserId) {
+			result.rejectValue("deadline", "500", "不正なリクエストが行われました");
+		}
+
 		if (result.hasErrors()) {
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
-		if (bookStatus != 1 || ownerId == borrowUserId) {
-			result.rejectValue("deadline", "500", "不正なリクエストが行われました");
+
+		String inputDeadline = form.getDeadline();
+		Date deadline = Date.valueOf(inputDeadline);
+		LocalDate requestDate = LocalDate.now();
+		LocalDate deadlineDate = LocalDate.parse(inputDeadline);
+		LocalDate maxRequestDate = requestDate.plusMonths(2);
+		
+		if (deadlineDate.isBefore(requestDate)) {
+			result.rejectValue("deadline", "500", "貸出期限は今日以降の日付を入力してください");
+		}
+
+		if (deadlineDate.isAfter(maxRequestDate)) {
+			result.rejectValue("deadline", "500", "貸出期限は本日から2か月以内の日付を入力してください");
+		}
+
+		if (result.hasErrors()) {
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
-		Date deadline = Date.valueOf(form.getDeadline());
+
 		sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, deadline);
 		// TODO 貸し手にメール送信
 		return "redirect:/book_rental/show_list";
