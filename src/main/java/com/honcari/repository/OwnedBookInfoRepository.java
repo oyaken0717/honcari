@@ -52,7 +52,7 @@ public class OwnedBookInfoRepository {
 		user.setImagePath(rs.getString("u_image_path"));
 		user.setProfile(rs.getString("u_profile"));
 		user.setStatus(rs.getInt("u_status"));
-		ownedBookInfo.setBook(book);
+		ownedBookInfo.setUser(user);
 		Category category = new Category();
 		category.setCategoryId(rs.getInt("c_category_id"));
 		category.setName(rs.getString("c_name"));
