@@ -79,8 +79,13 @@ public class RegisterBookController {
 			}else {
 				pageCount = Integer.parseInt(registerBookForm.getPageCount());
 			}
+			book.setIsbnId(registerBookForm.getIsbnId());
+			book.setTitle(registerBookForm.getTitle());
+			book.setAuthor(registerBookForm.getAuthor());
+			book.setPublishedDate(registerBookForm.getPublishedDate());
+			book.setDescription(registerBookForm.getDescription());
 			book.setPageCount(pageCount);
-			BeanUtils.copyProperties(registerBookForm, book);
+			book.setThumbnailPath(registerBookForm.getThumbnailPath());
 			Book registeredBook = registerBookService.registerBook(book);
 			bookId = registeredBook.getBookId();
 		}else {

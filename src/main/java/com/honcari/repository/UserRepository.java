@@ -54,7 +54,6 @@ public class UserRepository {
 			int nowUserId = rs.getInt("u_user_id");
 			if (nowUserId != beforeUserId) {
 				ownedBookInfoList = new ArrayList<>();
-				groupList = new ArrayList<>();
 				user.setUserId(nowUserId);
 				user.setName(rs.getString("u_name"));
 				user.setEmail(rs.getString("u_email"));
@@ -68,7 +67,7 @@ public class UserRepository {
 
 				beforeUserId = nowUserId;
 			}
-
+			
 			int bookId = rs.getInt("b_book_id");
 			if (bookId != beforeBookId) {
 				OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
@@ -88,7 +87,6 @@ public class UserRepository {
 
 				beforeBookId = bookId;
 			}
-
 			int groupId = rs.getInt("g_group_id");
 			if (groupId != beforeGroupId) {
 				Group group = new Group();
@@ -150,7 +148,7 @@ public class UserRepository {
 	 * @return ユーザー情報リスト
 	 */
 	public User findByUserId(Integer userId) {
-		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND u.status != 9 order by u.user_id,b.book_id,g.group_id ;";
+		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND u.status != 9 order by g.group_id, b.book_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
 		return userList.get(0);
