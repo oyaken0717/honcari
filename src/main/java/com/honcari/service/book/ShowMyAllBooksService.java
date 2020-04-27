@@ -24,7 +24,7 @@ public class ShowMyAllBooksService {
 	private OwnedBookInfoRepository ownedBookInfoRepository;
 	
 	/**
-	 * ユーザidにてユーザ情報を取得するメソッド
+	 * ユーザidにてユーザ情報を取得するメソッド.
 	 * 
 	 * @param userId ユーザid
 	 * @return ユーザidに一致したユーザ情報
