@@ -29,14 +29,14 @@ public class UserRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
-	private static final RowMapper<User> User_ROW_MAPPER = (rs, i) -> {
+	private static final RowMapper<User> USER_ROW_MAPPER = (rs, i) -> {
 		User user = new User();
 		user.setUserId(rs.getInt("user_id"));
 		user.setName(rs.getString("name"));
 		user.setEmail(rs.getString("email"));
 		user.setPassword(rs.getString("password"));
-		user.setImagePath("image_path");
-		user.setProfile("profile");
+		user.setImagePath(rs.getString("image_path"));
+		user.setProfile(rs.getString("profile"));
 		user.setStatus(rs.getInt("status"));
 		return user;
 	};
@@ -135,7 +135,7 @@ public class UserRepository {
 	public User findByEmail(String email) {
 		String sql = BASE_SQL_FROM_USERS + "where email = :email AND status != 9;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
-		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
 		if (userList.size() == 0) {
 			return null;
 		}
@@ -165,7 +165,7 @@ public class UserRepository {
 	public User findByName(String name) {
 		String sql = BASE_SQL_FROM_USERS + "WHERE name=:name AND status != 9;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
-		return template.queryForObject(sql, param, User_ROW_MAPPER);
+		return template.queryForObject(sql, param, USER_ROW_MAPPER);
 	}
 	
 	/**
@@ -177,7 +177,7 @@ public class UserRepository {
 	public List<User> findByNameLike(String name, Integer userId) {
 		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id <> :userId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("userId", userId);
-		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
 		if (userList.isEmpty()) {
 			return null;
 		}
@@ -196,16 +196,16 @@ public class UserRepository {
 		template.update(sql, param);
 	}
 	
-	/**
-	 * ユーザidとcategoryIDにてユーザ情報を取得する
-	 * 
-	 * @param userId ユーザid
-	 * @param categoryId カテゴリid
-	 * @return ユーザidとカテゴリidに一致したユーザ情報
-	 */
-	public List<User> findByCategoryId(Integer userId, Integer categoryId){
-		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
-		return template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
-	}
+//	/**
+//	 * ユーザidとcategoryIDにてユーザ情報を取得する
+//	 * 
+//	 * @param userId ユーザid
+//	 * @param categoryId カテゴリid
+//	 * @return ユーザidとカテゴリidに一致したユーザ情報
+//	 */
+//	public List<User> findByCategoryId(Integer userId, Integer categoryId){
+//		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9;";
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
+//		return template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
+//	}
 }
