@@ -93,7 +93,7 @@
 							<div class="text-box">
 								<form th:action="@{/book_rental/accept}" method="POST">
 								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
-								レンタル希望者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
+								レンタル希望者：<span th:text="${bookRental.borrowUser.name}">さん</span><br>
 								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
 								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
 								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
@@ -113,7 +113,7 @@
 						<div class="col-lg-6">
 							<div class="text-box">
 								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
-								レンタル希望者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
+								レンタル希望者：<span th:text="${bookRental.borrowUser.name}">さん</span><br>
 								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
 								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
 								<div><button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#return-confirm-form">返却確認</button></div>
