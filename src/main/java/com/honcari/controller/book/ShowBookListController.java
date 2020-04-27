@@ -34,6 +34,7 @@ public class ShowBookListController {
 	@RequestMapping("/")
 	public String showBookList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Category> categoryList = showBookListService.findByUserId(loginUser.getUser().getUserId());
+		System.out.println(categoryList);
 		model.addAttribute("categoryList", categoryList);
 		return "book/book_list";
 	}
