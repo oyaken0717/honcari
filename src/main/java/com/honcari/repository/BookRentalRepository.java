@@ -25,11 +25,11 @@ import com.honcari.domain.User;
 @Repository
 public class BookRentalRepository {
 
-	private final static String SQL = "SELECT br.book_rental_id br_book_rental_id, br.owend_booK_info_id br_owend_booK_info_id, "
+	private final static String SQL = "SELECT br.book_rental_id br_book_rental_id, br.owned_booK_info_id br_owned_booK_info_id, "
 			+ "br.borrow_user_id br_borrow_user_id, br.deadline br_deadline, br.rental_status br_rental_status, "
 			// ユーザーが保有している本の情報
-			+ "ob.owend_booK_info_id, ob_owend_booK_info_id, ob.user_id ob_user_id, ob.book_id ob_book_id, ob.category_id "
-			+ "ob_category_id, ob.book_status ob_book_status, ob.comment ob_comment "
+			+ "ob.owned_booK_info_id ob_owned_booK_info_id, ob.user_id ob_user_id, ob.book_id ob_book_id, ob.category_id "
+			+ "ob_category_id, ob.book_status ob_book_status, ob.comment ob_comment, "
 			// 本情報
 			+ "b.book_id b_book_id, b.isbn_id b_isbn_id, b.title b_title, b.author b_author, "
 			+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, "
@@ -41,11 +41,11 @@ public class BookRentalRepository {
 			+ "u1_email, u1.password u1_password, u1.image_path u1_image_path, u1.profile u1_profile,"
 			// 借り手ユーザー情報
 			+ "u2.user_id u2_user_id, u2.name u2_name, u2.email "
-			+ "u2_email, u2.password u2_password, u2.image_path u2_image_path, u2.profile u2_profile,"
+			+ "u2_email, u2.password u2_password, u2.image_path u2_image_path, u2.profile u2_profile "
 			// テーブル選択
 			+ "FROM book_rentals br "
 			// book_ownerと結合
-			+ "INNER JOIN owned_book_info ob ON br.owned_book_info_id = bo.owned_book_info_id "
+			+ "INNER JOIN owned_book_info ob ON br.owned_book_info_id = ob.owned_book_info_id "
 			// bookと結合
 			+ "INNER JOIN books b ON ob.book_id = b.book_id "
 			// カテゴリーと結合
@@ -59,13 +59,13 @@ public class BookRentalRepository {
 		// レンタル情報をインスタンス化
 		BookRental bookRental = new BookRental();
 		bookRental.setBookRentalId(rs.getInt("br_book_rental_id"));
-		bookRental.setOwnedBookInfoId(rs.getInt("br_owend_booK_info_id"));
+		bookRental.setOwnedBookInfoId(rs.getInt("br_owned_booK_info_id"));
 		bookRental.setBorrowUserId(rs.getInt("br_borrow_user_id"));
 		bookRental.setRentalStatus(rs.getInt("br_rental_status"));
 		bookRental.setDeadline(rs.getDate("br_deadline"));
 		// 所有情報をインスタンス化
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
-		ownedBookInfo.setOwnedBookInfoId(rs.getInt("ob_owend_booK_info_id"));
+		ownedBookInfo.setOwnedBookInfoId(rs.getInt("ob_owned_booK_info_id"));
 		ownedBookInfo.setUserId(rs.getInt("ob_user_id"));
 		ownedBookInfo.setBookId(rs.getInt("ob_book_id"));
 		ownedBookInfo.setCategoryId(rs.getInt("ob_category_id"));
