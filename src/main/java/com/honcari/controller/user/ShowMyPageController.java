@@ -24,11 +24,6 @@ public class ShowMyPageController {
 	@Autowired
 	private ShowMyPageService showMyPageService;
 
-	@ModelAttribute
-	public EditUserForm setUpEditUserForm() {
-		return new EditUserForm();
-	}
-
 	/**
 	 * マイページに遷移するメソッド.
 	 * 

@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
-import com.honcari.form.EditUserForm;
 import com.honcari.service.book.ShowMyBookService;
 import com.honcari.service.user.ShowMyPageService;
 

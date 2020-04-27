@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/user")
 public class LoginController {
 	
 	@RequestMapping("/to_login")
@@ -15,7 +15,7 @@ public class LoginController {
 			System.err.println("login failed");
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 		}
-		return "login";
+		return "user/login";
 	}
 
 }

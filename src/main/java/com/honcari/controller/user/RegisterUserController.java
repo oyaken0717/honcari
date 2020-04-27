@@ -13,7 +13,7 @@ import com.honcari.form.RegisterUserForm;
 import com.honcari.service.user.RegisterUserService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/user")
 public class RegisterUserController {
 	
 	@Autowired
@@ -47,6 +47,6 @@ public class RegisterUserController {
 		BeanUtils.copyProperties(form, user);
 
 		registerUserService.registerUser(form);
-		return "redirect:/to_login";
+		return "redirect:/user/to_login";
 	}
 }
