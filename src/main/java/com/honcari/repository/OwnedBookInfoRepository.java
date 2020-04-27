@@ -52,7 +52,7 @@ public class OwnedBookInfoRepository {
 		user.setImagePath(rs.getString("u_image_path"));
 		user.setProfile(rs.getString("u_profile"));
 		user.setStatus(rs.getInt("u_status"));
-		ownedBookInfo.setBook(book);
+		ownedBookInfo.setUser(user);
 		Category category = new Category();
 		category.setCategoryId(rs.getInt("c_category_id"));
 		category.setName(rs.getString("c_name"));
@@ -61,9 +61,9 @@ public class OwnedBookInfoRepository {
 	};
 	
 	/**	OWNED_BOOK_INFO_ROW_MAPPERを使用する際に全件取得するためのSELECT文 */
-	private static final String SELECT_SQL = "SELECT o.owned_book_info_id o_owned_book_info_id, o.user_id o_userid, o.book_id o_book_id, o.category_id o_category_id,"
+	private static final String SELECT_SQL = "SELECT o.owned_book_info_id o_owned_book_info_id, o.user_id o_user_id, o.book_id o_book_id, o.category_id o_category_id,"
 			+ "o.book_status o_book_status, o.comment o_comment, b.book_id b_book_id, b.isbn_id b_isbn_id, b.title b_title, b.author b_author, b.published_date b_published_date,"
-			+ "b.description b_description, b.page_count b_pagecount, b.thumbnail_path b_thumbnail_path, u.user_id u_user_id, u.name u_name, u.email u_emai,"
+			+ "b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path, u.user_id u_user_id, u.name u_name, u.email u_email,"
 			+ "u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, c.category_id c_category_id, c.name c_name FROM owned_book_info o "
 			+ "INNER JOIN books b ON o.book_id = b.book_id INNER JOIN users u ON o.user_id = u.user_id INNER JOIN category c ON o.category_id = c.category_id";
 

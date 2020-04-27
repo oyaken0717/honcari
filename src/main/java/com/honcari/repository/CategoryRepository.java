@@ -51,6 +51,7 @@ public class CategoryRepository {
 				categoryList.add(category);
 			}
 			OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
+			ownedBookInfo.setOwnedBookInfoId(rs.getInt("o_owned_book_info_id"));
 			User user = new User();
 			user.setUserId(rs.getInt("u_user_id"));
 			user.setName(rs.getString("u_name"));
@@ -96,6 +97,7 @@ public class CategoryRepository {
 		String sql = "SELECT u.user_id u_user_id, u.name u_name, u.status u_status,b.book_id b_book_id,"
 				+ "b.isbn_id b_isbn_id,b.title b_title,b.author b_author, b.published_date b_published_date,"
 				+ "b.description b_description,b.page_count b_page_count,b.thumbnail_path b_thumbnail_path,"
+				+ "o.owned_book_info_id o_owned_book_info_id, "
 				+ "o.comment o_comment, o.book_status o_book_status,c.category_id c_category_id, c.name c_name "
 				+ "FROM users u INNER JOIN owned_book_info o ON u.user_id = o.user_id AND o.book_status != 9 "
 				+ "INNER JOIN books b ON o.book_id = b.book_id "
