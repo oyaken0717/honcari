@@ -88,7 +88,7 @@ public class OwnedBookInfoRepository {
 	 */
 	//TODO 下記のeditメソッドと一本化
 	public void update(OwnedBookInfo ownedBookInfo) {
-		String sql = "UPDATE owned_book_info SET user_id = :userId, book_id = bookId, category_id = categoryId, "
+		String sql = "UPDATE owned_book_info SET user_id = :userId, book_id = :bookId, category_id = :categoryId, "
 				+ "book_status = :bookStatus, comment = :comment WHERE owned_book_info_id = :ownedBookInfoId";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(ownedBookInfo);
 		template.update(sql, param);
