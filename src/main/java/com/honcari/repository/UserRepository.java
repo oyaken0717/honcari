@@ -67,6 +67,18 @@ public class UserRepository {
 
 				beforeUserId = nowUserId;
 			}
+
+			int groupId = rs.getInt("g_group_id");
+			if (groupId != beforeGroupId) {
+				Group group = new Group();
+				group.setId(rs.getInt("g_group_id"));
+				group.setName(rs.getString("g_name"));
+				group.setDescription(rs.getString("g_description"));
+				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
+				groupList.add(group);
+
+				beforeGroupId = groupId;
+			}
 			
 			int bookId = rs.getInt("b_book_id");
 			if (bookId != beforeBookId) {
@@ -86,17 +98,6 @@ public class UserRepository {
 				ownedBookInfoList.add(ownedBookInfo);
 
 				beforeBookId = bookId;
-			}
-			int groupId = rs.getInt("g_group_id");
-			if (groupId != beforeGroupId) {
-				Group group = new Group();
-				group.setId(rs.getInt("g_group_id"));
-				group.setName(rs.getString("g_name"));
-				group.setDescription(rs.getString("g_description"));
-				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
-				groupList.add(group);
-
-				beforeGroupId = groupId;
 			}
 		}
 		return userList;
