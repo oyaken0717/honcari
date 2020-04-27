@@ -27,7 +27,6 @@ public class ShowGroupManagementController {
 
 		model.addAttribute("user",user);
 		model.addAttribute("ownGroupList",ownGroupList);
-		user.getGroupList().stream().forEach(g -> System.out.println(g.getName()));
 		return "group/group_management";
 	}
 
