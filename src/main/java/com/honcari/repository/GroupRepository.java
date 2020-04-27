@@ -170,4 +170,16 @@ public class GroupRepository {
 		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
 		return groupList.get(0);
 	}
+	
+	/**
+	 * 受け取ったパラメータからグループ情報を取得するメソッド.
+	 * 
+	 * @param ownerUserId 検索パラメータ
+	 * @return グループ情報リスト
+	 */
+	public List<Group> findByOwnerUserId(Integer ownerUserId) {
+		String sql = "SELECT group_id,name,description,owner_user_id,group_status FROM groups WHERE owner_user_id = :ownerUserId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("ownerUserId",ownerUserId);
+		return template.query(sql, param, GROUP_ROW_MAPPER);
+	}
 }
