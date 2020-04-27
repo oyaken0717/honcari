@@ -11,13 +11,13 @@ import com.honcari.domain.LoginUser;
 import com.honcari.service.group.ShowGroupDetailService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/group")
 public class ShowGroupDetailController {
 	
 	@Autowired
 	private ShowGroupDetailService showGroupDetailService;
 	
-	@RequestMapping("/show_group_detail")
+	@RequestMapping("/show_detail")
 	public String showGroupDetail(Integer id,Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		Group group = showGroupDetailService.showGroupDetail(id);
 		model.addAttribute("group",group);

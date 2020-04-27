@@ -9,7 +9,7 @@
 <body>
 <script>
 $(function(){
-	var url = 'http://localhost:8080/check_user_in_group';
+	var url = 'http://localhost:8080/group/check_user';
 	var groupId = $('#groupId').val();
 	$.ajax({
 		url : url,
@@ -37,7 +37,7 @@ $(function(){
     });	
 });
 </script>
-	<form name="form" th:action="@{/join_group}">
+	<form name="form" th:action="@{/group/join}">
 	グループ名：<span th:text="${group.name}"></span><br>
 	グループについて：<span th:text="${group.description}"></span><br>
 	参加ユーザー：<br>
@@ -50,7 +50,7 @@ $(function(){
 	<div id="invite"></div>
 	<hr>
 	</form>
-	<a th:href="@{/to_search_group}">戻る</a>
+	<a th:href="@{/group/to_search}">戻る</a>
 
 </body>
 </html>

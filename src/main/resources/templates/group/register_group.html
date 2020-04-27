@@ -13,7 +13,7 @@
 	<div class="row justify-content-md-center">
 		<div class="col-md-8 col-md-offset-4">
 			<h1>グループ作成</h1>
-			<form th:action="@{/register_group}" th:object="${registerGroupForm}" method="post">
+			<form th:action="@{/group/register}" th:object="${registerGroupForm}" method="post">
 			  <div class="form-group">
 			    <label for="InputGroupName">グループ名</label>
 			    <label th:errors="*{name}"  class="control-label" style="color: red" for="InputGroupName"></label>

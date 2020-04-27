@@ -13,7 +13,7 @@ import com.honcari.service.group.JoinGroupService;
 import com.honcari.service.group.SearchUserInGroupService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/group")
 public class JoinGroupController {
 	
 	@Autowired
@@ -24,18 +24,18 @@ public class JoinGroupController {
 	@Autowired
 	private JoinGroupService joinGroupService;
 	
-	@RequestMapping("/check_user_in_group")
+	@RequestMapping("/check_user")
 	@ResponseBody
 	public GroupRelation checkUserInGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser) {
 		GroupRelation gr = searchUserInGroupService.searchUser(loginUser.getUser().getUserId(), groupId);
 		return gr;
 	}
 	
-	@RequestMapping("/join_group")
+	@RequestMapping("/join")
 	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser,Model model) {
 		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);
 		System.out.println("グループ参加成功");
-		return "redirect:/to_search_group";
+		return "redirect:/to_search";
 	}
 
 }

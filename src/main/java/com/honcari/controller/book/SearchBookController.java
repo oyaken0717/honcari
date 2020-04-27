@@ -29,6 +29,6 @@ public class SearchBookController {
 //		groupId = 1;
 //		List<User> userList = userService.findByGroupAndTitle(groupId, title);
 //		model.addAttribute("userList", userList);
-//		return "book/home";
+//		return "book/book_list";
 //	}
 }

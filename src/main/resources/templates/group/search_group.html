@@ -16,7 +16,7 @@
 		
 		$("#group-button").on("click", function(){
 			var searchName = $('#group-name').val();
-			var url = 'http://localhost:8080/search_group';
+			var url = 'http://localhost:8080/group/search';
 			$.ajax({
 				url : url,
 				type : 'GET',
@@ -42,7 +42,7 @@
 			var groupHtml = "";
 			for(let i = 0; i < groupList.length; i++){
 				let group =  groupList[i];
-				groupHtml += '<div>グループ名：<a href="/show_group_detail?id='+group.id+'">'
+				groupHtml += '<div>グループ名：<a href="/group/show_detail?id='+group.id+'">'
 						+group.name+'</a><br>グループについて:'+group.description+'</div><hr>'
 			}
 			$('#group').html(groupHtml);

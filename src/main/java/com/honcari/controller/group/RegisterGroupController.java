@@ -26,7 +26,7 @@ import com.honcari.service.group.RegisterGroupService;
  *
  */
 @Controller
-@RequestMapping("")
+@RequestMapping("/group")
 public class RegisterGroupController {
 
 	@Autowired
@@ -37,7 +37,7 @@ public class RegisterGroupController {
 		return new RegisterGroupForm();
 	}
 	
-	@RequestMapping("/to_register_group")
+	@RequestMapping("/to_register")
 	public String toRegisterGroup(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		model.addAttribute("user", loginUser.getUser());
 		return "group/register_group";
@@ -51,7 +51,7 @@ public class RegisterGroupController {
 	 * @param redirectAttributes
 	 * @return トップページ（仮）
 	 */
-	@RequestMapping("/register_group")
+	@RequestMapping("/register")
 	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result, RedirectAttributes redirectAttributesm, 
 			Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
