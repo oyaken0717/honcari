@@ -15,7 +15,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.Book;
-import com.honcari.domain.OwnedBookInfo;
 
 /**
  * booksテーブルを操作するリポジトリ.
@@ -51,8 +50,8 @@ public class BookRepository {
 	@PostConstruct
 	public void init() {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcTemplate());
-		SimpleJdbcInsert withtableName = simpleJdbcInsert.withTableName("book_owners");
-		insert = withtableName.usingGeneratedKeyColumns("book_owner_id");
+		SimpleJdbcInsert withtableName = simpleJdbcInsert.withTableName("books");
+		insert = withtableName.usingGeneratedKeyColumns("book_id");
 	}
 	
 	/**
