@@ -70,10 +70,10 @@
 		<div class="col-10" th:each="category: ${categoryList}">
 			<div th:text="${category.name}"></div>
 			<div class="slider">
-				<span th:each="book: ${category.bookList}" style="margin-right: 5px;"><!-- 間隔を空けるためにmargin(仮) -->
-					<a th:href="@{'/book/show_detail?bookId=' + ${book.id}}"><img src="" th:src="@{${book.thumbnailPath}}"></a><br>
-					<a th:href="@{'/book/show_detail?bookId=' + ${book.id}}"><span th:text="${book.title}"></span></a><br>
-					<span th:text="'所有者：' + ${book.user.name}"></span><br>			
+				<span th:each="ownedBookInfo: ${category.ownedBookInfoList}" style="margin-right: 5px;"><!-- 間隔を空けるためにmargin(仮) -->
+					<a th:href="@{'/show_book_detail?bookId=' + ${ownedBookInfo.book.bookId}}"><img src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a><br>
+					<a th:href="@{'/show_book_detail?bookId=' + ${ownedBookInfo.book.bookId}}"><span th:text="${ownedBookInfo.book.title}"></span></a><br>
+					<span th:text="'所有者：' + ${ownedBookInfo.user.name}"></span><br>			
 				</span>
 			</div>
 		</div>
