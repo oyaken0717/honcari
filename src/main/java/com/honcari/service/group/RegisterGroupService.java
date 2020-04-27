@@ -38,7 +38,7 @@ public class RegisterGroupService {
 		return userRepository.findByName(name);
 	}
 	
-	public List<User> findByNameLike(String name) {
-		return userRepository.findByNameLike(name);
+	public List<User> findByNameLike(String name, Integer userId) {
+		return userRepository.findByNameLike(name, userId);
 	}
 }

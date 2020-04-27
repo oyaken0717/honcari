@@ -174,9 +174,9 @@ public class UserRepository {
 	 * @param name 検索名
 	 * @return ユーザー情報
 	 */
-	public List<User> findByNameLike(String name) {
-		String sql = BASE_SQL_FROM_USERS + "WHERE name ILIKE :name AND status != 9;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+	public List<User> findByNameLike(String name, Integer userId) {
+		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id <> :userId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("userId", userId);
 		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
 		if (userList.isEmpty()) {
 			return null;

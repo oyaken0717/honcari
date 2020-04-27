@@ -8,8 +8,7 @@ public class Group {
 	private String name;
 	private String description;
 	private Integer ownerUserId;
-	private Boolean isPrivate;
-	private Boolean deleted;
+	private Integer groupStatus;
 	private List<User> userList;
 
 	public Integer getId() {
@@ -44,20 +43,12 @@ public class Group {
 		this.ownerUserId = ownerUserId;
 	}
 
-	public Boolean getIsPrivate() {
-		return isPrivate;
+	public Integer getGroupStatus() {
+		return groupStatus;
 	}
 
-	public void setIsPrivate(Boolean isPrivate) {
-		this.isPrivate = isPrivate;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public void setGroupStatus(Integer groupStatus) {
+		this.groupStatus = groupStatus;
 	}
 
 	public List<User> getUserList() {
@@ -70,9 +61,8 @@ public class Group {
 
 	@Override
 	public String toString() {
-
 		return "Group [id=" + id + ", name=" + name + ", description=" + description + ", ownerUserId=" + ownerUserId
-				+ ", isPrivate=" + isPrivate + ", deleted=" + deleted + ", userList=" + userList + "]";
+				+ ", groupStatus=" + groupStatus + ", userList=" + userList + "]";
 	}
 
 }

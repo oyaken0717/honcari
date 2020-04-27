@@ -48,8 +48,7 @@ public class GroupRepository {
 				group.setName(rs.getString("g_name"));
 				group.setDescription(rs.getString("g_description"));
 				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
-				group.setIsPrivate(rs.getBoolean("g_is_private"));
-				group.setDeleted(rs.getBoolean("g_deleted"));
+				group.setGroupStatus(rs.getInt("g_group_status"));
 				group.setUserList(userList);
 				groupList.add(group);
 				
@@ -97,8 +96,7 @@ public class GroupRepository {
 		group.setName(rs.getString("name"));
 		group.setDescription(rs.getString("description"));
 		group.setOwnerUserId(rs.getInt("owner_user_id"));
-		group.setIsPrivate(rs.getBoolean("is_private"));
-		group.setDeleted(rs.getBoolean("deleted"));
+		group.setGroupStatus(rs.getInt("group_status"));
 		return group;
 	};
 	
@@ -110,7 +108,7 @@ public class GroupRepository {
 	private static final StringBuilder getSQL() {
 		StringBuilder SQL = new StringBuilder();
 		SQL.append("SELECT g.group_id g_group_id, g.name g_name, g.description g_description, g.owner_user_id g_owner_user_id, ");
-		SQL.append("g.is_private g_is_private, g.deleted g_deleted, u.user_id u_user_id, u.name u_name, u.email u_email, ");
+		SQL.append("g.group_status g_group_status, u.user_id u_user_id, u.name u_name, u.email u_email, ");
 		SQL.append("u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, ");
 		SQL.append("o.owned_book_info_id o_owned_book_info_id, o.user_id o_user_id, o.book_id o_book_id, o.category_id o_category_id, ");
 		SQL.append("o.book_status o_book_status, o.comment o_comment FROM groups g LEFT OUTER JOIN group_relations gr ");
@@ -154,7 +152,7 @@ public class GroupRepository {
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByLikeName(String name) {
-		String sql = "SELECT group_id,name,description,owner_user_id,is_private,deleted FROM groups WHERE name LIKE :name ORDER BY group_id";
+		String sql = "SELECT group_id,name,description,owner_user_id,group_status FROM groups WHERE name LIKE :name ORDER BY group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		return template.query(sql, param, GROUP_ROW_MAPPER);
 	}
