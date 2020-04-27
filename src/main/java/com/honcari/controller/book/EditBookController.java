@@ -20,6 +20,7 @@ import com.honcari.service.book.FindAllCategoryService;
  *
  */
 @Controller
+@RequestMapping("/book")
 public class EditBookController {
 
 	@Autowired
@@ -39,7 +40,7 @@ public class EditBookController {
 	 * @param ownedBookInfoId ユーザが所有している書籍情報
 	 * @return 書籍編集ページ
 	 */
-	@RequestMapping("/show_edit_book")
+	@RequestMapping("/show_edit")
 	public String showEditBook(Model model, Integer ownedBookInfoId) {
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 		model.addAttribute("ownedBookInfo", ownedBookInfo);
@@ -57,13 +58,13 @@ public class EditBookController {
 	 * 
 	 * @return マイブック
 	 */
-	@RequestMapping("/edit_book")
+	@RequestMapping("/edit")
 	public String editBook(Integer ownedBookInfoId, Integer categoryId, String comment) {
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
 		ownedBookInfo.setCategoryId(categoryId);
 		ownedBookInfo.setComment(comment);
 		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
-		return "redirect:/show_my_book";
+		return "redirect:/book/show_mybook";
 	}
 	
 	/**
@@ -72,11 +73,11 @@ public class EditBookController {
 	 * @param bookId 書籍ID
 	 * @return マイブック
 	 */
-	@RequestMapping("/delete_book")
+	@RequestMapping("/delete")
 	public String deleteBook(Integer ownedBookInfoId) {
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
 		ownedBookInfo.setBookStatus(4);
 		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
-		return "redirect:/show_my_book";
+		return "redirect:/book/show_mybook";
 	}
 }

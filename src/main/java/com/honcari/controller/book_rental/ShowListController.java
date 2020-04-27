@@ -20,8 +20,8 @@ import com.honcari.service.book_rental.SearchByOwnerService;
  * @author shumpei
  *
  */
-@RequestMapping("/book_rental")
 @Controller
+@RequestMapping("/book_rental")
 public class ShowListController {
 	
 	@Autowired
@@ -60,7 +60,7 @@ public class ShowListController {
 		model.addAttribute("lendList", lendList);
 		model.addAttribute("borrowPendingList", borrowPendingList);
 		model.addAttribute("borrowList", borrowList);
-		return "/book_rental/rental_list";
+		return "book_rental/rental_list";
 	}
 
 }

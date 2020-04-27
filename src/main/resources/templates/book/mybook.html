@@ -30,25 +30,25 @@
 					<!-- 書籍カテゴリ選択リスト(デザイン要検討) -->
 					<div class="list-group" id="my-book-category">
 						<span class="list-group-item">カテゴリ選択</span>
-						<a href="mybook.html" th:href="@{/show_my_book}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook}" 
 							class="list-group-item list-group-item-action">書籍一覧</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=1}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=1}" 
 							class="list-group-item list-group-item-action">文学・小説</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=2}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=2}" 
 							class="list-group-item list-group-item-action">社会・ビジネス</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=3}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=3}" 
 							class="list-group-item list-group-item-action">実用・教育</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=4}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=4}" 
 							class="list-group-item list-group-item-action">旅行・地図</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=5}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=5}" 
 							class="list-group-item list-group-item-action">趣味</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=6}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=6}" 
 							class="list-group-item list-group-item-action">アート・教養・エンタメ</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=7}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=7}" 
 							class="list-group-item list-group-item-action">辞典・図鑑・語学・辞書</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=8}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=8}" 
 							class="list-group-item list-group-item-action">こども</a>
-						<a href="mybook.html" th:href="@{/show_my_book_category?categoryId=9}" 
+						<a href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=9}" 
 							class="list-group-item list-group-item-action">その他</a>
 					</div>					
 				</div>
@@ -74,12 +74,12 @@
  				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${user.bookList}">
 					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="book : ${user.bookList}" id="book-card">
      					<div class="card">
-      						<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
+      						<a th:href="@{'/book/show_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
       						<div class="card-body">
-							<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
+							<a th:href="@{'/book/show_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
 							<p class="card-text" th:text="${book.author}"></p>
 							<p class="card-text" th:text="${book.publishedDate}"></p>
-							<a id="edit-button" class="btn btn-primary" th:href="@{'/show_edit_book?bookId=' + ${book.id}}"><span>書籍情報を変更</span></a>
+							<a id="edit-button" class="btn btn-primary" th:href="@{'/book/show_edit?bookId=' + ${book.id}}"><span>書籍情報を変更</span></a>
       						</div>
       					</div>
       				</div>

@@ -19,7 +19,6 @@ import com.honcari.service.book.ShowBookListService;
  *
  */
 @Controller
-@RequestMapping("")
 public class ShowBookListController {
 
 	@Autowired
@@ -35,6 +34,6 @@ public class ShowBookListController {
 	public String showBookList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Category> categoryList = showBookListService.findByUserId(loginUser.getUser().getUserId());
 		model.addAttribute("categoryList", categoryList);
-		return "home";
+		return "book/home";
 	}
 }

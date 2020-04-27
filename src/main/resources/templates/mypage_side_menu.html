@@ -11,24 +11,24 @@
   <!-- side bar -->
 	<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 float-left" th:fragment="frag_mypage_side_menu(page)">
 		<div class="list-group" th:fragment="frag_mypage_side_menu_for_my_book(page)">
-			<a href="mypage.html" th:href="@{/show_my_page}" th:if="${page == 1}" 
+			<a href="mypage.html" th:href="@{/user/show_mypage}" th:if="${page == 1}" 
 				class="list-group-item list-group-item-action active">プロフィール</a>
-			<a href="mypage.html" th:href="@{/show_my_page}" th:unless="${page == 1}" 
+			<a href="mypage.html" th:href="@{/user/show_mypage}" th:unless="${page == 1}" 
 				class="list-group-item list-group-item-action">プロフィール</a>
 			
-			<a href="mybook.html" th:href="@{/show_my_book}" th:if="${page == 2}" 
+			<a href="mybook.html" th:href="@{/book/show_mybook}" th:if="${page == 2}" 
 				class="list-group-item list-group-item-action active">マイブック</a>
-			<a href="mybook.html" th:href="@{/show_my_book}" th:unless="${page == 2}" 
+			<a href="mybook.html" th:href="@{/book/show_mybook}" th:unless="${page == 2}" 
 				class="list-group-item list-group-item-action">マイブック</a>
 			
-			<a href="lend_management.html" th:href="@{/to_lend_management}" th:if="${page == 3}" 
+			<a href="lend_management.html" th:href="@{/book_rental/to_lend_management}" th:if="${page == 3}" 
 				class="list-group-item list-group-item-action active">レンタル管理</a>
-			<a href="lend_management.html" th:href="@{/to_lend_management}" th:unless="${page == 3}" 
+			<a href="lend_management.html" th:href="@{/book_rental/to_lend_management}" th:unless="${page == 3}" 
 				class="list-group-item list-group-item-action">レンタル管理</a>
 			
-			<a href="lental_history.html" th:href="@{/show_lental_history}" th:if="${page == 4}" 
+			<a href="lental_history.html" th:href="@{/book_rental/show_history}" th:if="${page == 4}" 
 				class="list-group-item list-group-item-action active">レンタル履歴</a>
-			<a href="lental_history.html" th:href="@{/show_lental_history}" th:unless="${page == 4}" 
+			<a href="lental_history.html" th:href="@{/book_rental/show_history}" th:unless="${page == 4}" 
 				class="list-group-item list-group-item-action">レンタル履歴</a>
 		</div>
 	</div>

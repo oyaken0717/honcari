@@ -15,7 +15,7 @@
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form method="POST" id="signup-form" class="signup-form" th:action="@{/register_user}" th:object="${registerUserForm}">
+                    <form method="POST" id="signup-form" class="signup-form" th:action="@{/user/register}" th:object="${registerUserForm}">
                         <h2 class="my-3 title text-black text-uppercase">Create account</h2>
                         <div class="form-group">
 							<label th:errors="*{name}" class="control-label" style="color: red" for="inputError"></label>
@@ -43,7 +43,7 @@
                         </div>
                     </form>
                     <p class="loginhere">
-                        Have already an account ? <a th:href="@{/to_login}" class="loginhere-link">Login here</a>
+                        Have already an account ? <a th:href="@{/user/to_login}" class="loginhere-link">Login here</a>
                     </p>
                 </div>
             </div>

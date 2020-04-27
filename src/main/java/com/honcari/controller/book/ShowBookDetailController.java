@@ -16,8 +16,8 @@ import com.honcari.service.book.ShowBookDetailService;
  * @author shumpei
  *
  */
-@RequestMapping("/book")
 @Controller
+@RequestMapping("/book")
 public class ShowBookDetailController {
 	
 	@Autowired
@@ -40,7 +40,7 @@ public class ShowBookDetailController {
 		OwnedBookInfo ownedBookInfo = showBookDetailService.searchByOwnedBookId(ownedBookInfoId);
 		model.addAttribute("ownedBookInfo", ownedBookInfo);
 		model.addAttribute("book", ownedBookInfo.getBook());
-		return "book_detail";
+		return "book/book_detail";
 	}
 	
 	

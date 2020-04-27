@@ -27,6 +27,7 @@ import com.honcari.service.book.RegisterOwnedBookInfoService;
  *
  */
 @Controller
+@RequestMapping("/book")
 public class RegisterBookController {
 
 	@Autowired
@@ -46,7 +47,7 @@ public class RegisterBookController {
 	 * 
 	 * @return 書籍登録画面
 	 */
-	@RequestMapping("/show_register_book")
+	@RequestMapping("/show_register")
 	public String showRegisterBook(Model model) {
 		List<Category> categoryList = getAllCategoryService.findAll();
 		model.addAttribute("categoryList", categoryList);
@@ -61,7 +62,7 @@ public class RegisterBookController {
 	 * @param redirectAttributes リダイレクト先へリクエストスコープを格納する
 	 * @return 書籍登録画面
 	 */
-	@RequestMapping("/register_book")
+	@RequestMapping("/register")
 	public String registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
 		Integer bookId = null;
 		Book book = new Book();
@@ -92,6 +93,6 @@ public class RegisterBookController {
 		ownedBookInfo.setComment(registerBookForm.getComment());
 		registerOwnedBookInfoService.registerOwnedBookInfo(ownedBookInfo);
 		redirectAttributes.addFlashAttribute("check", "check");
-		return "redirect:/show_register_book";
+		return "redirect:/book/show_register";
 	}
 }

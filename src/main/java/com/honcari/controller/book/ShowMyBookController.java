@@ -20,6 +20,7 @@ import com.honcari.service.user.ShowMyPageService;
  *
  */
 @Controller
+@RequestMapping("/book")
 public class ShowMyBookController {
 	
 	@Autowired
@@ -35,11 +36,11 @@ public class ShowMyBookController {
 	 * @param loginUser ログインしているユーザ情報
 	 * @return マイブックページ(自身が登録している書籍一覧)
 	 */
-	@RequestMapping("/show_my_book")
+	@RequestMapping("/show_mybook")
 	public String ShowMyBook(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user = showMyPageService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user",user);
-		return "mybook";
+		return "book/mybook";
 	}
 	
 	/**
@@ -50,7 +51,7 @@ public class ShowMyBookController {
 	 * @param loginUser ログインしているユーザ情報
 	 * @return マイブックページ(自身が登録しているカテゴリ別の書籍一覧)
 	 */
-	@RequestMapping("/show_my_book_category")
+	@RequestMapping("/show_mybook_category")
 	public String showMyBookGroupByCategory(Integer categoryId, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(categoryId == null) {
 			categoryId = 0;
@@ -61,6 +62,6 @@ public class ShowMyBookController {
 		}else {
 			model.addAttribute("user", userList.get(0));
 		}
-		return "mybook";
+		return "book/mybook";
 	}
 }

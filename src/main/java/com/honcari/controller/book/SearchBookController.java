@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-@RequestMapping("")
+@RequestMapping("/book")
 public class SearchBookController {
 
 //	@Autowired
@@ -24,11 +24,11 @@ public class SearchBookController {
 //	 * @param model モデル
 //	 * @return 本一覧画面
 //	 */
-//	@RequestMapping("/search_book")
+//	@RequestMapping("/search")
 //	public String searchBook(String title, Integer groupId, Model model) {
 //		groupId = 1;
 //		List<User> userList = userService.findByGroupAndTitle(groupId, title);
 //		model.addAttribute("userList", userList);
-//		return "home";
+//		return "book/home";
 //	}
 }
