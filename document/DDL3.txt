@@ -69,14 +69,13 @@ create table book_rentals(
 ​
 -- groups
 drop table if exists groups cascade;
-​
+
 create table groups (
   group_id serial primary key
   , name character varying(100) not null
   , description text
   , owner_user_id integer
-  , is_private boolean default false
-  , deleted boolean
+  , group_status integer not null
 );
 
 ​
