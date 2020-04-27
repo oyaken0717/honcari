@@ -14,6 +14,8 @@ public class RentalRequestForm {
 	private Integer ownedBookInfoId;
 	/** 貸出状況 */
 	private Integer bookStatus;
+	/** 所有者ID */
+	private Integer ownerId;
 	/** 貸出期限 */
 	@NotBlank(message = "貸出期限を入力してください")
 	private String deadline;
@@ -42,10 +44,18 @@ public class RentalRequestForm {
 		this.deadline = deadline;
 	}
 
+	public Integer getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Integer ownerId) {
+		this.ownerId = ownerId;
+	}
+
 	@Override
 	public String toString() {
-		return "RentalRequestForm [ownedBookInfoId=" + ownedBookInfoId + ", bookStatus=" + bookStatus + ", deadline="
-				+ deadline + "]";
+		return "RentalRequestForm [ownedBookInfoId=" + ownedBookInfoId + ", bookStatus=" + bookStatus + ", ownerId="
+				+ ownerId + ", deadline=" + deadline + "]";
 	}
 
 }
