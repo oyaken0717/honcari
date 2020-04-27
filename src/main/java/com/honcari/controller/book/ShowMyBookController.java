@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
-import com.honcari.domain.User;
 import com.honcari.service.book.ShowMyAllBooksService;
 import com.honcari.service.book.ShowMyBooksByCategoryIdService;
 
