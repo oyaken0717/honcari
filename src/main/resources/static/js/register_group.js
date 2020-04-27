@@ -5,13 +5,16 @@ $(function() {
 	//ユーザー検索
 	$(".searchUser").on("keyup", function() {
 		var searchName = $(this).val();
+		var loginUserId = $(".loginUserId").val();
+		console.log(loginUserId);
 		var url = 'http://localhost:8080/search_user_api';
 		$.ajax({
 			url : url,
 			type : 'GET',
 			dataType : 'json',
 			data : {
-				name : searchName
+				name : searchName,
+				userId : loginUserId
 			},
 			async : true
 		}).done(function(data) {
