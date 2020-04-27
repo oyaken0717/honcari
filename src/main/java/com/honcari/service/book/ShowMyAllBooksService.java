@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.domain.OwnedBookInfo;
-import com.honcari.domain.User;
 import com.honcari.repository.OwnedBookInfoRepository;
 
 /**
