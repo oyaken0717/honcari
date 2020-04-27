@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.common.BookStatusEnum;
 import com.honcari.common.RentalStatusEnum;
@@ -19,6 +20,7 @@ import com.honcari.repository.OwnedBookInfoRepository;
  *
  */
 @Service
+@Transactional
 public class SendRentalRequestService {
 	
 	@Autowired

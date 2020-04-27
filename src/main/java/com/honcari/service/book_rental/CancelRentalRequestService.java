@@ -33,6 +33,7 @@ public class CancelRentalRequestService {
 	public void cancelRentalRequest(Integer bookRentalId) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
 		bookRental.setRentalStatus(RentalStatusEnum.CANCELED.getValue());
+		bookRentalRepository.update(bookRental);
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
 		ownedBookInfo.setBookStatus(BookStatusEnum.RENTABLE.getValue());
 		ownedBookInfoRepository.update(ownedBookInfo);

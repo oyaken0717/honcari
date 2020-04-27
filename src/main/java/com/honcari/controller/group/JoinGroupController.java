@@ -35,7 +35,7 @@ public class JoinGroupController {
 	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser,Model model) {
 		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);
 		System.out.println("グループ参加成功");
-		return "redirect:/to_search";
+		return "redirect:/group/to_search";
 	}
 
 }

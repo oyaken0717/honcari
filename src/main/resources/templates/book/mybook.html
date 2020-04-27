@@ -71,15 +71,15 @@
 				</div> -->
 				
 				<!-- カテゴリ選択ボタンを押下後に表示されるカテゴリ別の書籍一覧(デザイン要検討)一部動作上手くいってません。 -->
- 				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${user.ownedBookInfoList}">
-					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="book : ${user.ownedBookInfoList}" id="book-card">
+ 				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${ownedBookInfoList}">
+					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="ownedBookInfo : ${ownedBookInfoList}" id="book-card">
      					<div class="card">
-      						<a th:href="@{'/book/show_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
+      						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="card-img-top" th:src="${ownedBookInfo.book.thumbnailPath}" alt=""></a>
       						<div class="card-body">
-							<a th:href="@{'/book/show_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
-							<p class="card-text" th:text="${book.author}"></p>
-							<p class="card-text" th:text="${book.publishedDate}"></p>
-							<a id="edit-button" class="btn btn-primary" th:href="@{'/book/show_edit?bookId=' + ${book.id}}"><span>書籍情報を変更</span></a>
+							<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span class="card-text" th:text="${ownedBookInfo.book.title}"></span></a>
+							<p class="card-text" th:text="${ownedBookInfo.book.author}"></p>
+							<p class="card-text" th:text="${ownedBookInfo.book.publishedDate}"></p>
+							<a id="edit-button" class="btn btn-primary" th:href="@{'/book/show_edit?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span>書籍情報を変更</span></a>
       						</div>
       					</div>
       				</div>

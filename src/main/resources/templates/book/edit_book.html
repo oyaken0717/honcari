@@ -25,7 +25,7 @@
             <!-- Column -->
             <div class="col-lg-6 mt-4 mt-md-0">
                 <div class="text-box">
-                	<p>貸出状況：<span th:text="${ownedBookInfo.book.getBookLendingStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                	<p>貸出状況：<span th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
                 		所有者：<span th:text="${ownedBookInfo.user.name}">status</span></p>
                     <h3 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.title}">title</h3>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.author}">author</h4>
@@ -33,7 +33,7 @@
                     <p th:text="${ownedBookInfo.book.description}">description</p>
 					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#book-edit-form">
 						登録情報を変更する</button>
-					<a th:href="@{'/delete?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}" class="btn btn-warning btn-lg btn-block">
+					<a th:href="@{'/book/delete?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}" class="btn btn-warning btn-lg btn-block">
 						登録を解除する</a>
 				</div>
             </div>
@@ -50,11 +50,11 @@
 							</div>
 							<div class="modal-body">	
 								<select name="categoryId">
-									<option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.id}" th:selected="${ownedBookInfo.categoryId == category.id}"></option>
+									<option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.categoryId}" th:selected="${ownedBookInfo.categoryId == category.categoryId}"></option>
 								</select>
 							</div>
 							<div class="modal-body">
-								<textarea name="comment" rows="4" cols="30"></textarea>
+								<textarea name="comment" rows="4" cols="30" th:field="${ownedBookInfo.comment}"></textarea>
 							</div>
 							<input type="hidden" name="ownedBookInfoId" th:value="${ownedBookInfo.ownedBookInfoId}">
 							<div id="book-request-parameter"></div>
