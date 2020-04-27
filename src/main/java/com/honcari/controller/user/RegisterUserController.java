@@ -24,12 +24,12 @@ public class RegisterUserController {
 		return new RegisterUserForm();
 	}
 	
-	@RequestMapping("/to_register_user")
+	@RequestMapping("/to_register")
 	public String toRegisterUser() {
 		return "user/register_user";
 	}
 	
-	@RequestMapping("/register_user")
+	@RequestMapping("/register")
 	public String register(@Validated RegisterUserForm form, BindingResult result,Model mode) {
 		if (!form.getPassword().equals(form.getConfirmPassword())) {
 			result.rejectValue("password", null, "パスワードと確認用パスワードが一致していません。");

@@ -20,7 +20,7 @@ public class ShowGroupManagementController {
 	@Autowired
 	private ShowGroupManagementService showGroupListService;
 	
-	@RequestMapping(value="/to_group_management")
+	@RequestMapping(value="/to_management")
 	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser,Model model) {
 		User user = showGroupListService.showGroupListByBelongUserId(loginUser.getUser().getUserId());
 		List<Group> ownGroupList = showGroupListService.showGroupListByOwnerUserId(loginUser.getUser().getUserId());

@@ -21,9 +21,9 @@
 			<a href="mybook.html" th:href="@{/book/show_mybook}" th:unless="${page == 2}" 
 				class="list-group-item list-group-item-action">マイブック</a>
 			
-			<a href="lend_management.html" th:href="@{/book_rental/to_lend_management}" th:if="${page == 3}" 
+			<a href="lend_management.html" th:href="@{/book_rental/show_list}" th:if="${page == 3}" 
 				class="list-group-item list-group-item-action active">レンタル管理</a>
-			<a href="lend_management.html" th:href="@{/book_rental/to_lend_management}" th:unless="${page == 3}" 
+			<a href="lend_management.html" th:href="@{/book_rental/show_list}" th:unless="${page == 3}" 
 				class="list-group-item list-group-item-action">レンタル管理</a>
 			
 			<a href="lental_history.html" th:href="@{/book_rental/show_history}" th:if="${page == 4}" 
