@@ -42,7 +42,8 @@ public class EditBookController {
 	 */
 	@RequestMapping("/show_edit")
 	public String showEditBook(Model model, Integer ownedBookInfoId) {
-		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
+		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
+		System.out.println(ownedBookInfo);
 		model.addAttribute("ownedBookInfo", ownedBookInfo);
 		List<Category> categoryList = findAllCategoryService.findAll();
 		model.addAttribute("categoryList", categoryList);

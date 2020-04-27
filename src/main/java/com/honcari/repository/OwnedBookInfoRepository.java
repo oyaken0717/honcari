@@ -76,7 +76,7 @@ public class OwnedBookInfoRepository {
 	 * @return ユーザーが所有している本の情報
 	 */
 	public OwnedBookInfo findByOwnedBookInfoId(Integer ownedBookInfoId) {
-		String sql = SELECT_SQL + " WHERE o.owned_book_info_id = :ownedBookInfoId;";
+		String sql = SELECT_SQL + " WHERE o.owned_book_info_id = :ownedBookInfoId AND o.book_status != 4;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("ownedBookInfoId", ownedBookInfoId);
 		OwnedBookInfo ownedBookInfo = template.queryForObject(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
 		return ownedBookInfo;
@@ -138,7 +138,7 @@ public class OwnedBookInfoRepository {
 	 * @return ユーザidとカテゴリidに一致したユーザ情報
 	 */
 	public List<OwnedBookInfo> findByCategoryId(Integer userId, Integer categoryId){
-		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9;";
+		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9 AND o.book_status != 4;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
 		return template.query(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
 	}
@@ -150,7 +150,7 @@ public class OwnedBookInfoRepository {
 	 * @return ユーザー情報リスト
 	 */
 	public List<OwnedBookInfo> findByUserId(Integer userId) {
-		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND u.status != 9;";
+		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND u.status != 9 AND o.book_status != 4;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		return template.query(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
 	}
