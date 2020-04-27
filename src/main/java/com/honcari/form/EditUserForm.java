@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  */
 public class EditUserForm {
 	/**	ID */
-	private Integer id;
+	private Integer userId;
 	/**	名前 */
 	@NotBlank(message="入力は必須です")
 	private String name;
@@ -30,11 +30,11 @@ public class EditUserForm {
 	private String imagePath;
 	/**	自己紹介文 */
 	private String profile;
-	public Integer getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getName() {
 		return name;
@@ -80,7 +80,7 @@ public class EditUserForm {
 	}
 	@Override
 	public String toString() {
-		return "EditUserForm [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
+		return "EditUserForm [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
 				+ ", confirmPassword=" + confirmPassword + ", defaultPassword=" + defaultPassword + ", imagePath="
 				+ imagePath + ", profile=" + profile + "]";
 	}

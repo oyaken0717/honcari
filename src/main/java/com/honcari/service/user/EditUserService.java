@@ -49,7 +49,7 @@ public class EditUserService {
 		if(Objects.isNull(user)) {
 			return false;
 		}
-		if(user.getUserId().equals(editUserForm.getId())) {
+		if(user.getUserId().equals(editUserForm.getUserId())) {
 			return false;
 		}
 		return true;
