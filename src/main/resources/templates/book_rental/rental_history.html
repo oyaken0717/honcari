@@ -27,7 +27,7 @@
 					<!-- タブ・メニュー -->
 					<ul class="nav nav-tabs nav-justified justify-content-center">
 						<li class="nav-item">
-							<a class="nav-link text-dark" href="#borrowing-list" data-toggle="tab">借りた本</a>
+							<a class="nav-link text-dark active" href="#borrowing-list" data-toggle="tab">借りた本</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link text-dark" href="#lending-list" data-toggle="tab">貸した本</a>
@@ -35,7 +35,7 @@
 					</ul>
 					<!-- タブ・コンテント -->
 					<div class="tab-content">
-						<div class="tab-pane active" id="borrowing-list" >
+						<div class="tab-pane fade show active" id="borrowing-list" >
 							<!-- 借りた本 -->
 							<div class="pt-3 pb-3 mt-4 mb-4 border-bottom">
 								<div th:if="${borrowedList.size()}==0"><p class="text-center">借りた本はありません</p></div>
@@ -62,7 +62,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="lending-list">
+						<div class="tab-pane fade" id="lending-list">
 						<!-- 貸した本 -->
 						<div class="pt-3 pb-3 mt-4 mb-4 border-bottom">
 							<div th:if="${lentList.size()}==0"><p class="text-center">貸した本はありません</p></div>
