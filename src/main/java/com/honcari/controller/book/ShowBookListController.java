@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.Category;
 import com.honcari.domain.LoginUser;
+import com.honcari.service.book.ShowBookListOneCategory;
 import com.honcari.service.book.ShowBookListService;
 
 /**
@@ -25,6 +26,9 @@ public class ShowBookListController {
 	@Autowired
 	private ShowBookListService showBookListService;
 	
+	@Autowired
+	private ShowBookListOneCategory showBookListOneCategory;
+	
 	/**
 	 * 本一覧を表示するメソッド.
 	 * 
@@ -36,5 +40,12 @@ public class ShowBookListController {
 		List<Category> categoryList = showBookListService.findByUserId(loginUser.getUser().getUserId());
 		model.addAttribute("categoryList", categoryList);
 		return "book/book_list";
+	}
+	
+	@RequestMapping("/show_one_category")
+	public String showOneCategoryBookList(Model model, @AuthenticationPrincipal LoginUser loginUser, Integer categoryId) {
+		List<Category> categoryList = showBookListOneCategory.findByUserIdAndCategoryId(loginUser.getUser().getUserId(), categoryId);
+		model.addAttribute("categoryList", categoryList);
+		return "book/book_list_category";
 	}
 }
