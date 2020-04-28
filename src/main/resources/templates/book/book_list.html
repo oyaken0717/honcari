@@ -11,13 +11,6 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
-<!-- グループ作成時のアラート -->
-<div th:if="${complete}" class="alert alert-info alert-dismissible fade show" role="alert">
-  <strong>グループを作成しました!!</strong>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
 <!-- <header>
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">

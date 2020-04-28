@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.Group;
@@ -32,6 +33,9 @@ public class RegisterGroupController {
 	@Autowired
 	private RegisterGroupService registerGroupService;
 	
+	@Autowired
+	private ShowGroupDetailController showGroupDetailController;
+	
 	@ModelAttribute
 	public RegisterGroupForm setRegisterGroupForm() {
 		return new RegisterGroupForm();
@@ -51,7 +55,7 @@ public class RegisterGroupController {
 	 * @param redirectAttributes
 	 * @return トップページ（仮）
 	 */
-	@RequestMapping("/register")
+	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result, RedirectAttributes redirectAttributesm, 
 			Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
@@ -70,8 +74,8 @@ public class RegisterGroupController {
 		group.setDescription(form.getDescription());
 		group.setOwnerUserId(loginUser.getUser().getUserId());
 		group.setGroupStatus(0);
-		registerGroupService.insertGroup(group, userList);
+		group = registerGroupService.insertGroup(group, userList);
 		redirectAttributesm.addFlashAttribute("complete", "complete");
-		return "redirect:/";
+		return "redirect:/group/show_detail?id=" + group.getId();
 	}
 }

@@ -25,13 +25,14 @@ public class RegisterGroupService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public void insertGroup(Group group, List<User> userList) {
+	public Group insertGroup(Group group, List<User> userList) {
 		//グループを登録、戻り値にidを取得.
 		Group groupInId = groupRepository.insertGroup(group);
 		//グループに入れるuser数だけ登録.
 		userList.forEach(user -> {
 			groupRelationRepository.insert(user.getUserId(), groupInId.getId());
 		});
+		return groupInId;
 	}
 	
 	public User findByName(String name) {
