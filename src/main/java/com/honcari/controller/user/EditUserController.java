@@ -97,6 +97,7 @@ public class EditUserController {
 		if(editUserForm.getPassword().isEmpty()) {
 			user.setPassword(editUserForm.getDefaultPassword());
 		}
+		user.setStatus(0);
 		editUserService.editUser(user);
 		redirectAttributes.addFlashAttribute("completeMessage", "プロフィール情報の変更が完了しました。");
 		return "redirect:/user/show_mypage";
