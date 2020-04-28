@@ -40,6 +40,7 @@ public class ShowMyBookController {
 	public String ShowMyBook(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<OwnedBookInfo> ownedBookInfoList = showMyAllBooksService.ShowMyAllBook(loginUser.getUser().getUserId());
 		model.addAttribute("ownedBookInfoList", ownedBookInfoList);
+		model.addAttribute("categoryNum", 0);
 		return "book/mybook";
 	}
 	
@@ -59,8 +60,10 @@ public class ShowMyBookController {
 		List<OwnedBookInfo> ownedBookInfoList = showMyBooksByCategoryIdService.findByCategoryId(loginUser.getUser().getUserId(), categoryId);
 		if(ownedBookInfoList.size() == 0) {
 			model.addAttribute("errorMessage", "該当カテゴリの書籍が登録されていません。");
+			model.addAttribute("categoryNum", categoryId);
 		}else {
 			model.addAttribute("ownedBookInfoList", ownedBookInfoList.get(0));
+			model.addAttribute("categoryNum", categoryId);
 		}
 		return "book/mybook";
 	}
