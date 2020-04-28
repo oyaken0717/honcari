@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 	http.authorizeRequests() // 認可に関する設定
-	.antMatchers("/user/to_login","/user/to_register","/user/register","/user/to_thank_register").permitAll() //「/」などのパスは全てのユーザに許可
+	.antMatchers("/user/to_login","/user/to_register","/user/register","/about").permitAll() //「/」などのパスは全てのユーザに許可
 	//.antMatchers("/admin/**").hasRole("ADMIN") // /admin/から始まるパスはADMIN権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 //	.antMatchers().hasRole("USER") // /user/から始まるパスはUSER権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 	.anyRequest().authenticated(); // それ以外のパスは認証が必要

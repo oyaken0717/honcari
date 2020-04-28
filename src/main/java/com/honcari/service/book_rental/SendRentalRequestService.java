@@ -22,25 +22,25 @@ import com.honcari.repository.OwnedBookInfoRepository;
 @Service
 @Transactional
 public class SendRentalRequestService {
-	
+
 	@Autowired
 	private OwnedBookInfoRepository ownedBookInfoRepository;
-	
+
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
-	
-	
+
 	/**
 	 * 本の貸出申請を送る.
 	 * 
 	 * @param ownedBookInfoId ユーザーが所有している書籍情報ID
-	 * @param borrowUserId 借り手ユーザーID
-	 * @param deadline 貸出期限
+	 * @param borrowUserId    借り手ユーザーID
+	 * @param deadline        貸出期限
 	 */
-	public void sendRentalRequest(Integer ownedBookInfoId, Integer borrowUserId, Date deadline) {
+	public void sendRentalRequest(Integer ownedBookInfoId, Integer borrowUserId, String borrowUserName, Date deadline) {
 		BookRental bookRental = new BookRental();
 		bookRental.setOwnedBookInfoId(ownedBookInfoId);
 		bookRental.setBorrowUserId(borrowUserId);
+		bookRental.setCreationUserName(borrowUserName);
 		bookRental.setRentalStatus(RentalStatusEnum.WAIT_APPROVAL.getValue());
 		bookRental.setDeadline(deadline);
 		bookRentalRepository.insert(bookRental);
@@ -48,6 +48,5 @@ public class SendRentalRequestService {
 		ownedBookInfo.setBookStatus(BookStatusEnum.BEFORE_LENDING.getValue());
 		ownedBookInfoRepository.update(ownedBookInfo);
 	}
-
 
 }

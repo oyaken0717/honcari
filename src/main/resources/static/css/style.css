@@ -3,6 +3,10 @@
 @import url(//fonts.googleapis.com/css?family=Montserrat:400,700);
 
 /* 全てに適能可能なデザイン */
+:root{
+	--yellow: #fed136;
+}
+
 h2.section-heading {
 	font-size: 2.0rem;
 	margin-top: 0;
@@ -99,7 +103,6 @@ h3.section-subheading {
 
 /*  トップページのデザイン */
 .top-head-wrapper {
-	font-family: "Montserrat", sans-serif;
 	font-weight: 300;
 	padding: 10% 0;
 	background-size: cover;
@@ -142,4 +145,16 @@ h3.section-subheading {
 
 #edit-button{
 	font-size: 16px;
+}
+
+/* 本詳細ページのデザイン */
+.book-detail-img{
+	width: 250px;
+}
+
+footer {
+	height:50px;
+	text-align:center;
+	font-size:0.85em;
+	display:block;
 }

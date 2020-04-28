@@ -18,22 +18,25 @@ import com.honcari.repository.OwnedBookInfoRepository;
  */
 @Service
 public class AcceptRentalRequestService {
-	
+
 	@Autowired
 	private OwnedBookInfoRepository ownedBookInfoRepository;
-	
+
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
 
 	/**
 	 * 本の貸出申請を承認する.
 	 * 
-	 * @param bookRentalId 貸出情報ID
+	 * @param bookRentalId       貸出情報ID
+	 * @param processingUserName 処理ユーザー
 	 */
-	public void acceptRentalRequest(Integer bookRentalId) {
+	public void acceptRentalRequest(Integer bookRentalId, String processingUserName) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
+		bookRental.setUpdateUserName(processingUserName);
 		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
 		bookRentalRepository.update(bookRental);
+
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
 		ownedBookInfo.setBookStatus(BookStatusEnum.LENDING.getValue());
 		ownedBookInfoRepository.update(ownedBookInfo);

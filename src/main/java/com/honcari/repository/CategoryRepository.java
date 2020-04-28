@@ -77,6 +77,15 @@ public class CategoryRepository {
 		return categoryList;
 	};
 
+	private final String SQL = "SELECT u.user_id u_user_id, u.name u_name, u.status u_status,b.book_id b_book_id,"
+			+ "b.isbn_id b_isbn_id,b.title b_title,b.author b_author, b.published_date b_published_date,"
+			+ "b.description b_description,b.page_count b_page_count,b.thumbnail_path b_thumbnail_path,"
+			+ "o.owned_book_info_id o_owned_book_info_id, "
+			+ "o.comment o_comment, o.book_status o_book_status,c.category_id c_category_id, c.name c_name "
+			+ "FROM users u INNER JOIN owned_book_info o ON u.user_id = o.user_id AND o.book_status != 9 "
+			+ "INNER JOIN books b ON o.book_id = b.book_id "
+			+ "INNER JOIN category c ON o.category_id = c.category_id ";
+	
 	/**
 	 * カテゴリ一覧を取得するメソッド.
 	 * 
@@ -94,19 +103,51 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserId(Integer userId) {
-		String sql = "SELECT u.user_id u_user_id, u.name u_name, u.status u_status,b.book_id b_book_id,"
-				+ "b.isbn_id b_isbn_id,b.title b_title,b.author b_author, b.published_date b_published_date,"
-				+ "b.description b_description,b.page_count b_page_count,b.thumbnail_path b_thumbnail_path,"
-				+ "o.owned_book_info_id o_owned_book_info_id, "
-				+ "o.comment o_comment, o.book_status o_book_status,c.category_id c_category_id, c.name c_name "
-				+ "FROM users u INNER JOIN owned_book_info o ON u.user_id = o.user_id AND o.book_status != 9 "
-				+ "INNER JOIN books b ON o.book_id = b.book_id "
-				+ "INNER JOIN category c ON o.category_id = c.category_id "
-				+ "WHERE u.status != 9 AND u.user_id in ("
-					+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
-						+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
-				+ "ORDER BY c.category_id;";
+		String sql = SQL + "WHERE u.status != 9 AND u.user_id in ("
+							+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
+								+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+						 + "ORDER BY c.category_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
+		if (categoryList.isEmpty()) {
+			return null;
+		}
+		return categoryList;
+	}
+	
+	/**
+	 * ユーザーIDとカテゴリIDからカテゴリごとの本情報を取得する.
+	 * 
+	 * @param userId ユーザーID
+	 * @param categoryId カテゴリID
+	 * @return カテゴリ一覧
+	 */
+	public List<Category> findByUserIdAndCategoryId(Integer userId, Integer categoryId) {
+		String sql = SQL + "WHERE u.status != 9 AND c.category_id = :categoryId AND u.user_id in ("
+				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
+				+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+				+ "ORDER BY c.category_id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
+		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
+		if (categoryList.isEmpty()) {
+			return null;
+		}
+		return categoryList;
+	}
+	
+	/**
+	 * ユーザーIDとタイトル名からカテゴリーごとの本情報を取得する.
+	 * 
+	 * @param userId ユーザーID
+	 * @param title タイトル名
+	 * @return カテゴリ一覧
+	 */
+	public List<Category> findByUserIdAndTitle(Integer userId, String title) {
+		String sql = SQL + "WHERE b.title LIKE :title AND u.status != 9 AND u.user_id in ("
+				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
+				+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+				+ "ORDER BY c.category_id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("title", "%" + title + "%");
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
 		if (categoryList.isEmpty()) {
 			return null;

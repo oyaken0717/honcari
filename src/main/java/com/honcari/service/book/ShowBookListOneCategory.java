@@ -9,26 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.honcari.domain.Category;
 import com.honcari.repository.CategoryRepository;
 
-/**
- * 本一覧を表示させるサービスクラス.
- * 
- * @author yamadadai
- *
- */
 @Service
 @Transactional
-public class ShowBookListService {
+public class ShowBookListOneCategory {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
-	/**
-	 * グループIDからカテゴリー情報を取得するメソッド
-	 * 
-	 * @param groupId グループID
-	 * @return ユーザー情報リスト
-	 */
-	public List<Category> findByUserId(Integer userId) {
-		return categoryRepository.findByUserId(userId);
+	public List<Category> findByUserIdAndCategoryId(Integer userId, Integer categoryId) {
+		return categoryRepository.findByUserIdAndCategoryId(userId, categoryId);
 	}
 }
