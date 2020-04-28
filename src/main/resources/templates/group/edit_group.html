@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<form th:action="@{/group/edit_group}" th:object="${editGroupForm}" method="post">
+	<label th:errors="*{name}" class="control-label" style="color: red" for="inputError"></label>
+	<p>グループ名：<input type="text" name="name" th:field="${group.name}"></p>
+	<label th:errors="*{description}" class="control-label" style="color: red" for="inputError"></label>
+	<p>グループについて：<input type="text" name="description" th:field="${group.description}"></p>	
+	<input type="hidden" name="groupId" th:value="${group.id}">
+	<input type="hidden" name="groupStatus" th:value="${group.groupStatus}">
+	<input type="hidden" name="ownerUserId" th:value="${group.ownerUserId}">
+	<button>編集する</button>
+	</form>
+<!-- 	<a th:href="@{'/group/delete_group?id=' + ${group.id}}"><button>このグループを削除する</button></a>
+ -->	
+</body>
+</html>

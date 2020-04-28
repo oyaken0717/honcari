@@ -10,23 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
+import com.honcari.domain.OwnedBookInfo;
 import com.honcari.domain.User;
 import com.honcari.service.group.ShowGroupManagementService;
 
 @Controller
-@RequestMapping(value="group")
+@RequestMapping("group")
 public class ShowGroupManagementController {
 	
 	@Autowired
 	private ShowGroupManagementService showGroupListService;
 	
-	@RequestMapping(value="/to_management")
+	@RequestMapping("/to_management")
 	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser,Model model) {
 		User user = showGroupListService.showGroupListByBelongUserId(loginUser.getUser().getUserId());
 		List<Group> ownGroupList = showGroupListService.showGroupListByOwnerUserId(loginUser.getUser().getUserId());
 
 		model.addAttribute("user",user);
 		model.addAttribute("ownGroupList",ownGroupList);
+
 		return "group/group_management";
 	}
 

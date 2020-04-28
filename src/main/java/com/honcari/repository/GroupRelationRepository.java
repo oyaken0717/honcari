@@ -44,5 +44,17 @@ public class GroupRelationRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
 		template.update(sql, param);	
 	}
+	
+	public void deleteByUserIdAndGroupId(Integer userId, Integer groupId) {
+		String sql = "DELETE FROM group_relations WHERE user_id = :userId AND group_id = :groupId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
+		template.update(sql, param);	
+	}
+	
+	public void deleteByGroupId(Integer groupId) {
+		String sql = "DELETE FROM group_relations WHERE group_id = :groupId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
+		template.update(sql, param);	
+	}
 
 }

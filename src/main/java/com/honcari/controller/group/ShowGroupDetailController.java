@@ -20,7 +20,10 @@ public class ShowGroupDetailController {
 	@RequestMapping("/show_detail")
 	public String showGroupDetail(Integer id,Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		Group group = showGroupDetailService.showGroupDetail(id);
+		
 		model.addAttribute("group",group);
+		boolean b = group.getUserList().stream().map(u -> u.getUserId()).anyMatch(u -> u==loginUser.getUser().getUserId());
+		model.addAttribute("b",b);
 		model.addAttribute("userId",loginUser.getUser().getUserId());
 		return "group/group_detail";
 	}

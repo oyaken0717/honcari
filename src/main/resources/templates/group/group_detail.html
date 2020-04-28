@@ -7,49 +7,16 @@
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<script>
-$(function(){
-	var url = 'http://localhost:8080/group/check_user';
-	var groupId = $('#groupId').val();
-	$.ajax({
-		url : url,
-		type : 'GET',
-		dataType : 'json',
-		data : {
-			groupId : groupId
-		},
-		async : true
-	})
-	  .done(function(jsonGr){
-		gr = jsonGr;
-		console.log(gr)
-		if(gr != null){
-		let formElements = document.forms.form;
-		formElements.submit.disabled = true;
-		document.getElementById('button').innerText = '参加済み'
-		$('#invite').html('<a href="#">招待する<a>');
-		}
-	})
-	.fail(function() {
-        console.log('失敗');
-    })
-    .always(function() {
-    });	
-});
-</script>
-	<form name="form" th:action="@{/group/join}">
 	グループ名：<span th:text="${group.name}"></span><br>
 	グループについて：<span th:text="${group.description}"></span><br>
 	参加ユーザー：<br>
-	<div th:each="user : ${group.userList}">
-		<span th:text="${user.name}"></span>
-	</div>	
-	<input type="hidden" id="groupId" name="groupId" th:value="${group.id}"><br>
-	<a href="" th:if="${userId}==${group.ownerUserId}"><button>グループを編集する</button></a><br>
-	<button id="button" name="submit">このグループに参加する</button><br>
-	<div id="invite"></div>
+	<div th:each="user : ${group.userList}"><span th:text="${user.name}"></span></div>	
+	<input type="hidden" name="groupId" th:value="${group.id}"><br>
+	<a th:href="@{/group/to_edit_group(groupId=${group.id})}" th:if="${userId}==${group.ownerUserId}">グループを編集する</a><br>
+	<a href="" th:if="${b}==true">招待する</a><br>
+	<a th:href="@{'/group/out_group?id=' + ${group.id}}" th:if="${b}==true" onclick="return confirm('本当にこのグループから抜けますか？')">このグループから抜ける</a><br>
+	<a href="" th:if="${b}==false">このグループに参加する</a><br>	
 	<hr>
-	</form>
 	<a th:href="@{/group/to_search}">戻る</a>
 
 </body>
