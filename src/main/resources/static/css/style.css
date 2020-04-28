@@ -71,7 +71,7 @@ h3.section-subheading {
 }
 
 .image img, input[type="image"] {
-	object-fit: cover;
+	opacity: 0.6;
 }
 
 .custom-file {
@@ -83,7 +83,12 @@ h3.section-subheading {
 	white-space: nowrap;
 }
 
-.dropdown .dropdown-menu {
+.dropdown .dd-text {
+	position: relative;
+	top: 38px;
+}
+
+.dropdown .dd-img {
 	position: relative;
 	top: 48px;
 }
