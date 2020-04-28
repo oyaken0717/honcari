@@ -1,7 +1,16 @@
 package com.honcari.controller.book;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.honcari.domain.Category;
+import com.honcari.domain.LoginUser;
+import com.honcari.service.book.SearchBookService;
 
 /**
  * あいまい検索機能のコントローラ.
@@ -13,22 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/book")
 public class SearchBookController {
 
-//	@Autowired
-//	private SearchBookService userService;
-//	
-//	/**
-//	 * あいまい検索を実行するメソッド.
-//	 * 
-//	 * @param title 本のタイトル
-//	 * @param groupId グループID
-//	 * @param model モデル
-//	 * @return 本一覧画面
-//	 */
-//	@RequestMapping("/search")
-//	public String searchBook(String title, Integer groupId, Model model) {
-//		groupId = 1;
-//		List<User> userList = userService.findByGroupAndTitle(groupId, title);
-//		model.addAttribute("userList", userList);
-//		return "book/book_list";
-//	}
+	@Autowired
+	private SearchBookService searchBookService;
+	
+	@RequestMapping("/search")
+	public String searchBook(@AuthenticationPrincipal LoginUser loginUser, String title, Model model) {
+		List<Category> categoryList = searchBookService.findByUserIdAndTitle(loginUser.getUser().getUserId(), title);
+		model.addAttribute("categoryList", categoryList);
+		return "book/book_list";
+	}
 }
