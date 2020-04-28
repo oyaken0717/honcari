@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Honcari -気軽に本をどこへでも-</title>
+<title>What's HONCARI?&amp;|&amp;Honcari -気軽に本をどこへでも-</title>
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
@@ -20,32 +20,21 @@
     <div class="row justify-content-center">
       <!-- Column -->
       <div class="col-md-8 align-self-center text-center">
-        <h1 class="my-3 title text-white text-uppercase">Honcari</h1>
+        <h1 class="my-3 title text-white text-uppercase">What's HONCARI?</h1>
         <h6 class="text-white font-weight-normal op-8">本の共有、貸し借り管理アプリ</h6>
-        <a class="btn btn-outline-light btn-md mt-3" href="about.html" th:href="@{/about}"><span>What's HONCARI?</span></a>
       </div>
     </div>
     <div class="row mt-4">
 		<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-			<form method="post" action="book_list.html" th:action="@{/login}">
-				<div class="form-group">
-					<label class="control-label" th:text="${errorMessage}" style="color: red" for="inputError"></label>
-					<label for="inputEmail" class="text-white font-weight-normal op-8">メールアドレス:</label> 
-					<input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email">
+			<p class="text-white align-self-center text-center">身近な人との本の貸し借りをサポートします。</p>
+			<div class="row">
+				<div class="mx-auto">
+					<a class="btn btn-block btn-outline-light rounded-pill btn-md mt-3" th:href="@{/user/to_login}">ログインへ</a>
 				</div>
-				<div class="form-group">
-					<label for="inputPassword" class="text-white font-weight-normal op-8">パスワード:</label>
-					<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password">
+				<div class="mx-auto">
+					<a class="btn btn-block btn-outline-light rounded-pill btn-md mt-3" th:href="@{/user/to_register}">新規登録</a>
 				</div>
-				<div class="row">
-					<div class="mx-auto">
-						<button type="submit" class="btn btn-block btn-outline-light rounded-pill btn-md mt-3">ログイン</button>
-					</div>
-					<div class="mx-auto">
-						<a class="btn btn-block btn-outline-light rounded-pill btn-md mt-3" th:href="@{/user/to_register}">新規登録</a>
-					</div>
-				</div>
-			</form>
+			</div>
 		</div>
 	</div>
   </div>
