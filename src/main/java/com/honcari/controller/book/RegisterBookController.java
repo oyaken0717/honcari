@@ -2,7 +2,6 @@ package com.honcari.controller.book;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -79,8 +78,13 @@ public class RegisterBookController {
 			}else {
 				pageCount = Integer.parseInt(registerBookForm.getPageCount());
 			}
+			book.setIsbnId(registerBookForm.getIsbnId());
+			book.setTitle(registerBookForm.getTitle());
+			book.setAuthor(registerBookForm.getAuthor());
+			book.setPublishedDate(registerBookForm.getPublishedDate());
+			book.setDescription(registerBookForm.getDescription());
 			book.setPageCount(pageCount);
-			BeanUtils.copyProperties(registerBookForm, book);
+			book.setThumbnailPath(registerBookForm.getThumbnailPath());
 			Book registeredBook = registerBookService.registerBook(book);
 			bookId = registeredBook.getBookId();
 		}else {

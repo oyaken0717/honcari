@@ -29,14 +29,14 @@ public class UserRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
-	private static final RowMapper<User> User_ROW_MAPPER = (rs, i) -> {
+	private static final RowMapper<User> USER_ROW_MAPPER = (rs, i) -> {
 		User user = new User();
 		user.setUserId(rs.getInt("user_id"));
 		user.setName(rs.getString("name"));
 		user.setEmail(rs.getString("email"));
 		user.setPassword(rs.getString("password"));
-		user.setImagePath("image_path");
-		user.setProfile("profile");
+		user.setImagePath(rs.getString("image_path"));
+		user.setProfile(rs.getString("profile"));
 		user.setStatus(rs.getInt("status"));
 		return user;
 	};
@@ -54,7 +54,6 @@ public class UserRepository {
 			int nowUserId = rs.getInt("u_user_id");
 			if (nowUserId != beforeUserId) {
 				ownedBookInfoList = new ArrayList<>();
-				groupList = new ArrayList<>();
 				user.setUserId(nowUserId);
 				user.setName(rs.getString("u_name"));
 				user.setEmail(rs.getString("u_email"));
@@ -69,6 +68,18 @@ public class UserRepository {
 				beforeUserId = nowUserId;
 			}
 
+			int groupId = rs.getInt("g_group_id");
+			if (groupId != beforeGroupId) {
+				Group group = new Group();
+				group.setId(rs.getInt("g_group_id"));
+				group.setName(rs.getString("g_name"));
+				group.setDescription(rs.getString("g_description"));
+				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
+				groupList.add(group);
+
+				beforeGroupId = groupId;
+			}
+			
 			int bookId = rs.getInt("b_book_id");
 			if (bookId != beforeBookId) {
 				OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
@@ -87,18 +98,6 @@ public class UserRepository {
 				ownedBookInfoList.add(ownedBookInfo);
 
 				beforeBookId = bookId;
-			}
-
-			int groupId = rs.getInt("g_group_id");
-			if (groupId != beforeGroupId) {
-				Group group = new Group();
-				group.setId(rs.getInt("g_group_id"));
-				group.setName(rs.getString("g_name"));
-				group.setDescription(rs.getString("g_description"));
-				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
-				groupList.add(group);
-
-				beforeGroupId = groupId;
 			}
 		}
 		return userList;
@@ -136,7 +135,7 @@ public class UserRepository {
 	public User findByEmail(String email) {
 		String sql = BASE_SQL_FROM_USERS + "where email = :email AND status != 9;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
-		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
 		if (userList.size() == 0) {
 			return null;
 		}
@@ -150,7 +149,7 @@ public class UserRepository {
 	 * @return ユーザー情報リスト
 	 */
 	public User findByUserId(Integer userId) {
-		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND u.status != 9 order by u.user_id,b.book_id,g.group_id ;";
+		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND u.status != 9 order by g.group_id, b.book_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
 		return userList.get(0);
@@ -166,7 +165,7 @@ public class UserRepository {
 	public User findByName(String name) {
 		String sql = BASE_SQL_FROM_USERS + "WHERE name=:name AND status != 9;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
-		return template.queryForObject(sql, param, User_ROW_MAPPER);
+		return template.queryForObject(sql, param, USER_ROW_MAPPER);
 	}
 	
 	/**
@@ -178,7 +177,7 @@ public class UserRepository {
 	public List<User> findByNameLike(String name, Integer userId) {
 		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id <> :userId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("userId", userId);
-		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
 		if (userList.isEmpty()) {
 			return null;
 		}
@@ -197,16 +196,16 @@ public class UserRepository {
 		template.update(sql, param);
 	}
 	
-	/**
-	 * ユーザidとcategoryIDにてユーザ情報を取得する
-	 * 
-	 * @param userId ユーザid
-	 * @param categoryId カテゴリid
-	 * @return ユーザidとカテゴリidに一致したユーザ情報
-	 */
-	public List<User> findByCategoryId(Integer userId, Integer categoryId){
-		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
-		return template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
-	}
+//	/**
+//	 * ユーザidとcategoryIDにてユーザ情報を取得する
+//	 * 
+//	 * @param userId ユーザid
+//	 * @param categoryId カテゴリid
+//	 * @return ユーザidとカテゴリidに一致したユーザ情報
+//	 */
+//	public List<User> findByCategoryId(Integer userId, Integer categoryId){
+//		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9;";
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
+//		return template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
+//	}
 }
