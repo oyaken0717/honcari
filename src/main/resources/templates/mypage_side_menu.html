@@ -11,25 +11,28 @@
   <!-- side bar -->
 	<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 float-left" th:fragment="frag_mypage_side_menu(page)">
 		<div class="list-group" th:fragment="frag_mypage_side_menu_for_my_book(page)">
-			<a href="mypage.html" th:href="@{/user/show_mypage}" th:if="${page == 1}" 
-				class="list-group-item list-group-item-action active">プロフィール</a>
-			<a href="mypage.html" th:href="@{/user/show_mypage}" th:unless="${page == 1}" 
+			<a id="page1" href="mypage.html" th:href="@{/user/show_mypage}" 
 				class="list-group-item list-group-item-action">プロフィール</a>
-			
-			<a href="mybook.html" th:href="@{/book/show_mybook}" th:if="${page == 2}" 
-				class="list-group-item list-group-item-action active">マイブック</a>
-			<a href="mybook.html" th:href="@{/book/show_mybook}" th:unless="${page == 2}" 
+			<a id="page2" href="mybook.html" th:href="@{/book/show_mybook}" 
 				class="list-group-item list-group-item-action">マイブック</a>
-			
-			<a href="lend_management.html" th:href="@{/book_rental/show_list}" th:if="${page == 3}" 
-				class="list-group-item list-group-item-action active">レンタル管理</a>
-			<a href="lend_management.html" th:href="@{/book_rental/show_list}" th:unless="${page == 3}" 
+			<a id="page3" href="lend_management.html" th:href="@{/book_rental/show_list}" 
 				class="list-group-item list-group-item-action">レンタル管理</a>
-			
-			<a href="lental_history.html" th:href="@{/book_rental/show_history}" th:if="${page == 4}" 
-				class="list-group-item list-group-item-action active">レンタル履歴</a>
-			<a href="lental_history.html" th:href="@{/book_rental/show_history}" th:unless="${page == 4}" 
+			<a id="page4" href="lental_history.html" th:href="@{/book_rental/show_history}" 
 				class="list-group-item list-group-item-action">レンタル履歴</a>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+			<script>
+				$(function(){
+					var page = [(${page})]
+					function active(){
+						$(".list-group-item").each(function(){
+							if($(this).attr("id") == 'page' + page){
+								$(this).addClass("active");
+							}
+						});
+					}
+					active();
+				});
+			</script>
 		</div>
 	</div>
 </body>
