@@ -24,13 +24,14 @@
             <!-- Column -->
             <div class="col-lg-6 mt-4 mt-md-0">
                 <div class="text-box">
-                	<p>貸出状況：<span th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                	<p class="font-weight-bold">貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}" th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
                 		所有者：<span th:text="${ownedBookInfo.user.name}">status</span></p>
                     <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.author}">author</h4>
                     <h4 class="font-weight-light mt-2 mb-4" th:text="${book.publishedDate}">published_date</h4>
                     <p th:text="${book.description}">description</p>
-					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-show="true" data-target="#rental-request-form">
+					<button id="rental-request-button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" 
+						data-show="true" data-target="#rental-request-form">
 						貸出リクエスト</button>
 				</div>
             </div>
