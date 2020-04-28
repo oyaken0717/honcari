@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>What's HONCARI?&amp;|&amp;Honcari -気軽に本をどこへでも-</title>
+<!-- Style CSS -->
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<nav th:replace="header::frag_header(0)"></nav>
+<!-- トップ -->
+<div class="top-head-wrapper" th:style="'background-image:url(/img/home.jpeg)'">
+  <div class="container">
+    <!-- Row  -->
+    <div class="row justify-content-center">
+      <!-- Column -->
+      <div class="col-md-8 align-self-center text-center">
+        <h1 class="my-3 title text-white text-uppercase">What's HONCARI?</h1>
+        <h6 class="text-white font-weight-normal op-8">本の共有、貸し借り管理アプリ</h6>
+      </div>
+    </div>
+    <div class="row mt-4">
+		<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+			<p class="text-white align-self-center text-center">身近な人との本の貸し借りをサポートします。</p>
+			<div class="row">
+				<div class="mx-auto">
+					<a class="btn btn-block btn-outline-light rounded-pill btn-md mt-3" th:href="@{/user/to_login}">ログインへ</a>
+				</div>
+				<div class="mx-auto">
+					<a class="btn btn-block btn-outline-light rounded-pill btn-md mt-3" th:href="@{/user/to_register}">新規登録</a>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+</body>
+</html>

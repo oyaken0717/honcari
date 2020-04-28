@@ -43,10 +43,12 @@ public class RegisterUserController {
 			return toRegisterUser();
 		}
 
-		User user = new User();
-		BeanUtils.copyProperties(form, user);
-
 		registerUserService.registerUser(form);
-		return "redirect:/user/to_login";
+		return "redirect:/user/to_thank_register";
+	}
+	
+	@RequestMapping("/to_thank_register")
+	public String toThankRegister() {
+		return "user/thank_register";
 	}
 }

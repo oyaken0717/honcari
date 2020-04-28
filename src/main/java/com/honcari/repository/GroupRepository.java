@@ -182,4 +182,16 @@ public class GroupRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("ownerUserId",ownerUserId);
 		return template.query(sql, param, GROUP_ROW_MAPPER);
 	}
+	
+	public void update(Group group) {
+		String sql = "UPDATE groups SET name=:name,description=:description,owner_user_id=:ownerUserId,group_status=:groupStatus WHERE group_id=:id";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(group);
+		template.update(sql, param);
+	}
+	
+	public void delete(Integer id) {
+		String sql = "DELETE FROM groups WHERE group_id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
+		template.update(sql, param);
+	}
 }
