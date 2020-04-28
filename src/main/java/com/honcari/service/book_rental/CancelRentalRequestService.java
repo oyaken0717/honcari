@@ -29,11 +29,14 @@ public class CancelRentalRequestService {
 	 * 本の貸出リクエストをキャンセルする.
 	 * 
 	 * @param bookLendingId 貸出状況ID
+	 * @param processingUserName 処理ユーザー
 	 */
-	public void cancelRentalRequest(Integer bookRentalId) {
+	public void cancelRentalRequest(Integer bookRentalId, String processingUserName) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
+		bookRental.setUpdateUserName(processingUserName);
 		bookRental.setRentalStatus(RentalStatusEnum.CANCELED.getValue());
 		bookRentalRepository.update(bookRental);
+		
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
 		ownedBookInfo.setBookStatus(BookStatusEnum.RENTABLE.getValue());
 		ownedBookInfoRepository.update(ownedBookInfo);

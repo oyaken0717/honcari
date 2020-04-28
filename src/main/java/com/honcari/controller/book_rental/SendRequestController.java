@@ -51,6 +51,7 @@ public class SendRequestController {
 	public String sendLendingRequest(Model model, @AuthenticationPrincipal LoginUser loginUser,
 			@Validated RentalRequestForm form, BindingResult result) {
 		Integer borrowUserId = loginUser.getUser().getUserId();
+		String borrowUserName = loginUser.getUser().getName();
 		Integer ownedBookInfoId = form.getOwnedBookInfoId();
 		Integer bookStatus = form.getBookStatus();
 		Integer ownerId = form.getOwnerId();
@@ -80,7 +81,7 @@ public class SendRequestController {
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
 
-		sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, deadline);
+		sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, borrowUserName, deadline);
 		// TODO 貸し手にメール送信
 		return "redirect:/book_rental/show_list";
 	}

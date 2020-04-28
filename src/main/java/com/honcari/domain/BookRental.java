@@ -20,12 +20,16 @@ public class BookRental {
 	private OwnedBookInfo ownedBookInfo;
 	/** 借り手ユーザー */
 	private User borrowUser;
+	/** 初回登録者 */
+	private String creationUserName;
+	/** （最終）更新者 */
+	private String updateUserName;
 
 	public BookRental() {
 	}
 
 	public BookRental(Integer bookRentalId, Integer ownedBookInfoId, Integer borrowUserId, Integer rentalStatus,
-			Date deadline, OwnedBookInfo ownedBookInfo, User borrowUser) {
+			Date deadline, OwnedBookInfo ownedBookInfo, User borrowUser, String creationUser, String updateUser) {
 		super();
 		this.bookRentalId = bookRentalId;
 		this.ownedBookInfoId = ownedBookInfoId;
@@ -34,6 +38,8 @@ public class BookRental {
 		this.deadline = deadline;
 		this.ownedBookInfo = ownedBookInfo;
 		this.borrowUser = borrowUser;
+		this.creationUserName = creationUser;
+		this.updateUserName = updateUser;
 	}
 
 	/**
@@ -101,11 +107,28 @@ public class BookRental {
 		this.borrowUser = borrowUser;
 	}
 
+	public String getCreationUserName() {
+		return creationUserName;
+	}
+
+	public void setCreationUserName(String creationUserName) {
+		this.creationUserName = creationUserName;
+	}
+
+	public String getUpdateUserName() {
+		return updateUserName;
+	}
+
+	public void setUpdateUserName(String updateUserName) {
+		this.updateUserName = updateUserName;
+	}
+
 	@Override
 	public String toString() {
 		return "BookRental [bookRentalId=" + bookRentalId + ", ownedBookInfoId=" + ownedBookInfoId + ", borrowUserId="
 				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", deadline=" + deadline + ", ownedBookInfo="
-				+ ownedBookInfo + ", borrowUser=" + borrowUser + "]";
+				+ ownedBookInfo + ", borrowUser=" + borrowUser + ", creationUser=" + creationUserName + ", updateUser="
+				+ updateUserName + "]";
 	}
 
 }

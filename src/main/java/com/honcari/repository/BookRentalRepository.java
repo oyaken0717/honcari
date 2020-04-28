@@ -133,8 +133,8 @@ public class BookRentalRepository {
 	 * @param bookRental レンタル情報
 	 */
 	public void insert(BookRental bookRental) {
-		String sql = "INSERT INTO book_rentals (owned_book_info_id, borrow_user_id, rental_status, deadline) "
-				+ "VALUES (:ownedBookInfoId, :borrowUserId, :rentalStatus, :deadline)";
+		String sql = "INSERT INTO book_rentals (owned_book_info_id, borrow_user_id, rental_status, deadline, creation_date ,creation_user) "
+				+ "VALUES (:ownedBookInfoId, :borrowUserId, :rentalStatus, :deadline, (SELECT NOW()), :creationUserName)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(bookRental);
 		template.update(sql, param);
 	}
@@ -146,7 +146,8 @@ public class BookRentalRepository {
 	 */
 	public void update(BookRental bookRental) {
 		String sql = "UPDATE book_rentals SET owned_book_info_id = :ownedBookInfoId, borrow_user_id = :borrowUserId, "
-				+ "rental_status = :rentalStatus, deadline = :deadline WHERE owned_book_info_id = :ownedBookInfoId";
+				+ "rental_status = :rentalStatus, deadline = :deadline, update_date = (SELECT NOW()), update_user = :updateUserName "
+				+ "WHERE owned_book_info_id = :ownedBookInfoId";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(bookRental);
 		template.update(sql, param);
 	}

@@ -29,11 +29,14 @@ public class ConfirmReturnService {
 	 * 
 	 * @param bookLendingId 本の貸出状況ID
 	 * @param bookId 本ID
+	 * @param processingUserName 処理ユーザー
 	 */
-	public void confirmReturn(Integer bookRentalId, Integer bookStatus) {
+	public void confirmReturn(Integer bookRentalId, Integer bookStatus, String processingUserName) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
+		bookRental.setUpdateUserName(processingUserName);
 		bookRental.setRentalStatus(RentalStatusEnum.RETURNED.getValue());
 		bookRentalRepository.update(bookRental);
+		
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
 		ownedBookInfo.setBookStatus(bookStatus);
 		ownedBookInfoRepository.update(ownedBookInfo);

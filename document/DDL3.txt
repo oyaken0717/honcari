@@ -60,6 +60,10 @@ create table book_rentals(
   , borrow_user_id integer not null references users(user_id)
   , rental_status integer not null
   , deadline date
+  , creation_date timestamp
+  , creation_user text
+  , update_date timestamp
+  , update_user text
 );
 
 
