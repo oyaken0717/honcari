@@ -15,39 +15,41 @@
 <nav th:replace="header::frag_header(0)"></nav>
 <!-- トップ -->
 <div class="top-head-wrapper" th:style="'background-image:url(/img/home.jpeg)'">
-  <div class="container">
-    <!-- Row  -->
-    <div class="row justify-content-center">
-      <!-- Column -->
-      <div class="col-md-8 align-self-center text-center">
-        <h1 class="my-3 title text-white text-uppercase">Honcari</h1>
-        <h6 class="text-white font-weight-normal op-8">本の共有、貸し借り管理アプリ</h6>
-        <a class="btn btn-outline-light btn-md mt-3" href="" th:href="@{#}"><span>What's HONCARI?</span></a>
-      </div>
-    </div>
-    <div class="row mt-4">
-		<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-			<form method="post" action="#" th:action="@{/login}">
-				<div class="form-group">
-					<label class="control-label" th:text="${errorMessage}" style="color: red" for="inputError"></label>
-					<label for="inputEmail" class="text-white font-weight-normal op-8">メールアドレス:</label> 
-					<input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email">
-				</div>
-				<div class="form-group">
-					<label for="inputPassword" class="text-white font-weight-normal op-8">パスワード:</label>
-					<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password">
-				</div>
-				<div class="row">
-					<div class="mx-auto">
-						<button type="submit" class="btn btn-block btn-outline-light rounded-pill btn-md mt-3">ログイン</button>
+  <div class="container mb-4">
+  	<div class="rounded-lg bg-white" style="margin: 0 150px; padding: 20px 0;">
+	    <!-- Row  -->
+	    <div class="row justify-content-center">
+	      <!-- Column -->
+	      <div class="col-md-8 align-self-center text-center">
+	        <h1 class="my-3 title text-black text-uppercase">Honcari</h1>
+	        <h6 class="text-black font-weight-normal op-8">本の共有、貸し借り管理アプリ</h6>
+	        <a class="btn btn-outline-dark btn-md mt-3" href="" th:href="@{#}"><span>What's HONCARI?</span></a>
+	      </div>
+	    </div>
+	    <div class="row mt-4">
+			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+				<form method="post" action="#" th:action="@{/login}">
+					<div class="form-group">
+						<label class="control-label" th:text="${errorMessage}" style="color: red; background-color: #fff" for="inputError"></label>
+						<label for="inputEmail" class="text-black font-weight-normal op-8">メールアドレス:</label> 
+						<input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email">
 					</div>
-					<div class="mx-auto">
-						<a class="btn btn-block btn-outline-light rounded-pill btn-md mt-3" th:href="@{/user/to_register}">新規登録</a>
+					<div class="form-group">
+						<label for="inputPassword" class="text-black font-weight-normal op-8">パスワード:</label>
+						<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password">
 					</div>
-				</div>
-			</form>
+					<div class="row">
+						<div class="mx-auto">
+							<button type="submit" class="btn btn-block btn-outline-dark rounded-pill btn-md mt-3">ログイン</button>
+						</div>
+						<div class="mx-auto">
+							<a class="btn btn-block btn-outline-dark rounded-pill btn-md mt-3" th:href="@{/user/to_register}">新規登録</a>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
+  	</div>
   </div>
 </div>
 
