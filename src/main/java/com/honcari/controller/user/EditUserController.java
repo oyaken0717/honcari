@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
@@ -60,7 +61,7 @@ public class EditUserController {
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String editUser(@Validated EditUserForm editUserForm, BindingResult result, 
-			Model model, @AuthenticationPrincipal LoginUser loginUser) {
+			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser) {
 		if(editUserService.isExistOtherUserByEmail(editUserForm)) {
 			result.rejectValue("email", null, "入力されたメールアドレスは登録済のため使用できません");
 		}
@@ -78,6 +79,7 @@ public class EditUserController {
 			return showEditUser(model, loginUser);
 		}
 		editUserService.editUser(editUserForm);
+		redirectAttributes.addFlashAttribute("completeMessage", "プロフィール情報の変更が完了しました。");
 		return "redirect:/user/show_mypage";
 	}
 	
