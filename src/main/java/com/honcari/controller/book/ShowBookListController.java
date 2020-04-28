@@ -19,6 +19,7 @@ import com.honcari.service.book.ShowBookListService;
  *
  */
 @Controller
+@RequestMapping("/")
 public class ShowBookListController {
 
 	@Autowired
@@ -30,10 +31,9 @@ public class ShowBookListController {
 	 * @param model モデル
 	 * @return 本一覧画面
 	 */
-	@RequestMapping("/")
+	@RequestMapping("")
 	public String showBookList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Category> categoryList = showBookListService.findByUserId(loginUser.getUser().getUserId());
-		System.out.println(categoryList);
 		model.addAttribute("categoryList", categoryList);
 		return "book/book_list";
 	}

@@ -29,7 +29,6 @@ public class ShowBookListService {
 	 * @return ユーザー情報リスト
 	 */
 	public List<Category> findByUserId(Integer userId) {
-		System.out.println(categoryRepository.findByUserId(userId));
 		return categoryRepository.findByUserId(userId);
 	}
 }
