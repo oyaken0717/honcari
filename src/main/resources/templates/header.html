@@ -68,9 +68,11 @@
   					$(this).addClass("active");
   				}
   			});
+  			if(page != 1){
+  				$("#container form").remove();
+  			}
   			if(page == 9){
   				$("#container div").remove();
-  				$("#container form").remove();
   				$("#container button").remove();
   			}
   		}
