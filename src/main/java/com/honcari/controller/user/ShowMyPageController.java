@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
-import com.honcari.service.user.ShowMyPageService;
+import com.honcari.service.user.SearchUserByUserIdService;
 
 /**
  * マイページを表示するコントローラー.
@@ -21,7 +21,7 @@ import com.honcari.service.user.ShowMyPageService;
 public class ShowMyPageController {
 
 	@Autowired
-	private ShowMyPageService showMyPageService;
+	private SearchUserByUserIdService searchUserByUserIdService;
 
 	/**
 	 * マイページに遷移するメソッド.
@@ -32,7 +32,7 @@ public class ShowMyPageController {
 	 */
 	@RequestMapping("/show_mypage")
 	public String showMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = showMyPageService.showUser(loginUser.getUser().getUserId());
+		User user = searchUserByUserIdService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);
 		return "user/mypage";
 	}

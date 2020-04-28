@@ -2,8 +2,10 @@ package com.honcari.controller.user;
 
 import java.util.Objects;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,8 @@ import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.EditUserForm;
 import com.honcari.service.user.EditUserService;
+import com.honcari.service.user.SearchExistOtherUserByEmailService;
+import com.honcari.service.user.SearchUserByUserIdService;
 
 /**
  * ユーザー情報を編集するコントローラー.
@@ -30,6 +34,15 @@ public class EditUserController {
 	
 	@Autowired
 	private EditUserService editUserService;
+	
+	@Autowired
+	private SearchExistOtherUserByEmailService searchExistOtherUserByEmailService;
+	
+	@Autowired
+	private SearchUserByUserIdService searchUserByUserIdService;	
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@ModelAttribute
 	public EditUserForm setUpEditUserForm() {
@@ -45,7 +58,7 @@ public class EditUserController {
 	 */
 	@RequestMapping("/show_edit")
 	public String showEditUser(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = editUserService.showUser(loginUser.getUser().getUserId());
+		User user = searchUserByUserIdService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);
 		return "user/edit_user";
 	}
@@ -62,7 +75,7 @@ public class EditUserController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String editUser(@Validated EditUserForm editUserForm, BindingResult result, 
 			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser) {
-		if(editUserService.isExistOtherUserByEmail(editUserForm)) {
+		if(searchExistOtherUserByEmailService.isExistOtherUserByEmail(editUserForm)) {
 			result.rejectValue("email", null, "入力されたメールアドレスは登録済のため使用できません");
 		}
 		//パスワードの入力があるときだけチェックを実施するためにFormでなくこちらでチェック
@@ -78,9 +91,14 @@ public class EditUserController {
 				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getImagePath()))) {
 			return showEditUser(model, loginUser);
 		}
-		editUserService.editUser(editUserForm);
+		User user = new User();
+		BeanUtils.copyProperties(editUserForm, user);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		if(editUserForm.getPassword().isEmpty()) {
+			user.setPassword(editUserForm.getDefaultPassword());
+		}
+		editUserService.editUser(user);
 		redirectAttributes.addFlashAttribute("completeMessage", "プロフィール情報の変更が完了しました。");
 		return "redirect:/user/show_mypage";
-	}
-	
+	}	
 }

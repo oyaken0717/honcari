@@ -15,7 +15,7 @@ import com.honcari.repository.UserRepository;
  */
 @Service
 @Transactional
-public class ShowMyPageService {
+public class SearchUserByUserIdService {
 	
 	@Autowired
 	private UserRepository userRepository;
