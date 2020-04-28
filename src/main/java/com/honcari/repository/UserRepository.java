@@ -38,6 +38,8 @@ public class UserRepository {
 		user.setImagePath(rs.getString("image_path"));
 		user.setProfile(rs.getString("profile"));
 		user.setStatus(rs.getInt("status"));
+		user.setUpdatePasswordDate(rs.getTimestamp("update_password_date"));
+		
 		return user;
 	};
 
@@ -61,6 +63,7 @@ public class UserRepository {
 				user.setImagePath(rs.getString("u_image_path"));
 				user.setProfile(rs.getString("u_profile"));
 				user.setStatus(rs.getInt("u_status"));
+				user.setUpdatePasswordDate(rs.getTimestamp("u_update_password_date"));
 				user.setOwnedBookInfoList(ownedBookInfoList);
 				user.setGroupList(groupList);
 				userList.add(user);
@@ -105,10 +108,10 @@ public class UserRepository {
 	};
 
 	/** usersテーブルのみから検索する際に利用するSQL文 */
-	private static final String BASE_SQL_FROM_USERS = "SELECT user_id,name,email,password,image_path,profile,status from Users ";
+	private static final String BASE_SQL_FROM_USERS = "SELECT user_id,name,email,password,image_path,profile,status,update_password_date from Users ";
 	
 	/** 5テーブルから検索する際に利用するSQL文 */
-	private static final String BASE_SQL_FROM_5 = "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile, u.status u_status,"
+	private static final String BASE_SQL_FROM_5 = "SELECT u.user_id u_user_id,u.name u_name,u.email u_email,u.password u_password,u.image_path u_image_path,u.profile u_profile,u.status u_status,u.update_password_date u_update_password_date,"
 			+ "b.book_id b_book_id,b.isbn_id b_isbn_id, b.title b_title, b.author b_author,"
 			+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, b.thumbnail_path b_thumbnail_path,"
 			+ "o.comment o_comment, o.book_status o_book_status, o.category_id o_category_id, g.group_id g_group_id,g.name g_name,g.description g_description,g.owner_user_id g_owner_user_id "
@@ -122,7 +125,7 @@ public class UserRepository {
 	 * @param user ユーザー
 	 */
 	public void insert(User user) {
-		String sql = "INSERT INTO Users(name,email,password,image_path,profile)VALUES(:name,:email,:password,:imagePath,:profile)";
+		String sql = "INSERT INTO Users(name,email,password,image_path,profile,update_password_date)VALUES(:name,:email,:password,:imagePath,:profile,:updatePasswordDate)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
 		template.update(sql, param);
 	}
@@ -176,7 +179,7 @@ public class UserRepository {
 	 * @return ユーザー情報
 	 */
 	public List<User> findByNameLike(String name, Integer userId) {
-		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id <> :userId;";
+		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id != :userId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("userId", userId);
 		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
 		if (userList.isEmpty()) {
@@ -192,8 +195,8 @@ public class UserRepository {
 	 */
 	public void update(User user) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
-		String sql = "UPDATE users SET name = :name, email = :email, password = :password, "
-				+ "image_path = :imagePath, profile = :profile, status = :status WHERE user_id = :userId;";
+		String sql = "UPDATE users SET name = :name, email = :email, password = :password, image_path = :imagePath, "
+				+ "profile = :profile, status = :status, update_password_date = :updatePasswordDate WHERE user_id = :userId;";
 		template.update(sql, param);
 	}
 	

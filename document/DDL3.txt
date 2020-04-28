@@ -8,6 +8,7 @@ create table users(
   , image_path text
   , profile character varying(100)
   , status integer not null default 0
+  , update_password_date timestamp not null
 );
 
 -- category

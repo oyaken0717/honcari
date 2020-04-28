@@ -1,5 +1,6 @@
 package com.honcari.controller.user;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
@@ -79,12 +80,20 @@ public class EditUserController {
 			result.rejectValue("email", null, "入力されたメールアドレスは登録済のため使用できません");
 		}
 		//パスワードの入力があるときだけチェックを実施するためにFormでなくこちらでチェック
-		if(!editUserForm.getPassword().isEmpty() 
-				&& !editUserForm.getPassword().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,32}$")) {
+		String currentPassword = editUserForm.getCurrentPassword();
+		String inputCurrentPassword = editUserForm.getInputCurrentPassword();
+		String newPassword = editUserForm.getPassword();
+		String confirmPassword = editUserForm.getConfirmPassword();
+		if(!newPassword.isEmpty() 
+				&& !passwordEncoder.matches(inputCurrentPassword, currentPassword)) {
+			result.rejectValue("inputCurrentPassword", null, "現在のパスワードが間違っています");
+		}
+		if(!newPassword.isEmpty() 
+				&& !newPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,32}$")) {
 			result.rejectValue("password", null, "パスワードの条件を満たしていません");
 		}
-		if(!editUserForm.getPassword().isEmpty() 
-				&& !(editUserForm.getPassword().equals(editUserForm.getConfirmPassword()))) {
+		if((!newPassword.isEmpty() && !newPassword.equals(confirmPassword))
+				|| (!confirmPassword.isEmpty() && newPassword.isEmpty())) {
 			result.rejectValue("confirmPassword", null, "パスワードが一致していません");
 		}
 		if(result.getErrorCount() > 1 
@@ -93,10 +102,15 @@ public class EditUserController {
 		}
 		User user = new User();
 		BeanUtils.copyProperties(editUserForm, user);
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		if(editUserForm.getPassword().isEmpty()) {
-			user.setPassword(editUserForm.getDefaultPassword());
+		if(!newPassword.isEmpty()) {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			redirectAttributes.addFlashAttribute("updatePasswordMessage", "パスワードの変更が完了しました。");
 		}
+		if(newPassword.isEmpty()) {
+			user.setPassword(currentPassword);
+		}
+		user.setStatus(0);
+		user.setUpdatePasswordDate(new Timestamp(System.currentTimeMillis()));
 		editUserService.editUser(user);
 		redirectAttributes.addFlashAttribute("completeMessage", "プロフィール情報の変更が完了しました。");
 		return "redirect:/user/show_mypage";
