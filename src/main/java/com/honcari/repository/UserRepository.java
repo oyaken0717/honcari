@@ -45,14 +45,14 @@ public class UserRepository {
 		List<User> userList = new ArrayList<>();
 		List<OwnedBookInfo> ownedBookInfoList = new ArrayList<>();
 		List<Group> groupList = new ArrayList<>();
-		User user = new User();
+		List<Integer> bookIdList = null;
 		int beforeUserId = 0;
-		int beforeBookId = 0;
 		int beforeGroupId = 0;
 
 		while (rs.next()) {
 			int nowUserId = rs.getInt("u_user_id");
 			if (nowUserId != beforeUserId) {
+				User user = new User();
 				ownedBookInfoList = new ArrayList<>();
 				user.setUserId(nowUserId);
 				user.setName(rs.getString("u_name"));
@@ -66,6 +66,7 @@ public class UserRepository {
 				userList.add(user);
 
 				beforeUserId = nowUserId;
+				bookIdList = new ArrayList<>();
 			}
 
 			int groupId = rs.getInt("g_group_id");
@@ -81,7 +82,7 @@ public class UserRepository {
 			}
 			
 			int bookId = rs.getInt("b_book_id");
-			if (bookId != beforeBookId) {
+			if (!bookIdList.contains(bookId)) {
 				OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 				ownedBookInfo.setComment(rs.getString("o_comment"));
 				ownedBookInfo.setBookStatus(rs.getInt("o_book_status"));
@@ -96,8 +97,8 @@ public class UserRepository {
 				book.setThumbnailPath(rs.getString("b_thumbnail_path"));
 				ownedBookInfo.setBook(book);
 				ownedBookInfoList.add(ownedBookInfo);
-
-				beforeBookId = bookId;
+				
+				bookIdList.add(bookId);
 			}
 		}
 		return userList;
