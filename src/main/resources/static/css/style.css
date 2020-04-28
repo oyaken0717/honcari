@@ -152,3 +152,9 @@ h3.section-subheading {
 	width: 250px;
 }
 
+footer {
+	height:50px;
+	text-align:center;
+	font-size:0.85em;
+	display:block;
+}
