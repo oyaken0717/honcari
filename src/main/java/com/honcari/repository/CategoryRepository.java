@@ -116,6 +116,26 @@ public class CategoryRepository {
 	}
 	
 	/**
+	 * ユーザーIDとカテゴリIDからカテゴリごとの本情報を取得する.
+	 * 
+	 * @param userId ユーザーID
+	 * @param categoryId カテゴリID
+	 * @return カテゴリ一覧
+	 */
+	public List<Category> findByUserIdAndCategoryId(Integer userId, Integer categoryId) {
+		String sql = SQL + "WHERE u.status != 9 AND c.category_id = :categoryId AND u.user_id in ("
+				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
+				+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+				+ "ORDER BY c.category_id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
+		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
+		if (categoryList.isEmpty()) {
+			return null;
+		}
+		return categoryList;
+	}
+	
+	/**
 	 * ユーザーIDとタイトル名からカテゴリーごとの本情報を取得する.
 	 * 
 	 * @param userId ユーザーID
