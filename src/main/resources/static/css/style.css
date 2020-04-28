@@ -143,3 +143,9 @@ h3.section-subheading {
 #edit-button{
 	font-size: 16px;
 }
+
+/* 本詳細ページのデザイン */
+.book-detail-img{
+	width: 250px;
+}
+
