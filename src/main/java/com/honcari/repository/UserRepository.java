@@ -193,7 +193,7 @@ public class UserRepository {
 	public void update(User user) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
 		String sql = "UPDATE users SET name = :name, email = :email, password = :password, "
-				+ "image_path = :imagePath, profile = :profile WHERE user_id = :userId;";
+				+ "image_path = :imagePath, profile = :profile, status = :status WHERE user_id = :userId;";
 		template.update(sql, param);
 	}
 	

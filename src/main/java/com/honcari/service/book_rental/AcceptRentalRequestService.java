@@ -1,6 +1,7 @@
 package com.honcari.service.book_rental;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.honcari.common.BookStatusEnum;
@@ -28,18 +29,31 @@ public class AcceptRentalRequestService {
 	/**
 	 * 本の貸出申請を承認する.
 	 * 
-	 * @param bookRentalId       貸出情報ID
-	 * @param processingUserName 処理ユーザー
+	 * @param bookRentalId         貸出情報ID
+	 * @param processingUserName   処理ユーザー
+	 * @param bookRentalVersion    貸出状況バージョン
+	 * @param ownedBookInfoVersion 所有情報バージョン
 	 */
-	public void acceptRentalRequest(Integer bookRentalId, String processingUserName) {
+	public void acceptRentalRequest(Integer bookRentalId, String processingUserName, Integer bookRentalVersion,
+			Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
-		bookRental.setUpdateUserName(processingUserName);
-		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
-		bookRentalRepository.update(bookRental);
-
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
+
+		// データベースのバージョンが更新されていた場合は例外処理を行う
+		if (bookRental.getVersion() != bookRentalVersion || ownedBookInfo.getVersion() != ownedBookInfoVersion) {
+			throw new OptimisticLockingFailureException("Faild to accept book rental!");
+		}
+		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
+		bookRental.setUpdateUserName(processingUserName);
+		bookRental.setVersion(bookRentalVersion);
 		ownedBookInfo.setBookStatus(BookStatusEnum.LENDING.getValue());
-		ownedBookInfoRepository.update(ownedBookInfo);
+		ownedBookInfo.setVersion(ownedBookInfoVersion);
+		int updateBookRentalCount = bookRentalRepository.update(bookRental);
+		int updateOwnedBookInfoCount = ownedBookInfoRepository.update(ownedBookInfo);
+		// データベースの更新ができなかった場合は例外処理を行う
+		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
+			throw new IllegalStateException("Faild to accept book rental!");
+		}
 	}
 
 }

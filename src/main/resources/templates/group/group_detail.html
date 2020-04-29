@@ -3,10 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 <body>
+<script>
+$(function(){
+	var url = 'http://localhost:8080/group/check_user';
+	var groupId = $('#groupId').val();
+	$.ajax({
+		url : url,
+		type : 'GET',
+		dataType : 'json',
+		data : {
+			groupId : groupId
+		},
+		async : true
+	})
+	  .done(function(jsonGr){
+		gr = jsonGr;
+		console.log(gr)
+		if(gr != null){
+		let formElements = document.forms.form;
+		formElements.submit.disabled = true;
+		document.getElementById('button').innerText = '参加済み'
+		$('#invite').html('<a href="#">招待する<a>');
+		}
+	})
+	.fail(function() {
+        console.log('失敗');
+    })
+    .always(function() {
+    });	
+});
+</script>
+<nav th:replace="header::frag_header(1)"></nav>
+<div th:if="${complete}" class="alert alert-info alert-dismissible fade show" role="alert">
+  <strong>グループを作成しました!!</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+	<form name="form" th:action="@{/group/join}">
 	グループ名：<span th:text="${group.name}"></span><br>
 	グループについて：<span th:text="${group.description}"></span><br>
 	参加ユーザー：<br>
@@ -18,6 +58,6 @@
 	<a href="" th:if="${b}==false">このグループに参加する</a><br>	
 	<hr>
 	<a th:href="@{/group/to_search}">戻る</a>
-
+	</form>
 </body>
 </html>

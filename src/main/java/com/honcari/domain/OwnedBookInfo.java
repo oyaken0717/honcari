@@ -28,12 +28,14 @@ public class OwnedBookInfo {
 	private Book book;
 	/** カテゴリー */
 	private Category category;
+	/** バージョン（楽観ロック用） */
+	private Integer version;
 
 	public OwnedBookInfo() {
 	}
 
 	public OwnedBookInfo(Integer ownedBookInfoId, Integer userId, Integer bookId, Integer categoryId,
-			Integer bookStatus, String comment, User user, Book book, Category category) {
+			Integer bookStatus, String comment, User user, Book book, Category category, Integer version) {
 		super();
 		this.ownedBookInfoId = ownedBookInfoId;
 		this.userId = userId;
@@ -44,6 +46,7 @@ public class OwnedBookInfo {
 		this.user = user;
 		this.book = book;
 		this.category = category;
+		this.version = version;
 	}
 
 	/**
@@ -127,10 +130,19 @@ public class OwnedBookInfo {
 		this.category = category;
 	}
 
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	@Override
 	public String toString() {
 		return "OwnedBookInfo [ownedBookInfoId=" + ownedBookInfoId + ", userId=" + userId + ", bookId=" + bookId
 				+ ", categoryId=" + categoryId + ", bookStatus=" + bookStatus + ", comment=" + comment + ", user="
-				+ user + ", book=" + book + ", category=" + category + "]";
+				+ user + ", book=" + book + ", category=" + category + ", version=" + version + "]";
 	}
+
 }
