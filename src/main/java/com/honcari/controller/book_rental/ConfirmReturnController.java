@@ -32,10 +32,18 @@ public class ConfirmReturnController {
 	 */
 	@RequestMapping(value = "/confirm_return", method = RequestMethod.POST)
 	public String confirmReturn(Integer bookRentalId, Integer updateStatus,
-			@AuthenticationPrincipal LoginUser loginUser) {
+			@AuthenticationPrincipal LoginUser loginUser, Integer bookRentalVersion, Integer ownedBookInfoVersion) {
 		String processingUserName = loginUser.getUser().getName();
-		confirmReturnService.confirmReturn(bookRentalId, updateStatus, processingUserName);
-		// TODO 借り手にメール送信
+
+		try {
+			confirmReturnService.confirmReturn(bookRentalId, updateStatus, processingUserName, bookRentalVersion,
+					ownedBookInfoVersion);
+			// TODO 借り手にメール送信
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			// TODO エラーメッセージをフラッシュに追加
+		}
+
 		return "redirect:/book_rental/show_list";
 	}
 
