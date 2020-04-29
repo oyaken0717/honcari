@@ -8,7 +8,7 @@ public class RegisterUserForm {
 	private String name;
 	@NotBlank(message="入力必須項目です")
 	private String email;
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){8,100}$", message="半角英数字8桁以上で設定してください")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,100}$", message="半角英数字8桁以上で設定してください")
 	@NotBlank(message="入力必須項目です")
 	private String password;
 	@NotBlank(message="入力必須項目です")

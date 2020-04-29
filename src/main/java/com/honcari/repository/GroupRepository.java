@@ -178,7 +178,7 @@ public class GroupRepository {
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByOwnerUserId(Integer ownerUserId) {
-		String sql = "SELECT group_id,name,description,owner_user_id,group_status FROM groups WHERE owner_user_id = :ownerUserId";
+		String sql = "SELECT group_id,name,description,owner_user_id,group_status FROM groups WHERE owner_user_id = :ownerUserId order by group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("ownerUserId",ownerUserId);
 		return template.query(sql, param, GROUP_ROW_MAPPER);
 	}

@@ -150,7 +150,7 @@ public class UserRepository {
 	 * @return ユーザー情報リスト
 	 */
 	public User findByUserId(Integer userId) {
-		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND u.status != 9 order by g.group_id, b.book_id;";
+		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND u.status != 9 order by g.group_id, b.book_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
 		return userList.get(0);
