@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.controller.book.ShowBookDetailController;
 import com.honcari.domain.LoginUser;
@@ -49,7 +50,7 @@ public class SendRequestController {
 	 */
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public String sendLendingRequest(Model model, @AuthenticationPrincipal LoginUser loginUser,
-			@Validated RentalRequestForm form, BindingResult result) {
+			@Validated RentalRequestForm form, BindingResult result, RedirectAttributes redirectAttributes) {
 		Integer borrowUserId = loginUser.getUser().getUserId();
 		String borrowUserName = loginUser.getUser().getName();
 		Integer ownedBookInfoId = form.getOwnedBookInfoId();
@@ -86,6 +87,7 @@ public class SendRequestController {
 		try {
 			sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, borrowUserName, deadline, version);			
 			// TODO 貸し手にメール送信
+			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを送信しました！");
 		}catch (Exception ex) {
 			ex.printStackTrace();
 			result.rejectValue("deadline", "500", "貸出申請に失敗しました");
