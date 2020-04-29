@@ -75,6 +75,8 @@
 								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
 								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
 								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
+								<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
+								<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
 								<div><button class="btn btn-primary btn-sm" type="submit">延長申請</button></div>
 								</form>
 							</div>
@@ -99,6 +101,8 @@
 								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
 								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
 								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
+								<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
+								<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
 								<div><button class="approval-btn btn btn-warning btn-sm" type="submit">承認</button></div>
 								</form>
 							</div>
@@ -137,6 +141,8 @@
    								    <input type="radio" name="updateStatus" th:value="0">&nbsp;貸出不可&nbsp;&nbsp;
    								    <input type="radio" name="updateStatus" th:value="1">&nbsp;貸出可
    								    <input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
+   								    <input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
+									<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
   	 						   </div>
     						  	<div class="modal-footer">
     								<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
