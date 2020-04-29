@@ -41,6 +41,7 @@ create table books (
 );
 
 -- owned_book_info
+-- カラムのみ追加（ALTER TABLE owned_book_info ADD COLUMN version integer not null default 0;）
 drop table if exists book_owners cascade;
 drop table if exists owned_book_info cascade;
 create table owned_book_info(
@@ -50,6 +51,7 @@ create table owned_book_info(
    , category_id integer not null references category(category_id)
    , book_status integer not null
    , comment text
+   , version integer not null default 0
 );
 
 -- book_rentals
@@ -64,6 +66,7 @@ create table book_rentals(
   , creation_user text
   , update_date timestamp
   , update_user text
+  , version integer not null default 0
 );
 
 

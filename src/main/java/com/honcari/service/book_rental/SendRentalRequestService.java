@@ -3,6 +3,7 @@ package com.honcari.service.book_rental;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,8 @@ public class SendRentalRequestService {
 	 * @param borrowUserId    借り手ユーザーID
 	 * @param deadline        貸出期限
 	 */
-	public void sendRentalRequest(Integer ownedBookInfoId, Integer borrowUserId, String borrowUserName, Date deadline) {
+	public void sendRentalRequest(Integer ownedBookInfoId, Integer borrowUserId, String borrowUserName, Date deadline,
+			Integer ownedBookInfoVersion) {
 		BookRental bookRental = new BookRental();
 		bookRental.setOwnedBookInfoId(ownedBookInfoId);
 		bookRental.setBorrowUserId(borrowUserId);
@@ -44,9 +46,20 @@ public class SendRentalRequestService {
 		bookRental.setRentalStatus(RentalStatusEnum.WAIT_APPROVAL.getValue());
 		bookRental.setDeadline(deadline);
 		bookRentalRepository.insert(bookRental);
+
 		OwnedBookInfo ownedBookInfo = ownedBookInfoRepository.findByOwnedBookInfoId(ownedBookInfoId);
+		// データベースのバージョンが更新されていた場合は例外処理を行う
+		if (ownedBookInfo.getVersion() != ownedBookInfoVersion) {
+			throw new OptimisticLockingFailureException("Faild updating status of the book!");
+		}
+		ownedBookInfo.setVersion(ownedBookInfoVersion);
 		ownedBookInfo.setBookStatus(BookStatusEnum.BEFORE_LENDING.getValue());
-		ownedBookInfoRepository.update(ownedBookInfo);
+		int updateCount = ownedBookInfoRepository.update(ownedBookInfo);
+
+		// データベースの更新ができなかった場合は例外処理を行う
+		if (updateCount != 1) {
+			throw new IllegalStateException("Faild updating status of the book!");
+		}
 	}
 
 }

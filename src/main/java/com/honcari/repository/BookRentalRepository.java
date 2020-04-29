@@ -26,10 +26,10 @@ import com.honcari.domain.User;
 public class BookRentalRepository {
 
 	private final static String SQL = "SELECT br.book_rental_id br_book_rental_id, br.owned_booK_info_id br_owned_booK_info_id, "
-			+ "br.borrow_user_id br_borrow_user_id, br.deadline br_deadline, br.rental_status br_rental_status, "
+			+ "br.borrow_user_id br_borrow_user_id, br.deadline br_deadline, br.rental_status br_rental_status, br.version br_version, "
 			// ユーザーが保有している本の情報
 			+ "ob.owned_booK_info_id ob_owned_booK_info_id, ob.user_id ob_user_id, ob.book_id ob_book_id, ob.category_id "
-			+ "ob_category_id, ob.book_status ob_book_status, ob.comment ob_comment, "
+			+ "ob_category_id, ob.book_status ob_book_status, ob.comment ob_comment, ob.version ob_version, "
 			// 本情報
 			+ "b.book_id b_book_id, b.isbn_id b_isbn_id, b.title b_title, b.author b_author, "
 			+ "b.published_date b_published_date, b.description b_description, b.page_count b_page_count, "
@@ -63,6 +63,7 @@ public class BookRentalRepository {
 		bookRental.setBorrowUserId(rs.getInt("br_borrow_user_id"));
 		bookRental.setRentalStatus(rs.getInt("br_rental_status"));
 		bookRental.setDeadline(rs.getDate("br_deadline"));
+		bookRental.setVersion(rs.getInt("br_version"));
 		// 所有情報をインスタンス化
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 		ownedBookInfo.setOwnedBookInfoId(rs.getInt("ob_owned_booK_info_id"));
@@ -71,6 +72,7 @@ public class BookRentalRepository {
 		ownedBookInfo.setCategoryId(rs.getInt("ob_category_id"));
 		ownedBookInfo.setBookStatus(rs.getInt("ob_book_status"));
 		ownedBookInfo.setComment(rs.getString("ob_comment"));
+		ownedBookInfo.setVersion(rs.getInt("ob_version"));
 		// 本情報をインスタンス化
 		Book book = new Book();
 		book.setBookId(rs.getInt("b_book_id"));
@@ -144,12 +146,12 @@ public class BookRentalRepository {
 	 * 
 	 * @param bookRental レンタル情報
 	 */
-	public void update(BookRental bookRental) {
+	public int update(BookRental bookRental) {
 		String sql = "UPDATE book_rentals SET owned_book_info_id = :ownedBookInfoId, borrow_user_id = :borrowUserId, "
-				+ "rental_status = :rentalStatus, deadline = :deadline, update_date = (SELECT NOW()), update_user = :updateUserName "
-				+ "WHERE owned_book_info_id = :ownedBookInfoId";
+				+ "rental_status = :rentalStatus, deadline = :deadline, update_date = (SELECT NOW()), update_user = :updateUserName, "
+				+ "version = (:version + 1) WHERE owned_book_info_id = :ownedBookInfoId AND version = :version";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(bookRental);
-		template.update(sql, param);
+		return template.update(sql, param);
 	}
 
 	/**
