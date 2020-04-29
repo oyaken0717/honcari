@@ -27,13 +27,22 @@ public class AcceptRequestController {
 	 * 
 	 * @param bookRentalId 貸出申請ID
 	 * @param loginUser    ログインユーザー
+	 * @param bookRentalVersion 貸出状況バージョン
+	 * @param ownedBookInfoVersion　所有情報バージョン
 	 * @return 貸出情報一覧画面
 	 */
 	@RequestMapping(value = "/accept", method = RequestMethod.POST)
-	public String acceptRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser) {
+	public String acceptRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
+			Integer bookRentalVersion, Integer ownedBookInfoVersion) {
 		String processingUserName = loginUser.getUser().getName();
-		acceptRentalRequestService.acceptRentalRequest(bookRentalId, processingUserName);
-		// TODO 借り手にメール送信
+		try {
+			acceptRentalRequestService.acceptRentalRequest(bookRentalId, processingUserName, bookRentalVersion,
+					ownedBookInfoVersion);
+			// TODO 借り手にメール送信
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			// TODO エラーメッセージをフラッシュに追加
+		}
 		return "redirect:/book_rental/show_list";
 	}
 
