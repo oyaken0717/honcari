@@ -30,10 +30,17 @@ public class CancelRequestController {
 	 * @return 貸出情報一覧画面
 	 */
 	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
-	public String cancelRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser) {
+	public String cancelRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
+			Integer bookRentalVersion, Integer ownedBookInfoVersion) {
 		String processingUserName = loginUser.getUser().getName();
-		cancelRentalRequestService.cancelRentalRequest(bookRentalId, processingUserName);
-		// TODO 貸し手にメール送信
+		try {
+			cancelRentalRequestService.cancelRentalRequest(bookRentalId, processingUserName, bookRentalVersion,
+					ownedBookInfoVersion);
+			// TODO 貸し手にメール送信
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			// TODO エラーメッセージをフラッシュに追加
+		}
 		return "redirect:/book_rental/show_list";
 	}
 

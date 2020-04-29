@@ -52,6 +52,8 @@
 									レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
 									ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
 									<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
+									<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
+									<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
 									<div><button class="cancel-btn btn btn-primary btn-sm" type="submit">キャンセル</button></div>
 									</form>
 								</div>

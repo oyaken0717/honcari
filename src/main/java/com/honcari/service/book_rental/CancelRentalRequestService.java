@@ -1,6 +1,7 @@
 package com.honcari.service.book_rental;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.honcari.common.BookStatusEnum;
@@ -18,28 +19,41 @@ import com.honcari.repository.OwnedBookInfoRepository;
  */
 @Service
 public class CancelRentalRequestService {
-	
+
 	@Autowired
 	private OwnedBookInfoRepository ownedBookInfoRepository;
-	
+
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
-	
+
 	/**
 	 * 本の貸出リクエストをキャンセルする.
 	 * 
-	 * @param bookLendingId 貸出状況ID
-	 * @param processingUserName 処理ユーザー
+	 * @param bookLendingId        貸出状況ID
+	 * @param processingUserName   処理ユーザー
+	 * @param bookRentalVersion    貸出状況バージョン
+	 * @param ownedBookInfoVersion 保有する本情報バージョン
 	 */
-	public void cancelRentalRequest(Integer bookRentalId, String processingUserName) {
+	public void cancelRentalRequest(Integer bookRentalId, String processingUserName, Integer bookRentalVersion,
+			Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
+		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
+
+		// データベースのバージョンが更新されていた場合は例外処理を行う
+		if (bookRental.getVersion() != bookRentalVersion || ownedBookInfo.getVersion() != ownedBookInfoVersion) {
+			throw new OptimisticLockingFailureException("Faild canceling book rental!");
+		}
+		bookRental.setVersion(bookRentalVersion);
 		bookRental.setUpdateUserName(processingUserName);
 		bookRental.setRentalStatus(RentalStatusEnum.CANCELED.getValue());
-		bookRentalRepository.update(bookRental);
-		
-		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
+		ownedBookInfo.setVersion(ownedBookInfoVersion);
 		ownedBookInfo.setBookStatus(BookStatusEnum.RENTABLE.getValue());
-		ownedBookInfoRepository.update(ownedBookInfo);
+		int updateBookRentalCount = bookRentalRepository.update(bookRental);
+		int updateOwnedBookInfoCount = ownedBookInfoRepository.update(ownedBookInfo);
+		// データベースの更新ができなかった場合は例外処理を行う
+		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
+			throw new IllegalStateException("Faild canceling book rental!");
+		}
 	}
 
 }
