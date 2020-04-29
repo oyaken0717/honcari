@@ -41,18 +41,18 @@ public class CancelRentalRequestService {
 
 		// データベースのバージョンが更新されていた場合は例外処理を行う
 		if (bookRental.getVersion() != bookRentalVersion || ownedBookInfo.getVersion() != ownedBookInfoVersion) {
-			throw new OptimisticLockingFailureException("Faild canceling book rental!");
+			throw new OptimisticLockingFailureException("Faild to cancel book rental!");
 		}
-		bookRental.setVersion(bookRentalVersion);
 		bookRental.setUpdateUserName(processingUserName);
 		bookRental.setRentalStatus(RentalStatusEnum.CANCELED.getValue());
-		ownedBookInfo.setVersion(ownedBookInfoVersion);
+		bookRental.setVersion(bookRentalVersion);
 		ownedBookInfo.setBookStatus(BookStatusEnum.RENTABLE.getValue());
+		ownedBookInfo.setVersion(ownedBookInfoVersion);
 		int updateBookRentalCount = bookRentalRepository.update(bookRental);
 		int updateOwnedBookInfoCount = ownedBookInfoRepository.update(ownedBookInfo);
 		// データベースの更新ができなかった場合は例外処理を行う
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
-			throw new IllegalStateException("Faild canceling book rental!");
+			throw new IllegalStateException("Faild to cancel book rental!");
 		}
 	}
 
