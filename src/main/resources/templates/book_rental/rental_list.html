@@ -138,15 +138,15 @@
   						       		</button>
   					     	   </div>
    							   <div class="modal-body">
-   								    <input type="radio" name="updateStatus" th:value="0">&nbsp;貸出不可&nbsp;&nbsp;
-   								    <input type="radio" name="updateStatus" th:value="1">&nbsp;貸出可
+   								    <input type="radio" name="updateStatus" th:value="1" checked>&nbsp;貸出可&nbsp;&nbsp;
+   								    <input type="radio" name="updateStatus" th:value="0">&nbsp;貸出不可
    								    <input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
    								    <input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
 									<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
   	 						   </div>
     						  	<div class="modal-footer">
     								<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-    								<button type="submit" class="btn btn-primary">リクエストを送信</button>
+    								<button type="submit" class="btn btn-primary">本の返却を確認</button>
   							  	</div>
   							  </form>
   							</div>
