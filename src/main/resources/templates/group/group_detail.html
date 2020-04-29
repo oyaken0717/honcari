@@ -14,7 +14,7 @@
 	<input type="hidden" name="groupId" th:value="${group.id}"><br>
 	<a th:href="@{/group/to_edit_group(groupId=${group.id})}" th:if="${userId}==${group.ownerUserId}">グループを編集する</a><br>
 	<a href="" th:if="${b}==true">招待する</a><br>
-	<a th:href="@{'/group/out_group?id=' + ${group.id}}" th:if="${b}==true" onclick="return confirm('本当にこのグループから抜けますか？')">このグループから抜ける</a><br>
+	<a th:href="@{'/group/out_group?id=' + ${group.id}}" th:if="${b==true and userId!=group.ownerUserId}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループから抜ける</a><br>
 	<a href="" th:if="${b}==false">このグループに参加する</a><br>	
 	<hr>
 	<a th:href="@{/group/to_search}">戻る</a>
