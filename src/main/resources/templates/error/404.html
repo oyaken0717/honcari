@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Style CSS -->
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body th:style="'background-image:url(/img/home.jpeg)'">
+<div class="container">
+	<div class="row text-center justify-content-center">
+		<div class="rounded-lg col-md-6 col-md-offset-6 bg-white">
+			<h1 class="my-3 title text-black text-uppercase">404</h1>
+			<h2 class="my-3 title text-black text-uppercase">お探しのページが見つかりません</h2>
+			<a th:href="@{/}">
+				<button type="button" class="btn btn-outline-secondary  mb-4">トップページへ戻る</button>
+			</a>
+		</div>
+	</div>
+</div>
+</body>
+</html>
