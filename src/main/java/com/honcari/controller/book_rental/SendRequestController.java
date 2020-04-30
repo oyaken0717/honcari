@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.controller.book.ShowBookDetailController;
 import com.honcari.domain.LoginUser;
+import com.honcari.form.ExtendRequestForm;
 import com.honcari.form.RentalRequestForm;
 import com.honcari.service.book_rental.SendRentalRequestService;
 
@@ -39,17 +40,24 @@ public class SendRequestController {
 	public RentalRequestForm setUpForm() {
 		return new RentalRequestForm();
 	}
+	
+	@ModelAttribute
+	public ExtendRequestForm setUpExtendRequestForm() {
+		return new ExtendRequestForm();
+	}
 
 	/**
 	 * 貸出リクエストを送る.
 	 * 
-	 * @param model  リクエストスコープ
-	 * @param form   フォーム
-	 * @param result エラーチェック
-	 * @return 申請状況一覧画面
+	 * @param model リクエストスコープ
+	 * @param loginUser　ログインユーザー
+	 * @param form　フォーム
+	 * @param result　エラーチェック
+	 * @param redirectAttributes　リダイレクトスコープ
+	 * @return　貸出情報一覧画面
 	 */
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
-	public String sendLendingRequest(Model model, @AuthenticationPrincipal LoginUser loginUser,
+	public String sendRentalRequest(Model model, @AuthenticationPrincipal LoginUser loginUser,
 			@Validated RentalRequestForm form, BindingResult result, RedirectAttributes redirectAttributes) {
 		Integer borrowUserId = loginUser.getUser().getUserId();
 		String borrowUserName = loginUser.getUser().getName();
@@ -70,10 +78,10 @@ public class SendRequestController {
 		//貸出期限のエラーチェック　
 		String inputDeadline = form.getDeadline();
 		Date deadline = Date.valueOf(inputDeadline);
-		LocalDate requestDate = LocalDate.now();
+		LocalDate sendRequestDate = LocalDate.now();
 		LocalDate deadlineDate = LocalDate.parse(inputDeadline);
-		LocalDate maxRequestDate = requestDate.plusMonths(2);
-		if (deadlineDate.isBefore(requestDate)) {
+		LocalDate maxRequestDate = sendRequestDate.plusMonths(2);
+		if (deadlineDate.isBefore(sendRequestDate)) {
 			result.rejectValue("deadline", "500", "貸出期限は今日以降の日付を入力してください");
 		}
 		if (deadlineDate.isAfter(maxRequestDate)) {

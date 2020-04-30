@@ -21,8 +21,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="w-75 mx-auto">
-				<div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${completeMessage}">
-					<span th:text="${completeMessage}"></span>
+				<div class="alert alert-info alert-dismissible fade show mt-2" role="alert" th:if="${completeMessage} or ${updatePasswordMessage}">
+					<span th:text="${completeMessage}"></span><br th:if="${completeMessage} and ${updatePasswordMessage}">
+					<span th:text="${updatePasswordMessage}"></span>
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -30,7 +31,7 @@
 				<h1 class="my-4">My Page</h1>
 		
 				<!-- side bar -->
-				<div th:replace="mypage_side_menu::frag_mypage_side_menu(1)"></div>
+				<div th:replace="mypage_side_menu::frag_mypage_side_menu(1,99)"></div>
 
 				<!-- main content -->
 				<!-- profile -->

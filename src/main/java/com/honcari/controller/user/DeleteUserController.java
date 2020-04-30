@@ -51,7 +51,7 @@ public class DeleteUserController {
 		List<BookRental> bookRentalListByOwner = searchByOwnerService.searchRentalListByOwner(userId);
 		List<BookRental> bookRentalListByBorrower = searchByBorrowerService.searchRentalListByBorrower(userId);
 		if(bookRentalListByOwner.size() != 0) {
-			model.addAttribute("ownerMessage", "貸し出しリクエスト承認待ち、もしくは貸し出し中の本があります");
+			model.addAttribute("ownerError", "貸し出しリクエスト承認待ち、もしくは貸し出し中の本があります");
 		}
 		if(bookRentalListByBorrower.size() != 0){
 			model.addAttribute("borrowerError", "貸し出しリクエスト送信中、もしくは借りている本があります");

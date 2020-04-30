@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honcari.common.RentalStatusEnum;
 import com.honcari.domain.LoginUser;
+import com.honcari.service.book_rental.AcceptExtendRequestService;
 import com.honcari.service.book_rental.AcceptRentalRequestService;
 
 /**
@@ -23,22 +25,32 @@ public class AcceptRequestController {
 	@Autowired
 	private AcceptRentalRequestService acceptRentalRequestService;
 
+	@Autowired
+	private AcceptExtendRequestService acceptExtendRequestService;
+
 	/**
 	 * 貸出申請を承認する.
 	 * 
-	 * @param bookRentalId 貸出申請ID
-	 * @param loginUser    ログインユーザー
-	 * @param bookRentalVersion 貸出状況バージョン
-	 * @param ownedBookInfoVersion　所有情報バージョン
+	 * @param bookRentalId         貸出申請ID
+	 * @param loginUser            ログインユーザー
+	 * @param rentalStatus         貸出状況
+	 * @param bookRentalVersion    貸出状況バージョン
+	 * @param ownedBookInfoVersion 所有情報バージョン
+	 * @param redirectAttributes   フラッシュスコープ
 	 * @return 貸出情報一覧画面
 	 */
 	@RequestMapping(value = "/accept", method = RequestMethod.POST)
 	public String acceptRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
-			Integer bookRentalVersion, Integer ownedBookInfoVersion, RedirectAttributes redirectAttributes) {
-		String processingUserName = loginUser.getUser().getName();
+			Integer rentalStatus, Integer bookRentalVersion, Integer ownedBookInfoVersion,
+			RedirectAttributes redirectAttributes) {
+		String updateUserName = loginUser.getUser().getName();
 		try {
-			acceptRentalRequestService.acceptRentalRequest(bookRentalId, processingUserName, bookRentalVersion,
-					ownedBookInfoVersion);
+			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
+				acceptRentalRequestService.acceptRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
+						ownedBookInfoVersion);
+			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
+				acceptExtendRequestService.acceptExtendRequest(bookRentalId, updateUserName, bookRentalVersion);
+			}
 			// TODO 借り手にメール送信
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを承認しました！");
 		} catch (Exception ex) {

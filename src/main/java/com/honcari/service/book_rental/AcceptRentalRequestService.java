@@ -30,11 +30,11 @@ public class AcceptRentalRequestService {
 	 * 本の貸出申請を承認する.
 	 * 
 	 * @param bookRentalId         貸出情報ID
-	 * @param processingUserName   処理ユーザー
+	 * @param updateUserName   処理ユーザー
 	 * @param bookRentalVersion    貸出状況バージョン
 	 * @param ownedBookInfoVersion 所有情報バージョン
 	 */
-	public void acceptRentalRequest(Integer bookRentalId, String processingUserName, Integer bookRentalVersion,
+	public void acceptRentalRequest(Integer bookRentalId, String updateUserName, Integer bookRentalVersion,
 			Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
@@ -44,7 +44,7 @@ public class AcceptRentalRequestService {
 			throw new OptimisticLockingFailureException("Faild to accept book rental!");
 		}
 		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
-		bookRental.setUpdateUserName(processingUserName);
+		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
 		ownedBookInfo.setBookStatus(BookStatusEnum.LENDING.getValue());
 		ownedBookInfo.setVersion(ownedBookInfoVersion);

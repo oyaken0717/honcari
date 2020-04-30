@@ -1,5 +1,7 @@
 package com.honcari.service.user;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class RegisterUserService {
 		user.setPassword(passwordEncoder.encode(form.getPassword()));
 		user.setImagePath(null);
 		user.setProfile(null);
+		user.setUpdatePasswordDate(new Timestamp(System.currentTimeMillis()));
 		userRepository.insert(user);
 	}
 
