@@ -1,17 +1,18 @@
 package com.honcari.controller.book;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.Book;
-import com.honcari.domain.Category;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.form.RegisterBookForm;
@@ -20,15 +21,9 @@ import com.honcari.service.book.FindByIsbnIdService;
 import com.honcari.service.book.RegisterBookService;
 import com.honcari.service.book.RegisterOwnedBookInfoService;
 
-/**
- * 書籍情報を登録するコントローラ.
- * 
- * @author hatakeyamakouta
- *
- */
-@Controller
-@RequestMapping("/book")
-public class RegisterBookController {
+@RestController
+@RequestMapping("/api")
+public class RegisterBookApi {
 
 	@Autowired
 	private RegisterBookService registerBookService;
@@ -43,18 +38,6 @@ public class RegisterBookController {
 	private RegisterOwnedBookInfoService registerOwnedBookInfoService;
 	
 	/**
-	 * 書籍登録画面を表示する.
-	 * 
-	 * @return 書籍登録画面
-	 */
-	@RequestMapping("/show_register")
-	public String showRegisterBook(Model model) {
-		List<Category> categoryList = getAllCategoryService.findAll();
-		model.addAttribute("categoryList", categoryList);
-		return "book/register_book";
-	}
-	
-	/**
 	 * 書籍登録画面で送られたリクエストパラメータ情報をowned_book_infoテーブルに登録する
 	 * 
 	 * @param registerBookForm 書籍登録画面で送られたリクエストパラメータ
@@ -62,11 +45,13 @@ public class RegisterBookController {
 	 * @param redirectAttributes リダイレクト先へリクエストスコープを格納する
 	 * @return 書籍登録画面
 	 */
+	@ResponseBody
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
+	public Map<String, String> registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
 		Integer bookId = null;
 		Book book = new Book();
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
+		Map<String, String> map = new HashMap<>();
 		
 		//booksテーブルに既に該当の書籍が登録されているかISBNコードを用いて検索する
 		List<Book> bookList = findByIsbnIdService.getByIsbnId(registerBookForm.getIsbnId());
@@ -98,7 +83,7 @@ public class RegisterBookController {
 		ownedBookInfo.setBookStatus(1);
 		ownedBookInfo.setComment(registerBookForm.getComment());
 		registerOwnedBookInfoService.registerOwnedBookInfo(ownedBookInfo);
-		redirectAttributes.addFlashAttribute("check", "check");
-		return "redirect:/book/show_register";
+		map.put("check", "書籍情報の登録が完了しました");
+		return map;
 	}
 }

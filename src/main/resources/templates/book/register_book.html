@@ -53,10 +53,13 @@
 						<option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.categoryId}"></option>
 					</select>
 				</div>
+				<div class="modal-body">
+					<textarea name="comment" rows="4" cols="30" placeholder="コメント"></textarea>
+				</div>
 				<div id="book-request-parameter"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-					<button type="submit" class="btn btn-primary">登録する</button>
+					<button id="book-register-button" type="submit" class="btn btn-primary">登録する</button>
   				</div>
   			</form>
   		</div>
