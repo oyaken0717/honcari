@@ -3,6 +3,7 @@ package com.honcari.service.book_rental;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.common.RentalStatusEnum;
 import com.honcari.domain.BookRental;
@@ -16,6 +17,7 @@ import com.honcari.repository.BookRentalRepository;
  *
  */
 @Service
+@Transactional
 public class SendExtendRequestService {
 
 	@Autowired
