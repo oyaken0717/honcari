@@ -1,5 +1,6 @@
 package com.honcari.domain;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public class User {
 	private String profile;
 	/**	ステータス */
 	private Integer status;
+	/**	パスワード更新日時 */
+	private Timestamp updatePasswordDate;
 	/**	所有している本リスト */
 	private List<OwnedBookInfo> ownedBookInfoList;
 	/**	所属しているグループリスト */
@@ -69,6 +72,12 @@ public class User {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public Timestamp getUpdatePasswordDate() {
+		return updatePasswordDate;
+	}
+	public void setUpdatePasswordDate(Timestamp updatePasswordDate) {
+		this.updatePasswordDate = updatePasswordDate;
+	}
 	public List<OwnedBookInfo> getOwnedBookInfoList() {
 		return ownedBookInfoList;
 	}
@@ -84,7 +93,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
-				+ ", imagePath=" + imagePath + ", profile=" + profile + ", status=" + status + ", ownedBookInfoList="
-				+ ownedBookInfoList + ", groupList=" + groupList + "]";
+				+ ", imagePath=" + imagePath + ", profile=" + profile + ", status=" + status + ", updatePasswordDate="
+				+ updatePasswordDate + ", ownedBookInfoList=" + ownedBookInfoList + ", groupList=" + groupList + "]";
 	}
 }
