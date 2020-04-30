@@ -51,7 +51,7 @@ public class BookRental {
 	 * 
 	 * @return 貸出状況
 	 */
-	public String getBookLendingStatus() {
+	public String getBookRentalStatus() {
 		return RentalStatusEnum.of(rentalStatus).getKey();
 	}
 
