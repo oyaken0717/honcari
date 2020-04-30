@@ -21,6 +21,10 @@ h3.section-subheading {
 	margin-bottom: 1rem;
 }
 
+.w-85 {
+	width: 85% !important;
+}
+
 .carousel-item {
 	height: 65vh;
 	min-height: 350px;

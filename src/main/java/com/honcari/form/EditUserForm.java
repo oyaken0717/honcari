@@ -20,12 +20,14 @@ public class EditUserForm {
 	@NotNull(message="入力は必須です")
 	@Email(message="入力形式が不正です")
 	private String email;
-	/**	パスワード */
+	/**	新しいパスワード */
 	private String password;
 	/**	確認用パスワード */
 	private String confirmPassword;
-	/**	変更前パスワード */
-	private String defaultPassword;
+	/**	現在のパスワード(ハッシュ化済) */
+	private String currentPassword;
+	/**	入力された現在のパスワード */
+	private String inputCurrentPassword;
 	/**	画像 */
 	private String imagePath;
 	/**	自己紹介文 */
@@ -60,11 +62,17 @@ public class EditUserForm {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-	public String getDefaultPassword() {
-		return defaultPassword;
+	public String getCurrentPassword() {
+		return currentPassword;
 	}
-	public void setDefaultPassword(String defaultPassword) {
-		this.defaultPassword = defaultPassword;
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
+	public String getInputCurrentPassword() {
+		return inputCurrentPassword;
+	}
+	public void setInputCurrentPassword(String inputCurrentPassword) {
+		this.inputCurrentPassword = inputCurrentPassword;
 	}
 	public String getImagePath() {
 		return imagePath;
@@ -80,8 +88,9 @@ public class EditUserForm {
 	}
 	@Override
 	public String toString() {
-		return "EditUserForm [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
-				+ ", confirmPassword=" + confirmPassword + ", defaultPassword=" + defaultPassword + ", imagePath="
-				+ imagePath + ", profile=" + profile + "]";
+		return "EditUserForm [userId=" + userId + ", name=" + name + ", email=" + email
+				+ ", password=" + password + ", confirmPassword=" + confirmPassword + ", currentPassword="
+				+ currentPassword + ", inputCurrentPassword=" + inputCurrentPassword + ", imagePath=" + imagePath
+				+ ", profile=" + profile + "]";
 	}
 }

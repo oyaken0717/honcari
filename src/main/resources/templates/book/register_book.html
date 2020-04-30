@@ -2,6 +2,8 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 	<title>Insert title here</title>
 	<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 	<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
@@ -11,9 +13,9 @@
 	<script src="../static/js/book.js" th:src="@{/js/book.js}"></script>
 </head>
 <body>
-<nav th:replace="header::frag_header(2)"></nav>
-<div th:if="${check}" class="alert alert-info alert-dismissible fade show" role="alert">
-  <strong>登録完了</strong>
+<nav th:replace="header::frag_header(1)"></nav>
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+  <strong id="check"></strong>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -41,24 +43,27 @@
 <div class="modal fade" id="book-register-form" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<form th:action="@{/book/register}" method="POST">
 				<div class="modal-header">
 					<h5 class="modal-title">書籍カテゴリを選択する</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<form id="book-data">
 				<div class="modal-body">
-					<select name="categoryId">
+					<select name="categoryId" id="register-category-id">
 						<option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.categoryId}"></option>
 					</select>
 				</div>
+				<div class="modal-body">
+					<textarea id="register-comment" name="comment" rows="4" cols="30" placeholder="コメント"></textarea>
+				</div>
 				<div id="book-request-parameter"></div>
+				</form>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-					<button type="submit" class="btn btn-primary">登録する</button>
+					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-primary">登録する</button>
   				</div>
-  			</form>
   		</div>
   	</div>	
 </div>
