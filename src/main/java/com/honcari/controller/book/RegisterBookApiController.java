@@ -16,21 +16,17 @@ import com.honcari.domain.Book;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.form.RegisterBookForm;
-import com.honcari.service.book.FindAllCategoryService;
 import com.honcari.service.book.FindByIsbnIdService;
 import com.honcari.service.book.RegisterBookService;
 import com.honcari.service.book.RegisterOwnedBookInfoService;
 
 @RestController
-@RequestMapping("/api")
-public class RegisterBookApi {
+@RequestMapping("/book_api")
+public class RegisterBookApiController {
 
 	@Autowired
 	private RegisterBookService registerBookService;
 
-	@Autowired
-	private FindAllCategoryService getAllCategoryService;
-	
 	@Autowired
 	private FindByIsbnIdService findByIsbnIdService;
 	
@@ -46,12 +42,13 @@ public class RegisterBookApi {
 	 * @return 書籍登録画面
 	 */
 	@ResponseBody
-	@RequestMapping(value="/register", method=RequestMethod.POST)
+	@RequestMapping(value="/register_book", method=RequestMethod.POST)
 	public Map<String, String> registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
 		Integer bookId = null;
 		Book book = new Book();
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 		Map<String, String> map = new HashMap<>();
+		System.out.println(registerBookForm);
 		
 		//booksテーブルに既に該当の書籍が登録されているかISBNコードを用いて検索する
 		List<Book> bookList = findByIsbnIdService.getByIsbnId(registerBookForm.getIsbnId());
