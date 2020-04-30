@@ -12,6 +12,7 @@ public enum RentalStatusEnum {
 	APPROVED("承認済み", 1), 
 	WAIT_RETURNING("返却待ち", 2),
 	RETURNED("返却済み", 3),
+	WAIT_EXTEND("延長承認待ち", 4),
 	CANCELED("申請キャンセル", 8),
 	REJECTED("承認拒否", 9),;
 	
