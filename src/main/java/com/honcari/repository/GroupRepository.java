@@ -172,6 +172,20 @@ public class GroupRepository {
 	}
 	
 	/**
+	 * グループIDからグループ情報を取得するメソッド.
+	 * 
+	 * @param groupId グループID
+	 * @return グループ情報
+	 */
+	public Group findByGroupIdAndRelationStatus(Integer groupId) {
+		StringBuilder sql = getSQL();
+		sql.append("WHERE g.group_id = :groupId AND gr.relation_status = 1 AND u.status <> 1 ORDER BY g.group_id");
+		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
+		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
+		return groupList.get(0);
+	}
+	
+	/**
 	 * 受け取ったパラメータからグループ情報を取得するメソッド.
 	 * 
 	 * @param ownerUserId 検索パラメータ
@@ -180,7 +194,9 @@ public class GroupRepository {
 	public List<Group> findByOwnerUserId(Integer ownerUserId) {
 		String sql = "SELECT group_id,name,description,owner_user_id,group_status FROM groups WHERE owner_user_id = :ownerUserId order by group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("ownerUserId",ownerUserId);
-		return template.query(sql, param, GROUP_ROW_MAPPER);
+		List<Group> groupList = template.query(sql, param, GROUP_ROW_MAPPER);
+		if(groupList.isEmpty())return null;
+		return groupList;
 	}
 	
 	public void update(Group group) {

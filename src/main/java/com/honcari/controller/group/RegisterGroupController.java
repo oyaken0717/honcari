@@ -61,14 +61,15 @@ public class RegisterGroupController {
 		if(result.hasErrors()) {
 			return toRegisterGroup(model, loginUser);
 		}
-		
+				
 		List<User> userList = new ArrayList<>();
 		//フォームからユーザー情報リストを取得
-		form.getUserNameList().forEach(name -> {
-			User user = registerGroupService.findByName(name);
-			userList.add(user);
-		});
-		
+		if(form.getUserNameList()!=null) {
+			form.getUserNameList().forEach(name -> {
+				User user = registerGroupService.findByName(name);
+				userList.add(user);
+			});
+		}
 		Group group = new Group();
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());

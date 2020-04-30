@@ -32,4 +32,9 @@ public class RegisterUserService {
 	public User checkUserByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+	
+	public User checkUserByName(String name) {
+		return userRepository.findByName(name);
+	}
+	
 }

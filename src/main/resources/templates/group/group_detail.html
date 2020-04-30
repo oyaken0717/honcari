@@ -10,7 +10,7 @@
 </head>
 <body>
 <script>
-$(function(){
+/* $(function(){
 	var url = 'http://localhost:8080/group/check_user';
 	var groupId = $('#groupId').val();
 	$.ajax({
@@ -36,7 +36,7 @@ $(function(){
         console.log('失敗');
     })
     .always(function() {
-    });	
+    });	 */
 });
 </script>
 <nav th:replace="header::frag_header(1)"></nav>
@@ -53,11 +53,12 @@ $(function(){
 	<div th:each="user : ${group.userList}"><span th:text="${user.name}"></span></div>	
 	<input type="hidden" name="groupId" th:value="${group.id}"><br>
 	<a th:href="@{/group/to_edit_group(groupId=${group.id})}" th:if="${userId}==${group.ownerUserId}">グループを編集する</a><br>
-	<a href="" th:if="${b}==true">招待する</a><br>
+	<a th:href="@{'/group/to_invite_group?id=' + ${group.id}}" th:if="${b}==true">招待する</a><br>
 	<a th:href="@{'/group/out_group?id=' + ${group.id}}" th:if="${b==true and userId!=group.ownerUserId}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループから抜ける</a><br>
-	<a href="" th:if="${b}==false">このグループに参加する</a><br>	
+	<button th:if="${b}==false">このグループに参加する</button><br>	
 	<hr>
-	<a th:href="@{/group/to_search}">戻る</a>
+	<a th:if="${session.fromManagement}!=null" th:href="@{/group/to_management}">戻る</a>
+	<a th:if="${session.fromManagement}==null" th:href="@{/group/to_search}">戻る</a>
 	</form>
 </body>
 </html>

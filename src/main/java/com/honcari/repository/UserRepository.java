@@ -156,6 +156,15 @@ public class UserRepository {
 		return userList.get(0);
 
 	}
+	
+	public User findByUserIdAndRelationStatus(Integer userId,Integer status) {
+		String sql = BASE_SQL_FROM_5 + "WHERE u.user_id = :userId AND gr.relation_status=:status AND u.status != 9 order by g.group_id, b.book_id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
+		List<User> userList = template.query(sql, param, USER_RESULT_SET_EXTRACTOR);
+		if(userList.isEmpty())return null;
+		return userList.get(0);
+
+	}
 
 	/**
 	 * 名前から検索するメソッド.
@@ -166,7 +175,9 @@ public class UserRepository {
 	public User findByName(String name) {
 		String sql = BASE_SQL_FROM_USERS + "WHERE name=:name AND status != 9;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
-		return template.queryForObject(sql, param, USER_ROW_MAPPER);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		if(userList.isEmpty())return null;
+		return userList.get(0);
 	}
 	
 	/**
@@ -178,6 +189,22 @@ public class UserRepository {
 	public List<User> findByNameLike(String name, Integer userId) {
 		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id <> :userId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("userId", userId);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		if (userList.isEmpty()) {
+			return null;
+		}
+		return userList;
+	}
+	
+	/**
+	 * 名前からあいまい検索するメソッド.
+	 * 
+	 * @param name 検索名
+	 * @return ユーザー情報
+	 */
+	public List<User> findByNameLikeAndGroupId(String name, Integer userId,Integer groupId) {
+		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id <> :userId AND user_id NOT IN (SELECT user_id FROM group_relations WHERE group_id = :groupId)";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("userId", userId).addValue("groupId", groupId);
 		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
 		if (userList.isEmpty()) {
 			return null;

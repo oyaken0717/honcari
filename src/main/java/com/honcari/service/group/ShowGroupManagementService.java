@@ -21,8 +21,8 @@ public class ShowGroupManagementService {
 	@Autowired
 	private GroupRepository groupRepository;
 	
-	public User showGroupListByBelongUserId(Integer userId){
-		return userRepository.findByUserId(userId);
+	public User showGroupListByBelongUserIdAndStatus(Integer userId,Integer status){
+		return userRepository.findByUserIdAndRelationStatus(userId,status);
 	}
 	
 	public List<Group> showGroupListByOwnerUserId(Integer userId){

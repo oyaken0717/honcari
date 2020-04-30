@@ -17,7 +17,7 @@ public class ShowGroupDetailService {
 	
 	@RequestMapping("/show_group_detail")
 	public Group showGroupDetail(Integer groupId) {
-		return groupRepository.findByGroupId(groupId);
+		return groupRepository.findByGroupIdAndRelationStatus(groupId);
 	}
 
 

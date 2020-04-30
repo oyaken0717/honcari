@@ -1,5 +1,4 @@
 package com.honcari.controller.user;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.domain.User;
+
 import com.honcari.form.RegisterUserForm;
 import com.honcari.service.user.RegisterUserService;
 
@@ -37,6 +36,10 @@ public class RegisterUserController {
 
 		if (registerUserService.checkUserByEmail(form.getEmail()) != null) {
 			result.rejectValue("email", null, "このメールアドレスは既に登録されています。");
+		}
+		
+		if(registerUserService.checkUserByName(form.getName()) != null) {
+			result.rejectValue("name", null, "このユーザー名は既に登録されています。他のユーザー名を設定してください。");
 		}
 
 		if (result.hasErrors()) {

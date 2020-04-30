@@ -37,4 +37,13 @@ public class SearchUserApiController {
 		map.put("userList", userList);
 		return map;
 	}
+	
+	@RequestMapping("/search_user_api_for_invite")
+	public Map<String, List<User>> searchUserNotInGroup(String name, Integer userId,Integer groupId) {
+		Map<String, List<User>> map = new HashMap<>();
+		List<User> userList = registerGroupService.findByNameLikeAndGroupId(name, userId, groupId);
+		System.out.println(userList);
+		map.put("userList", userList);
+		return map;
+	}
 }

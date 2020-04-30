@@ -12,20 +12,16 @@
 <div class="container">
 	<div class="row justify-content-md-center">
 		<div class="col-md-8 col-md-offset-4">
-			<h1>グループ作成</h1>
-			<form th:action="@{/group/register}" th:object="${registerGroupForm}" method="post">
+			<h1>グループに招待する</h1>
+			<form th:action="@{/group/invite_group}" th:object="${inviteGroupForm}" method="post">
 			  <div class="form-group">
-			    <label for="InputGroupName">グループ名</label>
-			    <label th:errors="*{name}"  class="control-label" style="color: red" for="InputGroupName"></label>
-			    <input type="text" th:field="*{name}" class="form-control" id="InputGroupName" placeholder="グループ名">
+			    グループ名: <span th:text="${group.name}"></span>
 			  </div>
 			  <div class="form-group">
-			    <label for="InputGroupDescription">説明文</label>
-			    <label th:errors="*{description}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
-			    <input type="text" th:field="*{description}" class="form-control" id="InputGroupDescription" placeholder="説明文">
+			    説明文： <span th:text="${group.description}"></span>
 			  </div>
 			  <div class="form-group">
-			    <label for="formGroupExampleInput2">ユーザー検索</label>
+			    <label for="formGroupExampleInput2">ユーザー検索</label>  <label th:errors="*{userNameList}"  class="control-label" style="color: red" for="InputGroupDescription"></label></br>
 			    <input type="text" class="form-control searchUser" id="formGroupExampleInput2" placeholder="ユーザー名">
 			  	<div class="addUserList">
 			  		<!-- jqueryで検索したユーザーリストを表示 -->
@@ -36,13 +32,12 @@
 			    <label for="formGroupExampleInput2">招待するユーザー</label>
 			  	<div class="groupUserList">
 			  		<div class="row login-user">
-<!-- 			  			<span th:text="${user.name}" class="col-md-12 text-left">ログインユーザー</span>
- --><!-- 			  			<input type="hidden" name="userNameList[0]" th:value="${user.name}">
- -->			  		</div>
+		  		</div>
 			  	</div>
 			  </div>
+			  <input type="hidden"  class="groupId" name="groupId" th:value="${group.id}">
 			  <button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
-					グループを作成</button>
+					招待する</button>
 			</form>
 		</div>
 	</div>
@@ -50,6 +45,6 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{/js/register_group.js}"></script>
+<script type="text/javascript" th:src="@{/js/invite_group.js}"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 drop table if exists users cascade;
 create table users(
   user_id serial primary key
-  , name character varying(100) not null
+  , name character varying(100) not null unique
   , email character varying(100) not null unique
   , password text not null
   , image_path text
