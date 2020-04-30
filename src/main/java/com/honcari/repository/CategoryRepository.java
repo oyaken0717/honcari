@@ -154,7 +154,7 @@ public class CategoryRepository {
 	public List<Category> findByUserId(Integer userId) {
 		String sql = SQL + "WHERE u.status != 9 AND u.user_id in ("
 							+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
-								+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+								+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status=1)) "
 						 + "ORDER BY c.category_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR_LIMIT_16);
