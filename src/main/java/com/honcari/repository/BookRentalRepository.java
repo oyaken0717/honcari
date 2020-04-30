@@ -149,7 +149,7 @@ public class BookRentalRepository {
 	public int update(BookRental bookRental) {
 		String sql = "UPDATE book_rentals SET owned_book_info_id = :ownedBookInfoId, borrow_user_id = :borrowUserId, "
 				+ "rental_status = :rentalStatus, deadline = :deadline, update_date = (SELECT NOW()), update_user = :updateUserName, "
-				+ "version = (:version + 1) WHERE owned_book_info_id = :ownedBookInfoId AND version = :version";
+				+ "version = (:version + 1) WHERE book_rental_id = :bookRentalId AND version = :version";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(bookRental);
 		return template.update(sql, param);
 	}
@@ -163,7 +163,7 @@ public class BookRentalRepository {
 	public List<BookRental> findByOwnerUserIdAndMultiRentalStatus(Integer ownerUserId) {
 		String strSql = SQL;
 		strSql = strSql + " WHERE u1.user_id = :ownerUserId AND (br.rental_status = 0 "
-				+ "OR br.rental_status = 1 OR br.rental_status = 2) ORDER BY br.book_rental_id";
+				+ "OR br.rental_status = 1 OR br.rental_status = 2 OR br.rental_status = 4) ORDER BY br.book_rental_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("ownerUserId", ownerUserId);
 		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
 		return bookRentalList;
@@ -195,7 +195,7 @@ public class BookRentalRepository {
 	public List<BookRental> findByBorrowUserIdAndMultiRentalStatus(Integer borrowUserId) {
 		String strSql = SQL;
 		strSql = strSql + " WHERE br.borrow_user_id = :borrowUserId AND (br.rental_status = 0 "
-				+ "OR br.rental_status = 1 OR br.rental_status = 2) ORDER BY br.book_rental_id";
+				+ "OR br.rental_status = 1 OR br.rental_status = 2 OR br.rental_status = 4) ORDER BY br.book_rental_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId);
 		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
 		return bookRentalList;
