@@ -34,16 +34,16 @@ public class CancelRentalRequestService {
 	 * @param bookRentalVersion    貸出状況バージョン
 	 * @param ownedBookInfoVersion 保有する本情報バージョン
 	 */
-	public void cancelRentalRequest(Integer bookRentalId, String processingUserName, Integer bookRentalVersion,
+	public void cancelRentalRequest(Integer bookRentalId, String updateUserName, Integer bookRentalVersion,
 			Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
 
 		// データベースのバージョンが更新されていた場合は例外処理を行う
 		if (bookRental.getVersion() != bookRentalVersion || ownedBookInfo.getVersion() != ownedBookInfoVersion) {
-			throw new OptimisticLockingFailureException("Faild to cancel book rental!");
+			throw new OptimisticLockingFailureException("Faild to cancel book rental request!");
 		}
-		bookRental.setUpdateUserName(processingUserName);
+		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setRentalStatus(RentalStatusEnum.CANCELED.getValue());
 		bookRental.setVersion(bookRentalVersion);
 		ownedBookInfo.setBookStatus(BookStatusEnum.RENTABLE.getValue());
@@ -52,7 +52,7 @@ public class CancelRentalRequestService {
 		int updateOwnedBookInfoCount = ownedBookInfoRepository.update(ownedBookInfo);
 		// データベースの更新ができなかった場合は例外処理を行う
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
-			throw new IllegalStateException("Faild to cancel book rental!");
+			throw new IllegalStateException("Faild to cancel book rental request!");
 		}
 	}
 
