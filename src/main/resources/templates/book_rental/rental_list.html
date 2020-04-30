@@ -138,6 +138,7 @@
 								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
 								ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
+								<input type="hidden" th:value="${bookRental.rentalStatus}" name="rentalStatus">
 								<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
 								<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
 								<div><button class="approval-btn btn btn-warning btn-sm" type="submit">承認</button></div>
