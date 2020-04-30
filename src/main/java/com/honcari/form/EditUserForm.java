@@ -88,9 +88,9 @@ public class EditUserForm {
 	}
 	@Override
 	public String toString() {
-		return "EditUserForm [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
-				+ ", confirmPassword=" + confirmPassword + ", currentPassword=" + currentPassword
-				+ ", inputCurrentPassword=" + inputCurrentPassword + ", imagePath=" + imagePath + ", profile=" + profile
-				+ "]";
+		return "EditUserForm [userId=" + userId + ", name=" + name + ", email=" + email
+				+ ", password=" + password + ", confirmPassword=" + confirmPassword + ", currentPassword="
+				+ currentPassword + ", inputCurrentPassword=" + inputCurrentPassword + ", imagePath=" + imagePath
+				+ ", profile=" + profile + "]";
 	}
 }

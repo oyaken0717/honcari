@@ -20,7 +20,7 @@
 	<!-- page content -->
 	<div class="container">
 		<div class="row">
-			<div class="w-75 mx-auto">
+			<div class="w-85 mx-auto">
 				<h1 class="my-4">My Page</h1>
 		
 				<!-- side bar -->
@@ -52,7 +52,7 @@
 							<div class="col-sm-8" th:if="${#fields.hasErrors('name')}">
 								<label class="col-form-label" style="color:red" th:errors="*{name}"></label>
 							</div>
-							<label class="col-sm-4 col-form-label" for="name">名前</label>
+							<label class="col-sm-4 col-form-label" for="name">名前<small style="color:red">(必須)</small></label>
 							<div class="col-sm-8">
 								<input id="name" class="form-control" type="text" name="name" th:value="${user.name}" required>
 							</div>
@@ -62,7 +62,7 @@
 							<div class="col-sm-8" th:if="${#fields.hasErrors('email')}">
 								<label class="col-form-label" style="color:red" th:errors="*{email}"></label>
 							</div>
-							<label class="col-sm-4 col-form-label" for="email">メールアドレス</label>
+							<label class="col-sm-4 col-form-label" for="email">メールアドレス<small style="color:red">(必須)</small></label>
 							<div class="col-sm-8">
 								<input id="email" class="form-control" type="email" name="email" th:value="${user.email}" required>
 							</div>
@@ -78,7 +78,9 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-6 col-form-label" for="inputCurrentPassword" style="font-weight:bold">パスワードを更新する場合</label>
+							<label class="col-form-label" for="inputCurrentPassword" style="font-weight:bold">
+								パスワードを更新する場合<br><small style="color:red">(パスワードは半角の英大文字、英小文字、数字を全て含む8桁以上)</small>
+							</label>
 						</div>
 						<div class="form-group row">
 							<div class="col-sm-4" th:if="${#fields.hasErrors('inputCurrentPassword')}"></div>
@@ -105,7 +107,7 @@
 							<div class="col-sm-8" th:if="${#fields.hasErrors('confirmPassword')}">
 								<label class="col-form-label" style="color:red" th:errors="*{confirmPassword}"></label>
 							</div>
-							<label class="col-sm-4 col-form-label" for="confirmPassword">新しいパスワード<br>(確認)</label>
+							<label class="col-sm-4 col-form-label" for="confirmPassword">新しいパスワード<small>(確認)</small></label>
 							<div class="col-sm-8">
 								<input id="confirmPassword" class="form-control" type="password" name="confirmPassword">
 							</div>

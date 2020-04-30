@@ -173,6 +173,18 @@ public class UserRepository {
 	}
 	
 	/**
+	 * 名前から退会したユーザーを含めた全ユーザーから検索するメソッド.
+	 * 
+	 * @param name 検索名
+	 * @return ユーザー情報
+	 */
+	public User findAnyUserByName(String name) {
+		String sql = BASE_SQL_FROM_USERS + "WHERE name=:name;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+		return template.queryForObject(sql, param, USER_ROW_MAPPER);
+	}
+	
+	/**
 	 * 名前からあいまい検索するメソッド.
 	 * 
 	 * @param name 検索名
