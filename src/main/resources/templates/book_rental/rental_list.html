@@ -63,7 +63,7 @@
 									書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
 									所有者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
 									レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
-									ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
+									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 									<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
 									<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
 									<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
@@ -82,18 +82,40 @@
 						</div>
 						<div class="col-lg-6">
 							<div class="text-box">
-								<form th:action="@{#}" method="POST">	
 								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
 								所有者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
-								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
-								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
-								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
-								<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
-								<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
-								<div><button class="btn btn-primary btn-sm" type="submit">延長申請</button></div>
-								</form>
+								レンタル期間：<span id="rental-period" th:text="${bookRental.deadline}">まで</span><br>
+								ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
+								<div><button class="btn btn-primary btn-sm" data-toggle="modal" 
+									data-show="true" data-target="#extend-request-form" type="submit">延長申請</button></div>
 							</div>
 						</div>
+         			   <!-- Modal -->
+						<div class="modal fade" id="extend-request-form" tabindex="-1" role="dialog">
+  							<div class="modal-dialog modal-dialog-centered" role="document">
+ 							   <div class="modal-content">
+ 							   <form method="post" th:action="@{/book_rental/send_extend}" th:object="${rentalRequestForm}">
+ 							     <div class="modal-header">
+  							       <h5 class="modal-title">延長期限を設定</h5>
+  							       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  							         <span aria-hidden="true">&times;</span>
+  							       </button>
+  							    </div>
+   							    <div class="modal-body">
+   							   	  <div id="error-message" th:errors="*{deadline}" class="text-danger">延長期限を入力してください</div>
+   							      <input id="extend-date" type="date" name="deadline" th:value="${bookRental.deadline}" th:field="*{deadline}">
+   							      <input type="hidden" name="bookRentalId" th:value="${bookRental.bookRentalId}">	
+   							      <input type="hidden" name="bookRentalVersion" th:value="${bookRental.version}">
+   				   			 	</div>
+    			  			    <div class="modal-footer">
+    				 			  <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+    							  <button type="submit" class="btn btn-primary">延長リクエストを送信</button>
+  				   		        </div>
+  				  			  </form>
+  				  			  </div>
+  							</div>	
+						</div>
+										
 					</div>
 				</div>
 			</div>
@@ -112,7 +134,7 @@
 								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
 								レンタル希望者：<span th:text="${bookRental.borrowUser.name}">さん</span><br>
 								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
-								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
+								ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
 								<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
 								<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
@@ -134,7 +156,7 @@
 								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
 								レンタル希望者：<span th:text="${bookRental.borrowUser.name}">さん</span><br>
 								レンタル希望期間：<span th:text="${bookRental.deadline}">まで</span><br>
-								ステータス：<span th:text="${bookRental.ownedBookInfo.getStatus()}"></span>
+								ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 								<div><button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#return-confirm-form">返却確認</button></div>
 							</div>
 						</div>
