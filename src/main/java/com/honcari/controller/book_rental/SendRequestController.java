@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.controller.book.ShowBookDetailController;
 import com.honcari.domain.LoginUser;
+import com.honcari.form.ExtendRequestForm;
 import com.honcari.form.RentalRequestForm;
 import com.honcari.service.book_rental.SendRentalRequestService;
 
@@ -38,6 +39,11 @@ public class SendRequestController {
 	@ModelAttribute
 	public RentalRequestForm setUpForm() {
 		return new RentalRequestForm();
+	}
+	
+	@ModelAttribute
+	public ExtendRequestForm setUpExtendRequestForm() {
+		return new ExtendRequestForm();
 	}
 
 	/**

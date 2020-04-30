@@ -17,6 +17,8 @@ public class ExtendRequestForm {
 	/** 貸出期限 */
 	@NotBlank(message = "延長期限を入力してください")
 	private String deadline;
+	/** 元々の貸出期限 */
+	private String defaultDeadline;
 
 	public Integer getBookRentalId() {
 		return bookRentalId;
@@ -42,10 +44,18 @@ public class ExtendRequestForm {
 		this.deadline = deadline;
 	}
 
+	public String getDefaultDeadline() {
+		return defaultDeadline;
+	}
+
+	public void setDefaultDeadline(String defaultDeadline) {
+		this.defaultDeadline = defaultDeadline;
+	}
+
 	@Override
 	public String toString() {
 		return "ExtendRequestForm [bookRentalId=" + bookRentalId + ", bookRentalVersion=" + bookRentalVersion
-				+ ", deadline=" + deadline + "]";
+				+ ", deadline=" + deadline + ", defaultDeadline=" + defaultDeadline + "]";
 	}
 
 }

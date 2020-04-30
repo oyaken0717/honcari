@@ -8,12 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.LoginUser;
 import com.honcari.form.ExtendRequestForm;
+import com.honcari.form.RentalRequestForm;
 import com.honcari.service.book_rental.SendExtendRequestService;
 
 /**
@@ -28,6 +30,19 @@ public class SendExtendRequestController {
 
 	@Autowired
 	private SendExtendRequestService sendExtendRequestService;
+	
+	@Autowired
+	private ShowListController showListController;
+	
+	@ModelAttribute
+	public RentalRequestForm setUpForm() {
+		return new RentalRequestForm();
+	}
+
+	@ModelAttribute
+	public ExtendRequestForm setUpExtendRequestForm() {
+		return new ExtendRequestForm();
+	}
 
 	/**
 	 * 貸出延長申請を送る.
@@ -45,22 +60,21 @@ public class SendExtendRequestController {
 		String updateUserName = loginUser.getUser().getName();
 
 		if (result.hasErrors()) {
-			return "redirect:/book_rental/show_list";
+			return showListController.showList(loginUser, model);
 		}
 
 		// 貸出期限のエラーチェック
-		String inputDeadline = form.getDeadline();
-		LocalDate sendRequestDate = LocalDate.now();
-		LocalDate deadlineDate = LocalDate.parse(inputDeadline);
-		LocalDate maxRequestDate = sendRequestDate.plusMonths(2);
-		if (deadlineDate.isBefore(sendRequestDate)) {
-			result.rejectValue("deadline", "500", "貸出期限は今日以降の日付を入力してください");
+		LocalDate defautDeadline = LocalDate.parse(form.getDefaultDeadline());
+		LocalDate requestDeadline = LocalDate.parse(form.getDeadline());
+		LocalDate maxRequestDate = defautDeadline.plusMonths(1);
+		if (requestDeadline.isBefore(defautDeadline)) {
+			result.rejectValue("deadline", "500", "延長期限は元々の期限日以降の日付を入力してください");
 		}
-		if (deadlineDate.isAfter(maxRequestDate)) {
-			result.rejectValue("deadline", "500", "貸出期限は本日から2か月以内の日付を入力してください");
+		if (requestDeadline.isAfter(maxRequestDate)) {
+			result.rejectValue("deadline", "500", "延長期限は元々の期限日から1か月以内の日付を入力してください");
 		}
 		if (result.hasErrors()) {
-			return "redirect:/book_rental/show_list";
+			return showListController.showList(loginUser, model);
 		}
 
 		// 貸出申請を処理する
@@ -70,7 +84,7 @@ public class SendExtendRequestController {
 			redirectAttributes.addFlashAttribute("successMessage", "貸出延長リクエストを送信しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.rejectValue("deadline", "500", "貸出申請に失敗しました");
+			redirectAttributes.addFlashAttribute("errorMessage", "貸出延長リクエストに失敗しました！");
 		}
 		return "redirect:/book_rental/show_list";
 	}

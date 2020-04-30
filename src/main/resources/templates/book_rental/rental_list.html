@@ -94,7 +94,7 @@
 						<div class="modal fade" id="extend-request-form" tabindex="-1" role="dialog">
   							<div class="modal-dialog modal-dialog-centered" role="document">
  							   <div class="modal-content">
- 							   <form method="post" th:action="@{/book_rental/send_extend}" th:object="${rentalRequestForm}">
+ 							   <form method="post" th:action="@{/book_rental/send_extend}" th:object="${extendRequestForm}">
  							     <div class="modal-header">
   							       <h5 class="modal-title">延長期限を設定</h5>
   							       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -104,7 +104,8 @@
    							    <div class="modal-body">
    							   	  <div id="error-message" th:errors="*{deadline}" class="text-danger">延長期限を入力してください</div>
    							      <input id="extend-date" type="date" name="deadline" th:value="${bookRental.deadline}" th:field="*{deadline}">
-   							      <input type="hidden" name="bookRentalId" th:value="${bookRental.bookRentalId}">	
+   							      <input type="hidden" name="bookRentalId" th:value="${bookRental.bookRentalId}">
+   							      <input type="hidden" name="defaultDeadline" th:value="${bookRental.deadline}">
    							      <input type="hidden" name="bookRentalVersion" th:value="${bookRental.version}">
    				   			 	</div>
     			  			    <div class="modal-footer">
