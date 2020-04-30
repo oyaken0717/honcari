@@ -31,8 +31,12 @@ public class CancelRequestController {
 	/**
 	 * 貸出申請をキャンセルする.
 	 * 
-	 * @param bookRentalId 貸出情報ID
-	 * @param loginUser    ログインユーザー
+	 * @param bookRentalId         貸出申請ID
+	 * @param loginUser            ログインユーザー
+	 * @param rentalStatus         貸出状況
+	 * @param bookRentalVersion    貸出状況バージョン
+	 * @param ownedBookInfoVersion 所有情報バージョン
+	 * @param redirectAttributes   フラッシュスコープ
 	 * @return 貸出情報一覧画面
 	 */
 	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
