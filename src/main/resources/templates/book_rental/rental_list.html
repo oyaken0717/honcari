@@ -105,8 +105,8 @@
   							       </button>
   							    </div>
    							    <div class="modal-body">
-   							   	  <div id="error-message" th:errors="*{deadline}" class="text-danger">延長期限を入力してください</div>
-   							      <input id="extend-date" type="date" name="deadline" th:value="${bookRental.deadline}" th:field="*{deadline}">
+   							   	  <div id="error-message" th:errors="*{requestDeadline}" class="text-danger">延長期限を入力してください</div>
+   							      <input id="extend-date" type="date" name="requestDeadline" th:value="${bookRental.deadline}" th:field="*{requestDeadline}">
    							      <input type="hidden" name="bookRentalId" th:value="${bookRental.bookRentalId}">
    							      <input type="hidden" name="defaultDeadline" th:value="${bookRental.deadline}">
    							      <input type="hidden" name="bookRentalVersion" th:value="${bookRental.version}">

@@ -29,9 +29,6 @@ public class SendExtendRequestService {
 	 * @param form           フォーム
 	 * @param updateUserName 更新ユーザー名
 	 */
-	/**
-	
-	 */
 	public void sendExtendRequest(ExtendRequestForm form, String updateUserName) {
 		BookRental bookRental = bookRentalRepository.load(form.getBookRentalId());
 		// データベースのバージョンが更新されていた場合は例外処理を行う
@@ -39,7 +36,7 @@ public class SendExtendRequestService {
 		if (bookRental.getVersion() != bookRentalVersion) {
 			throw new OptimisticLockingFailureException("Faild to send extend request of the book!");
 		}
-		bookRental.setDeadline(java.sql.Date.valueOf(form.getDeadline()));
+		bookRental.setRequestDeadline(java.sql.Date.valueOf(form.getRequestDeadline()));
 		bookRental.setRentalStatus(RentalStatusEnum.WAIT_EXTEND.getValue());
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
