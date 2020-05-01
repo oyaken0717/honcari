@@ -3,22 +3,15 @@ package com.honcari.controller.book;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.honcari.domain.Book;
 import com.honcari.domain.Category;
-import com.honcari.domain.LoginUser;
-import com.honcari.domain.OwnedBookInfo;
-import com.honcari.form.RegisterBookForm;
+import com.honcari.domain.GoogleBooks;
+import com.honcari.domain.VolumeInfo;
 import com.honcari.service.book.FindAllCategoryService;
-import com.honcari.service.book.FindByIsbnIdService;
-import com.honcari.service.book.RegisterBookService;
-import com.honcari.service.book.RegisterOwnedBookInfoService;
+import com.honcari.service.book.GoogleBookApiService;
 
 /**
  * 書籍情報を登録するコントローラ.
@@ -30,17 +23,12 @@ import com.honcari.service.book.RegisterOwnedBookInfoService;
 @RequestMapping("/book")
 public class RegisterBookController {
 
-	@Autowired
-	private RegisterBookService registerBookService;
 
 	@Autowired
 	private FindAllCategoryService getAllCategoryService;
 	
 	@Autowired
-	private FindByIsbnIdService findByIsbnIdService;
-	
-	@Autowired
-	private RegisterOwnedBookInfoService registerOwnedBookInfoService;
+	private GoogleBookApiService googleBookApiService;
 	
 	/**
 	 * 書籍登録画面を表示する.
@@ -51,6 +39,17 @@ public class RegisterBookController {
 	public String showRegisterBook(Model model) {
 		List<Category> categoryList = getAllCategoryService.findAll();
 		model.addAttribute("categoryList", categoryList);
+		return "book/register_book";
+	}
+	
+	@RequestMapping("/search_books")
+	public String getGoogleBooks(String name, Model model) {
+		GoogleBooks googleBooks = googleBookApiService.getBook(name);
+		List<VolumeInfo> volumeInfoList = googleBooks.getItems();
+		model.addAttribute("volumeInfoList", volumeInfoList);
+		List<Category> categoryList = getAllCategoryService.findAll();
+		model.addAttribute("categoryList", categoryList);
+		System.out.println(volumeInfoList);
 		return "book/register_book";
 	}
 	

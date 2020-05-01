@@ -25,8 +25,10 @@
 		<div class="add-book-top">
 			<p class="add-book-theme">Register your books</p>
 			<div class="search-book-for-add">
-	    		<input id="book-name" type="text" name="book-name" placeholder="book's name">	　　
-				<button id="book-button" class="lead">Search</button>
+			<form th:action="@{/book/search_books}" method="POST">
+	    		<input type="text" name="name" placeholder="book's name">	　　
+				<button class="lead">Search</button>
+			</form>
 			</div>
 		</div>
 	</div>
@@ -35,7 +37,36 @@
 	<div class="row">
 		<div class="table-responsive">
 		<br>
-			<table id="book-list">
+			<table id="book-list" th:if="${volumeInfoList}">
+				<tr>
+					<td width="20%">書籍サムネイル</td><td width="20%">著者</td><td width="20%">タイトル</td><td width="20%">出版日</td><td width="20%">登録</td>
+				</tr>
+				<tr th:each="item : ${volumeInfoList}">
+					<td th:if="${item.volumeInfo.imageLinks.smallThumbnail}"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
+					<td th:unless="${item.volumeInfo.imageLinks.smallThumbnail}"><img class="book-img">No Photo</td>
+					<td th:if="${item.volumeInfo.authors}"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
+					<td th:unless="${item.volumeInfo.authors}"><span>ー</span></td>
+					<td th:if="${item.volumeInfo.title}"><span th:text="${item.volumeInfo.title}"></span></td>
+					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
+					<td th:if="${item.volumeInfo.publishedDate}"><span th:text="${item.volumeInfo.publishedDate}"></span></td>
+					<td th:unless="${item.volumeInfo.publishedDate}"><span>ー</span></td>
+					<td><button id="register-btn" class="btn btn-secondary" data-toggle="modal" data-target="#book-register-form">登録</button>
+					<input th:if="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="${item.volumeInfo.industryIdentifiers[0].identifier}">
+					<input th:unless="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="ー">
+					<input th:if="${item.volumeInfo.title}" type="hidden" class="title" th:value="${item.volumeInfo.title}">
+					<input th:unless="${item.volumeInfo.title}" type="hidden" class="title" th:value="ー">
+					<input th:if="${item.volumeInfo.authors}" type="hidden" class="author" th:value="${item.volumeInfo.authors[0]}">
+					<input th:unless="${item.volumeInfo.authors}" type="hidden" class="author" th:value="ー">
+					<input th:if="${item.volumeInfo.publishedDate}" type="hidden" class="published-date" th:value="${item.volumeInfo.publishedDate}">
+					<input th:unless="${item.volumeInfo.publishedDate}" type="hidden" class="published-date" th:value="ー">
+					<input th:if="${item.volumeInfo.description}" type="hidden" class="description" th:value="${item.volumeInfo.description}">
+					<input th:unless="${item.volumeInfo.description}" type="hidden" class="description" th:value="ー">
+					<input th:if="${item.volumeInfo.pageCount}" type="hidden" class="page-count" th:value="${item.volumeInfo.pageCount}">
+					<input th:unless="${item.volumeInfo.pageCount}" type="hidden" class="page-count" th:value="ー">
+					<input th:if="${item.volumeInfo.pageCount}" type="hidden" class="thumbnail-path" th:value="${item.volumeInfo.pageCount}">
+					<input th:unless="${item.volumeInfo.pageCount}" type="hidden" class="thumbnail-path" th:value="ー">
+					</td>
+				</tr>
 			</table>
 		</div>
 	</div>				
