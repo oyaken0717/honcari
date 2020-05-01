@@ -79,7 +79,7 @@ public class SendRequestController {
 		// 貸出期限のエラーチェック
 		Date requestDeadline = Date.valueOf(form.getRequestDeadline());
 		String errorMessage = checkRequestDeadline(form.getRequestDeadline());
-		if (!(Objects.isNull(errorMessage))) {
+		if (Objects.nonNull(errorMessage)) {
 			result.rejectValue("requestDeadline", "500", "貸出errorMessage");
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
