@@ -12,16 +12,21 @@ import com.honcari.repository.GroupRelationRepository;
 public class JoinGroupService {
 	@Autowired
 	private GroupRelationRepository grRepository;
-	
-	public void joinGroup(Integer userId,Integer groupId) {
-		GroupRelation gr = grRepository.findByUserIdAndGroupIdAndStatus(userId, groupId, 0);
-		if(gr != null) {
+
+	public void joinGroup(Integer userId, Integer groupId) {
+		GroupRelation gr = grRepository.findByUserIdAndGroupId(userId, groupId);
+
+		if (gr == null) {
+			grRepository.insert(userId, groupId, 1);
+			return;
+		}
+
+		if (gr.getRelation_status() == 0 || gr.getRelation_status() == 9) {
 			gr.setRelation_status(1);
 			grRepository.update(gr);
 
-		}else {
-			grRepository.insert(userId, groupId,1);
 		}
+
 	}
 
 }

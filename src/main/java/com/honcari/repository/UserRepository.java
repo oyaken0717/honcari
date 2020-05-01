@@ -212,13 +212,15 @@ public class UserRepository {
 	}
 	
 	/**
-	 * 名前からあいまい検索するメソッド.
-	 * 
+	 * グループ作成者のid、グループidから、グループに所属していないユーザーをあいまい検索
+	 * 注意！グループ招待機能のみで使ってます。
 	 * @param name 検索名
 	 * @return ユーザー情報
 	 */
 	public List<User> findByNameLikeAndGroupId(String name, Integer userId,Integer groupId) {
-		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id <> :userId AND user_id NOT IN (SELECT user_id FROM group_relations WHERE group_id = :groupId)";
+		String sql = BASE_SQL_FROM_USERS + "WHERE name LIKE :name AND status != 9 AND user_id <> :userId AND "
+				+ "user_id NOT IN (SELECT user_id FROM group_relations WHERE group_id = :groupId)"
+				+ "OR user_id IN (SELECT user_id FROM group_relations WHERE group_id = :groupId and relation_status = 9 )";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("userId", userId).addValue("groupId", groupId);
 		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
 		if (userList.isEmpty()) {
