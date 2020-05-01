@@ -44,7 +44,7 @@ public class OwnedBookInfoRepository {
 		book.setAuthor(rs.getString("b_author"));
 		book.setPublishedDate(rs.getString("b_published_date"));
 		book.setDescription(rs.getString("b_description"));
-		book.setPageCount(rs.getInt("b_page_count"));
+		book.setPageCount(rs.getString("b_page_count"));
 		book.setThumbnailPath(rs.getString("b_thumbnail_path"));
 		ownedBookInfo.setBook(book);
 		User user = new User();

@@ -37,7 +37,7 @@ create table books (
   , author text not null
   , published_date character varying(10) not null
   , description text  not null
-  , page_count integer not null
+  , page_count text not null
   , thumbnail_path text not null
 );
 

@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.honcari.domain.Category;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.service.book.EditOwnedBookInfoService;
-import com.honcari.service.book.FindByOwnedBookInfoService;
 import com.honcari.service.book.FindAllCategoryService;
+import com.honcari.service.book.FindByOwnedBookInfoService;
 
 /**
  * 書籍情報を編集するコントローラ.
@@ -58,7 +59,7 @@ public class EditBookController {
 	 * 
 	 * @return マイブック
 	 */
-	@RequestMapping("/edit")
+	@RequestMapping(value="/edit", method=RequestMethod.POST)
 	public String editBook(Integer ownedBookInfoId, Integer categoryId, String comment) {
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
 		ownedBookInfo.setCategoryId(categoryId);
@@ -73,9 +74,18 @@ public class EditBookController {
 	 * @param bookId 書籍ID
 	 * @return マイブック
 	 */
-	@RequestMapping("/delete")
-	public String deleteBook(Integer ownedBookInfoId) {
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public String deleteBook(Integer ownedBookInfoId, Model model) {
+		System.out.println(ownedBookInfoId);
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
+		if(ownedBookInfo.getBookStatus() == 2) {
+			model.addAttribute("errorMessage", "貸し出し承認待ち中の書籍です");
+			return showEditBook(model, ownedBookInfoId);
+		}
+		if(ownedBookInfo.getBookStatus() == 3) {
+			model.addAttribute("errorMessage", "貸し出し中の書籍です");
+			return showEditBook(model, ownedBookInfoId);
+		}
 		ownedBookInfo.setBookStatus(4);
 		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
 		return "redirect:/book/show_mybook";

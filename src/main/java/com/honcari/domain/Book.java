@@ -21,15 +21,12 @@ public class Book {
 	/** 説明 */
 	private String description;
 	/** 総ページ数 */
-	private Integer pageCount;
+	private String pageCount;
 	/** サムネイル画像パス */
 	private String thumbnailPath;
-
-	public Book() {
-	}
-
+	
 	public Book(Integer bookId, String isbnId, String title, String author, String publishedDate, String description,
-			Integer pageCount, String thumbnailPath) {
+			String pageCount, String thumbnailPath) {
 		super();
 		this.bookId = bookId;
 		this.isbnId = isbnId;
@@ -40,7 +37,10 @@ public class Book {
 		this.pageCount = pageCount;
 		this.thumbnailPath = thumbnailPath;
 	}
+	
+	public Book() {}
 
+	
 	public Integer getBookId() {
 		return bookId;
 	}
@@ -89,11 +89,11 @@ public class Book {
 		this.description = description;
 	}
 
-	public Integer getPageCount() {
+	public String getPageCount() {
 		return pageCount;
 	}
 
-	public void setPageCount(Integer pageCount) {
+	public void setPageCount(String pageCount) {
 		this.pageCount = pageCount;
 	}
 
@@ -112,4 +112,5 @@ public class Book {
 				+ ", thumbnailPath=" + thumbnailPath + "]";
 	}
 
+	
 }
