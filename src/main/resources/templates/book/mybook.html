@@ -27,22 +27,8 @@
 				<div th:replace="mypage_side_menu::frag_mypage_side_menu(2,${categoryNum})"></div>
 				
 				<!-- main content -->
-				<!-- 書籍一覧を表示する(デザイン要検討) -->
-				<!-- <div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${myBookType} == 0">
-					<div class="col-lg-4 col-md-5 col-sm-7 mb-5 float-left" th:each="book : ${user.bookList}">
-     					<div class="card" id="book-card">
-      						<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><img class="card-img-top" th:src="${book.thumbnailPath}" alt=""></a>
-      						<div class="card-body">
-							<a th:href="@{'/show_book_detail?bookId=' + ${book.id}}"><span class="card-text" th:text="${book.title}"></span></a>
-							<p class="card-text" th:text="${book.author}"></p>
-							<p class="card-text" th:text="${book.publishedDate}"></p>
-      						</div>
-      					</div>
-      				</div>
-				</div> -->
 				
-				<!-- カテゴリ選択ボタンを押下後に表示されるカテゴリ別の書籍一覧(デザイン要検討)一部動作上手くいってません。 -->
- 				 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 float-left" th:if="${ownedBookInfoList}">
+ 				 <div class="col-lg-9 col-md-8 col-sm-11 col-xs-11 float-left" th:if="${ownedBookInfoList}">
 					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="ownedBookInfo : ${ownedBookInfoList}" id="book-card">
      					<div class="card">
       						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="card-img-top" th:src="${ownedBookInfo.book.thumbnailPath}" alt=""></a>
@@ -55,14 +41,12 @@
       					</div>
       				</div>
 				</div>
-				
 				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${errorMessage}">
 					<div th:text="${errorMessage}" style="text-align:center"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 	<!-- script -->
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>

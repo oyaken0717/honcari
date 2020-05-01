@@ -65,7 +65,7 @@ public class CategoryRepository {
 			book.setAuthor(rs.getString("b_author"));
 			book.setPublishedDate(rs.getString("b_published_date"));
 			book.setDescription(rs.getString("b_description"));
-			book.setPageCount(rs.getInt("b_page_count"));
+			book.setPageCount(rs.getString("b_page_count"));
 			book.setThumbnailPath(rs.getString("b_thumbnail_path"));
 			ownedBookInfo.setBook(book);
 			ownedBookInfo.setComment(rs.getString("o_comment"));
@@ -113,7 +113,7 @@ public class CategoryRepository {
 			book.setAuthor(rs.getString("b_author"));
 			book.setPublishedDate(rs.getString("b_published_date"));
 			book.setDescription(rs.getString("b_description"));
-			book.setPageCount(rs.getInt("b_page_count"));
+			book.setPageCount(rs.getString("b_page_count"));
 			book.setThumbnailPath(rs.getString("b_thumbnail_path"));
 			ownedBookInfo.setBook(book);
 			ownedBookInfo.setComment(rs.getString("o_comment"));
@@ -154,7 +154,7 @@ public class CategoryRepository {
 	public List<Category> findByUserId(Integer userId) {
 		String sql = SQL + "WHERE u.status != 9 AND u.user_id in ("
 							+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
-								+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+								+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status=1)) "
 						 + "ORDER BY c.category_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR_LIMIT_16);

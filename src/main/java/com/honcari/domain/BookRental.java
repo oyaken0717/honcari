@@ -14,6 +14,8 @@ public class BookRental {
 	private Integer borrowUserId;
 	/** 貸し借り状況 */
 	private Integer rentalStatus;
+	/** 申請貸出期限 */
+	private Date requestDeadline;
 	/** 貸出期限 */
 	private Date deadline;
 	/** 本所有情報 */
@@ -31,13 +33,14 @@ public class BookRental {
 	}
 
 	public BookRental(Integer bookRentalId, Integer ownedBookInfoId, Integer borrowUserId, Integer rentalStatus,
-			Date deadline, OwnedBookInfo ownedBookInfo, User borrowUser, String creationUserName, String updateUserName,
-			Integer version) {
+			Date requestDeadline, Date deadline, OwnedBookInfo ownedBookInfo, User borrowUser, String creationUserName,
+			String updateUserName, Integer version) {
 		super();
 		this.bookRentalId = bookRentalId;
 		this.ownedBookInfoId = ownedBookInfoId;
 		this.borrowUserId = borrowUserId;
 		this.rentalStatus = rentalStatus;
+		this.requestDeadline = requestDeadline;
 		this.deadline = deadline;
 		this.ownedBookInfo = ownedBookInfo;
 		this.borrowUser = borrowUser;
@@ -85,6 +88,14 @@ public class BookRental {
 
 	public void setRentalStatus(Integer rentalStatus) {
 		this.rentalStatus = rentalStatus;
+	}
+
+	public Date getRequestDeadline() {
+		return requestDeadline;
+	}
+
+	public void setRequestDeadline(Date requestDeadline) {
+		this.requestDeadline = requestDeadline;
 	}
 
 	public Date getDeadline() {
@@ -138,9 +149,10 @@ public class BookRental {
 	@Override
 	public String toString() {
 		return "BookRental [bookRentalId=" + bookRentalId + ", ownedBookInfoId=" + ownedBookInfoId + ", borrowUserId="
-				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", deadline=" + deadline + ", ownedBookInfo="
-				+ ownedBookInfo + ", borrowUser=" + borrowUser + ", creationUserName=" + creationUserName
-				+ ", updateUserName=" + updateUserName + ", version=" + version + "]";
+				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", requestDeadline=" + requestDeadline
+				+ ", deadline=" + deadline + ", ownedBookInfo=" + ownedBookInfo + ", borrowUser=" + borrowUser
+				+ ", creationUserName=" + creationUserName + ", updateUserName=" + updateUserName + ", version="
+				+ version + "]";
 	}
 
 }

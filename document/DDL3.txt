@@ -37,7 +37,7 @@ create table books (
   , author text not null
   , published_date character varying(10) not null
   , description text  not null
-  , page_count integer not null
+  , page_count text not null
   , thumbnail_path text not null
 );
 
@@ -62,6 +62,7 @@ create table book_rentals(
   , owned_book_info_id integer not null references owned_book_info(owned_book_info_id)
   , borrow_user_id integer not null references users(user_id)
   , rental_status integer not null
+  , request_deadline date
   , deadline date
   , creation_date timestamp
   , creation_user text

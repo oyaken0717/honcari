@@ -57,22 +57,22 @@ public class ShowListController {
 		List<BookRental> BookRentalListByOwner = searchByOwnerService.searchRentalListByOwner(userId);
 		List<BookRental> BookRentalListByBorrower = searchByBorrowerService.searchRentalListByBorrower(userId);
 
-		// 貸出承認待ち本リスト
+		// 貸す承認待ち本リスト
 		List<BookRental> lendPendingList = BookRentalListByOwner.stream()
 				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.WAIT_APPROVAL.getValue()
 						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_EXTEND.getValue())
 				.collect(Collectors.toList());
-		// 貸し出し中本リスト
+		// 貸している本リスト
 		List<BookRental> lendList = BookRentalListByOwner.stream()
 				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.APPROVED.getValue()
 						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_RETURNING.getValue())
 				.collect(Collectors.toList());
-		// レンタル承認待ち本リスト
+		// 借りる承認待ち本リスト
 		List<BookRental> borrowPendingList = BookRentalListByBorrower.stream()
 				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.WAIT_APPROVAL.getValue()
 						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_EXTEND.getValue())
 				.collect(Collectors.toList());
-		// レンタル中本リスト
+		// 借りている本リスト
 		List<BookRental> borrowList = BookRentalListByBorrower.stream()
 				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.APPROVED.getValue()
 						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_RETURNING.getValue())

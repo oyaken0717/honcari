@@ -39,7 +39,7 @@ public class BookRepository {
 		book.setAuthor(rs.getString("author"));
 		book.setPublishedDate(rs.getString("published_date"));
 		book.setDescription(rs.getString("description"));
-		book.setPageCount(rs.getInt("page_count"));
+		book.setPageCount(rs.getString("page_count"));
 		book.setThumbnailPath(rs.getString("thumbnail_path"));
 		return book;
 	};

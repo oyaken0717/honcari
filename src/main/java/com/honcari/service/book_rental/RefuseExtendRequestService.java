@@ -7,44 +7,41 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.honcari.common.RentalStatusEnum;
 import com.honcari.domain.BookRental;
-import com.honcari.form.ExtendRequestForm;
 import com.honcari.repository.BookRentalRepository;
 
 /**
- * 貸出延長申請を送る.
+ * 貸出延長申請を拒否する.
  * 
  * @author shumpei
  *
  */
 @Service
 @Transactional
-public class SendExtendRequestService {
+public class RefuseExtendRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
 
 	/**
-	 * 貸出期間の延長処理を行う.
+	 * 貸出延長申請を拒否する.
 	 * 
-	 * @param form           フォーム
-	 * @param updateUserName 更新ユーザー名
+	 * @param bookRentalId      貸出情報ID
+	 * @param updateUserName    処理ユーザー
+	 * @param bookRentalVersion 貸出状況バージョン
 	 */
-	public void sendExtendRequest(ExtendRequestForm form, String updateUserName) {
-		BookRental bookRental = bookRentalRepository.load(form.getBookRentalId());
+	public void refuseExtendRequest(Integer bookRentalId, String updateUserName, Integer bookRentalVersion) {
+		BookRental bookRental = bookRentalRepository.load(bookRentalId);
 		// データベースのバージョンが更新されていた場合は例外処理を行う
-		Integer bookRentalVersion = form.getBookRentalVersion();
 		if (bookRental.getVersion() != bookRentalVersion) {
-			throw new OptimisticLockingFailureException("Faild to send extend request of the book!");
+			throw new OptimisticLockingFailureException("Faild to refuse book rental!");
 		}
-		bookRental.setRequestDeadline(java.sql.Date.valueOf(form.getRequestDeadline()));
-		bookRental.setRentalStatus(RentalStatusEnum.WAIT_EXTEND.getValue());
+		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
 		int updateCount = bookRentalRepository.update(bookRental);
 		// データベースの更新ができなかった場合は例外処理を行う
 		if (updateCount != 1) {
-			throw new IllegalStateException("Faild to send extend request of the book!");
+			throw new IllegalStateException("Faild to refuse book rental!");
 		}
 	}
-
 }

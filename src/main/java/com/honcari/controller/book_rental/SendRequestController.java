@@ -2,6 +2,7 @@ package com.honcari.controller.book_rental;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,7 +41,7 @@ public class SendRequestController {
 	public RentalRequestForm setUpForm() {
 		return new RentalRequestForm();
 	}
-	
+
 	@ModelAttribute
 	public ExtendRequestForm setUpExtendRequestForm() {
 		return new ExtendRequestForm();
@@ -49,12 +50,12 @@ public class SendRequestController {
 	/**
 	 * 貸出リクエストを送る.
 	 * 
-	 * @param model リクエストスコープ
-	 * @param loginUser　ログインユーザー
-	 * @param form　フォーム
-	 * @param result　エラーチェック
-	 * @param redirectAttributes　リダイレクトスコープ
-	 * @return　貸出情報一覧画面
+	 * @param model              リクエストスコープ
+	 * @param loginUser          ログインユーザー
+	 * @param form               フォーム
+	 * @param result             エラーチェック
+	 * @param redirectAttributes リダイレクトスコープ
+	 * @return 貸出情報一覧画面
 	 */
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public String sendRentalRequest(Model model, @AuthenticationPrincipal LoginUser loginUser,
@@ -64,45 +65,56 @@ public class SendRequestController {
 		Integer ownedBookInfoId = form.getOwnedBookInfoId();
 		Integer bookStatus = form.getBookStatus();
 		Integer ownerId = form.getOwnerId();
-		Integer version = form.getVersion();
-		
-		//貸出状況のエラーチェック
+		Integer ownedBookInfoVersion = form.getOwnedBookInfoVersion();
+
+		// 貸出状況のエラーチェック
 		if (bookStatus != 1 || ownerId == borrowUserId) {
-			result.rejectValue("deadline", "500", "不正なリクエストが行われました");
+			result.rejectValue("requestDeadline", "500", "不正なリクエストが行われました");
 		}
 
 		if (result.hasErrors()) {
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
 
-		//貸出期限のエラーチェック　
-		String inputDeadline = form.getDeadline();
-		Date deadline = Date.valueOf(inputDeadline);
-		LocalDate sendRequestDate = LocalDate.now();
-		LocalDate deadlineDate = LocalDate.parse(inputDeadline);
-		LocalDate maxRequestDate = sendRequestDate.plusMonths(2);
-		if (deadlineDate.isBefore(sendRequestDate)) {
-			result.rejectValue("deadline", "500", "貸出期限は今日以降の日付を入力してください");
-		}
-		if (deadlineDate.isAfter(maxRequestDate)) {
-			result.rejectValue("deadline", "500", "貸出期限は本日から2か月以内の日付を入力してください");
-		}
-		if (result.hasErrors()) {
+		// 貸出期限のエラーチェック
+		Date requestDeadline = Date.valueOf(form.getRequestDeadline());
+		String errorMessage = checkRequestDeadline(form.getRequestDeadline());
+		if (Objects.nonNull(errorMessage)) {
+			result.rejectValue("requestDeadline", "500", "貸出errorMessage");
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
-		
-		//貸出申請を処理する
+
+		// 貸出申請を処理する
 		try {
-			sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, borrowUserName, deadline, version);			
+			sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, borrowUserName, requestDeadline,
+					ownedBookInfoVersion);
 			// TODO 貸し手にメール送信
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを送信しました！");
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.rejectValue("deadline", "500", "貸出申請に失敗しました");
+			result.rejectValue("requestDeadline", "500", "貸出申請に失敗しました");
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
 		return "redirect:/book_rental/show_list";
 	}
-	
+
+	/**
+	 * 貸出期限のエラーチェックを行う.
+	 * 
+	 * @param requestDeadline 申請貸出期限
+	 * @return エラーメッセージ
+	 */
+	public String checkRequestDeadline(String requestDeadline) {
+		LocalDate sendRequestDate = LocalDate.now();
+		LocalDate deadlineDate = LocalDate.parse(requestDeadline);
+		LocalDate maxRequestDate = sendRequestDate.plusMonths(2);
+		if (deadlineDate.isBefore(sendRequestDate)) {
+			return "貸出期限は本日以降の日付を入力してください";
+		}
+		if (deadlineDate.isAfter(maxRequestDate)) {
+			return "貸出期限は本日から２ヶ月以内の日付を入力してください";
+		}
+		return null;
+	}
 
 }
