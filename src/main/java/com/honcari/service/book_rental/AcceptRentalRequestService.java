@@ -43,6 +43,7 @@ public class AcceptRentalRequestService {
 		if (bookRental.getVersion() != bookRentalVersion || ownedBookInfo.getVersion() != ownedBookInfoVersion) {
 			throw new OptimisticLockingFailureException("Faild to accept book rental!");
 		}
+		bookRental.setDeadline(bookRental.getRequestDeadline());
 		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
