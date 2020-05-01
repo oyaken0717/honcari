@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.honcari.domain.GroupRelation;
 import com.honcari.domain.User;
 import com.honcari.service.group.RegisterGroupService;
 
@@ -41,9 +42,8 @@ public class SearchUserApiController {
 	@RequestMapping("/search_user_api_for_invite")
 	public Map<String, List<User>> searchUserNotInGroup(String name, Integer userId,Integer groupId) {
 		Map<String, List<User>> map = new HashMap<>();
-		List<User> userList = registerGroupService.findByNameLikeAndGroupId(name, userId, groupId);
-		System.out.println(userList);
-		map.put("userList", userList);
+			List<User> userList = registerGroupService.findByNameLikeAndGroupId(name, userId, groupId);
+			map.put("userList", userList);
 		return map;
 	}
 }

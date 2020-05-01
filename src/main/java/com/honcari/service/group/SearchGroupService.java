@@ -25,5 +25,7 @@ public class SearchGroupService {
 		
 		return groupRepository.findByGroupId(id);
 	}
+	
+	
 
 }

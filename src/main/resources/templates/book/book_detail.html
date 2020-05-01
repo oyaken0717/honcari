@@ -52,11 +52,11 @@
   				      </button>
   				    </div>
    				   <div class="modal-body">
-   				   	<div id="error-message" th:errors="*{deadline}" class="text-danger">貸出期限を入力してください</div>
-   				    <input type="date" name="deadline" th:field="*{deadline}">
+   				   	<div id="error-message" th:errors="*{requestDeadline}" class="text-danger">貸出期限を入力してください</div>
+   				    <input type="date" name="requestDeadline" th:field="*{requestDeadline}">
    				     <input type="hidden" name="ownedBookInfoId" th:value="${ownedBookInfo.ownedBookInfoId}">
    				     <input type="hidden" name="bookStatus" th:value="${ownedBookInfo.bookStatus}">
-   				     <input type="hidden" name="version" th:value="${ownedBookInfo.version}">
+   				     <input type="hidden" name="ownedBookInfoVersion" th:value="${ownedBookInfo.version}">
    				     <input type="hidden" name="ownerId" th:value="${ownedBookInfo.userId}">
    				   </div>
     			   <div class="modal-footer">

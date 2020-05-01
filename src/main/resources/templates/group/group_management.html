@@ -18,8 +18,8 @@
 			<h1 class="my-4">グループ管理</h1>
 	
 			<!-- side bar -->
-			<div th:replace="mypage_side_menu::frag_mypage_side_menu(0,99)"></div>
-
+<!-- 			<div th:replace="mypage_side_menu::frag_mypage_side_menu(0,99)"></div>
+ -->
 <!-- main content -->
 <div class="py-5 book-detail-wrapper">
     <div class="container">
@@ -57,6 +57,9 @@
 			<div class="tab-pane" id="not-approved-list" th:unless="${notApprovedUser}==null">
    				<div th:each="group:${notApprovedUser.groupList}">
    					<a th:href="@{'/group/show_detail?id='} + ${group.id}" th:text="${group.name}"></a>
+   					<a th:href="@{'/group/join?groupId='} + ${group.id}"><button>参加する</button></a>
+   					<a th:href="@{'/group/reject_invite_group?groupId='} + ${group.id}" onclick="return confirm('参加しなくてもよろしいですか？')"
+   					><button>参加しない</button></a>
    				</div>
 			</div>
 			<div class="tab-pane" id="not-approved-list" th:if="${notApprovedUser}==null">
@@ -65,7 +68,6 @@
    		  </div>
     </div>
 </div> 
-
 		</div>
 	</div>
 </div>

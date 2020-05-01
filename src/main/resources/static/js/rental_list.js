@@ -1,5 +1,10 @@
 (function() {
 	'use strict';
+	
+	// フラッシュメッセージを表示
+	setTimeout(() => {
+		$('#flash').alert('close');
+	}, 1000);
 
 	// 延長申請時に延長後の貸出期限のデフォルト値を１週間後にセットする
 	if(document.getElementById('rental-period') != null){
@@ -17,22 +22,18 @@
 		$("#extend-request-form").modal();
 	}
 	
-	setTimeout(() => {
-		$('#flash').alert('close');
-	}, 1000);
 	
 	$('.cancel-btn').click(function() {
-		if (!confirm("キャンセルしてよろしいでしょうか?")) {
+		if (!confirm($(this).text() + "してよろしいでしょうか?")) {
 			return false;
 		}
 	});
 	
-	$('.approval-btn').click(function() {
-		if (!confirm("承認してよろしいでしょうか?")) {
+	$('.submit-btn').click(function() {
+		if (!confirm($(this).val() + "してよろしいでしょうか?")) {
 			return false;
 		}
 	});
-	
 	
 	
 })();

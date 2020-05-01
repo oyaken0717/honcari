@@ -9,27 +9,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.common.RentalStatusEnum;
 import com.honcari.domain.LoginUser;
-import com.honcari.service.book_rental.AcceptExtendRequestService;
-import com.honcari.service.book_rental.AcceptRentalRequestService;
+import com.honcari.service.book_rental.RefuseExtendRequestService;
+import com.honcari.service.book_rental.RefuseRentalRequestService;
 
 /**
- * 貸出申請を承認する.
+ * 貸出申請を拒否するコントローラ.
  * 
  * @author shumpei
  *
  */
-@Controller
 @RequestMapping("/book_rental")
-public class AcceptRequestController {
+@Controller
+public class RefuseRequestController {
 
 	@Autowired
-	private AcceptRentalRequestService acceptRentalRequestService;
+	private RefuseRentalRequestService refuseRentalRequestService;
 
 	@Autowired
-	private AcceptExtendRequestService acceptExtendRequestService;
+	private RefuseExtendRequestService refuseExtendRequestService;
 
 	/**
-	 * 貸出申請を承認する.
+	 * 貸出申請を却下する.
 	 * 
 	 * @param bookRentalId         貸出申請ID
 	 * @param loginUser            ログインユーザー
@@ -39,23 +39,23 @@ public class AcceptRequestController {
 	 * @param redirectAttributes   フラッシュスコープ
 	 * @return 貸出情報一覧画面
 	 */
-	@RequestMapping(value = "/determine", params = "accept",method = RequestMethod.POST)
-	public String acceptRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
+	@RequestMapping(value = "/determine", params = "refuse", method = RequestMethod.POST) 
+	public String refuseRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
 			Integer rentalStatus, Integer bookRentalVersion, Integer ownedBookInfoVersion,
 			RedirectAttributes redirectAttributes) {
 		String updateUserName = loginUser.getUser().getName();
 		try {
 			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
-				acceptRentalRequestService.acceptRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
+				refuseRentalRequestService.refuseRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
 						ownedBookInfoVersion);
 			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
-				acceptExtendRequestService.acceptExtendRequest(bookRentalId, updateUserName, bookRentalVersion);
+				refuseExtendRequestService.refuseExtendRequest(bookRentalId, updateUserName, bookRentalVersion);
 			}
 			// TODO 借り手にメール送信
-			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを承認しました！");
+			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを却下しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			redirectAttributes.addFlashAttribute("errorMessage", "貸出リクエストの承認に失敗しました！");
+			redirectAttributes.addFlashAttribute("errorMessage", "貸出リクエストの却下に失敗しました！");
 		}
 		return "redirect:/book_rental/show_list";
 	}

@@ -1,6 +1,7 @@
 package com.honcari.controller.book_rental;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,10 +31,10 @@ public class SendExtendRequestController {
 
 	@Autowired
 	private SendExtendRequestService sendExtendRequestService;
-	
+
 	@Autowired
 	private ShowListController showListController;
-	
+
 	@ModelAttribute
 	public RentalRequestForm setUpForm() {
 		return new RentalRequestForm();
@@ -64,16 +65,10 @@ public class SendExtendRequestController {
 		}
 
 		// 貸出期限のエラーチェック
-		LocalDate defautDeadline = LocalDate.parse(form.getDefaultDeadline());
-		LocalDate requestDeadline = LocalDate.parse(form.getDeadline());
-		LocalDate maxRequestDate = defautDeadline.plusMonths(1);
-		if (requestDeadline.isBefore(defautDeadline)) {
-			result.rejectValue("deadline", "500", "延長期限は元々の期限日以降の日付を入力してください");
-		}
-		if (requestDeadline.isAfter(maxRequestDate)) {
-			result.rejectValue("deadline", "500", "延長期限は元々の期限日から1か月以内の日付を入力してください");
-		}
-		if (result.hasErrors()) {
+		String errorMessage = checkRequestDeadline(LocalDate.parse(form.getDefaultDeadline()),
+				LocalDate.parse(form.getRequestDeadline()));
+		if (Objects.nonNull(errorMessage)) {
+			result.rejectValue("requestDeadline", "500", "errorMessage");
 			return showListController.showList(loginUser, model);
 		}
 
@@ -87,6 +82,24 @@ public class SendExtendRequestController {
 			redirectAttributes.addFlashAttribute("errorMessage", "貸出延長リクエストに失敗しました！");
 		}
 		return "redirect:/book_rental/show_list";
+	}
+
+	/**
+	 * 貸出期限のチェックを行う.
+	 * 
+	 * @param defautDeadline  元々の貸出期限
+	 * @param requestDeadline 申請した貸出期限
+	 * @return エラーメッセージ
+	 */
+	public String checkRequestDeadline(LocalDate defautDeadline, LocalDate requestDeadline) {
+		LocalDate maxRequestDate = defautDeadline.plusMonths(1);
+		if (requestDeadline.isBefore(defautDeadline)) {
+			return "延長期限は元々の期限日以降の日付を入力してください";
+		}
+		if (requestDeadline.isAfter(maxRequestDate)) {
+			return "延長期限は元々の期限日から1か月以内の日付を入力してください";
+		}
+		return null;
 	}
 
 }
