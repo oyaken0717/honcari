@@ -161,6 +161,8 @@ $(function() {
 			$("#check").text(data.check);
 			$("#register-comment").val('');
 			$('#register-category-id').val(1);
+			const xhr = new XMLHttpRequest();
+			xhr.withCredentials = true;
 		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("エラーが発生しました！");
 			console.log("XMLHttpRequest : " + XMLHttpRequest.status);

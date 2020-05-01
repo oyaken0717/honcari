@@ -20,6 +20,12 @@ import com.honcari.service.book.FindByIsbnIdService;
 import com.honcari.service.book.RegisterBookService;
 import com.honcari.service.book.RegisterOwnedBookInfoService;
 
+/**
+ * 非同期で書籍登録を行うコントローラ.
+ * 
+ * @author hatakeyamakouta
+ *
+ */
 @RestController
 @RequestMapping("/book_api")
 public class RegisterBookApiController {
@@ -48,7 +54,6 @@ public class RegisterBookApiController {
 		Book book = new Book();
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 		Map<String, String> map = new HashMap<>();
-		System.out.println(registerBookForm);
 		
 		//booksテーブルに既に該当の書籍が登録されているかISBNコードを用いて検索する
 		List<Book> bookList = findByIsbnIdService.getByIsbnId(registerBookForm.getIsbnId());
@@ -56,19 +61,56 @@ public class RegisterBookApiController {
 		//検索出来ない場合、書籍情報をbooksテーブルに挿入しbook_idを戻り値として取得しbookIdに代入する
 		//検索出来た場合、bookList0番目のbook_idを取得しbookIdに代入する
 		if(bookList.isEmpty()) {
-			Integer pageCount = null;
-			if(registerBookForm.getPageCount().equals("undefined")) {
-				pageCount = 0; //TODO テーブル側でdefault値入れてnullでも対応出来るようにする？
+			String title = null;
+			String author = null;
+			String publishedDate = null;
+			String description = null;
+			String pageCount = null;
+			String thumbnailPath = null;
+			
+			if(registerBookForm.getTitle().equals("undefined")) {
+				title = "ー";
 			}else {
-				pageCount = Integer.parseInt(registerBookForm.getPageCount());
+				title = registerBookForm.getTitle();
 			}
+			
+			if(registerBookForm.getAuthor().equals("undefined")) {
+				author = "ー";
+			}else {
+				author = registerBookForm.getAuthor();
+			}
+			
+			if(registerBookForm.getPublishedDate().equals("undefined")) {
+				publishedDate = "ー";
+			}else {
+				publishedDate = registerBookForm.getPublishedDate();
+			}
+			
+			if(registerBookForm.getDescription().equals("undefined")) {
+				description = "ー";
+			}else {
+				description = registerBookForm.getDescription();
+			}
+			
+			if(registerBookForm.getPageCount().equals("undefined")) {
+				pageCount = "ー";
+			}else {
+				pageCount = registerBookForm.getPageCount();
+			}
+			
+			if(registerBookForm.getThumbnailPath().equals("undefined")) {
+				thumbnailPath = "ー";
+			}else {
+				thumbnailPath = registerBookForm.getThumbnailPath();
+			}
+			
 			book.setIsbnId(registerBookForm.getIsbnId());
-			book.setTitle(registerBookForm.getTitle());
-			book.setAuthor(registerBookForm.getAuthor());
-			book.setPublishedDate(registerBookForm.getPublishedDate());
-			book.setDescription(registerBookForm.getDescription());
+			book.setTitle(title);
+			book.setAuthor(author);
+			book.setPublishedDate(publishedDate);
+			book.setDescription(description);
 			book.setPageCount(pageCount);
-			book.setThumbnailPath(registerBookForm.getThumbnailPath());
+			book.setThumbnailPath(thumbnailPath);
 			Book registeredBook = registerBookService.registerBook(book);
 			bookId = registeredBook.getBookId();
 		}else {
