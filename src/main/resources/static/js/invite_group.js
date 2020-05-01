@@ -6,15 +6,17 @@ $(function() {
 	$(".searchUser").on("keyup", function() {
 		var searchName = $(this).val();
 		var loginUserId = $(".loginUserId").val();
+		var groupId = $(".groupId").val();
 		console.log(loginUserId);
-		var url = 'http://localhost:8080/search_user_api';
+		var url = 'http://localhost:8080/search_user_api_for_invite';
 		$.ajax({
 			url : url,
 			type : 'GET',
 			dataType : 'json',
 			data : {
 				name : searchName,
-				userId : loginUserId
+				userId : loginUserId,
+				groupId : groupId
 			},
 			async : true
 		}).done(function(data) {

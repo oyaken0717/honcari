@@ -1,5 +1,7 @@
 package com.honcari.controller.group;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,8 @@ public class JoinGroupController {
 	@Autowired
 	private SearchUserInGroupService searchUserInGroupService;
 	
-
+	@Autowired
+	private HttpSession session;
 	
 	@Autowired
 	private JoinGroupService joinGroupService;
@@ -35,6 +38,9 @@ public class JoinGroupController {
 	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser,Model model) {
 		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);
 		System.out.println("グループ参加成功");
+		if(session.getAttribute("fromManagement")!=null) {
+			return "redirect:/group/to_management";
+		}
 		return "redirect:/group/to_search";
 	}
 

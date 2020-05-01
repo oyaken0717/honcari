@@ -17,6 +17,7 @@ public class OutGroupController {
 	
 	@RequestMapping(value="/out_group")
 	public String outGroup(Integer id, @AuthenticationPrincipal LoginUser loginUser) {
+		
 		deleteGroupRelationService.deleteGroup(loginUser.getUser().getUserId(), id);
 		System.out.println("グループから抜けました");
 		return "redirect:/group/to_management";

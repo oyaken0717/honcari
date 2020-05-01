@@ -1,8 +1,7 @@
 package com.honcari.controller.book;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,13 +29,9 @@ public class ShowBookDetailController {
 	@ModelAttribute
 	public RentalRequestForm setUpForm() {
 		RentalRequestForm form = new RentalRequestForm();
-		Date now = new Date();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(now);
-		calendar.add(Calendar.WEEK_OF_MONTH, 2);
-		Date date = calendar.getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		form.setDeadline(sdf.format(date));
+		LocalDate defaultDeadline = LocalDate.now().plusWeeks(2);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		form.setDeadline(formatter.format(defaultDeadline));
 		return form;
 	}
 	

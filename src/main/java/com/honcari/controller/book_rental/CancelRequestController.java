@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honcari.common.RentalStatusEnum;
 import com.honcari.domain.LoginUser;
+import com.honcari.service.book_rental.CancelExtendRequestService;
 import com.honcari.service.book_rental.CancelRentalRequestService;
 
 /**
@@ -23,20 +25,33 @@ public class CancelRequestController {
 	@Autowired
 	private CancelRentalRequestService cancelRentalRequestService;
 
+	@Autowired
+	private CancelExtendRequestService cancelExtendRequestService;
+
 	/**
 	 * 貸出申請をキャンセルする.
 	 * 
-	 * @param bookRentalId 貸出情報ID
-	 * @param loginUser    ログインユーザー
+	 * @param bookRentalId         貸出申請ID
+	 * @param loginUser            ログインユーザー
+	 * @param rentalStatus         貸出状況
+	 * @param bookRentalVersion    貸出状況バージョン
+	 * @param ownedBookInfoVersion 所有情報バージョン
+	 * @param redirectAttributes   フラッシュスコープ
 	 * @return 貸出情報一覧画面
 	 */
 	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
 	public String cancelRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
-			Integer bookRentalVersion, Integer ownedBookInfoVersion, RedirectAttributes redirectAttributes) {
-		String processingUserName = loginUser.getUser().getName();
+			Integer rentalStatus, Integer bookRentalVersion, Integer ownedBookInfoVersion,
+			RedirectAttributes redirectAttributes) {
+		String updateUserName = loginUser.getUser().getName();
+
 		try {
-			cancelRentalRequestService.cancelRentalRequest(bookRentalId, processingUserName, bookRentalVersion,
-					ownedBookInfoVersion);
+			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
+				cancelRentalRequestService.cancelRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
+						ownedBookInfoVersion);
+			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
+				cancelExtendRequestService.cancelExtendRequest(bookRentalId, updateUserName, bookRentalVersion);
+			}
 			// TODO 貸し手にメール送信
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストをキャンセルしました！");
 		} catch (Exception ex) {

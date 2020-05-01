@@ -20,5 +20,10 @@ public class SearchGroupService {
 		
 		return groupRepository.findByLikeName(name);
 	}
+	
+	public Group searchGroupById(Integer id) {
+		
+		return groupRepository.findByGroupId(id);
+	}
 
 }
