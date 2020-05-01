@@ -25,12 +25,12 @@ public class GoogleBookApiService {
 	private static final String URL = "https://www.googleapis.com/books/v1/volumes?q=";
 	
 	public GoogleBooks getBook(String name) {
-		System.out.println(name);
 		String searchUrl = null;
 		GoogleBooks googleBooks = new GoogleBooks();
 		try {
 			searchUrl = URL + name;
 			googleBooks = restTemplate.getForObject(searchUrl, GoogleBooks.class);
+			googleBooks.getItems().get(0).getVolumeInfo().getIndustryIdentifiers().get(0).getIdentifier();
 		}catch(Exception e){
 			e.printStackTrace();
 		}

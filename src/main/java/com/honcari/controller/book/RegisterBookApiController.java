@@ -72,37 +72,37 @@ public class RegisterBookApiController {
 			String pageCount = null;
 			String thumbnailPath = null;
 			
-			if(registerBookForm.getTitle().equals("undefined")) {
+			if(registerBookForm.getTitle() == null) {
 				title = "ー";
 			}else {
 				title = registerBookForm.getTitle();
 			}
 			
-			if(registerBookForm.getAuthor().equals("undefined")) {
+			if(registerBookForm.getAuthor() == null) {
 				author = "ー";
 			}else {
 				author = registerBookForm.getAuthor();
 			}
 			
-			if(registerBookForm.getPublishedDate().equals("undefined")) {
+			if(registerBookForm.getPublishedDate() == null) {
 				publishedDate = "ー";
 			}else {
 				publishedDate = registerBookForm.getPublishedDate();
 			}
 			
-			if(registerBookForm.getDescription().equals("undefined")) {
+			if(registerBookForm.getDescription() == null) {
 				description = "ー";
 			}else {
 				description = registerBookForm.getDescription();
 			}
 			
-			if(registerBookForm.getPageCount().equals("undefined")) {
+			if(registerBookForm.getPageCount() == null) {
 				pageCount = "ー";
 			}else {
 				pageCount = registerBookForm.getPageCount();
 			}
 			
-			if(registerBookForm.getThumbnailPath().equals("undefined")) {
+			if(registerBookForm.getThumbnailPath() == null) {
 				thumbnailPath = "ー";
 			}else {
 				thumbnailPath = registerBookForm.getThumbnailPath();
