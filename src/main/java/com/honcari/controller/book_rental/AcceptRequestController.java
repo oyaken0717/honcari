@@ -39,7 +39,7 @@ public class AcceptRequestController {
 	 * @param redirectAttributes   フラッシュスコープ
 	 * @return 貸出情報一覧画面
 	 */
-	@RequestMapping(value = "/accept", method = RequestMethod.POST)
+	@RequestMapping(value = "/determine", params = "accept",method = RequestMethod.POST)
 	public String acceptRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
 			Integer rentalStatus, Integer bookRentalVersion, Integer ownedBookInfoVersion,
 			RedirectAttributes redirectAttributes) {
