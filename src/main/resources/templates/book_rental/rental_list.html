@@ -136,16 +136,19 @@
 						</div>
 						<div class="col-lg-6">
 							<div class="text-box">
-								<form th:action="@{/book_rental/accept}" method="POST">
-								書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
-								レンタル希望者：<span th:text="${bookRental.borrowUser.name}">さん</span><br>
-								レンタル希望期間：<span th:text="${bookRental.requestDeadline}">まで</span><br>
-								ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
-								<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
-								<input type="hidden" th:value="${bookRental.rentalStatus}" name="rentalStatus">
-								<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
-								<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
-								<div><button class="approval-btn btn btn-warning btn-sm" type="submit">承認</button></div>
+								<form th:action="@{/book_rental/determine}" method="POST">
+									書籍名：<span th:text="${bookRental.ownedBookInfo.book.title}"></span><br>
+									レンタル希望者：<span th:text="${bookRental.borrowUser.name}">さん</span><br>
+									レンタル希望期間：<span th:text="${bookRental.requestDeadline}">まで</span><br>
+									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
+									<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
+									<input type="hidden" th:value="${bookRental.rentalStatus}" name="rentalStatus">
+									<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
+									<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
+									<div>
+										<input type="submit" name="accept" th:value="承認" class="submit submit-btn btn btn-warning btn-sm">
+										<input type="submit" name="refuse" th:value="却下" class="submit submit-btn btn btn-primary btn-sm">
+									</div>
 								</form>
 							</div>
 						</div>
