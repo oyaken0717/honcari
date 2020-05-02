@@ -19,8 +19,7 @@
 
 	<!-- page content -->
 	<div class="container">
-		<div class="row">
-			<div class="w-75 mx-auto">
+		<div class="row mx-auto my-5">
 				<div class="alert alert-info alert-dismissible fade show mt-2" role="alert" th:if="${completeMessage} or ${updatePasswordMessage}">
 					<span th:text="${completeMessage}"></span><br th:if="${completeMessage} and ${updatePasswordMessage}">
 					<span th:text="${updatePasswordMessage}"></span>
@@ -28,20 +27,20 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<h1 class="my-4">My Page</h1>
 		
 				<!-- side bar -->
 				<div th:replace="mypage_side_menu::frag_mypage_side_menu(1,99)"></div>
 
 				<!-- main content -->
 				<!-- profile -->
-				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left">
+				<div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 float-left">
 					<div class="image mb-3">
 						<img class="rounded-lg mx-auto d-block border border-secondary" 
 							th:if="${user.imagePath}" th:src="${user.imagePath}" width="100px" height="100px">
 						<img class="rounded-lg mx-auto d-block border border-secondary" 
 							th:unless="${user.imagePath}" th:src="@{/img/user_default.png}" width="100px" height="100px">
 					</div>
+					<div class="col-lg-10 mx-auto">
 					<div class="table-responsible">
 						<table class="table">
 							<tr>
@@ -58,12 +57,10 @@
 							</tr>
 						</table>
 					</div>
-					<div class="">
-						<a class="btn btn-warning" th:href="@{/user/show_edit}">プロフィール編集</a>
+					<a class="btn btn-warning" th:href="@{/user/show_edit}">プロフィール編集</a>
 					</div>
 				</div>
 				
-			</div>
 		</div>
 	</div>
 	

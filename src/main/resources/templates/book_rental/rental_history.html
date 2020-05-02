@@ -14,71 +14,66 @@
 
 <!-- page content -->
 <div class="container">
-	<div class="row">
-		<div class="w-100 mx-auto">
-			<h1 class="my-4">レンタル履歴</h1>
+	<div class="row mx-auto my-5">
 			
-			<!-- side bar -->
-			<div th:replace="mypage_side_menu::frag_mypage_side_menu(4,99)"></div>
+		<!-- side bar -->
+		<div th:replace="mypage_side_menu::frag_mypage_side_menu(4,99)"></div>
 			
-			<!-- main content -->
-			<div class="py-5 book-detail-wrapper">
-				<div class="container">
-					<!-- タブ・メニュー -->
-					<ul class="nav nav-tabs nav-justified justify-content-center">
-						<li class="nav-item">
-							<a class="nav-link text-dark active" href="#borrowing-list" data-toggle="tab">借りた本</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" href="#lending-list" data-toggle="tab">貸した本</a>
-						</li>
-					</ul>
-					<!-- タブ・コンテント -->
-					<div class="tab-content">
-						<div class="tab-pane fade show active" id="borrowing-list" >
-							<!-- 借りた本 -->
-							<div class="pt-3 pb-3 mt-4 mb-4 border-bottom">
-								<div th:if="${borrowedList.size()}==0"><p class="text-center">借りた本はありません</p></div>
-								<div class="mt-3 mb-3" th:each="borrowedBook:${borrowedList}">
-									<div class="row">
-										<div class="col-lg-6">
-											<img th:src="@{${borrowedBook.ownedBookInfo.book.thumbnailPath}}" 
-												class="rounded img-fluid mx-auto d-block book-detail">
-										</div>
-										<div class="col-lg-6">
-											<div class="text-box">
-												<form th:action="#" method="POST">	
-													書籍名：<span th:text="${borrowedBook.ownedBookInfo.book.title}"></span><br>
-													所有者：<span th:text="${borrowedBook.ownedBookInfo.user.name}">さん</span><br>
-													レンタル期間：<span th:text="${borrowedBook.deadline}">まで</span><br>
-													現在のステータス：<span th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span>
-													<input type="hidden" th:value="${borrowedBook.bookRentalId}" name="bookRentalId">
-													<div><button class="btn btn-primary btn-sm" type="submit">もう一度借りる</button></div>
-												</form>
-											</div>
-										</div>
+		<!-- main content -->
+		<div class="col-lg-9 col-md-9 col-sm-11 col-xs-11 float-left book-detail-wrapper">
+			<!-- タブ・メニュー -->
+			<ul class="nav nav-tabs nav-justified justify-content-center">
+				<li class="nav-item">
+					<a class="nav-link text-dark active" href="#borrowing-list" data-toggle="tab">借りた本</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-dark" href="#lending-list" data-toggle="tab">貸した本</a>
+				</li>
+			</ul>
+			<!-- タブ・コンテント -->
+			<div class="tab-content">
+				<div class="tab-pane fade show active" id="borrowing-list" >
+					<!-- 借りた本 -->
+					<div class="my-4 border-bottom">
+						<div th:if="${borrowedList.size()}==0"><p class="text-center">借りた本はありません</p></div>
+						<div class="my-3" th:each="borrowedBook,status:${borrowedList}">
+							<div class="row">
+								<div class="col-lg-6">
+									<img th:src="@{${borrowedBook.ownedBookInfo.book.thumbnailPath}}" 
+										class="rounded img-fluid mx-auto d-block book-detail">
+								</div>
+								<div class="col-lg-6">
+									<div class="text-box">
+										<form action="#" method="POST">	
+											<strong th:text="${borrowedBook.ownedBookInfo.book.title}"></strong><br>
+											所有者：<span th:text="${borrowedBook.ownedBookInfo.user.name}">さん</span><br>
+											レンタル期間：<span th:text="${borrowedBook.deadline}">まで</span><br>
+											現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span>
+											<input type="hidden" th:value="${borrowedBook.bookRentalId}" name="bookRentalId">
+											<div><button class="btn btn-warning btn-sm" th:value="${status.count}" type="submit">もう一度借りる</button></div>
+										</form>
 									</div>
 								</div>
-							</div>
+							</div><hr th:unless="${status.last}">
 						</div>
-						<div class="tab-pane fade" id="lending-list">
-						<!-- 貸した本 -->
-						<div class="pt-3 pb-3 mt-4 mb-4 border-bottom">
-							<div th:if="${lentList.size()}==0"><p class="text-center">貸した本はありません</p></div>
-								<div class="mt-3 mb-3" th:each="lentBook:${lentList}">
-									<div class="row">
-										<div class="col-lg-6">
-											<img th:src="@{${lentBook.ownedBookInfo.book.thumbnailPath}}" 
-												class="rounded img-fluid mx-auto d-block book-detail">
-										</div>
-										<div class="col-lg-6">
-											<div class="text-box">
-												書籍名：<span th:text="${lentBook.ownedBookInfo.book.title}"></span><br>
-												レンタル者：<span th:text="${lentBook.borrowUser.name}">さん</span><br>
-												レンタル期間：<span th:text="${lentBook.deadline}">まで</span><br>
-												現在のステータス：<span th:text="${lentBook.ownedBookInfo.getStatus()}"></span>
-											</div>
-										</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="lending-list">
+					<!-- 貸した本 -->
+					<div class="my-4 border-bottom">
+						<div th:if="${lentList.size()}==0"><p class="text-center">貸した本はありません</p></div>
+						<div class="my-3" th:each="lentBook,status:${lentList}">
+							<div class="row">
+								<div class="col-lg-6">
+									<img th:src="@{${lentBook.ownedBookInfo.book.thumbnailPath}}" 
+										class="rounded img-fluid mx-auto d-block book-detail">
+								</div>
+								<div class="col-lg-6">
+									<div class="text-box">
+										<strong th:text="${lentBook.ownedBookInfo.book.title}"></strong><br>
+										レンタル者：<span th:text="${lentBook.borrowUser.name}">さん</span><br>
+										レンタル期間：<span th:text="${lentBook.deadline}">まで</span><br>
+										現在のステータス：<span th:text="${lentBook.ownedBookInfo.getStatus()}"></span>
 									</div>
 								</div>
 							</div>
@@ -86,11 +81,19 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+	<script>
+		$(function(){
+			$("form").each(function(){
+				if($(this).find(".book-status").text() != '貸出可') {
+					$(this).find("button").prop("disabled",true).css("cursor","default");
+				}
+			});
+		});
+	</script>
 </body>
 </html>
