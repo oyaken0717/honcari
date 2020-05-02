@@ -4,3 +4,5 @@ spring:
       url: jdbc:postgresql://localhost:5432/honcari
       username: postgres
       password: postgres
+
+        server.max-http-header-size=10000000

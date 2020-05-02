@@ -10,7 +10,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 	<script src="../static/js/book.js" th:src="@{/js/book.js}"></script>
+</body>
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
@@ -70,6 +73,7 @@
 			</table>
 		</div>
 	</div>				
+	
 <!-- モーダル -->
 <div class="modal fade" id="book-register-form" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -99,7 +103,5 @@
   	</div>	
 </div>
 </div>
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 </body>
 </html>

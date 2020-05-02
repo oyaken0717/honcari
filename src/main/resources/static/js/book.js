@@ -101,30 +101,37 @@ $(function() {
 		var description = $(this).nextAll('.description').val();
 		var pageCount = $(this).nextAll('.page-count').val();
 		var thumbnailPath = $(this).nextAll('.thumbnail-path').val();
-		$.ajax({
-			data : {
-				isbnId : isbnId,
-				title : title,
-				author : author,
-				publishedDate : publishedDate,
-				description : description,
-				pageCount : pageCount,
-				thumbnailPath : thumbnailPath
-			},
-			async: true
-		}).done(function(data) {
+		console.log(isbnId);
+		console.log(title);
+		console.log(author);
+		console.log(publishedDate);
+		console.log(description);
+		console.log(pageCount);
+		console.log(thumbnailPath);
+//		$.ajax({
+//			data : {
+//				isbnId : isbnId,
+//				title : title,
+//				author : author,
+//				publishedDate : publishedDate,
+//				description : description,
+//				pageCount : pageCount,
+//				thumbnailPath : thumbnailPath
+//			},
+//			async: true
+//		}).done(function(data) {
 			let element = document.getElementById('book-request-parameter');
 			$('#book-request-parameter').html('');
 			element.insertAdjacentHTML('beforeend', '<input type="hidden" name="isbnId" value="' + isbnId + '" id="register-isbn"><input type="hidden" name="title" value="' + 
 					title + '" id="register-title"><input type="hidden" name="author" value="' + author + '" id="register-author"><input type="hidden" name="publishedDate" value="' + publishedDate + 
 					'" id="register-published-date"><input type="hidden" name="description" value="' + description + '" id="register-description"><input type="hidden" name="pageCount" value="' + pageCount + 
 					'" id="register-page-count"><input type="hidden" name="thumbnailPath" value="' + thumbnailPath + '" id="register-thumbnail-path">');
-		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("エラーが発生しました！");
-			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
-			console.log("textStatus     : " + textStatus);
-			console.log("errorThrown    : " + errorThrown.message);
-		});
+//		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+//			alert("エラーが発生しました！");
+//			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+//			console.log("textStatus     : " + textStatus);
+//			console.log("errorThrown    : " + errorThrown.message);
+//		});
 	});
 	
 	$(document).on('click', '#book-register-button', function(){
@@ -143,6 +150,7 @@ $(function() {
 		var categoryId = $('#register-category-id').val();
 		var comment = $('#register-comment').val();
 		var url = 'http://localhost:8080/book_api/register_book';
+		console.log(isbnId);
 		$.ajax({
 			url : url,
 			type : 'POST',
