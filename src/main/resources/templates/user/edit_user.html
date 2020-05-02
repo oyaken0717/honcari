@@ -19,15 +19,13 @@
 
 	<!-- page content -->
 	<div class="container">
-		<div class="row">
-			<div class="w-85 mx-auto">
-				<h1 class="my-4">My Page</h1>
+		<div class="row mx-auto my-5">
 		
 				<!-- side bar -->
 				<div th:replace="mypage_side_menu::frag_mypage_side_menu(1,99)"></div>
 
 				<!-- main content -->
-				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left">
+				<div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 float-left">
 					<form action="mypage.html" th:action="@{/user/edit}" method="post" 
 						th:object="${editUserForm}" enctype="multipart/form-data">
 						<input type="hidden" name="userId" th:value="${user.userId}">
@@ -37,16 +35,17 @@
 								th:if="${user.imagePath}" th:src="${user.imagePath}" width="100px" height="100px">
 							<img class="rounded-lg mx-auto d-block border border-secondary" 
 								th:unless="${user.imagePath}" th:src="@{/img/user_default.png}" width="100px" height="100px">
-							<div id="file" class="input-group">
-								<div class="custom-file">
-									<input type="file" id="custom-file" class="custom-file-input" name="imagePath">
-									<label class="custom-file-label" for="custom-file" data-browse="参照">ファイル選択...</label>
-								</div>
-								<div class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary reset">取消</button>
-								</div>
-							</div>
+<!-- 							<div id="file" class="input-group"> -->
+<!-- 								<div class="custom-file"> -->
+<!-- 									<input type="file" id="custom-file" class="custom-file-input" name="imagePath"> -->
+<!-- 									<label class="custom-file-label" for="custom-file" data-browse="参照">ファイル選択...</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="input-group-append"> -->
+<!-- 									<button type="button" class="btn btn-outline-secondary reset">取消</button> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 						</div>
+						<div class="col-lg-10 mx-auto">
 						<div class="form-group row">
 							<div class="col-sm-4" th:if="${#fields.hasErrors('name')}"></div>
 							<div class="col-sm-8" th:if="${#fields.hasErrors('name')}">
@@ -114,6 +113,7 @@
 						</div>
 						<div class="form-group">
 							<button class="btn btn-warning">登録</button>
+						</div>
 						</div>
 					</form>
 				</div>							

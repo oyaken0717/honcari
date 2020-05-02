@@ -30,10 +30,6 @@ h4.content-heading{
 
 /*　全体のデザインに関わるCSS */
 
-.w-85 {
-	width: 85% !important;
-}
-
 .carousel-item {
 	height: 65vh;
 	min-height: 350px;
@@ -151,11 +147,6 @@ ul.social-buttons {
 	display: block;
 }
 
-#book-card {
-	width: 80%;
-	height: 550px;
-}
-
 #my-book-category {
 	margin-top: 40px;
 }
@@ -211,8 +202,45 @@ ul.social-buttons {
 	width: 250px;
 }
 
+.book-detail {
+	height: 180px;
+}
 
+.thumbnail {
+    height: 250px;
+}
 
+.thumbnail img {
+    height: 100%;
+    width: auto;
+}
 
+.book-card {
+	width: 80%;
+	height: 458px;
+}
 
+.card {
+	height: 458px;
+	border: none;
+}
 
+.book-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+}
+
+.book-author {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+}
+
+.book-bb {
+	border-bottom-style: double !important;
+}
