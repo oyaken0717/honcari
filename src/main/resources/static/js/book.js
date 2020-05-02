@@ -150,7 +150,6 @@ $(function() {
 		var categoryId = $('#register-category-id').val();
 		var comment = $('#register-comment').val();
 		var url = 'http://localhost:8080/book_api/register_book';
-		console.log(isbnId);
 		$.ajax({
 			url : url,
 			type : 'POST',
