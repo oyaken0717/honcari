@@ -1,10 +1,10 @@
 (function() {
 	'use strict';
 	
-	// フラッシュメッセージを表示
+	// フラッシュメッセージを消す
 	setTimeout(() => {
 		$('#flash').alert('close');
-	}, 1000);
+	}, 2000);
 
 	// 延長申請時に延長後の貸出期限のデフォルト値を１週間後にセットする
 	if(document.getElementById('rental-period') != null){
