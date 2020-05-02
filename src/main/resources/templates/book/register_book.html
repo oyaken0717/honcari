@@ -7,6 +7,7 @@
 	<title>Insert title here</title>
 	<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 	<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
@@ -17,27 +18,22 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-  <strong id="check"></strong>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<header>
-	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-		<div class="add-book-top">
-			<p class="add-book-theme">Register your books</p>
+	<div class="alert alert-info alert-dismissible fade show" role="alert">
+  		<strong id="check"></strong>
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  			<span aria-hidden="true">&times;</span>
+ 		</button>
+	</div>
+	<h2 class="section-heading">マイブックに本を登録しよう</h2>
+	<p class="section-description">書籍名もしくはISBNコードにて検索</p>
 			<div class="search-book-for-add">
 			<form th:action="@{/book/search_books}" method="POST">
-	    		<input type="text" name="name" placeholder="book's name">	　　
-				<button class="lead">Search</button>
+	    		<input type="text" name="name" placeholder="登録する本を検索...">	　　
+				<button class="btn btn-outline-secondary my-2 my-sm-0">検索</button>
 			</form>
 			</div>
-		</div>
-	</div>
-</header>
-<div class="container">
-	<div class="row">
+	<div class="container content-wrapper">
+		<div class="row">
 		<div class="table-responsive">
 		<br>
 			<table id="book-list" th:if="${volumeInfoList}">
@@ -103,5 +99,6 @@
   	</div>	
 </div>
 </div>
+<footer th:replace="footer::footer"></footer>
 </body>
 </html>
