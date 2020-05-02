@@ -41,8 +41,8 @@
 					<td width="20%">書籍サムネイル</td><td width="20%">著者</td><td width="20%">タイトル</td><td width="20%">出版日</td><td width="20%">登録</td>
 				</tr>
 				<tr th:each="item : ${volumeInfoList}">
-					<td th:if="${item.volumeInfo.imageLinks.smallThumbnail}"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
-					<td th:unless="${item.volumeInfo.imageLinks.smallThumbnail}"><img class="book-img">No Photo</td>
+					<td th:if="${item.volumeInfo.imageLinks}"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
+					<td th:unless="${item.volumeInfo.imageLinks}"><img class="book-img">No Photo</td>
 					<td th:if="${item.volumeInfo.authors}"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
 					<td th:unless="${item.volumeInfo.authors}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.title}"><span th:text="${item.volumeInfo.title}"></span></td>
@@ -89,12 +89,12 @@
 				<div class="modal-body">
 					<textarea id="register-comment" name="comment" rows="4" cols="30" placeholder="コメント"></textarea>
 				</div>
-				<div id="book-request-parameter"></div>
-				</form>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
 					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-primary">登録する</button>
   				</div>
+  				<div id="book-request-parameter"></div>
+  				</form>
   		</div>
   	</div>	
 </div>
