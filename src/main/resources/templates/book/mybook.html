@@ -19,22 +19,22 @@
 
 	<!-- page content -->
 	<div class="container">
-		<div class="row">
-			<div class="w-100 mx-auto">
-				<h1 class="my-4">My Book</h1>
+		<div class="row mx-auto my-5">
 		
 				<!-- side bar -->
 				<div th:replace="mypage_side_menu::frag_mypage_side_menu(2,${categoryNum})"></div>
 				
 				<!-- main content -->
 				
- 				 <div class="col-lg-9 col-md-8 col-sm-11 col-xs-11 float-left" th:if="${ownedBookInfoList}">
-					<div class="col-lg-3 col-md-4 col-sm-6 mb-4 float-left" th:each="ownedBookInfo : ${ownedBookInfoList}" id="book-card">
+ 				 <div class="col-lg-9 col-md-9 col-sm-11 col-xs-11 float-left" th:if="${ownedBookInfoList}">
+					<div class="col-lg-4 col-md-4 col-sm-6 mb-5 float-left book-card" th:each="ownedBookInfo:${ownedBookInfoList}">
      					<div class="card">
-      						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="card-img-top" th:src="${ownedBookInfo.book.thumbnailPath}" alt=""></a>
+      						<a class="thumbnail" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
+      							<img class="card-img mx-auto d-block" th:src="${ownedBookInfo.book.thumbnailPath}" alt="">
+      						</a>
       						<div class="card-body">
-							<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span class="card-text" th:text="${ownedBookInfo.book.title}"></span></a>
-							<p class="card-text" th:text="${ownedBookInfo.book.author}"></p>
+							<a class="card-text book-title" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span class="card-text" th:text="${ownedBookInfo.book.title}"></span></a>
+							<p class="card-text book-author" th:text="${ownedBookInfo.book.author}"></p>
 							<p class="card-text" th:text="${ownedBookInfo.book.publishedDate}"></p>
 							<a id="edit-button" class="btn btn-primary" th:href="@{'/book/show_edit?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span>書籍情報を変更</span></a>
       						</div>
@@ -43,7 +43,6 @@
 				</div>
 				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${errorMessage}">
 					<div th:text="${errorMessage}" style="text-align:center"></div>
-				</div>
 			</div>
 		</div>
 	</div>
