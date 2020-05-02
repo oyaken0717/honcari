@@ -66,8 +66,8 @@
 					<input th:unless="${item.volumeInfo.description}" type="hidden" class="description" th:value="ー">
 					<input th:if="${item.volumeInfo.pageCount}" type="hidden" class="page-count" th:value="${item.volumeInfo.pageCount}">
 					<input th:unless="${item.volumeInfo.pageCount}" type="hidden" class="page-count" th:value="ー">
-					<input th:if="${item.volumeInfo.pageCount}" type="hidden" class="thumbnail-path" th:value="${item.volumeInfo.pageCount}">
-					<input th:unless="${item.volumeInfo.pageCount}" type="hidden" class="thumbnail-path" th:value="ー">
+					<input th:if="${item.volumeInfo.imageLinks}" type="hidden" class="thumbnail-path" th:value="${item.volumeInfo.imageLinks.smallThumbnail}">
+					<input th:unless="${item.volumeInfo.imageLinks}" type="hidden" class="thumbnail-path" th:value="ー">
 					</td>
 				</tr>
 			</table>
