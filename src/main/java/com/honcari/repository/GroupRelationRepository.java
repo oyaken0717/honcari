@@ -69,7 +69,7 @@ public class GroupRelationRepository {
 	}
 	
 	public void update(GroupRelation gr) {
-		String sql = "UPDATE group_relations SET group_relation_id=:id,user_id=:userId,group_id=:groupId,relation_status=:relation_status WHERE user_id=:userId AND relation_status=0";
+		String sql = "UPDATE group_relations SET group_relation_id=:id,user_id=:userId,group_id=:groupId,relation_status=:relation_status WHERE group_relation_id=:id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(gr);
 		template.update(sql, param);	
 	}
