@@ -152,7 +152,7 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserId(Integer userId) {
-		String sql = SQL + "WHERE u.status != 9 AND u.user_id in ("
+		String sql = SQL + "WHERE u.status != 9 AND o.book_status != 4 AND u.user_id in ("
 							+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
 								+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status=1)) "
 						 + "ORDER BY c.category_id;";
@@ -172,7 +172,7 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserIdAndCategoryId(Integer userId, Integer categoryId) {
-		String sql = SQL + "WHERE u.status != 9 AND c.category_id = :categoryId AND u.user_id in ("
+		String sql = SQL + "WHERE u.status != 9 AND o.book_status != 4 AND c.category_id = :categoryId AND u.user_id in ("
 				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
 				+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
 				+ "ORDER BY c.category_id;";
@@ -192,7 +192,7 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserIdAndTitle(Integer userId, String title) {
-		String sql = SQL + "WHERE b.title LIKE :title AND u.status != 9 AND u.user_id in ("
+		String sql = SQL + "WHERE b.title LIKE :title AND u.status != 9 AND o.book_status != 4 AND u.user_id in ("
 				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
 				+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
 				+ "ORDER BY c.category_id;";
