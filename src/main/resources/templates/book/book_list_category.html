@@ -71,9 +71,8 @@
 					<div class="mr-4 mb-4 bg-white col-md-2" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
 						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="bd-placeholder-img card-img-top" width="100%" height="232" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a>
 						<div class="p-2">
-							<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
-								<span th:unless="${ownedBookInfo.book.title.length() > 20}" th:text="${ownedBookInfo.book.title}"></span>
-								<span th:if="${ownedBookInfo.book.title.length() > 20}" th:text="${ownedBookInfo.book.title.substring(0,18) + '...'}"></span>
+							<a class="card-text book-title" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
+								<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
 							</a><br>
 							<span th:text="'所有者：' + ${ownedBookInfo.user.name}"></span><br>			
 						</div>
