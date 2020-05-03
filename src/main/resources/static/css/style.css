@@ -5,17 +5,23 @@
 /*　全体のデザインに関わるCSS */
 :root { 
 	--yellow: #f7c600;
+	--yelloHover: #e0a800;
 	--white: #fffff;
+	--gray: #808080;
+}
+.text-yellow{
+	color: var(--yellow); !important
 }
 
 .content-wrapper{
-	
+	padding-top: 55px;
+	padding-bottom: 55px;
 }
 
 h2.section-heading {
 	font-size: 2.0rem;
-	margin-top: 1.5rem;
-	margin-bottom: 0.5rem;
+	padding-top: 1.5rem;
+	padding-bottom: 0.5rem;
 	text-align: center;
 }
 
@@ -40,6 +46,21 @@ h4.content-heading{
 	background-size: cover;
 }
 /* ヘッダー　*/
+.menu-btn{
+	font-size: 30px;
+	line-height: 50px;
+	display: block;
+	width: 50px;
+	height: 50px;
+	color: #495057;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	border-radius: 100%;
+	outline: none;
+}
+
+
 
 /* フッター　*/
 footer {
@@ -73,6 +94,22 @@ ul.social-buttons {
 	border-radius: 100%;
 	outline: none;
 	background-color: var(--yellow);
+}
+
+.logo {
+	font-size: 20px;
+	width: 80px;
+	height: 80px;
+	-webkit-tfransition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	color: #fff;
+	border-radius: 100%;
+	outline: none;
+	background-color: var(--yellow);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 /* 本一覧ページ　*/
@@ -263,3 +300,25 @@ ul.social-buttons {
 	background-color:#fff3cd;
 	color: #856404;
 }
+
+.full-width {
+     width:100vw; 
+     position: relative;
+     left: 50%;
+     right: 50%;
+     margin-left: -50vw;
+     margin-right: -50vw;
+     height: 18	0px;
+ }
+ 
+ ul.category-list {
+ 	list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ 
+ li.category {
+ 	margin-left: 10px;
+    margin-bottom: 10px;
+ }

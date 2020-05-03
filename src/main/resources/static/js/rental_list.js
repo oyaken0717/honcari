@@ -4,7 +4,7 @@
 	// フラッシュメッセージを消す
 	setTimeout(() => {
 		$('#flash').alert('close');
-	}, 2000);
+	}, 3000);
 
 	// 延長申請時に延長後の貸出期限のデフォルト値を１週間後にセットする
 	if(document.getElementById('rental-period') != null){

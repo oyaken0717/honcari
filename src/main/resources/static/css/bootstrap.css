@@ -154,14 +154,13 @@ sup {
 }
 
 a {
-  color: #007bff;
+  color: #f7c600;
   text-decoration: none;
   background-color: transparent;
 }
 
 a:hover {
-  color: #0056b3;
-  text-decoration: underline;
+  color: #e0a800;
 }
 
 a:not([href]) {
@@ -2982,14 +2981,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-warning {
-  color: #ffc107;
-  border-color: #ffc107;
+  color: var(--yellow);
+  border-color: var(--yellow);
 }
 
 .btn-outline-warning:hover {
-  color: #212529;
-  background-color: #ffc107;
-  border-color: #ffc107;
+  color: #fffff;
+  background-color: var(--yellow);
+  border-color: var(--yellow)';
 }
 
 .btn-outline-warning:focus, .btn-outline-warning.focus {
@@ -3003,7 +3002,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-warning:not(:disabled):not(.disabled):active, .btn-outline-warning:not(:disabled):not(.disabled).active,
 .show > .btn-outline-warning.dropdown-toggle {
-  color: #212529;
+  color: #fffff;
   background-color: #ffc107;
   border-color: #ffc107;
 }
@@ -4242,6 +4241,7 @@ input[type="button"].btn-block {
 }
 
 .nav-link:hover, .nav-link:focus {
+  color: var(--yellow);
   text-decoration: none;
 }
 
@@ -4630,15 +4630,15 @@ input[type="button"].btn-block {
 }
 
 .navbar-light .navbar-brand {
-  color: rgba(0, 0, 0, 0.9);
+  color: var(--yellow);
 }
 
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-  color: rgba(0, 0, 0, 0.9);
+  color: var(--yellowHover);
 }
 
 .navbar-light .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--gray);
 }
 
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
@@ -4653,7 +4653,7 @@ input[type="button"].btn-block {
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .nav-link.active {
-  color: rgba(0, 0, 0, 0.9);
+  color: var(--gray);
 }
 
 .navbar-light .navbar-toggler {
@@ -5245,7 +5245,6 @@ a.badge-dark:focus, a.badge-dark.focus {
   background-image: url(/img/home.jpeg);
   color: #fff;
   padding: 2rem 1rem;
-  margin-bottom: 2rem;
   background-color: #e9ecef;
   border-radius: 0.3rem;
 }
@@ -5263,11 +5262,14 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert {
-  position: relative;
+  position: absolute;
+  width: 100%;
   padding: 1.0rem 0.75rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+  z-index: 2;
 }
 
 .alert-heading {
