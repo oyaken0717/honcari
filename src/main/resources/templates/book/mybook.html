@@ -36,12 +36,12 @@
 							<a class="card-text book-title" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span class="card-text" th:text="${ownedBookInfo.book.title}"></span></a>
 							<p class="card-text book-author" th:text="${ownedBookInfo.book.author}"></p>
 							<p class="card-text" th:text="${ownedBookInfo.book.publishedDate}"></p>
-							<a id="edit-button" class="btn btn-primary" th:href="@{'/book/show_edit?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span>書籍情報を変更</span></a>
+							<a id="edit-button" class="btn btn-warning" th:href="@{'/book/show_edit?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span>書籍情報を変更</span></a>
       						</div>
       					</div>
       				</div>
 				</div>
-				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${errorMessage}">
+				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" style="margin-top:70px" th:if="${errorMessage}">
 					<div th:text="${errorMessage}" style="text-align:center"></div>
 			</div>
 		</div>
