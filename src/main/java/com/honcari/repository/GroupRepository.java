@@ -35,6 +35,7 @@ public class GroupRepository {
 		List<OwnedBookInfo> ownedBookInfoList = new ArrayList<>();
 
 		Group group = new Group();
+		User ownerUser = null;
 		User user = new User();
 		int beforeGroupId = 0;
 		int beforeUserId = 0;
@@ -50,6 +51,16 @@ public class GroupRepository {
 				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
 				group.setGroupStatus(rs.getInt("g_group_status"));
 				group.setUserList(userList);
+				group.setOwnerUser(ownerUser);
+				ownerUser =  new User();
+				ownerUser.setUserId(rs.getInt("ou_user_id"));
+				ownerUser.setName(rs.getString("ou_name"));
+				ownerUser.setEmail(rs.getString("ou_email"));
+				ownerUser.setPassword(rs.getString("ou_password"));
+				ownerUser.setImagePath(rs.getString("ou_image_path"));
+				ownerUser.setProfile(rs.getString("ou_profile"));
+				ownerUser.setStatus(rs.getInt("ou_status"));
+				group.setOwnerUser(ownerUser);
 				groupList.add(group);
 				
 				beforeGroupId = nowGroupId;
@@ -97,6 +108,15 @@ public class GroupRepository {
 		group.setDescription(rs.getString("description"));
 		group.setOwnerUserId(rs.getInt("owner_user_id"));
 		group.setGroupStatus(rs.getInt("group_status"));
+		User ownerUser =  new User();
+		ownerUser.setUserId(rs.getInt("ou_user_id"));
+		ownerUser.setName(rs.getString("ou_name"));
+		ownerUser.setEmail(rs.getString("ou_email"));
+		ownerUser.setPassword(rs.getString("ou_password"));
+		ownerUser.setImagePath(rs.getString("ou_image_path"));
+		ownerUser.setProfile(rs.getString("ou_profile"));
+		ownerUser.setStatus(rs.getInt("ou_status"));
+		group.setOwnerUser(ownerUser);
 		return group;
 	};
 	
@@ -108,11 +128,11 @@ public class GroupRepository {
 	private static final StringBuilder getSQL() {
 		StringBuilder SQL = new StringBuilder();
 		SQL.append("SELECT g.group_id g_group_id, g.name g_name, g.description g_description, g.owner_user_id g_owner_user_id, ");
-		SQL.append("g.group_status g_group_status, u.user_id u_user_id, u.name u_name, u.email u_email, ");
-		SQL.append("u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, ");
+		SQL.append("g.group_status g_group_status,ou.user_id ou_user_id,ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path,ou.profile ou_profile, ou.status ou_status,");
+		SQL.append("u.user_id u_user_id, u.name u_name, u.email u_email,u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, ");
 		SQL.append("o.owned_book_info_id o_owned_book_info_id, o.user_id o_user_id, o.book_id o_book_id, o.category_id o_category_id, ");
 		SQL.append("o.book_status o_book_status, o.comment o_comment FROM groups g LEFT OUTER JOIN group_relations gr ");
-		SQL.append("ON g.group_id = gr.group_id LEFT OUTER JOIN users u ON gr.user_id = u.user_id LEFT OUTER JOIN owned_book_info o ");
+		SQL.append("ON g.group_id = gr.group_id LEFT OUTER JOIN users ou ON g.owner_user_id = ou.user_id LEFT OUTER JOIN users u ON gr.user_id = u.user_id LEFT OUTER JOIN owned_book_info o ");
 		SQL.append("ON u.user_id = o.user_id AND o.book_status <> 1 ");
 		return SQL;
 	}
@@ -152,9 +172,15 @@ public class GroupRepository {
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByLikeName(String name) {
-		String sql = "SELECT group_id,name,description,owner_user_id,group_status FROM groups WHERE name LIKE :name ORDER BY group_id";
+//		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+//				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
+//				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
+//				+ "g.owner_user_id = ou.user_id WHERE g.name LIKE :name ORDER BY g.group_id";
+		StringBuilder sql = getSQL();
+		sql.append(" WHERE g.name LIKE :name ORDER BY g.group_id");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
-		return template.query(sql, param, GROUP_ROW_MAPPER);
+		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
+		return groupList;
 	}
 	
 	/**
@@ -192,7 +218,10 @@ public class GroupRepository {
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByOwnerUserId(Integer ownerUserId) {
-		String sql = "SELECT group_id,name,description,owner_user_id,group_status FROM groups WHERE owner_user_id = :ownerUserId order by group_id";
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
+				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
+				+ "g.owner_user_id = ou.user_id WHERE owner_user_id = :ownerUserId order by group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("ownerUserId",ownerUserId);
 		List<Group> groupList = template.query(sql, param, GROUP_ROW_MAPPER);
 		if(groupList.isEmpty())return null;

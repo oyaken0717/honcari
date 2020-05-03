@@ -114,6 +114,7 @@ $(function() {
 			async: true
 		}).done(function(data) {
 			let element = document.getElementById('book-request-parameter');
+			console.log(element)
 			$('#book-request-parameter').html('');
 			element.insertAdjacentHTML('beforeend', '<input type="hidden" name="isbnId" value="' + isbnId + '" id="register-isbn"><input type="hidden" name="title" value="' + 
 					title + '" id="register-title"><input type="hidden" name="author" value="' + author + '" id="register-author"><input type="hidden" name="publishedDate" value="' + publishedDate + 

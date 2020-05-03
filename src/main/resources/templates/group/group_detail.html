@@ -60,5 +60,9 @@
 	<a th:if="${session.fromManagement}!=null" th:href="@{/group/to_management}">戻る</a>
 	<a th:if="${session.fromManagement}==null" th:href="@{/group/to_search}">戻る</a>
 	</form>
+	
+
+<!-- コンテンツ -->
+<footer th:replace="footer::footer"></footer>
 </body>
 </html>

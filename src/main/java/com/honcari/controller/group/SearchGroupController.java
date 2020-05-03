@@ -5,11 +5,13 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.honcari.domain.Group;
+import com.honcari.domain.LoginUser;
 import com.honcari.service.group.SearchGroupService;
 
 @Controller
@@ -26,16 +28,19 @@ public class SearchGroupController {
 	public String toSearchGroup() {
 		session.setAttribute("fromManagement", null);
 		
-		return "group/search_group";
+//		return "group/search_group";
+		return "group/search_group2";
 	}
 	
 	
 	@RequestMapping("/search")
-	@ResponseBody
-	public List<Group> searchGroup(String name) {
+	public String searchGroup(String name,Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		List<Group> groupList = searchGroupService.searchGroup(name);
-		
-		return groupList;
+//		boolean b = groupList.get(0).getUserList().stream().map(u -> u.getUserId()).anyMatch(u -> u==loginUser.getUser().getUserId());
+//		model.addAttribute("b",b);
+		model.addAttribute("userId",loginUser.getUser().getUserId());
+		model.addAttribute("groupList",groupList);
+		return "group/search_group2";
 	}
 
 }
