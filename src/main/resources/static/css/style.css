@@ -244,3 +244,17 @@ ul.social-buttons {
 .book-bb {
 	border-bottom-style: double !important;
 }
+
+#register-tr {
+  border-bottom: solid 1px #eee;
+}
+
+#book-list th {
+	text-align: center;
+  padding: 7px 0;
+  border-right:solid 1px white;
+  border-left:solid 1px white;
+  background-color:#f7c600;
+  color: white;
+  border-radius: 5px 5px 5px 5px;
+}
