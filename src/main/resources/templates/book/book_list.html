@@ -55,13 +55,13 @@
 <!-- ヘッダー画像 -->
 <div class="home-image jumbotron jumbotron-fluid">
 	 <div class="container">
-	   <h1 class="display-4 my-3 title text-white text-uppercase text-center">Honcari</h1>
-	   <p class="lead text-white font-weight-normal op-8 text-center">-気軽に本をどこへでも-</p>
+	   <h1 class="display-4 my-3 title text-yellow text-uppercase text-center font-weight-bold">Honcari</h1>
+	   <p class="lead text-white font-weight-normal op-8 text-center font-weight-bold">-気軽に本をどこへでも-</p>
 	 </div>
 </div>
 <!-- コンテンツ -->
 <div class="container content-wrapper">
-	<div class="full-width bg-light">
+	<div class="full-width">
 		<h2 class="section-heading">みんなの本棚</h2>
 		<p class="section-description">気になる本があったら貸出リクエストを送ろう</p>
 		<ul class="category-list">
@@ -74,7 +74,7 @@
 		<div class="mt-5 mb-5 col-md-10 col-md-offset-2" th:each="category: ${categoryList}">
 			<div class="mb-3 d-flex justify-content-between">
 				<h4 class="content-heading mb-0 d-flex align-items-end" th:text="${category.name}"></h4>
-				<a class="btn btn-outline-secondary" th:href="@{'/show_one_category?categoryId=' + ${category.categoryId}}">すべて見る ></a>
+				<a class="btn btn-warning" th:href="@{'/show_one_category?categoryId=' + ${category.categoryId}}">すべて見る ></a>
 			</div>
 			<hr>
 			<div class="slider">

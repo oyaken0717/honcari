@@ -9,6 +9,9 @@
 	--white: #fffff;
 	--gray: #808080;
 }
+.text-yellow{
+	color: var(--yellow); !important
+}
 
 .content-wrapper{
 	padding-top: 55px;
