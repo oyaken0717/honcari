@@ -18,12 +18,12 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
-<!-- 	<div class="alert alert-info alert-dismissible fade show" role="alert">
+	<div id="book-register-alert" class="alert alert-warning alert-top" role="alert">
   		<strong id="check"></strong>
   		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
   			<span aria-hidden="true">&times;</span>
  		</button>
-	</div> -->
+	</div>
 	<div class="container content-wrapper">
 	<h2 class="section-heading" style="padding-top: 50px">マイブックに本を登録しよう</h2>
 	<p class="section-description">書籍名もしくはISBNコードにて検索</p>
@@ -49,7 +49,7 @@
 					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.publishedDate}"><span th:text="${item.volumeInfo.publishedDate}"></span></td>
 					<td th:unless="${item.volumeInfo.publishedDate}"><span>ー</span></td>
-					<td><button id="register-btn" class="btn btn-warning" data-toggle="modal" data-target="#book-register-form">登録</button>
+					<td><button id="register-btn" class="btn btn-warning register-btn" data-toggle="modal" data-target="#book-register-form">登録</button>
 					<input th:if="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="${item.volumeInfo.industryIdentifiers[0].identifier}">
 					<input th:unless="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="ー">
 					<input th:if="${item.volumeInfo.title}" type="hidden" class="title" th:value="${item.volumeInfo.title}">
@@ -75,7 +75,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">書籍カテゴリを選択する</h5>
+					<h5 class="modal-title">書籍情報を登録する</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -91,7 +91,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-primary">登録する</button>
+					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-warning">登録する</button>
   				</div>
   				<div id="book-request-parameter"></div>
   				</form>

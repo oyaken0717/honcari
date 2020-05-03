@@ -1,4 +1,5 @@
 $(function() {	
+	$("#book-register-alert").hide();
 //	$("#book-button").click(function() {
 //		var name = $("#book-name").val();
 //		name += "　";
@@ -179,4 +180,10 @@ $(function() {
 			console.log("errorThrown    : " + errorThrown.message);
 		});
 	});
+	$(function(){
+		  $(".message:not(:animated)").fadeIn("slow",function(){
+		    $(this).delay(5000).fadeOut("slow");
+		  });
+		});
+		</script>
 });

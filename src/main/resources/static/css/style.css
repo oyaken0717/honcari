@@ -250,11 +250,16 @@ ul.social-buttons {
 }
 
 #book-list th {
-	text-align: center;
+  text-align: center;
   padding: 7px 0;
   border-right:solid 1px white;
   border-left:solid 1px white;
-  background-color:#f7c600;
-  color: white;
+  background-color:#fff3cd;
+  color: #856404;
   border-radius: 5px 5px 5px 5px;
+}
+
+.register-btn {
+	background-color:#fff3cd;
+	color: #856404;
 }
