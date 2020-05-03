@@ -6,6 +6,7 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
@@ -56,7 +57,7 @@
         </a>
   </div>
 </header> -->
-<div class="bg-light">
+<div>
 	<div class="jumbotron jumbotron-fluid" style="'background-image:url(/img/home.jpeg)'">
 	  <div class="container">
 	    <h1 class="display-4 my-3 title text-white text-uppercase">Honcari</h1>
@@ -65,13 +66,14 @@
 	</div>
 	<div class="container">
 		<h1 class="mb-4" th:text="${categoryList[0].name}">書籍一覧</h1>
+		<hr>
 		<div class="row">
 			<div class="col-md-12" th:each="category: ${categoryList}">
 				<div class="row">
-					<div class="mr-4 mb-4 bg-white col-md-2" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
-						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="bd-placeholder-img card-img-top" width="100%" height="232" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a>
+					<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
+						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="bd-placeholder-img card-img-top" width="100%" height="210" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a>
 						<div class="p-2">
-							<a class="card-text book-title" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
+							<a class="card-text book-title text-dark" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 								<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
 							</a><br>
 							<span th:text="'所有者：' + ${ownedBookInfo.user.name}"></span><br>			
@@ -80,8 +82,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
 </div>
-</div>
+<!-- コンテンツ -->
+<footer th:replace="footer::footer"></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>

@@ -15,8 +15,8 @@
 
 h2.section-heading {
 	font-size: 2.0rem;
-	margin-top: 1.5rem;
-	margin-bottom: 0.5rem;
+	padding-top: 1.5rem;
+	padding-bottom: 0.5rem;
 	text-align: center;
 }
 
@@ -74,6 +74,22 @@ ul.social-buttons {
 	border-radius: 100%;
 	outline: none;
 	background-color: var(--yellow);
+}
+
+.logo {
+	font-size: 20px;
+	width: 80px;
+	height: 80px;
+	-webkit-tfransition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	color: #fff;
+	border-radius: 100%;
+	outline: none;
+	background-color: var(--yellow);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 /* 本一覧ページ　*/
@@ -259,3 +275,25 @@ ul.social-buttons {
   color: white;
   border-radius: 5px 5px 5px 5px;
 }
+
+.full-width {
+     width:100vw; 
+     position: relative;
+     left: 50%;
+     right: 50%;
+     margin-left: -50vw;
+     margin-right: -50vw;
+     height: 18	0px;
+ }
+ 
+ ul.category-list {
+ 	list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ 
+ li.category {
+ 	margin-left: 10px;
+    margin-bottom: 10px;
+ }
