@@ -185,5 +185,4 @@ $(function() {
 		    $(this).delay(5000).fadeOut("slow");
 		  });
 		});
-		</script>
 });
