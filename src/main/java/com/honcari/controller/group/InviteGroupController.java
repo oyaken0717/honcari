@@ -63,12 +63,16 @@ public class InviteGroupController {
 		List<User> userList = new ArrayList<>();
 		if(form.getUserNameList()!=null) {
 			form.getUserNameList().forEach(name -> {
+				redirectAttributesm.addFlashAttribute("name","joinGroup");
 				User user = registerGroupService.findByName(name);
 				userList.add(user);
 			});
 		}
 		inviteGroupService.inviteGroup(userList,form.getGroupId());
-		
+		redirectAttributesm.addFlashAttribute("joinGroup","joinGroup");
+		redirectAttributesm.addFlashAttribute("complete","complete");
+		redirectAttributesm.addFlashAttribute("userList",userList);
+
 		return "redirect:/group/show_detail?id="+form.getGroupId();
 	}
 

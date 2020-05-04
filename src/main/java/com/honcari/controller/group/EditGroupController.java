@@ -32,7 +32,7 @@ public class EditGroupController {
 	public String toEditGroup(Integer groupId, Model model) {
 		Group group = showGroupDetailService.showGroupDetail(groupId);
 		model.addAttribute("group", group);
-		return "group/edit_group";
+		return "group/edit_group2";
 	}
 
 	@RequestMapping("/edit_group")

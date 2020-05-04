@@ -34,7 +34,7 @@ public class ShowGroupManagementController {
 		model.addAttribute("notApprovedUser",notApprovedUser);
 		model.addAttribute("ownGroupList",ownGroupList);
 		session.setAttribute("fromManagement", "fromManagement");
-		return "group/group_management";
+		return "group/group_management2";
 	}
 
 }

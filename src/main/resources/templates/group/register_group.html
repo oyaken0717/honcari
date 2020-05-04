@@ -6,13 +6,16 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <nav th:replace="header::frag_header(2)"></nav>
-<div class="container">
+<div class="container content-wrapper">
+  <h2 class="section-heading">グループ作成</h2>
+   <p class="section-description">グループを作成して世界と本で繋がろう！</p>
 	<div class="row justify-content-md-center">
+	
 		<div class="col-md-8 col-md-offset-4">
-			<h1>グループ作成</h1>
 			<form th:action="@{/group/register}" th:object="${registerGroupForm}" method="post">
 			  <div class="form-group">
 			    <label for="InputGroupName">グループ名</label>
@@ -47,6 +50,8 @@
 		</div>
 	</div>
 </div>
+<!-- フッター -->
+<footer th:replace="footer::footer"></footer>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>

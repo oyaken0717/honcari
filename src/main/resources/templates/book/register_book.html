@@ -7,50 +7,49 @@
 	<title>Insert title here</title>
 	<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 	<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 	<script src="../static/js/book.js" th:src="@{/js/book.js}"></script>
+</body>
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-  <strong id="check"></strong>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<header>
-	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-		<div class="add-book-top">
-			<p class="add-book-theme">Register your books</p>
+	<div id="book-register-alert" class="alert alert-warning alert-top" role="alert">
+  		<strong id="check"></strong>
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  			<span aria-hidden="true">&times;</span>
+ 		</button>
+	</div>
+	<div class="container content-wrapper">
+	<h2 class="section-heading" style="padding-top: 50px">マイブックに本を登録しよう</h2>
+	<p class="section-description">書籍名もしくはISBNコードにて検索</p>
 			<div class="search-book-for-add">
 			<form th:action="@{/book/search_books}" method="POST">
-	    		<input type="text" name="name" placeholder="book's name">	　　
-				<button class="lead">Search</button>
+	    		<input type="text" name="name" placeholder="登録する本を検索...">	　　
+				<button class="btn btn-outline-secondary my-2 my-sm-0">検索</button>
 			</form>
 			</div>
-		</div>
-	</div>
-</header>
-<div class="container">
-	<div class="row">
+		<div class="row">
 		<div class="table-responsive">
 		<br>
 			<table id="book-list" th:if="${volumeInfoList}">
 				<tr>
-					<td width="20%">書籍サムネイル</td><td width="20%">著者</td><td width="20%">タイトル</td><td width="20%">出版日</td><td width="20%">登録</td>
+					<th width="20%">書籍サムネイル</th><th width="20%">著者</th><th width="20%">タイトル</th><th width="20%">出版日</th><th width="20%">登録</th>
 				</tr>
-				<tr th:each="item : ${volumeInfoList}">
-					<td th:if="${item.volumeInfo.imageLinks.smallThumbnail}"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
-					<td th:unless="${item.volumeInfo.imageLinks.smallThumbnail}"><img class="book-img">No Photo</td>
+				<tr th:each="item : ${volumeInfoList}" id="register-tr">
+					<td th:if="${item.volumeInfo.imageLinks}" style="padding:10px 0 10px 0"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
+					<td th:unless="${item.volumeInfo.imageLinks}"><img class="book-img">No Photo</td>
 					<td th:if="${item.volumeInfo.authors}"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
 					<td th:unless="${item.volumeInfo.authors}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.title}"><span th:text="${item.volumeInfo.title}"></span></td>
 					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.publishedDate}"><span th:text="${item.volumeInfo.publishedDate}"></span></td>
 					<td th:unless="${item.volumeInfo.publishedDate}"><span>ー</span></td>
-					<td><button id="register-btn" class="btn btn-secondary" data-toggle="modal" data-target="#book-register-form">登録</button>
+					<td><button id="register-btn" class="btn btn-warning register-btn" data-toggle="modal" data-target="#book-register-form">登録</button>
 					<input th:if="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="${item.volumeInfo.industryIdentifiers[0].identifier}">
 					<input th:unless="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="ー">
 					<input th:if="${item.volumeInfo.title}" type="hidden" class="title" th:value="${item.volumeInfo.title}">
@@ -63,19 +62,20 @@
 					<input th:unless="${item.volumeInfo.description}" type="hidden" class="description" th:value="ー">
 					<input th:if="${item.volumeInfo.pageCount}" type="hidden" class="page-count" th:value="${item.volumeInfo.pageCount}">
 					<input th:unless="${item.volumeInfo.pageCount}" type="hidden" class="page-count" th:value="ー">
-					<input th:if="${item.volumeInfo.pageCount}" type="hidden" class="thumbnail-path" th:value="${item.volumeInfo.pageCount}">
-					<input th:unless="${item.volumeInfo.pageCount}" type="hidden" class="thumbnail-path" th:value="ー">
+					<input th:if="${item.volumeInfo.imageLinks}" type="hidden" class="thumbnail-path" th:value="${item.volumeInfo.imageLinks.smallThumbnail}">
+					<input th:unless="${item.volumeInfo.imageLinks}" type="hidden" class="thumbnail-path" th:value="NoPhoto">
 					</td>
 				</tr>
 			</table>
 		</div>
 	</div>				
+	
 <!-- モーダル -->
 <div class="modal fade" id="book-register-form" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">書籍カテゴリを選択する</h5>
+					<h5 class="modal-title">書籍情報を登録する</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -89,17 +89,16 @@
 				<div class="modal-body">
 					<textarea id="register-comment" name="comment" rows="4" cols="30" placeholder="コメント"></textarea>
 				</div>
-				<div id="book-request-parameter"></div>
-				</form>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-primary">登録する</button>
+					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-warning">登録する</button>
   				</div>
+  				<div id="book-request-parameter"></div>
+  				</form>
   		</div>
   	</div>	
 </div>
 </div>
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<footer th:replace="footer::footer"></footer>
 </body>
 </html>

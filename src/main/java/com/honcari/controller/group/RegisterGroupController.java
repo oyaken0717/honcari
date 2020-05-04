@@ -77,6 +77,8 @@ public class RegisterGroupController {
 		group.setGroupStatus(0);
 		group = registerGroupService.insertGroup(group, userList);
 		redirectAttributesm.addFlashAttribute("complete", "complete");
+		redirectAttributesm.addFlashAttribute("registerGroup", "registerGroup");
+
 		return "redirect:/group/show_detail?id=" + group.getId();
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.GroupRelation;
 import com.honcari.domain.LoginUser;
@@ -35,13 +36,16 @@ public class JoinGroupController {
 	}
 	
 	@RequestMapping("/join")
-	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser,Model model) {
+	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser,Model model,RedirectAttributes redirect) {
 		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);
-		System.out.println("グループ参加成功");
 		if(session.getAttribute("fromManagement")!=null) {
 			return "redirect:/group/to_management";
 		}
-		return "redirect:/group/to_search";
+		
+		redirect.addFlashAttribute("joinGroup", "joinGroup");
+		redirect.addFlashAttribute("complete", "complete");
+
+		return "redirect:/group/to_management";
 	}
 
 }

@@ -10,21 +10,35 @@
   </head>
   <body >
 <main role="main">
+<div th:if="${complete}" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong th:if="${registerGroup}">グループを作成しました!!</strong>
+  <div th:if="${joinGroup}">
+	  <span th:if="${joinGroup}" th:each="user:${userList}">
+	  	<strong th:text="${user.name} + さん"></strong>&nbsp;&nbsp;
+	  </span>
+	  <span>をこのグループに招待しました。相手が承認するまでお待ちください。</span>
+  </div>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <nav th:replace="header::frag_header(1)"></nav>
 
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
-    <div class="container">
+    <div class="container content-wrapper">
       <h1 class="display-3" th:text="${group.name}">Hello, world!</h1>
-      <p align="right"><a class="btn btn-warning btn-lg" href="#" role="button" th:if="${b}==false">このグループに参加する &raquo;</a></p>
-      <p align="right"><a class="btn btn-primary btn-lg" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b}==true" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a></p>
+      <p align="right"><a class="btn btn-warning btn-lg" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a></p>
+      <p align="right"><a class="btn btn-primary btn-lg" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a></p>
+    
     </div>
   </div>
 
-  <div class="container">
-   <p align="right"><a class="btn btn-warning btn-sm" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId}">このグループに招待する</a>&nbsp;&nbsp;
-   <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary" th:if="${userId}==${group.ownerUserId}">Edit</a></p>
-  
+  <div class="container content-wrapper">
+	  <div>
+		   <p align="right" class=".mt-5"><a class="btn btn-warning btn-sm" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId}">このグループに招待する</a>&nbsp;&nbsp;
+		   <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary" th:if="${userId}==${group.ownerUserId}">Edit</a></p>
+	  </div>
 	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
   			<li class="nav-item">
@@ -37,6 +51,7 @@
    				 <a class="nav-link text-dark" href="#users" data-toggle="tab">ユーザー</a>
   			</li>
     	</ul>
+    	<h1>内容は未実装です。</h1>
   </div> 
 
 </main>

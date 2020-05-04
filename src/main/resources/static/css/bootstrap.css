@@ -67,29 +67,10 @@ body {
 	padding-top: 55px;
 }
 
-[
-tabindex
-=
-"-1"
-]
-:focus
-:not
- 
-(
-:focus-visible
- 
-)
-{
-outline
-:
- 
-0
-!
-important
-;
-
-
+[tabindex="-1"]:focus:not(:focus-visible){
+outline: 0 !important;
 }
+
 hr {
 	box-sizing: content-box;
 	height: 0;
@@ -168,41 +149,20 @@ sup {
 }
 
 a {
-	color: #007bff;
-	text-decoration: none;
-	background-color: transparent;
+  color: #f7c600;
+  text-decoration: none;
+  background-color: transparent;
 }
 
 a:hover {
-	color: #0056b3;
-	text-decoration: underline;
+  color: #e0a800;
 }
 
-a
-:not
- 
-(
-[
-href
-]
- 
-)
-{
-color
-:
- 
-inherit
-;
-
-	
-text-decoration
-:
- 
-none
-;
-
-
+a:not([href] ) {
+	color: inherit;
+	text-decoration: none;
 }
+
 a:not ([href] ):hover {
 	color: inherit;
 	text-decoration: none;
@@ -287,56 +247,13 @@ button, [type="button"], [type="reset"], [type="submit"] {
 	-webkit-appearance: button;
 }
 
-button
-:not
- 
-(
-:disabled
- 
-),
-[
-type
-=
-"button"
-]
-:not
- 
-(
-:disabled
- 
-),
-[
-type
-=
-"reset"
-]
-:not
-
-	
-(
-:disabled
- 
-),
-[
-type
-=
-"submit"
-]
-:not
- 
-(
-:disabled
- 
-)
-{
-cursor
-:
- 
-pointer
-;
-
-
+button:not(:disabled),
+[type="button"]:not(:disabled ),
+[type="reset"]:not(:disabled ),
+[type="submit"]:not(:disabled ) {
+	cursor: pointer;
 }
+
 button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner,
 	[type="submit"]::-moz-focus-inner {
 	padding: 0;
@@ -3078,6 +2995,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 	color: #212529;
 	background-color: #ffc107;
 	border-color: #ffc107;
+  color: var(--yellow);
+  border-color: var(--yellow);
 }
 
 .btn-outline-warning:focus, .btn-outline-warning.focus {
@@ -3089,12 +3008,11 @@ a.btn.disabled, fieldset:disabled a.btn {
 	background-color: transparent;
 }
 
-.btn-outline-warning:not (:disabled ):not (.disabled ):active,
-	.btn-outline-warning:not (:disabled ):not (.disabled ).active, .show>.btn-outline-warning.dropdown-toggle
-	{
-	color: #212529;
-	background-color: #ffc107;
-	border-color: #ffc107;
+.btn-outline-warning:not(:disabled):not(.disabled):active, .btn-outline-warning:not(:disabled):not(.disabled).active,
+.show > .btn-outline-warning.dropdown-toggle {
+  color: #fffff;
+  background-color: #ffc107;
+  border-color: #ffc107;
 }
 
 .btn-outline-warning:not (:disabled ):not (.disabled ):active:focus,
@@ -4622,7 +4540,8 @@ none
 }
 
 .nav-link:hover, .nav-link:focus {
-	text-decoration: none;
+  color: var(--yellow);
+  text-decoration: none;
 }
 
 .nav-link.disabled {
@@ -5021,13 +4940,14 @@ none
 	color: rgba(0, 0, 0, 0.9);
 }
 
-.navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-	color: rgba(0, 0, 0, 0.9);
+.navbar-light .navbar-nav .nav-link {
+	  color: var(--yellow);
 }
 
-.navbar-light .navbar-nav .nav-link {
-	color: rgba(0, 0, 0, 0.5);
+.navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
+  color: var(--yellowHover);
 }
+
 
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus
 	{
@@ -5038,10 +4958,11 @@ none
 	color: rgba(0, 0, 0, 0.3);
 }
 
-.navbar-light .navbar-nav .show>.nav-link, .navbar-light .navbar-nav .active>.nav-link,
-	.navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active
-	{
-	color: rgba(0, 0, 0, 0.9);
+.navbar-light .navbar-nav .show > .nav-link,
+.navbar-light .navbar-nav .active > .nav-link,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .nav-link.active {
+  color: var(--gray);
 }
 
 .navbar-light .navbar-toggler {
@@ -5694,12 +5615,11 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .jumbotron {
-	background-image: url(/img/home.jpeg);
-	color: #fff;
-	padding: 2rem 1rem;
-	margin-bottom: 2rem;
-	background-color: #e9ecef;
-	border-radius: 0.3rem;
+  background-image: url(/img/home.jpeg);
+  color: #fff;
+  padding: 2rem 1rem;
+  background-color: #e9ecef;
+  border-radius: 0.3rem;
 }
 
 @media ( min-width : 576px) {
@@ -5715,11 +5635,14 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert {
-	position: relative;
-	padding: 1.0rem 0.75rem;
-	margin-bottom: 1rem;
-	border: 1px solid transparent;
-	border-radius: 0.25rem;
+  position: absolute;
+  width: 100%;
+  padding: 1.0rem 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  z-index: 2;
 }
 
 .alert-heading {

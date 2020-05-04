@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.LoginUser;
 import com.honcari.service.group.OutFromGroupService;
@@ -16,10 +17,10 @@ public class OutFromGroupController {
 	private OutFromGroupService deleteGroupRelationService;
 	
 	@RequestMapping(value="/out_group")
-	public String outGroup(Integer id, @AuthenticationPrincipal LoginUser loginUser) {
-		
+	public String outGroup(Integer id, @AuthenticationPrincipal LoginUser loginUser,RedirectAttributes redirectAttributes) {
 		deleteGroupRelationService.outGroup(loginUser.getUser().getUserId(), id);
-		System.out.println("グループから抜けました");
+		redirectAttributes.addFlashAttribute("complete", "complete");
+		redirectAttributes.addFlashAttribute("outGroup", "outGroup");
 		return "redirect:/group/to_management";
 	}
 

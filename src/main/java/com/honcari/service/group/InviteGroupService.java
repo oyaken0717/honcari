@@ -18,10 +18,10 @@ public class InviteGroupService {
 	private GroupRelationRepository groupRelationRepository;
 
 	public void inviteGroup(List<User> userList, Integer groupId) {
+		System.out.println(userList);
 
 		userList.forEach(user -> {
 			GroupRelation gr = groupRelationRepository.findByUserIdAndGroupId(user.getUserId(), groupId);
-
 			if (gr == null) {
 				groupRelationRepository.insert(user.getUserId(), groupId, 0);
 				return;

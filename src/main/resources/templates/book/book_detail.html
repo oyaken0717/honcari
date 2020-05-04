@@ -6,40 +6,42 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header>
-	<nav th:replace="header::frag_header(0)"></nav>
-</header>
-<section>
-<div class="py-5 book-detail-wrapper text-basic">
-    <div class="container">
-        <!-- Row -->
-        <div class="row align-items-center">
-            <!-- Column -->
-            <div class="col-lg-6"> 
-				<img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" 
-					th:src="@{${book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail" /> 
-			</div>
-            <!-- Column -->
-            <div class="col-lg-6 mt-4 mt-md-0">
-                <div class="text-box">
-                	<p class="font-weight-bold">
-                		貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}" th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                		所有者：<span th:text="${ownedBookInfo.user.name}">status</span></p>
-                    <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>
-                    <h4 class="font-weight-light mt-2 mb-4" th:text="${book.author}">author</h4>
-                    <h6 class="font-weight-light mt-2 mb-4">
-                    	発行日：<span th:text="${book.publishedDate}">published_date</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	総ページ数：<span th:text="${book.pageCount}">page_count</span>
-                    </h6>
-                    <p>この本の説明：<br><span th:text="${book.description}">description</span></p>
-                    <p th:if="${ownedBookInfo.comment}">持ち主のコメント：<br><span th:text="${ownedBookInfo.comment}">comment</span></p>
-					<button id="rental-request-button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" 
-						data-show="true" data-target="#rental-request-form">
-						貸出リクエスト</button>
-				</div>
-            </div>
+<nav th:replace="header::frag_header(0)"></nav>
+<div class="container content-wrapper">
+	<h2 class="section-heading">本をリクエストしよう</h2>
+	<p class="section-description">読んで見たい本があったらボタンを押そう</p>
+<!-- Row -->
+  <div class="row align-items-center">
+    <!-- Column -->
+    <div class="col-lg-6"> 
+	  <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" 
+		th:src="@{${book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail" /> 
+	</div>
+    <!-- Column -->
+    <div class="col-lg-6 mt-4">
+      <div class="text-box">
+          <p class="font-weight-bold">
+            貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}" th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            所有者：<a th:href="@{#}"><span th:text="${ownedBookInfo.user.name}">所有者</span></a>
+          </p>
+          <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>
+          <h4 class="font-weight-light mt-2 mb-4" th:text="${book.author}">author</h4>
+          <h6 class="font-weight-light mt-2 mb-4">
+           	発行日：<span th:text="${book.publishedDate}">published_date</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            総ページ数：<span th:text="${book.pageCount}">page_count</span>
+          </h6>
+          <p>この本の説明：<br><span th:text="${book.description}">description</span></p>
+          <div th:unless="${#strings.isEmpty(ownedBookInfo.comment)}">持ち主のコメント：<br>
+            <p th:text="${ownedBookInfo.comment}">comment</p>
+          </div>
+		　<button id="rental-request-button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" 
+			data-show="true" data-target="#rental-request-form">貸出リクエスト
+		  </button>
+		</div>
+     </div>
             <!-- Modal -->
 			<div class="modal fade" id="rental-request-form" tabindex="-1" role="dialog">
   				<div class="modal-dialog modal-dialog-centered" role="document">
@@ -60,17 +62,17 @@
    				     <input type="hidden" name="ownerId" th:value="${ownedBookInfo.userId}">
    				   </div>
     			   <div class="modal-footer">
+    				 <button type="submit" class="btn btn-warning">リクエストを送信</button>
     				 <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-    				 <button type="submit" class="btn btn-primary">リクエストを送信</button>
   				   </div>
   				  </form>
   				  </div>
   				</div>	
 			</div>
+			<!-- Modal -->
         </div>
     </div>
-</div>
-</section>
+<footer th:replace="footer::footer"></footer>
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script th:src="@{/js/book_detail.js}"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
