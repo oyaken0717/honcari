@@ -61,17 +61,18 @@
 </div>
 <!-- コンテンツ -->
 <div class="container content-wrapper">
-	<div class="full-width">
+	<nav id="category-scroll" class="full-width">
 		<h2 class="section-heading">みんなの本棚</h2>
 		<p class="section-description">気になる本があったら貸出リクエストを送ろう</p>
 		<ul class="category-list">
-			<li class="category" th:each="category: ${categoryList}">
-				<a class="btn btn-outline-warning" href="#"><span class="text" th:text="${category.name}"></span></a>
+			<li class="category" th:each="category, status: ${categoryList}">
+				<a class="btn btn-outline-warning" th:href="'#' + ${status.count}"><span class="text" th:text="${category.name}"></span></a>
 			</li>
 		</ul>
-	</div>
+	</nav>
 	<div class="row justify-content-md-center">
-		<div class="mt-5 mb-5 col-md-10 col-md-offset-2" th:each="category: ${categoryList}">
+		<div data-spy="scroll" data-target="#category-scroll" data-offset="0" class="col-md-10 col-md-offset-2" th:each="category, status: ${categoryList}">
+			<div th:id="${status.count}" class="space" style="height: 82px;"></div>
 			<div class="mb-3 d-flex justify-content-between">
 				<h4 class="content-heading mb-0 d-flex align-items-end" th:text="${category.name}"></h4>
 				<a class="btn btn-warning" th:href="@{'/show_one_category?categoryId=' + ${category.categoryId}}">すべて見る ></a>
@@ -84,7 +85,7 @@
 						<a class="card-text book-title text-dark" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 							<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
 						</a><br>
-						<span th:text="'所有者：' + ${ownedBookInfo.user.name}"></span><br>			
+						<span>所有者：<a href="#" th:text="${ownedBookInfo.user.name}"></a></span><br>			
 					</div>
 				</div>
 			</div>
@@ -104,6 +105,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="/js/slick.min.js"></script>
 <script type="text/javascript" src="/js/slick_option.js"></script>
- 
+<script type="text/javascript">$('body').scrollspy({ target: '#navbar-example' })</script>
 </body>
 </html>
