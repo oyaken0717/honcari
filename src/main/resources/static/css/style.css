@@ -292,15 +292,17 @@ ul.social-buttons {
   padding: 7px 0;
   border-right:solid 1px white;
   border-left:solid 1px white;
-  background-color:#fff3cd;
-  color: #856404;
+  background-color: var(--yellow);
+  color: white;
   border-radius: 5px 5px 5px 5px;
 }
 
+/* 
+他と合わせるためにコメントアウトしましたby湯口
 .register-btn {
 	background-color:#fff3cd;
 	color: #856404;
-}
+} */
 
 .full-width {
      width:100vw; 
