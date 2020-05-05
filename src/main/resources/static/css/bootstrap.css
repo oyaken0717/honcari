@@ -2997,11 +2997,9 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-outline-warning:hover {
-	color: #212529;
+	color: #fffff;
 	background-color: #ffc107;
 	border-color: #ffc107;
-  color: var(--yellow);
-  border-color: var(--yellow);
 }
 
 .btn-outline-warning:focus, .btn-outline-warning.focus {
@@ -4942,15 +4940,15 @@ none
 }
 
 .navbar-light .navbar-brand {
-	color: rgba(0, 0, 0, 0.9);
+	color: var(--yellow);
 }
 
 .navbar-light .navbar-nav .nav-link {
-	  color: var(--yellow);
+	color: var(--gray);
 }
 
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-  color: var(--yellowHover);
+    color: var(--yellowHover);
 }
 
 
