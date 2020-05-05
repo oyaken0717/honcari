@@ -4698,9 +4698,10 @@ none
 	padding: 0.25rem 0.75rem;
 	font-size: 1.25rem;
 	line-height: 1;
-	background-color: transparent;
+	background-color: var(--yellow);
 	border: 1px solid transparent;
 	border-radius: 0.25rem;
+	text-transform: uppercase;
 }
 
 .navbar-toggler:hover, .navbar-toggler:focus {
@@ -4969,8 +4970,8 @@ none
 }
 
 .navbar-light .navbar-toggler {
-	color: rgba(0, 0, 0, 0.5);
-	border-color: rgba(0, 0, 0, 0.1);
+	color: white;
+	border-color: rgba(0, 0, 0, 0);
 }
 
 .navbar-light .navbar-toggler-icon {
