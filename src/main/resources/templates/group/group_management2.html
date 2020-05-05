@@ -35,7 +35,7 @@
   			</li>
     	</ul>
     	<!-- タブ・コンテント -->
-    		<div class="tab-content">
+    	<div class="tab-content">
 			<div class="tab-pane" id="joined-groups" th:if="${belongUser}==null">
 				<div class="text-center" style="margin: 10px">参加しているグループはありません</div>
 			</div>   			
@@ -127,12 +127,11 @@
 </body>
 <style>
 .card-body{
-    overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
 	overflow: hidden;
 	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
+	-webkit-box-orient: vertical;	
 }
 </style>
 </html>
