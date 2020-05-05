@@ -28,7 +28,7 @@ public class ShowMyAllBooksService {
 	 * @param userId ユーザid
 	 * @return ユーザidに一致したユーザ情報
 	 */
-	public List<OwnedBookInfo> ShowMyAllBook(Integer userId) {
-		return ownedBookInfoRepository.findByUserId(userId);
+	public List<OwnedBookInfo> ShowMyAllBook(Integer userId, Integer page) {
+		return ownedBookInfoRepository.findByUserId(userId, page);
 	}
 }

@@ -26,7 +26,7 @@ public class ShowMyBooksByCategoryIdService {
 	 * @param categoryId カテゴリid
 	 * @return ユーザidとカテゴリidに一致したユーザが所有する書籍情報
 	 */
-	public List<OwnedBookInfo> findByCategoryId(Integer userId, Integer categoryId){
-		return ownedBookInfoRepository.findByCategoryId(userId, categoryId);
+	public List<OwnedBookInfo> findByCategoryId(Integer userId, Integer categoryId, Integer page){
+		return ownedBookInfoRepository.findByCategoryId(userId, categoryId, page);
 	}
 }
