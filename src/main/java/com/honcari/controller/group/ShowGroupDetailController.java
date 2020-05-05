@@ -25,7 +25,6 @@ public class ShowGroupDetailController {
 	@RequestMapping("/show_detail")
 	public String showGroupDetail(Integer id,Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		Group group = showGroupDetailService.showGroupDetail(id);
-		
 		boolean b = group.getUserList().stream().map(u -> u.getUserId()).anyMatch(u -> u==loginUser.getUser().getUserId());
 		
 		if(loginUser.getUser().getUserId()==group.getOwnerUserId()) {

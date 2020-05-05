@@ -45,13 +45,35 @@
     			<a class="nav-link text-dark" href="#about-group" data-toggle="tab">このグループについて</a>
  	 		</li>
  	 		<li class="nav-item">
-   				 <a class="nav-link text-dark" href="#book-list" data-toggle="tab">本一覧</a>
+   				 <a class="nav-link text-dark" href="#book-list" data-toggle="tab">シェアされている本</a>
   			</li>
   			<li class="nav-item">
    				 <a class="nav-link text-dark" href="#users" data-toggle="tab">ユーザー</a>
   			</li>
     	</ul>
-    	<h1>内容は未実装です。</h1>
+    	
+    	<div class="tab-content content-wrapper">
+			<div class="tab-pane tab-content" id="about-group" th:unless="${group}==null">
+				<div th:text="${group.description}" class="text-center"></div>
+			</div>
+			
+			<div class="tab-pane tab-content" id="book-list" th:unless="${group.userList}==null">
+				<div th:each="user:${group.userList}">
+					<div th:each="ownedBookInfo:${user.ownedBookInfoList}" >
+						<div th:text="${ownedBookInfo.book.title}" class="text-center"></div>
+					</div>
+					<div th:if="${user==null}"></div>
+				</div>
+			</div>
+			
+			<div class="tab-pane tab-content" id="users" th:unless="${group.userList}==null">
+				<div th:each="user:${group.userList}">
+					<div th:text="${user.name}" class="text-center"></div>
+				</div>
+			</div>
+		</div>
+		
+		
   </div> 
 
 </main>
@@ -65,4 +87,14 @@
 <script type="text/javascript" src="/js/slick_option.js"></script>
 <script src="../static/js/group_detail.js" th:src="@{/js/group_detail.js}"></script>
   </body>
+<style>
+.tab-content{
+  /** ５行以上で省略 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+}
+</style>
 </html>
