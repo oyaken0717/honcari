@@ -17,17 +17,19 @@
       <input class="form-control mr-sm-2" name="title" type="search" placeholder="グループ内の本を検索..." aria-label="検索...">
       <button type="submit" class="btn btn-warning my-2 my-sm-0">探す</button>
     </form>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+    <!-- ハンバーガーメニュー -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
     	aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          Menu
+          <i class="fas fa-bars"></i>
     </button>
+    <!-- ナビゲーションメニュー -->
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-      
-		<li id="page1" class="nav-item nav-link my-auto">
+      <ul class="navbar-nav ml-auto w-50 nav-justified ">
+		<li id="page1" class="nav-item">
           <a class="nav-link menu-btn" href="register_book.html" th:href="@{/book/show_register}"><i class="fas fa-book"></i></a>
         </li>
-        <li id="page2" class="nav-item nav-link dropdown my-auto">
+        <li id="page2" class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle menu-btn" id="dropdownMenuLink3" 
 				th:src="@{/img/user_default.png}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-user-friends"></i></a>
@@ -37,7 +39,7 @@
 				<a class="dropdown-item" href="group_management.html" th:href="@{/group/to_management}">グループ管理</a>
 			</div>
         </li>
-        <li id="page3" class="nav-item dropdown my-auto ml-4">
+        <li id="page3" class="nav-item dropdown">
 <!-- 			<input class="nav-link dropdown-toggle rounded-lg d-block" type="image" 
 				id="dropdownMenuLink4" width="58px" height="58px" th:src="@{/img/person-square.svg}" 
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
@@ -47,7 +49,7 @@
 			<div class="dropdown-menu dropdown-menu-lg-right dd-img" aria-labelledby="dropdownMenuLink4">
 				<a class="dropdown-item" href="mypage.html" th:href="@{/user/show_mypage}">マイページ</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="mybook.html" th:href="@{/book/show_mybook}">マイブック</a>
+				<a class="dropdown-item" href="mybook.html" th:href="@{/book/show_mybook?page=0}">マイブック</a>
 				<a class="dropdown-item" href="lend_management.html" th:href="@{/book_rental/show_list}">レンタル管理</a>
 				<a class="dropdown-item" href="lental_history.html" th:href="@{/book_rental/show_history}">レンタル履歴</a>
 				<div class="dropdown-divider"></div>

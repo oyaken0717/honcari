@@ -6,6 +6,7 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
   <!-- side bar -->
@@ -13,7 +14,7 @@
 		<div class="list-group" th:fragment="frag_mypage_side_menu_for_my_book(page)">
 			<a id="page1" href="mypage.html" th:href="@{/user/show_mypage}" 
 				class="list-group-item list-group-item-action side">プロフィール</a>
-			<a id="page2" href="mybook.html" th:href="@{/book/show_mybook}" 
+			<a id="page2" href="mybook.html" th:href="@{/book/show_mybook?page=0}" 
 				class="list-group-item list-group-item-action side">マイブック</a>
 			<a id="page3" href="lend_management.html" th:href="@{/book_rental/show_list}" 
 				class="list-group-item list-group-item-action side">レンタル管理</a>
@@ -23,7 +24,7 @@
 		
 		<!-- 書籍カテゴリ選択リスト(デザイン要検討) -->
 		<div id="my-book-category" class="list-group">
-			<a id="category0" href="mybook.html" th:href="@{/book/show_mybook}" 
+			<a id="category0" href="mybook.html" th:href="@{/book/show_mybook?page=0}" 
 				class="list-group-item list-group-item-action side-category">全カテゴリー</a>
 					
 			<a id="category1" href="mybook.html" th:href="@{/book/show_mybook_category?categoryId=1}" 

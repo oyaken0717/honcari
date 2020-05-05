@@ -140,11 +140,9 @@ public class OwnedBookInfoRepository {
 	 * @param categoryId カテゴリid
 	 * @return ユーザidとカテゴリidに一致したユーザ情報
 	 */
-	public List<OwnedBookInfo> findByCategoryId(Integer userId, Integer categoryId) {
-		String sql = SELECT_SQL
-				+ " WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9 AND o.book_status != 4;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId",
-				categoryId);
+	public List<OwnedBookInfo> findByCategoryId(Integer userId, Integer categoryId, Integer page) {
+		String sql = SELECT_SQL	+ " WHERE u.user_id = :userId AND o.category_id = :categoryId AND u.status != 9 AND o.book_status != 4 ORDER BY owned_book_info_id DESC OFFSET :page LIMIT 20;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId",categoryId).addValue("page", page);
 		return template.query(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
 	}
 
@@ -154,9 +152,26 @@ public class OwnedBookInfoRepository {
 	 * @param userId ユーザーID
 	 * @return ユーザー情報リスト
 	 */
-	public List<OwnedBookInfo> findByUserId(Integer userId) {
-		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND u.status != 9 AND o.book_status != 4;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+	public List<OwnedBookInfo> findByUserId(Integer userId, Integer page) {
+		String sql = SELECT_SQL + " WHERE u.user_id = :userId AND u.status != 9 AND o.book_status != 4 ORDER BY owned_book_info_id DESC OFFSET :page LIMIT 20;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("page", page);
 		return template.query(sql, param, OWNED_BOOK_INFO_ROW_MAPPER);
+	}
+	
+	/**
+	 * owned_book_infoテーブル内の全体件数を取得するメソッド.
+	 * 
+	 * @return owned_book_infoテーブル内の全体件数
+	 */
+	public Integer getOwnedBookInfoCount(Integer userId) {
+		String sql = "SELECT COUNT(*) FROM owned_book_info WHERE user_id = :userId AND book_status != 4";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		return template.queryForObject(sql, param, Integer.class);
+	}
+	
+	public Integer getOwnedBookInfoCountByCategoryId(Integer userId, Integer categoryId) {
+		String sql = "SELECT COUNT(*) FROM owned_book_info WHERE user_id = :userId AND book_status != 4 AND category_id = :categoryId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
+		return template.queryForObject(sql, param, Integer.class);
 	}
 }
