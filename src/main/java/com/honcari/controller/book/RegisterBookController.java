@@ -49,7 +49,6 @@ public class RegisterBookController {
 		model.addAttribute("volumeInfoList", volumeInfoList);
 		List<Category> categoryList = getAllCategoryService.findAll();
 		model.addAttribute("categoryList", categoryList);
-		System.out.println(volumeInfoList);
 		return "book/register_book";
 	}
 	

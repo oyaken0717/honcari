@@ -376,5 +376,9 @@ ul.social-buttons {
 }
 
 #book-title-mybook{
-	align: left;
+	text-align: left;
+}
+
+#register-success{
+	color: white;
 }

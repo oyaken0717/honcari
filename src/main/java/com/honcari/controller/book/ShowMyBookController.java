@@ -77,8 +77,6 @@ public class ShowMyBookController {
 	 */
 	@RequestMapping("/show_mybook_category")
 	public String showMyBookGroupByCategory(Integer categoryId, Integer page, Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		System.out.println(categoryId);
-		System.out.println(page);
 		//owned_book_infoテーブル内のデータ件数を取得する(byカテゴリid)
 		Integer pageCount = getOwnedBookInfoCountService.getOwnedBookInfoCountByCategoryId(loginUser.getUser().getUserId(), categoryId);
 		if(pageCount != null && pageCount % 20 != 0) {

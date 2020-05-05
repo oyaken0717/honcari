@@ -18,11 +18,8 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
-	<div id="book-register-alert" class="alert alert-warning alert-top" role="alert">
-  		<strong id="check"></strong>
-  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-  			<span aria-hidden="true">&times;</span>
- 		</button>
+	<div id="flash" class="alert alert-success alert-dismissible fade show" role="alert">
+  		<span id="register-success"></span>
 	</div>
 	<div class="container content-wrapper">
 	<h2 class="section-heading" style="padding-top: 50px">マイブックに本を登録しよう</h2>
