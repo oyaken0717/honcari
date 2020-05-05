@@ -367,9 +367,14 @@ ul.social-buttons {
 }
 .pager .pagination li span{
 	border-bottom: none;
+}
 
 .pager .pagination li a:hover,
 .pager .pagination li a.active{
   color: #000;
   background: #e0a800;
+}
+
+#book-title-mybook{
+	align: left;
 }

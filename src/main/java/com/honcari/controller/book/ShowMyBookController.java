@@ -63,7 +63,6 @@ public class ShowMyBookController {
 			model.addAttribute("categoryNum", 0);
 			model.addAttribute("pageCount", pageCount);
 			model.addAttribute("page", page);
-			System.out.println(page + "に入っているおは");
 		}
 		return "book/mybook";
 	}
