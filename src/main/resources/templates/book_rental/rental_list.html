@@ -61,7 +61,7 @@
 											<input type="hidden" th:value="${bookRental.rentalStatus}" name="rentalStatus">
 											<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
 											<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
-											<div><button class="cancel-btn btn btn-primary btn-sm" type="submit">キャンセル</button></div>
+											<div><button class="cancel-btn btn btn-secondary btn-sm" type="submit">キャンセル</button></div>
 										</form>
 									</div>
 								</div>
@@ -139,7 +139,7 @@
 											<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
 											<div>
 												<input type="submit" name="accept" th:value="承認" class="submit submit-btn btn btn-warning btn-sm">
-												<input type="submit" name="refuse" th:value="却下" class="submit submit-btn btn btn-primary btn-sm">
+												<input type="submit" name="refuse" th:value="却下" class="submit submit-btn btn btn-secondary btn-sm">
 											</div>
 										</form>
 									</div>
@@ -197,6 +197,7 @@
 		</div>
 	</div>
 </div>
+<footer th:replace="footer::footer"></footer>
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/rental_list.js}"></script>
