@@ -80,7 +80,7 @@ public class SendRequestController {
 		Date requestDeadline = Date.valueOf(form.getRequestDeadline());
 		String errorMessage = checkRequestDeadline(form.getRequestDeadline());
 		if (Objects.nonNull(errorMessage)) {
-			result.rejectValue("requestDeadline", "500", "貸出errorMessage");
+			result.rejectValue("requestDeadline", "500", errorMessage);
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
 		}
 
