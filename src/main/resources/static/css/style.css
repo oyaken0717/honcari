@@ -401,3 +401,15 @@ ul.social-buttons {
   border-radius: 10px;
   border-bottom: none;
 }
+
+
+/* FAQ */
+
+.ui-state-active {
+	border: var(--yellow);
+	background: var(--yellow);
+	font-weight: normal;
+	color: #ffffff;
+}
+
+
