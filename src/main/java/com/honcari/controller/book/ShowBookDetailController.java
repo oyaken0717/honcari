@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.form.RentalRequestForm;
 import com.honcari.service.book.ShowBookDetailService;
@@ -40,11 +42,15 @@ public class ShowBookDetailController {
 	 * 
 	 * @param model リクエストスコープ
 	 * @param bookId 本ID
+	 * @param loginUser ログインユーザー
 	 * @return　本詳細ページ
 	 */
 	@RequestMapping("/show_detail")
-	public String showBookDetail(Model model, Integer ownedBookInfoId) {
+	public String showBookDetail(Model model, Integer ownedBookInfoId, @AuthenticationPrincipal LoginUser loginUser) {
 		OwnedBookInfo ownedBookInfo = showBookDetailService.searchByOwnedBookId(ownedBookInfoId);
+		if(ownedBookInfo.getUserId() == loginUser.getUser().getUserId()) {
+			return "error/500";
+		}
 		model.addAttribute("ownedBookInfo", ownedBookInfo);
 		model.addAttribute("book", ownedBookInfo.getBook());
 		return "book/book_detail";

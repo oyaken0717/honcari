@@ -73,7 +73,7 @@ public class SendRequestController {
 		}
 
 		if (result.hasErrors()) {
-			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
+			return showBookDetailController.showBookDetail(model, ownedBookInfoId, loginUser);
 		}
 
 		// 貸出期限のエラーチェック
@@ -81,7 +81,7 @@ public class SendRequestController {
 		String errorMessage = checkRequestDeadline(form.getRequestDeadline());
 		if (Objects.nonNull(errorMessage)) {
 			result.rejectValue("requestDeadline", "500", errorMessage);
-			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
+			return showBookDetailController.showBookDetail(model, ownedBookInfoId, loginUser);
 		}
 
 		// 貸出申請を処理する
@@ -93,7 +93,7 @@ public class SendRequestController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			result.rejectValue("requestDeadline", "500", "貸出申請に失敗しました");
-			return showBookDetailController.showBookDetail(model, ownedBookInfoId);
+			return showBookDetailController.showBookDetail(model, ownedBookInfoId, loginUser);
 		}
 		return "redirect:/book_rental/show_list";
 	}
