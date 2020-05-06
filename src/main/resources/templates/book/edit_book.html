@@ -4,76 +4,96 @@
 <meta charset="UTF-8">
 <title>Honcari -気軽に本をどこへでも-</title>
 <!-- Style CSS -->
-<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
-<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"
+	rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css"
+	th:href="@{/css/style.css}">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+	rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header>
 	<nav th:replace="header::frag_header(0)"></nav>
-</header>
-<section>
-<div class="py-5 book-detail-wrapper">
-    <div class="container">
-    <div th:if="${errorMessage}"><h4 th:text="${errorMessage}" class="text-center text-danger">エラーメッセージ</h4></div>
-        <!-- Row -->
-        <div class="row">
-            <!-- Column -->
-            <div class="col-lg-6"> 
-				<img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" 
-					th:src="@{${ownedBookInfo.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail" alt="thumbnail" /> 
+	<div class="container content-wrapper">
+		<h2 class="section-heading">登録情報の変更・解除</h2>
+		<!-- Row -->
+		<div class="row align-items-center">
+			<!-- Column -->
+			<div class="col-lg-6">
+				<img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" th:src="@{${ownedBookInfo.book.thumbnailPath}}"
+					class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail" />
 			</div>
-            <!-- Column -->
-            <div class="col-lg-6 mt-4 mt-md-0">
-                <div class="text-box">
-                	<p>貸出状況：<span th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                		所有者：<span th:text="${ownedBookInfo.user.name}">status</span></p>
-                    <h3 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.title}">title</h3>
-                    <h4 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.author}">author</h4>
-                    <h4 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.publishedDate}">published_date</h4>
-                    <p th:text="${ownedBookInfo.book.description}">description</p>
-					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#book-edit-form">
-						登録情報を変更する</button><br>
+			<!-- Column -->
+			<div class="col-lg-6 mt-4">
+				<div class="text-box">
+					<p class="font-weight-bold">
+						貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}"
+							th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
+						所有者：<a th:href="@{#}"><span
+							th:text="${ownedBookInfo.user.name}">所有者</span></a>
+					</p>
+					<h3 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.title}">title</h3>
+					<h4 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.author}">author</h4>
+					<h6 class="font-weight-light mt-2 mb-4">
+						発行日：<span th:text="${ownedBookInfo.book.publishedDate}">published_date</span>&nbsp;&nbsp;&nbsp;&nbsp;
+						総ページ数：<span th:text="${ownedBookInfo.book.pageCount}">page_count</span>
+					</h6>
+					<p>
+						この本の説明：<br> <span th:text="${ownedBookInfo.book.description}">description</span>
+					</p>
+					<div th:unless="${#strings.isEmpty(ownedBookInfo.comment)}">
+						持ち主のコメント：<br>
+						<p th:text="${ownedBookInfo.comment}">comment</p>
+					</div>
+					<button class="btn btn-warning btn-lg btn-block"
+						data-toggle="modal" data-target="#book-edit-form">
+						登録情報を変更する</button>
+					<br>
 					<form th:action="@{/book/delete}" method="POST">
-						<input type="hidden" name="ownedBookInfoId" th:value="${ownedBookInfo.ownedBookInfoId}">
+						<input type="hidden" name="ownedBookInfoId"
+							th:value="${ownedBookInfo.ownedBookInfoId}">
 						<button class="btn btn-warning btn-lg btn-block">登録を解除する</button>
 					</form>
 				</div>
-            </div>
+			</div>
 			<!-- モーダル -->
-			<div class="modal fade" id="book-edit-form" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal fade" id="book-edit-form" tabindex="-1"
+				role="dialog" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<form th:action="@{/book/edit}" method="POST">
 							<div class="modal-header">
 								<h5 class="modal-title">書籍情報を編集する</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<div class="modal-body">	
+							<div class="modal-body">
 								<select name="categoryId">
-									<option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.categoryId}" th:selected="${ownedBookInfo.categoryId == category.categoryId}"></option>
+									<option th:each="category : ${categoryList}"
+										th:text="${category.name}" th:value="${category.categoryId}"
+										th:selected="${ownedBookInfo.categoryId == category.categoryId}"></option>
 								</select>
 							</div>
 							<div class="modal-body">
-								<textarea name="comment" rows="4" cols="30" th:field="${ownedBookInfo.comment}"></textarea>
+								<textarea name="comment" rows="4" cols="30"
+									th:field="${ownedBookInfo.comment}"></textarea>
 							</div>
-							<input type="hidden" name="ownedBookInfoId" th:value="${ownedBookInfo.ownedBookInfoId}">
+							<input type="hidden" name="ownedBookInfoId"
+								th:value="${ownedBookInfo.ownedBookInfoId}">
 							<div id="book-request-parameter"></div>
-								<div class="modal-footer">
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-warning">登録する</button>
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-								<button type="submit" class="btn btn-primary">登録する</button>
-  							</div>
-			  			</form>
-			  		</div>
-  				</div>	
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
-        </div>
-    </div>
-</div>
-</section>
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 </body>
 </html>

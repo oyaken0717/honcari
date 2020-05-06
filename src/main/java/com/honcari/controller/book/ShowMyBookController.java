@@ -58,6 +58,7 @@ public class ShowMyBookController {
 		List<OwnedBookInfo> ownedBookInfoList = showMyAllBooksService.ShowMyAllBook(loginUser.getUser().getUserId(), page);
 		if(ownedBookInfoList.size() == 0) {
 			model.addAttribute("errorMessage", "書籍が登録されていません。");
+			model.addAttribute("categoryNum", 0);
 		}else {
 			model.addAttribute("ownedBookInfoList", ownedBookInfoList);
 			model.addAttribute("categoryNum", 0);

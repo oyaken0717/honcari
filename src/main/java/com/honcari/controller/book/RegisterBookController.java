@@ -5,11 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.Category;
 import com.honcari.domain.GoogleBooks;
 import com.honcari.domain.VolumeInfo;
+import com.honcari.form.SearchGoogleBookForm;
 import com.honcari.service.book.FindAllCategoryService;
 import com.honcari.service.book.GoogleBookApiService;
 
@@ -30,6 +34,11 @@ public class RegisterBookController {
 	@Autowired
 	private GoogleBookApiService googleBookApiService;
 	
+	@ModelAttribute
+	private SearchGoogleBookForm setUpForm() {
+		return new SearchGoogleBookForm();
+	}
+	
 	/**
 	 * 書籍登録画面を表示する.
 	 * 
@@ -43,12 +52,21 @@ public class RegisterBookController {
 	}
 	
 	@RequestMapping("/search_books")
-	public String getGoogleBooks(String name, Model model) {
-		GoogleBooks googleBooks = googleBookApiService.getBook(name);
+	public String getGoogleBooks(@Validated SearchGoogleBookForm searchGoogleBookForm, BindingResult result, Model model) {
+		Integer pageNumber = searchGoogleBookForm.getPageNumber();
+		if(result.hasErrors()) {
+			return showRegisterBook(model);
+		}
+		if(searchGoogleBookForm.getPageNumber() == null) {
+			pageNumber = 1;
+		}
+		GoogleBooks googleBooks = googleBookApiService.getBook(searchGoogleBookForm.getSearchWord(), pageNumber - 1);
 		List<VolumeInfo> volumeInfoList = googleBooks.getItems();
 		model.addAttribute("volumeInfoList", volumeInfoList);
 		List<Category> categoryList = getAllCategoryService.findAll();
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("nowPageNumber", pageNumber);
+		model.addAttribute("searchWord", searchGoogleBookForm.getSearchWord());
 		return "book/register_book";
 	}
 	
