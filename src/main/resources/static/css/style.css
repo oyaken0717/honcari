@@ -412,4 +412,7 @@ ul.social-buttons {
 	color: #ffffff;
 }
 
-
+.flash{
+	position: fixed;
+	margin: 0;
+}

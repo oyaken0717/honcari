@@ -19,7 +19,7 @@
 	<nav th:replace="header::frag_header(0)"></nav>
 
 	<!-- page content -->
-	<div class="container">
+	<div class="container content-wrapper">
 		<div class="row mx-auto my-5">
 				<div class="alert alert-info alert-dismissible fade show mt-2" role="alert" th:if="${completeMessage} or ${updatePasswordMessage}">
 					<span th:text="${completeMessage}"></span><br th:if="${completeMessage} and ${updatePasswordMessage}">
@@ -64,6 +64,7 @@
 				
 		</div>
 	</div>
+	<footer th:replace="footer::footer"></footer>
 	
 	<!-- script -->
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
