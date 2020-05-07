@@ -53,7 +53,6 @@ public class RegisterBookApiController {
 	@CrossOrigin
 	@RequestMapping(value="/register_book", method=RequestMethod.POST)
 	public Map<String, String> registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
-		System.out.println(registerBookForm);
 		Integer bookId = null;
 		Book book = new Book();
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();

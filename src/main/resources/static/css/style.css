@@ -365,11 +365,51 @@ ul.social-buttons {
   border-radius: 10px;
   border-bottom: solid 4px #627295;
 }
+
 .pager .pagination li span{
 	border-bottom: none;
+}
 
 .pager .pagination li a:hover,
 .pager .pagination li a.active{
   color: #000;
   background: #e0a800;
 }
+
+#book-title-mybook{
+	text-align: left;
+}
+
+#register-success{
+	color: white;
+}
+
+.pager .pagination li a .register-book-paging{
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display:table;
+  text-decoration: none;
+  background-color: #F7C600;
+  color: white;
+  padding-top: 20%;
+  border-radius: 10px;
+  border-bottom: none;
+}
+
+
+/* FAQ */
+
+.ui-state-active {
+	border: var(--yellow);
+	background: var(--yellow);
+	font-weight: normal;
+	color: #ffffff;
+}
+
+

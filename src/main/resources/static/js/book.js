@@ -1,5 +1,9 @@
 $(function() {	
-	$("#book-register-alert").hide();
+	$("#flash").hide();
+	
+	var hideAlart = function(){
+		$("#flash").hide();
+	}
 //	$("#book-button").click(function() {
 //		var name = $("#book-name").val();
 //		name += "　";
@@ -174,6 +178,9 @@ $(function() {
 			$('#register-category-id').val(1);
 			const xhr = new XMLHttpRequest();
 			xhr.withCredentials = true;
+			$("#flash").show();
+			$("#register-success").text('書籍の登録が完了しました');
+			setTimeout(hideAlart, 3000);
 		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("エラーが発生しました！");
 			console.log("XMLHttpRequest : " + XMLHttpRequest.status);

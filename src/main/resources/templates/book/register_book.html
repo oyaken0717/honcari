@@ -18,19 +18,19 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
-	<div id="book-register-alert" class="alert alert-warning alert-top" role="alert">
-  		<strong id="check"></strong>
-  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-  			<span aria-hidden="true">&times;</span>
- 		</button>
+	<div id="flash" class="alert alert-success alert-dismissible fade show" role="alert">
+  		<span id="register-success"></span>
 	</div>
 	<div class="container content-wrapper">
 	<h2 class="section-heading" style="padding-top: 50px">マイブックに本を登録しよう</h2>
 	<p class="section-description">書籍名もしくはISBNコードにて検索</p>
 			<div class="search-book-for-add row justify-content-center">
-			<form th:action="@{/book/search_books}" class="form-inline" method="POST">
-	    		<input type="text" name="name" class="form-control" placeholder="登録する本を検索...">	　　
+			<form th:action="@{/book/search_books}" method="POST" th:object="${searchGoogleBookForm}">
+				<p th:errors="*{searchWord}" style="color:red"></p>
+				<span class="form-inline">
+	    		<input type="text" name="searchWord" class="form-control" placeholder="登録する本を検索..." th:field="*{searchWord}">　
 				<button class="btn btn-warning my-2 my-sm-0">検索</button>
+				</span>
 			</form>
 			</div>
 		<div class="row">
@@ -67,6 +67,12 @@
 					</td>
 				</tr>
 			</table>
+			<div class="pager">
+				<ul class="pagination">
+					<li class="active"><a class="register-book-paging" th:if="${nowPageNumber} AND ${nowPageNumber} != 1" th:href="@{'/book/search_books?searchWord=' + ${searchWord} + '&pageNumber=' + ${nowPageNumber - 1}}">前へ</a></li>
+					<li class="active"><a class="register-book-paging" th:if="${nowPageNumber}" th:href="@{'/book/search_books?searchWord=' + ${searchWord} + '&pageNumber=' + ${nowPageNumber + 1}}">次へ</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>				
 	
@@ -90,8 +96,8 @@
 					<textarea id="register-comment" name="comment" rows="4" cols="30" placeholder="コメント"></textarea>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
 					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-warning">登録する</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
   				</div>
   				<div id="book-request-parameter"></div>
   				</form>

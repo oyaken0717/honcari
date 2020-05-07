@@ -58,12 +58,12 @@ public class ShowMyBookController {
 		List<OwnedBookInfo> ownedBookInfoList = showMyAllBooksService.ShowMyAllBook(loginUser.getUser().getUserId(), page);
 		if(ownedBookInfoList.size() == 0) {
 			model.addAttribute("errorMessage", "書籍が登録されていません。");
+			model.addAttribute("categoryNum", 0);
 		}else {
 			model.addAttribute("ownedBookInfoList", ownedBookInfoList);
 			model.addAttribute("categoryNum", 0);
 			model.addAttribute("pageCount", pageCount);
 			model.addAttribute("page", page);
-			System.out.println(page + "に入っているおは");
 		}
 		return "book/mybook";
 	}
@@ -78,8 +78,6 @@ public class ShowMyBookController {
 	 */
 	@RequestMapping("/show_mybook_category")
 	public String showMyBookGroupByCategory(Integer categoryId, Integer page, Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		System.out.println(categoryId);
-		System.out.println(page);
 		//owned_book_infoテーブル内のデータ件数を取得する(byカテゴリid)
 		Integer pageCount = getOwnedBookInfoCountService.getOwnedBookInfoCountByCategoryId(loginUser.getUser().getUserId(), categoryId);
 		if(pageCount != null && pageCount % 20 != 0) {

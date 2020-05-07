@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.Category;
 import com.honcari.domain.OwnedBookInfo;
@@ -60,11 +61,12 @@ public class EditBookController {
 	 * @return マイブック
 	 */
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String editBook(Integer ownedBookInfoId, Integer categoryId, String comment) {
+	public String editBook(Integer ownedBookInfoId, Integer categoryId, String comment, RedirectAttributes redirectAttributes) {
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
 		ownedBookInfo.setCategoryId(categoryId);
 		ownedBookInfo.setComment(comment);
 		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
+		redirectAttributes.addFlashAttribute("successMessage", "書籍情報を変更しました");
 		return "redirect:/book/show_mybook";
 	}
 	
@@ -75,7 +77,7 @@ public class EditBookController {
 	 * @return マイブック
 	 */
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String deleteBook(Integer ownedBookInfoId, Model model) {
+	public String deleteBook(Integer ownedBookInfoId, Model model, RedirectAttributes redirectAttributes) {
 		System.out.println(ownedBookInfoId);
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
 		if(ownedBookInfo.getBookStatus() == 2) {
@@ -88,6 +90,7 @@ public class EditBookController {
 		}
 		ownedBookInfo.setBookStatus(4);
 		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
+		redirectAttributes.addFlashAttribute("successMessage", "書籍の登録を削除しました");
 		return "redirect:/book/show_mybook";
 	}
 }
