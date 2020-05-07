@@ -30,7 +30,7 @@ public class ShowGroupDetailController {
 		if(loginUser.getUser().getUserId()==group.getOwnerUserId()) {
 			model.addAttribute("owner","owner");
 		}
-		
+		System.out.println(group);
 		model.addAttribute("b",b);
 		model.addAttribute("group",group);
 		model.addAttribute("userId",loginUser.getUser().getUserId());

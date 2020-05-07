@@ -203,7 +203,7 @@ public class GroupRepository {
 	 */
 	public Group findByGroupId(Integer groupId) {
 		StringBuilder sql = getSQL();
-		sql.append("WHERE g.group_id = :groupId AND u.status <> 1 ORDER BY g.group_id");
+		sql.append("WHERE g.group_id = :groupId AND u.status <> 1 ORDER BY g.group_id , u.user_id");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
 		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
 		return groupList.get(0);
@@ -217,7 +217,7 @@ public class GroupRepository {
 	 */
 	public Group findByGroupIdAndRelationStatus(Integer groupId) {
 		StringBuilder sql = getSQL();
-		sql.append("WHERE g.group_id = :groupId AND gr.relation_status = 1 AND u.status <> 1 ORDER BY g.group_id");
+		sql.append("WHERE g.group_id = :groupId AND gr.relation_status = 1 AND u.status <> 1 ORDER BY g.group_id , u.user_id");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
 		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
 		return groupList.get(0);
