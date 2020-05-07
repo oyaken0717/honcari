@@ -53,6 +53,7 @@ public class RegisterBookApiController {
 	@CrossOrigin
 	@RequestMapping(value="/register_book", method=RequestMethod.POST)
 	public Map<String, String> registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
+		System.out.println(registerBookForm);
 		Integer bookId = null;
 		Book book = new Book();
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
@@ -122,7 +123,7 @@ public class RegisterBookApiController {
 		ownedBookInfo.setUserId(loginUser.getUser().getUserId());
 		ownedBookInfo.setBookId(bookId);
 		ownedBookInfo.setCategoryId(Integer.parseInt(registerBookForm.getCategoryId()));
-		ownedBookInfo.setBookStatus(1);
+		ownedBookInfo.setBookStatus(Integer.parseInt(registerBookForm.getBookStatus()));
 		ownedBookInfo.setComment(registerBookForm.getComment());
 		registerOwnedBookInfoService.registerOwnedBookInfo(ownedBookInfo);
 		map.put("check", "書籍情報の登録が完了しました");

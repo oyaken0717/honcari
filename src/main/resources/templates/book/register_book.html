@@ -18,7 +18,7 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
-	<div id="flash" class="alert alert-success alert-dismissible fade show" role="alert">
+	<div id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert">
   		<span id="register-success"></span>
 	</div>
 	<div class="container content-wrapper">
@@ -93,7 +93,15 @@
 					</select>
 				</div>
 				<div class="modal-body">
-					<textarea id="register-comment" name="comment" rows="4" cols="30" placeholder="コメント"></textarea>
+					<textarea id="register-comment" name="comment" rows="4" cols="30" placeholder="コメント" class="form-control"></textarea>
+				</div>
+				<div class="modal-body">
+					<label for="book-status-0">
+						<input id="book-status-0" type="radio" class="book-status-register" name="bookStatus" th:value="0">&nbsp;貸出不可&nbsp;&nbsp;&nbsp;
+					</label>
+					<label for="book-status-1">
+						<input id="book-status-1" type="radio" class="book-status-register" name="bookStatus" th:value="1" checked>&nbsp;貸出可
+					</label>
 				</div>
 				<div class="modal-footer">
 					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-warning">登録する</button>

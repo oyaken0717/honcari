@@ -20,6 +20,8 @@ public class RegisterBookForm {
 	private String categoryId;
 	/** コメント **/
 	private String comment;
+	/**	貸出状況 */
+	private String bookStatus;
 	public String getIsbnId() {
 		return isbnId;
 	}
@@ -74,10 +76,17 @@ public class RegisterBookForm {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+	public String getBookStatus() {
+		return bookStatus;
+	}
+	public void setBookStatus(String bookStatus) {
+		this.bookStatus = bookStatus;
+	}
 	@Override
 	public String toString() {
 		return "RegisterBookForm [isbnId=" + isbnId + ", title=" + title + ", author=" + author + ", publishedDate="
 				+ publishedDate + ", description=" + description + ", pageCount=" + pageCount + ", thumbnailPath="
-				+ thumbnailPath + ", categoryId=" + categoryId + ", comment=" + comment + "]";
+				+ thumbnailPath + ", categoryId=" + categoryId + ", comment=" + comment + ", bookStatus=" + bookStatus
+				+ "]";
 	}
 }
