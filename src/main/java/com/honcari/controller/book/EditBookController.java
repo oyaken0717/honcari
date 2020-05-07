@@ -61,10 +61,11 @@ public class EditBookController {
 	 * @return マイブック
 	 */
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String editBook(Integer ownedBookInfoId, Integer categoryId, String comment, RedirectAttributes redirectAttributes) {
+	public String editBook(Integer ownedBookInfoId, Integer categoryId, String comment, Integer bookStatus, RedirectAttributes redirectAttributes) {
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
 		ownedBookInfo.setCategoryId(categoryId);
 		ownedBookInfo.setComment(comment);
+		ownedBookInfo.setBookStatus(bookStatus);
 		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
 		redirectAttributes.addFlashAttribute("successMessage", "書籍情報を変更しました");
 		return "redirect:/book/show_mybook";

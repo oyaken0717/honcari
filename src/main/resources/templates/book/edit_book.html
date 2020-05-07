@@ -78,7 +78,15 @@
 							</div>
 							<div class="modal-body">
 								<textarea name="comment" rows="4" cols="30"
-									th:field="${ownedBookInfo.comment}"></textarea>
+									th:field="${ownedBookInfo.comment}" class="form-control" placeholder="コメント"></textarea>
+							</div>
+							<div class="modal-body" th:if="${ownedBookInfo.bookStatus == 0} or ${ownedBookInfo.bookStatus == 1}">
+								<label for="book-status-0">
+									<input id="book-status-0" type="radio" name="bookStatus" value="0" th:checked="${ownedBookInfo.bookStatus == 0}">&nbsp;貸出不可&nbsp;&nbsp;&nbsp;
+								</label>
+								<label for="book-status-1">
+									<input id="book-status-1" type="radio" name="bookStatus" value="1" th:checked="${ownedBookInfo.bookStatus == 1}">&nbsp;貸出可
+								</label>
 							</div>
 							<input type="hidden" name="ownedBookInfoId"
 								th:value="${ownedBookInfo.ownedBookInfoId}">
