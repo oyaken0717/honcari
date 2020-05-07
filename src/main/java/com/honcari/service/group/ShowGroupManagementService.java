@@ -11,6 +11,12 @@ import com.honcari.domain.User;
 import com.honcari.repository.GroupRepository;
 import com.honcari.repository.UserRepository;
 
+/**
+ * グループ管理画面表示のために使うサービス.
+ * 
+ * @author yamaseki
+ *
+ */
 @Service
 @Transactional
 public class ShowGroupManagementService {
@@ -21,10 +27,23 @@ public class ShowGroupManagementService {
 	@Autowired
 	private GroupRepository groupRepository;
 	
+	/**
+	 * ユーザーが所属しているグループを検索するためのメソッド.
+	 * 
+	 * @param userId ユーザーid
+	 * @param status ステータス
+	 * @return ユーザー情報
+	 */
 	public User showGroupListByBelongUserIdAndStatus(Integer userId,Integer status){
 		return userRepository.findByUserIdAndRelationStatus(userId,status);
 	}
 	
+	/**
+	 * ユーザーが作成したグループを検索するためのメソッド.
+	 * 
+	 * @param userId ユーザーid
+	 * @return グループ情報リスト
+	 */
 	public List<Group> showGroupListByOwnerUserId(Integer userId){
 		return groupRepository.findByOwnerUserId(userId);
 	}

@@ -39,6 +39,15 @@ public class SearchUserApiController {
 		return map;
 	}
 	
+	/**
+	 * 入力された名前であいまい検索をするメソッド.
+	 * すでにグループに所属しているユーザーは弾く.
+	 * 
+	 * @param name ユーザー名
+	 * @param userId ユーザーid
+	 * @param groupId グループid
+	 * @return ユーザー情報（map）
+	 */
 	@RequestMapping("/search_user_api_for_invite")
 	public Map<String, List<User>> searchUserNotInGroup(String name, Integer userId,Integer groupId) {
 		Map<String, List<User>> map = new HashMap<>();

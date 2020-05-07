@@ -13,7 +13,13 @@ import org.springframework.stereotype.Repository;
 
 import com.honcari.domain.GroupRelation;
 
-//yamaseki
+
+/**
+ *group_relationsテーブルを操作するリポジトリ.
+ * 
+ * @author yamaseki
+ *
+ */
 @Repository
 public class GroupRelationRepository {
 	
@@ -30,6 +36,13 @@ public class GroupRelationRepository {
 	private NamedParameterJdbcTemplate template;
 	
 	
+	/**
+	 * ユーザーidとグループidでgroup_relation情報を検索するメソッド.
+	 * 
+	 * @param userId ユーザーid
+	 * @param groupId グループid
+	 * @return group_relation情報
+	 */
 	public GroupRelation findByUserIdAndGroupId(Integer userId, Integer groupId) {
 		String sql = "SELECT group_relation_id,user_id,group_id,relation_status FROM group_relations WHERE user_id = :userId AND group_id = :groupId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
@@ -40,6 +53,14 @@ public class GroupRelationRepository {
 		return grList.get(0);
 	}
 	
+	/**
+	 * ユーザーidとグループidとステータスでgroup_relation情報を検索するメソッド.
+	 * 
+	 * @param userId ユーザーid
+	 * @param groupId グループid
+	 * @param status ステータス
+	 * @return group_relation情報
+	 */
 	public GroupRelation findByUserIdAndGroupIdAndStatus(Integer userId, Integer groupId,Integer status) {
 		String sql = "SELECT group_relation_id,user_id,group_id,relation_status FROM group_relations WHERE user_id = :userId AND group_id = :groupId AND relation_status=:status";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId).addValue("status", status);
@@ -50,24 +71,24 @@ public class GroupRelationRepository {
 		return grList.get(0);
 	}
 	
+	/**
+	 * インサートメソッド.
+	 * 
+	 * @param userId ユーザーid
+	 * @param groupId グループid
+	 * @param status ステータス
+	 */
 	public void insert(Integer userId, Integer groupId,Integer status) {
 		String sql = "INSERT INTO group_relations (user_id,group_id,relation_status) VALUES (:userId,:groupId, :status)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId).addValue("status", status);
 		template.update(sql, param);	
 	}
 	
-	public void deleteByUserIdAndGroupId(Integer userId, Integer groupId) {
-		String sql = "DELETE FROM group_relations WHERE user_id = :userId AND group_id = :groupId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("groupId", groupId);
-		template.update(sql, param);	
-	}
-	
-	public void deleteByGroupId(Integer groupId) {
-		String sql = "DELETE FROM group_relations WHERE group_id = :groupId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("groupId", groupId);
-		template.update(sql, param);	
-	}
-	
+	/**
+	 * アップデートメソッド.
+	 * 
+	 * @param gr group_relation情報
+	 */
 	public void update(GroupRelation gr) {
 		String sql = "UPDATE group_relations SET group_relation_id=:id,user_id=:userId,group_id=:groupId,relation_status=:relation_status WHERE group_relation_id=:id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(gr);

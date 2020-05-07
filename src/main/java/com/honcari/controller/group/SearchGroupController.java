@@ -14,33 +14,48 @@ import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.service.group.SearchGroupService;
 
+/**
+ * グループ検索のためのコントローラー
+ * 
+ * @author yamaseki
+ *
+ */
 @Controller
 @RequestMapping("/group")
 public class SearchGroupController {
-	
+
 	@Autowired
 	private SearchGroupService searchGroupService;
-	
+
 	@Autowired
 	private HttpSession session;
-	
+
+	/**
+	 * グループ検索画面へ遷移するためのメソッド.
+	 * 
+	 * @return グループ検索画面へ遷移
+	 */
 	@RequestMapping("/to_search")
 	public String toSearchGroup() {
 		session.setAttribute("fromManagement", null);
-		
-//		return "group/search_group";
-		return "group/search_group2";
+		return "group/search_group";
 	}
-	
-	
+
+	/**
+	 * グループ検索メソッド.
+	 * 
+	 * @param name グループ名（曖昧検索）
+	 * @param model
+	 * @param loginUser ログインユーザー
+	 * @return グループ検索画面へ戻る
+	 */
 	@RequestMapping("/search")
-	public String searchGroup(String name,Model model,@AuthenticationPrincipal LoginUser loginUser) {
+	public String searchGroup(String name, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Group> groupList = searchGroupService.searchGroup(name);
-//		boolean b = groupList.get(0).getUserList().stream().map(u -> u.getUserId()).anyMatch(u -> u==loginUser.getUser().getUserId());
-//		model.addAttribute("b",b);
-		model.addAttribute("userId",loginUser.getUser().getUserId());
-		model.addAttribute("groupList",groupList);
-		return "group/search_group2";
+
+		model.addAttribute("userId", loginUser.getUser().getUserId());
+		model.addAttribute("groupList", groupList);
+		return "group/search_group";
 	}
 
 }

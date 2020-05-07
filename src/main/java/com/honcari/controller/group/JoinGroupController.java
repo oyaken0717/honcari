@@ -15,33 +15,57 @@ import com.honcari.domain.LoginUser;
 import com.honcari.service.group.JoinGroupService;
 import com.honcari.service.group.SearchUserInGroupService;
 
+/**
+ * グループへ参加するためのコントローラー.
+ * 
+ * @author yamaseki
+ *
+ */
 @Controller
 @RequestMapping("/group")
 public class JoinGroupController {
-	
+
 	@Autowired
 	private SearchUserInGroupService searchUserInGroupService;
-	
+
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
 	private JoinGroupService joinGroupService;
-	
+
+	/**
+	 * ユーザーがグループにすでに存在しているかを確認するためのメソッド.
+	 * 
+	 * @param groupId   グループid
+	 * @param loginUser ログインユーザー
+	 * @return グループ情報
+	 */
 	@RequestMapping("/check_user")
 	@ResponseBody
 	public GroupRelation checkUserInGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser) {
 		GroupRelation gr = searchUserInGroupService.searchUser(loginUser.getUser().getUserId(), groupId);
 		return gr;
 	}
-	
+
+	/**
+	 * グループに参加するメソッド.
+	 * 
+	 * @param groupId           グループ情報
+	 * @param loginUserログインユーザー
+	 * @param model
+	 * @param redirect
+	 * @return グループ管理画面へ遷移
+	 */
 	@RequestMapping("/join")
-	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser,Model model,RedirectAttributes redirect) {
+	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser, Model model,
+			RedirectAttributes redirect) {
 		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);
-		if(session.getAttribute("fromManagement")!=null) {
+		if (session.getAttribute("fromManagement") != null) {
 			return "redirect:/group/to_management";
 		}
-		
+
+		// 参加完了後の画面にてポップアップ表示するためのモデル格納
 		redirect.addFlashAttribute("joinGroup", "joinGroup");
 		redirect.addFlashAttribute("complete", "complete");
 

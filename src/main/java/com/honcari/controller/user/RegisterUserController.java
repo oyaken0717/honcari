@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.honcari.form.RegisterUserForm;
 import com.honcari.service.user.RegisterUserService;
 
+/**
+ * 新規登録のためのコントローラー.
+ * 
+ * @author yamaseki
+ *
+ */
 @Controller
 @RequestMapping("/user")
 public class RegisterUserController {
@@ -26,6 +32,14 @@ public class RegisterUserController {
 		return "user/register_user";
 	}
 	
+	/**
+	 * 新規登録処理のためのメソッド.
+	 * 
+	 * @param form ユーザー登録情報を格納したフォーム
+	 * @param result
+	 * @param mode
+	 * @return thank you ページへ遷移
+	 */
 	@RequestMapping("/register")
 	public String register(@Validated RegisterUserForm form, BindingResult result,Model mode) {
 		if (!form.getPassword().equals(form.getConfirmPassword())) {

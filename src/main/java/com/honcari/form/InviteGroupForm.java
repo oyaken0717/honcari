@@ -2,10 +2,18 @@ package com.honcari.form;
 
 import java.util.List;
 
+/**
+ * グループ招待フォーム.
+ * 
+ * @author yamaseki
+ *
+ */
 public class InviteGroupForm {
-	
+	/** グループid */
 	private Integer groupId;
+	/** ユーザー名リスト */
 	private List<String> userNameList;
+	
 	public Integer getGroupId() {
 		return groupId;
 	}

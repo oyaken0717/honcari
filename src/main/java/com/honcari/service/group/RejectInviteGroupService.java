@@ -7,16 +7,27 @@ import org.springframework.transaction.annotation.Transactional;
 import com.honcari.domain.GroupRelation;
 import com.honcari.repository.GroupRelationRepository;
 
+/**
+ * グループへの招待を拒否するためのサービス.
+ * 
+ * @author yamaseki
+ *
+ */
 @Service
 @Transactional
 public class RejectInviteGroupService {
-	
+
 	@Autowired
 	private GroupRelationRepository groupRelationRepository;
-	
-	public void rejectInviteGroup(Integer userId,Integer groupId) {
+
+	/**
+	 * グループへの招待を拒否するためのメソッド.
+	 * 
+	 * @param userId ユーザーid
+	 * @param groupId グループid
+	 */
+	public void rejectInviteGroup(Integer userId, Integer groupId) {
 		GroupRelation gr = groupRelationRepository.findByUserIdAndGroupId(userId, groupId);
-		System.out.println(userId);
 		gr.setRelation_status(9);
 		groupRelationRepository.update(gr);
 	}

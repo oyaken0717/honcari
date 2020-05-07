@@ -1,68 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+  <head>
+    <title>Jumbotron Template for Bootstrap · Bootstrap</title>
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-</head>
-<body>
-<script>
-/* $(function(){
-	var url = 'http://localhost:8080/group/check_user';
-	var groupId = $('#groupId').val();
-	$.ajax({
-		url : url,
-		type : 'GET',
-		dataType : 'json',
-		data : {
-			groupId : groupId
-		},
-		async : true
-	})
-	  .done(function(jsonGr){
-		gr = jsonGr;
-		console.log(gr)
-		if(gr != null){
-		let formElements = document.forms.form;
-		formElements.submit.disabled = true;
-		document.getElementById('button').innerText = '参加済み'
-		$('#invite').html('<a href="#">招待する<a>');
-		}
-	})
-	.fail(function() {
-        console.log('失敗');
-    })
-    .always(function() {
-    });	 */
-});
-</script>
-<nav th:replace="header::frag_header(1)"></nav>
-<div th:if="${complete}" class="alert alert-info alert-dismissible fade show" role="alert">
-  <strong>グループを作成しました!!</strong>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/css/slick.css"/>
+<link rel="stylesheet" type="text/css" href="/css/slick-theme.css"/>
+  </head>
+  <body >
+<main role="main">
+<div th:if="${complete}" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong th:if="${registerGroup}">グループを作成しました!!</strong>
+  <div th:if="${inviteGroup}">
+	  <span th:if="${inviteGroup}" th:each="user:${userList}">
+	  	<strong th:text="${user.name} + さん"></strong>&nbsp;&nbsp;
+	  </span>
+	  <span>をこのグループに招待しました。相手が承認するまでお待ちください。</span>
+  </div>
+  <strong th:if="${joinGroup}">グループに参加しました!!</strong>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-	<form name="form" th:action="@{/group/join}">
-	グループ名：<span th:text="${group.name}"></span><br>
-	グループについて：<span th:text="${group.description}"></span><br>
-	参加ユーザー：<br>
-	<div th:each="user : ${group.userList}"><span th:text="${user.name}"></span></div>	
-	<input type="hidden" name="groupId" th:value="${group.id}"><br>
-	<a th:href="@{/group/to_edit_group(groupId=${group.id})}" th:if="${userId}==${group.ownerUserId}">グループを編集する</a><br>
-	<a th:href="@{'/group/to_invite_group?id=' + ${group.id}}" th:if="${b}==true">招待する</a><br>
-	<a th:href="@{'/group/out_group?id=' + ${group.id}}" th:if="${b==true and userId!=group.ownerUserId}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループから抜ける</a><br>
-	<button th:if="${b}==false">このグループに参加する</button><br>	
-	<hr>
-	<a th:if="${session.fromManagement}!=null" th:href="@{/group/to_management}">戻る</a>
-	<a th:if="${session.fromManagement}==null" th:href="@{/group/to_search}">戻る</a>
-	</form>
-	
+<nav th:replace="header::frag_header(1)"></nav>
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container content-wrapper">
+      <h1 class="display-3" th:text="${group.name}">Hello, world!</h1>
+      <p align="right"><a class="btn btn-warning btn-lg" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a></p>
+      <p align="right"><a class="btn btn-primary btn-lg" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a></p>
+    
+    </div>
+  </div>
+
+  <div class="container content-wrapper">
+	  <div>
+		   <p align="right" class=".mt-5"><a class="btn btn-warning btn-sm" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId}">このグループに招待する</a>&nbsp;&nbsp;
+		   <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary" th:if="${userId}==${group.ownerUserId}">Edit</a></p>
+	  </div>
+	<!-- タブ・メニュー -->
+	    <ul class="nav nav-tabs nav-justified justify-content-center">
+  			<li class="nav-item">
+    			<a class="nav-link text-dark" href="#about-group" data-toggle="tab">このグループについて</a>
+ 	 		</li>
+ 	 		<li class="nav-item">
+   				 <a class="nav-link text-dark" href="#book-list" data-toggle="tab">シェアされている本</a>
+  			</li>
+  			<li class="nav-item">
+   				 <a class="nav-link text-dark" href="#users" data-toggle="tab">ユーザー</a>
+  			</li>
+    	</ul>
+    	
+    	<div class="tab-content content-wrapper">
+			<div class="tab-pane tab-content" id="about-group" th:unless="${group}==null">
+				<div th:text="${group.description}" class="text-center"></div>
+			</div>
+			
+			<div class="tab-pane tab-content" id="book-list" th:unless="${group.userList}==null">
+				<div th:each="user:${group.userList}">
+					<div th:each="ownedBookInfo:${user.ownedBookInfoList}" >
+						<div th:text="${ownedBookInfo.book.title}" class="text-center"></div>
+					</div>
+					<div th:if="${user==null}"></div>
+				</div>
+			</div>
+			
+			<div class="tab-pane tab-content" id="users" th:unless="${group.userList}==null">
+				<div th:each="user:${group.userList}">
+					<div th:text="${user.name}" class="text-center"></div>
+				</div>
+			</div>
+		</div>
+		
+		
+  </div> 
+
+</main>
 
 <!-- コンテンツ -->
 <footer th:replace="footer::footer"></footer>
-</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/slick.min.js"></script>
+<script type="text/javascript" src="/js/slick_option.js"></script>
+<script src="../static/js/group_detail.js" th:src="@{/js/group_detail.js}"></script>
+  </body>
+<style>
+.tab-content{
+  /** ５行以上で省略 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+}
+</style>
 </html>

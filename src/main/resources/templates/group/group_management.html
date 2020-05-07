@@ -10,14 +10,18 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div th:if="${complete}" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong th:if="${rejectInvite}">グループに参加しませんでした。</strong>
+  <strong th:if="${outGroup}">グループから抜けました。</strong>
+  <strong th:if="${joinGroup}">グループに参加しました！</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <div class="container content-wrapper">
 <nav th:replace="header::frag_header(0)"></nav>
 <h2 class="section-heading">グループ管理</h2>
 	<p class="section-description">あなたのグループをこの画面で管理することができます</p>
-	
-<!-- main content -->
-<div class="py-5 book-detail-wrapper">
-    <div class="container">
     	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
   			<li class="nav-item">
@@ -31,40 +35,103 @@
   			</li>
     	</ul>
     	<!-- タブ・コンテント -->
-    		<div class="tab-content">
+    	<div class="tab-content">
 			<div class="tab-pane" id="joined-groups" th:if="${belongUser}==null">
-				参加しているグループはありません
+				<div class="text-center" style="margin: 10px">参加しているグループはありません</div>
 			</div>   			
 			<div class="tab-pane " id="joined-groups" th:unless="${belongUser}==null" >
-   				<div  th:each="group:${belongUser.groupList}">
-   					<a th:href="@{'/group/show_detail?id='} + ${group.id}" th:text="${group.name}"></a>
-   				</div>
-			</div>
+		      <div class="row" style="margin:70px">
+		        <div class="col-md-4" th:each="group:${belongUser.groupList}">        
+		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
+		            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+		            <div class="card-body">
+		              <p class="card-text" th:text="${group.name}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <p class="text-muted" th:text="${group.description}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <div class="d-flex justify-content-between align-items-center">
+		                <div class="btn-group" style="margin: 15px">
+		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>
+		           		  <input type="hidden" class="group-name" th:value="${group.name}">
+		                  <input type="hidden" class="group-description" th:value="${group.description}">
+		                </div>
+		                <div th:if="${userId}==${group.ownerUserId}" style="margin: 10px">
+		                  <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
+		                </div>
+<!-- 		                <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
+ -->		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>			
+      		</div>
 
 			<div class="tab-pane" id="own-groups" th:unless="${ownGroupList}==null">
-   				<div  th:each="group:${ownGroupList}">
-   					<a th:href="@{'/group/show_detail?id='} + ${group.id}" th:text="${group.name}"></a>
-   				</div>
-			</div>
+		      <div class="row" style="margin:70px">
+		        <div class="col-md-4" th:each="group:${ownGroupList}">        
+		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
+		            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+		            <div class="card-body">
+		              <p class="card-text" th:text="${group.name}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <p class="text-muted" th:text="${group.description}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <div class="d-flex justify-content-between align-items-center">
+		                <div class="btn-group" style="margin: 15px">
+		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		                  <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
+		           		  <input type="hidden" class="group-name" th:value="${group.name}">
+		                  <input type="hidden" class="group-description" th:value="${group.description}">
+		                </div>
+		                <div >
+		                </div>
+ 		                <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
+ 		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>			
+		    </div>
+		    
 			<div class="tab-pane" id="own-groups" th:if="${ownGroupList}==null">
-				自身で作成したグループはありません
+				<div class="text-center" style="margin: 10px">自身で作成したグループはありません</div>
 			</div>
+			
 			<div class="tab-pane" id="not-approved-list" th:unless="${notApprovedUser}==null">
-   				<div th:each="group:${notApprovedUser.groupList}">
-   					<a th:href="@{'/group/show_detail?id='} + ${group.id}" th:text="${group.name}"></a>
-   					<a th:href="@{'/group/join?groupId='} + ${group.id}"><button>参加する</button></a>
-   					<a th:href="@{'/group/reject_invite_group?groupId='} + ${group.id}" onclick="return confirm('参加しなくてもよろしいですか？')"
-   					><button>参加しない</button></a>
-   				</div>
-			</div>
+		      <div class="row" style="margin:70px">
+		        <div class="col-md-4" th:each="group:${notApprovedUser.groupList}">        
+		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
+		            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+		            <div class="card-body">
+		              <p class="card-text" th:text="${group.name}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <p class="text-muted" th:text="${group.description}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <div class="d-flex justify-content-between align-items-center">
+		                <div class="btn-group" style="margin: 15px">
+		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		                  <a th:href="@{/group/reject_invite_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Reject</a>
+		           		  <input type="hidden" class="group-name" th:value="${group.name}">
+		                  <input type="hidden" class="group-description" th:value="${group.description}">
+		                </div>
+		                <div >
+		                </div>
+ 		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>			
+		     </div>
+		     
 			<div class="tab-pane" id="not-approved-list" th:if="${notApprovedUser}==null">
-			現在招待されているグループはありません
+				<div class="text-center" style="margin: 10px">現在招待されているグループはありません</div>
 			</div>
-   		  </div>
-    </div>
-</div> 
-</div>
-<footer th:replace="footer::footer"></footer>
+   		  </div>   		  
+ </div>
+ <footer th:replace="footer::footer"></footer>
 
 </body>
+<style>
+.card-body{
+    text-overflow: ellipsis;
+    display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;	
+}
+</style>
 </html>

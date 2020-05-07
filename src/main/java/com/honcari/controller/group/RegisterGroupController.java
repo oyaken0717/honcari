@@ -32,39 +32,39 @@ public class RegisterGroupController {
 
 	@Autowired
 	private RegisterGroupService registerGroupService;
-	
+
 	@Autowired
 	private ShowGroupDetailController showGroupDetailController;
-	
+
 	@ModelAttribute
 	public RegisterGroupForm setRegisterGroupForm() {
 		return new RegisterGroupForm();
 	}
-	
+
 	@RequestMapping("/to_register")
 	public String toRegisterGroup(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		model.addAttribute("user", loginUser.getUser());
 		return "group/register_group";
 	}
-	
+
 	/**
 	 * グループ作成をするメソッド.
 	 * 
-	 * @param form グループ情報フォーム
-	 * @param result 
+	 * @param form               グループ情報フォーム
+	 * @param result
 	 * @param redirectAttributes
 	 * @return トップページ（仮）
 	 */
-	@RequestMapping(value="/register", method = RequestMethod.POST)
-	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result, RedirectAttributes redirectAttributesm, 
-			Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		if(result.hasErrors()) {
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result,
+			RedirectAttributes redirectAttributesm, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		if (result.hasErrors()) {
 			return toRegisterGroup(model, loginUser);
 		}
-				
+
 		List<User> userList = new ArrayList<>();
-		//フォームからユーザー情報リストを取得
-		if(form.getUserNameList()!=null) {
+		// フォームからユーザー情報リストを取得
+		if (form.getUserNameList() != null) {
 			form.getUserNameList().forEach(name -> {
 				User user = registerGroupService.findByName(name);
 				userList.add(user);

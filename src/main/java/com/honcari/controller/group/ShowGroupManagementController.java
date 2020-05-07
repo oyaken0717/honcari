@@ -15,27 +15,50 @@ import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.service.group.ShowGroupManagementService;
 
+/**
+ * グループ管理画面を表示するためのコントローラー.
+ * 
+ * @author yamaseki
+ *
+ */
 @Controller
 @RequestMapping("group")
 public class ShowGroupManagementController {
-	
+
 	@Autowired
 	private ShowGroupManagementService showGroupManagementService;
-	
+
 	@Autowired
 	private HttpSession session;
-	
+
+	/**
+	 * グループ管理画面を表示するためのメソッド.
+	 * 
+	 * @param loginUser ログインユーザー
+	 * @param model
+	 * @return グループ管理画面へ遷移
+	 */
 	@RequestMapping("/to_management")
-	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser,Model model) {
-		User belongUser = showGroupManagementService.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(),1);
-		User notApprovedUser = showGroupManagementService.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(),0);
-		List<Group> ownGroupList = showGroupManagementService.showGroupListByOwnerUserId(loginUser.getUser().getUserId());
-		model.addAttribute("belongUser",belongUser);
-		model.addAttribute("notApprovedUser",notApprovedUser);
-		model.addAttribute("ownGroupList",ownGroupList);
+	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser, Model model) {
+		//所属しているグループ情報が含まれるログインユーザーの情報（グループドメインから持ってくるよう修正予定）
+		User belongUser = showGroupManagementService
+				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
+		
+		//招待は来ているが承認していないグループの情報が含まれたログインユーザーの情報（グループドメインから持ってくるよう修正予定）
+		User notApprovedUser = showGroupManagementService
+				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 0);
+		
+		//自身が作成したグループのリスト
+		List<Group> ownGroupList = showGroupManagementService
+				.showGroupListByOwnerUserId(loginUser.getUser().getUserId());
+		
+		model.addAttribute("belongUser", belongUser);
+		model.addAttribute("notApprovedUser", notApprovedUser);
+		model.addAttribute("ownGroupList", ownGroupList);
+		
+		//グループ詳細画面から遷移してきたことを示すフラグ
 		session.setAttribute("fromManagement", "fromManagement");
-		return "group/group_management2";
+		return "group/group_management";
 	}
 
 }
-

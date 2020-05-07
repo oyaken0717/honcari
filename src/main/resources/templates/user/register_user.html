@@ -1,60 +1,62 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Honcari -気軽に本をどこへでも-</title>
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
-<link rel="stylesheet" href="../static/css/signup.css" th:href="@{/css/signup.css}">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body th:style="'background-image:url(/img/home.jpeg)'">
-
-    <div class="main" >
-
-        <section class="signup">
-            <!-- <img src="images/signup-bg.jpg" alt=""> -->
-            <div class="container">
-                <div class="signup-content">
+<body>
+<nav th:replace="header::frag_header(9)"></nav>
+<!-- トップ -->
+<div class="top-head-wrapper" th:style="'background-image:url(/img/home.jpeg)'">
+  <div class="container mb-4">
+  	<div class="rounded-lg bg-white" style="margin: 0 150px; padding: 20px 0;">
+	    <div class="row mt-4">
+			<div class="signup-content col-sm-9 col-md-7 col-lg-5 mx-auto">
                     <form method="POST" id="signup-form" class="signup-form" th:action="@{/user/register}" th:object="${registerUserForm}">
-                        <h2 class="my-3 title text-black text-uppercase">Create account</h2>
+                        <h2 class="my-3 title text-black text-uppercase text-yellow">Create account</h2>
                         <div class="form-group">
 							<label th:errors="*{name}" class="control-label" style="color: red" for="inputError"></label>
-                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name" th:field="*{name}"/>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" th:field="*{name}"/>
                         </div>
                         <div class="form-group">
 							<label th:errors="*{email}" class="control-label" style="color: red" for="inputError"></label>
-                            <input type="email" class="form-input" name="email" id="email" placeholder="Your Email" th:field="*{email}"/>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" th:field="*{email}"/>
                         </div>
                         <div class="form-group">
 							<label th:errors="*{password}" class="control-label" style="color: red" for="inputError"></label>
-                            <input type="password" class="form-input" name="password" id="password" placeholder="Password" th:field="*{password}"/>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" th:field="*{password}"/>
                             <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group">
 							<label th:errors="*{confirmPassword}" class="control-label" style="color: red" for="inputError"></label>
-                            <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password" th:field="*{confirmPassword}"/>
+                            <input type="password" class="form-control" name="re_password" id="re_password" placeholder="Repeat your password" th:field="*{confirmPassword}"/>
                         </div>
-                        <div class="form-group">
+<!--                         <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
-                        </div>
+                        </div> -->
                         <div class="form-group">
-                            <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>
+                            <input type="submit" name="submit" id="submit" class="btn btn-block btn-outline-warning rounded-pill btn-md mt-3" value="Sign up"/>
                         </div>
                     </form>
                     <p class="loginhere">
                         Have already an account ? <a th:href="@{/user/to_login}" class="loginhere-link">Login here</a>
                     </p>
                 </div>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- JS -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-
+		</div>
+  	</div>
+  </div>
+</div>
+<footer th:replace="footer::footer"></footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+</body>
 </html>
