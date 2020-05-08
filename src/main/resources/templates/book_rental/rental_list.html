@@ -54,7 +54,7 @@
 									<div class="text-box">
 										<form th:action="@{/book_rental/cancel}" method="POST">
 											<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
-											所有者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
+											所有者：<a th:href="@{/user/show_user_page(userId=${bookRental.ownedBookInfo.user.userId})}" th:text="${bookRental.ownedBookInfo.user.name}"></a><br>
 											レンタル希望期間：<span th:text="${bookRental.requestDeadline}">まで</span><br>
 											ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 											<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
@@ -79,7 +79,7 @@
 							<div class="col-lg-6">
 								<div class="text-box">
 									<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
-									所有者：<span th:text="${bookRental.ownedBookInfo.user.name}">さん</span><br>
+									所有者：<a th:href="@{/user/show_user_page(userId=${bookRental.ownedBookInfo.user.userId})}" th:text="${bookRental.ownedBookInfo.user.name}"></a><br>
 									レンタル期間：<span id="rental-period" th:text="${bookRental.deadline}">まで</span><br>
 									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 									<div><button class="btn btn-warning btn-sm" data-toggle="modal" 
@@ -130,7 +130,7 @@
 									<div class="text-box">
 										<form th:action="@{/book_rental/determine}" method="POST">
 											<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
-											レンタル希望者：<span th:text="${bookRental.borrowUser.name}">さん</span><br>
+											レンタル希望者：<a th:href="@{/user/show_user_page(userId=${bookRental.borrowUser.userId})}" th:text="${bookRental.borrowUser.name}"></a><br>
 											レンタル希望期間：<span th:text="${bookRental.requestDeadline}">まで</span><br>
 											ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 											<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
@@ -158,7 +158,7 @@
 							<div class="col-lg-6">
 								<div class="text-box">
 									<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
-									レンタル希望者：<span th:text="${bookRental.borrowUser.name}">さん</span><br>
+									レンタル先：<a th:href="@{/user/show_user_page(userId=${bookRental.borrowUser.userId})}" th:text="${bookRental.borrowUser.name}"></a><br>
 									レンタル期間：<span th:text="${bookRental.deadline}">まで</span><br>
 									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 									<div><button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#return-confirm-form">返却確認</button></div>

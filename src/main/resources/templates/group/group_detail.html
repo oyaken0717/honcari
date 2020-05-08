@@ -69,7 +69,9 @@
 			
 			<div class="tab-pane tab-content" id="users" th:unless="${group.userList}==null">
 				<div th:each="user:${group.userList}">
-					<div th:text="${user.name}" class="text-center"></div>
+					<div class="text-center">
+						<a th:href="@{/user/show_user_page(userId=${user.userId})}" th:text="${user.name}"></a>
+					</div>
 				</div>
 			</div>
 		</div>

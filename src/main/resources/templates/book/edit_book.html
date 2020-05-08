@@ -27,10 +27,7 @@
 			<div class="col-lg-6 mt-4">
 				<div class="text-box">
 					<p class="font-weight-bold">
-						貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}"
-							th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
-						所有者：<a th:href="@{#}"><span
-							th:text="${ownedBookInfo.user.name}">所有者</span></a>
+						貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}"></span>
 					</p>
 					<h3 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.title}">title</h3>
 					<h4 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.author}">author</h4>
