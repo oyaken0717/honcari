@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Honcari -気軽に本をどこへでも-</title>
+<!-- Style CSS -->
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <!-- side bar -->
+	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 float-left" th:fragment="side_menu(userId,pageType,category)">
+		<h4><span th:text=${user.name}>名前</span><small>さん</small></h4>
+		<div class="list-group">
+			<a id="pageType1" href="user_page.html" th:href="@{/user/show_user_page(userId=${userId})}" 
+				class="list-group-item list-group-item-action side">プロフィール</a>
+			<a id="pageType2" href="user_book.html" th:href="@{/book/show_user_book(userId=${userId})}" 
+				class="list-group-item list-group-item-action side">所有書籍</a>
+		</div>
+		
+		<!-- 書籍カテゴリ選択リスト(デザイン要検討) -->
+		<div id="user-book-category" class="book-category list-group">
+			<a id="category0" href="user_book.html" th:href="@{/book/show_user_book(userId=${userId})}" 
+				class="list-group-item list-group-item-action side-category">全カテゴリー</a>
+					
+			<a id="category1" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=1}" 
+				class="list-group-item list-group-item-action side-category">文学・小説</a>
+						
+			<a id="category2" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=2}" 
+				class="list-group-item list-group-item-action side-category">社会・ビジネス</a>
+							
+			<a id="category3" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=3}" 
+				class="list-group-item list-group-item-action side-category">実用・教育</a>
+							
+		 	<a id="category4" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=4}" 
+				class="list-group-item list-group-item-action side-category">旅行・地図</a>
+							
+			<a id="category5" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=5}" 
+				class="list-group-item list-group-item-action side-category">趣味</a>
+							
+			<a id="category6" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=6}" 
+				class="list-group-item list-group-item-action side-category">アート・教養・エンタメ</a>
+							
+			<a id="category7" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=7}" 
+				class="list-group-item list-group-item-action side-category">辞典・図鑑・語学・辞書</a>
+							
+			<a id="category8" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=8}" 
+				class="list-group-item list-group-item-action side-category">こども</a>
+							
+			<a id="category9" href="user_book.html" th:href="@{/book/show_user_book_category(userId=${userId},categoryId=9}" 
+				class="list-group-item list-group-item-action side-category">その他</a>
+		</div>	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script>
+			$(function(){
+				var pageType = [(${pageType})]
+				$(".side").each(function(){
+					if($(this).attr("id") == 'pageType' + pageType){
+						$(this).addClass("list-group-item-warning");
+					}
+				});
+				
+				var category = [(${category})]
+				if(category == 99){
+					$("#user-book-category").remove();
+				}
+				$(".side-category").each(function(){
+					if($(this).attr("id") == 'category' + category){
+						$(this).addClass("list-group-item-warning");
+					}
+				});
+			});
+		</script>
+	</div>
+</body>
+</html>
