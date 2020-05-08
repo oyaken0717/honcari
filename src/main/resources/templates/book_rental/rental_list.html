@@ -5,17 +5,17 @@
 <title>Honcari -気軽に本をどこへでも-</title>
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
-<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 </head>
 <body>
 <header>
 	<nav th:replace="header::frag_header(0)"></nav>
 	<!-- alert -->
-	<div id="flash" th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+	<div id="flash" th:if="${successMessage}" class="alert alert-success alert-dismissible fade show flash" role="alert">
   		<span th:text="${successMessage}"></span>
 	</div>
-	<div id="flash" th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+	<div id="flash" th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show flash" role="alert">
   		<span th:text="${errorMessage}"></span>
 	</div>
 </header>
@@ -184,7 +184,7 @@
 											<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">閉じる</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
 											<button type="submit" class="btn btn-warning">本の返却を登録</button>
 										</div>
 									</form>
