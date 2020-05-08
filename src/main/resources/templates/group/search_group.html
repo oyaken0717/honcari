@@ -14,11 +14,11 @@
 
   <section class="jumbotron text-center">
     <div class="container content-wrapper">
-      <h1 class="jumbotron-heading">グループ検索</h1>
+      <h1 class="jumbotron-heading">グループを探す</h1>
       <p class="lead"></p>
       <form th:action="@{/group/search}" method="post">
   		<div class="form-group">
-      		<input class="form-control-lg" name="name" type="search" placeholder="グループを検索..." aria-label="検索...">
+      		<input class="form-control-lg" name="name" type="search" placeholder="グループ検索..." aria-label="グループ検索...">
       		<button type="submit" class="btn-lg btn-warning my-2 my-2 my-sm-0">検索</button>
       	</div>
       </form>
@@ -29,8 +29,11 @@
 	<div class="full-width">
 		<h2 class="section-heading" style="color:gray">グループに参加してグループ内のユーザーと本をシェアしよう！</h2>
 	</div>
+	  <div style="margin: 50px 0 0 0">
+        <p class="text-center" style="color:gray" th:if="${groupList}==null">検索結果がありません</p>  
+      </div>
       <div class="row" style="margin:70px">
-        <div class="col-md-4" th:each="group:${groupList}">        
+        <div class="col-md-4" th:each="group:${groupList}">      
           <div class="card mb-4 shadow-sm" style="height: 12rem;" >
             <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
             <div class="card-body">
@@ -42,42 +45,24 @@
            		  <input type="hidden" class="group-name" th:value="${group.name}">
                   <input type="hidden" class="group-description" th:value="${group.description}">
                 </div>
-                <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
+                <small class="text-muted" th:text="'オーナー: '+${group.ownerUser.name}">9 mins</small>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+			<div class="pager" >
+				<ul class="pagination" th:if="${groupList} != null">
+					<li class="active" th:each="i : ${#numbers.sequence(1, totalPageNum)}">
+						<a  th:class="(${i}==${page})? 'active':''" th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}">
+						<span th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+	</div>
 
 </main>
-
-<!-- 繝｢繝ｼ繝�繝ｫ -->
-<!-- <div class="modal fade" id="group-detail-form" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">繧ｰ繝ｫ繝ｼ繝苓ｩｳ邏ｰ</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form id="book-data">
-				<div class="modal-body" id="group-detail">
-				</div>
-				</form>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">髢峨§繧�</button>
-					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-primary">蜿ょ刈縺吶ｋ</button>
-					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-primary">諡帛ｾ�縺吶ｋ</button>
-					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-primary" onclick="return confirm('譛ｬ蠖薙↓縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励°繧画栢縺代∪縺吶°�ｼ�')">縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励°繧画栢縺代ｋ</button>  				
-  				</div>
-  		</div>
-  	</div>	
-</div> -->
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="/js/slick.min.js"></script>
@@ -85,7 +70,7 @@
 <script src="../static/js/group_detail.js" th:src="@{/js/group_detail.js}"></script>
 
 </body>
-<!-- 繧ｳ繝ｳ繝�繝ｳ繝� -->
+<!-- 驛｢�ｽｧ�ｿｽ�ｽｽ�ｽｳ驛｢譎｢�ｽｽ�ｽｳ驛｢譎｢�ｽｿ�ｽｽ驛｢譎｢�ｽｽ�ｽｳ驛｢譎｢�ｽｿ�ｽｽ -->
 <footer th:replace="footer::footer"></footer>
 <style>
 .card-body{

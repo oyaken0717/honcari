@@ -10,7 +10,7 @@
   </head>
   <body >
 <main role="main">
-<div th:if="${complete}" class="alert alert-warning alert-dismissible fade show" role="alert">
+<div th:if="${complete}" class="flash alert alert-warning alert-dismissible fade show" role="alert">
   <strong th:if="${registerGroup}">グループを作成しました!!</strong>
   <div th:if="${inviteGroup}">
 	  <span th:if="${inviteGroup}" th:each="user:${userList}">

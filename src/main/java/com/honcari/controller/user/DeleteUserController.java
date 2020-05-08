@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.honcari.domain.BookRental;
 import com.honcari.domain.LoginUser;
@@ -45,7 +46,7 @@ public class DeleteUserController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/delete_user")
+	@RequestMapping(value="/delete_user",method = RequestMethod.POST)
 	public String deleteUser(@AuthenticationPrincipal LoginUser loginUser, Model model) {
 		Integer userId = loginUser.getUser().getUserId();
 		List<BookRental> bookRentalListByOwner = searchByOwnerService.searchRentalListByOwner(userId);

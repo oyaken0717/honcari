@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.Group;
@@ -72,7 +73,7 @@ public class InviteGroupController {
 	 * @param loginUser           ログインユーザー
 	 * @return グループ詳細画面へ遷移
 	 */
-	@RequestMapping("/invite_group")
+	@RequestMapping(value="/invite_group",method = RequestMethod.POST)
 	public String inviteGroup(@Validated InviteGroupForm form, BindingResult result,
 			RedirectAttributes redirectAttributesm, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 

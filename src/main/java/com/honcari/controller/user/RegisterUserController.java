@@ -6,6 +6,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.honcari.form.RegisterUserForm;
 import com.honcari.service.user.RegisterUserService;
 
@@ -27,7 +29,7 @@ public class RegisterUserController {
 		return new RegisterUserForm();
 	}
 	
-	@RequestMapping("/to_register")
+	@RequestMapping(value="/to_register")
 	public String toRegisterUser() {
 		return "user/register_user";
 	}
@@ -40,7 +42,7 @@ public class RegisterUserController {
 	 * @param mode
 	 * @return thank you ページへ遷移
 	 */
-	@RequestMapping("/register")
+	@RequestMapping(value="/register",method = RequestMethod.POST)
 	public String register(@Validated RegisterUserForm form, BindingResult result,Model mode) {
 		if (!form.getPassword().equals(form.getConfirmPassword())) {
 			result.rejectValue("password", null, "パスワードと確認用パスワードが一致していません。");

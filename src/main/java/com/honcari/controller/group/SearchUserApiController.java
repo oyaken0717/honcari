@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.honcari.domain.GroupRelation;
@@ -19,7 +20,7 @@ import com.honcari.service.group.RegisterGroupService;
  *
  */
 @RestController
-@RequestMapping("")
+@RequestMapping(value="")
 public class SearchUserApiController {
 
 	@Autowired
@@ -31,7 +32,7 @@ public class SearchUserApiController {
 	 * @param name
 	 * @return
 	 */
-	@RequestMapping("/search_user_api")
+	@RequestMapping(value="/search_user_api")
 	public Map<String, List<User>> searchUser(String name, Integer userId) {
 		Map<String, List<User>> map = new HashMap<>();
 		List<User> userList = registerGroupService.findByNameLike(name, userId);
@@ -48,7 +49,7 @@ public class SearchUserApiController {
 	 * @param groupId グループid
 	 * @return ユーザー情報（map）
 	 */
-	@RequestMapping("/search_user_api_for_invite")
+	@RequestMapping(value="/search_user_api_for_invite")
 	public Map<String, List<User>> searchUserNotInGroup(String name, Integer userId,Integer groupId) {
 		Map<String, List<User>> map = new HashMap<>();
 			List<User> userList = registerGroupService.findByNameLikeAndGroupId(name, userId, groupId);

@@ -61,7 +61,7 @@ public class EditUserController {
 	 * @param model  リクエストスコープ
 	 * @return プロフィール編集画面
 	 */
-	@RequestMapping("/show_edit")
+	@RequestMapping(value="/show_edit")
 	public String showEditUser(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user = searchUserByUserIdService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);

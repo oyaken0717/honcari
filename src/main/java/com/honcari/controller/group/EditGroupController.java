@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.honcari.domain.Group;
 import com.honcari.form.EditGroupForm;
@@ -56,7 +57,7 @@ public class EditGroupController {
 	 * @param model
 	 * @return 編集したグループの詳細画面へ遷移
 	 */
-	@RequestMapping("/edit_group")
+	@RequestMapping(value="/edit_group",method = RequestMethod.POST)
 	public String editGroup(@Validated EditGroupForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return toEditGroup(form.getGroupId(), model);
