@@ -146,6 +146,7 @@ $(function() {
 	    $(document).ajaxSend(function(e, xhr, options) {
 	      xhr.setRequestHeader(header, token);
 	    });
+	    var element = document.getElementById("book-data") ;
 		var isbnId = $('#register-isbn').val();
 		var title = $('#register-title').val();
 		var author = $('#register-author').val();
@@ -155,6 +156,8 @@ $(function() {
 		var thumbnailPath = $('#register-thumbnail-path').val();
 		var categoryId = $('#register-category-id').val();
 		var comment = $('#register-comment').val();
+		var bookStatusRadio = element.bookStatus;
+		var bookStatus = bookStatusRadio.value;
 		var url = 'http://localhost:8080/book_api/register_book';
 		$.ajax({
 			url : url,
@@ -169,7 +172,8 @@ $(function() {
 				pageCount : pageCount,
 				thumbnailPath : thumbnailPath,
 				categoryId : categoryId,
-				comment : comment
+				comment : comment,
+				bookStatus : bookStatus
 			},
 			async: false
 		}).done(function(data) {

@@ -154,13 +154,14 @@ sup {
 }
 
 a {
-  color: #f7c600;
+  color: #007bff;
   text-decoration: none;
   background-color: transparent;
 }
 
 a:hover {
-  color: #e0a800;
+  color: #0056b3;
+  text-decoration: underline;
 }
 
 a:not([href] ) {
@@ -2703,36 +2704,35 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-warning {
-	color: #fff;
-	background-color: #f7c600;
-	border-color: #f7c600;
+  color: #212529;
+  background-color: #ffc107;
+  border-color: #ffc107;
 }
 
 .btn-warning:hover {
-	color: #fff;
-	background-color: #e0a800;
-	border-color: #d39e00;
+  color: #212529;
+  background-color: #e0a800;
+  border-color: #d39e00;
 }
 
 .btn-warning:focus, .btn-warning.focus {
-	color: #fff;
-	background-color: #e0a800;
-	border-color: #d39e00;
-	box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+  color: #212529;
+  background-color: #e0a800;
+  border-color: #d39e00;
+  box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
 }
 
 .btn-warning.disabled, .btn-warning:disabled {
-	color: #fff;
-	background-color: #ffc107;
-	border-color: #ffc107;
+  color: #212529;
+  background-color: #ffc107;
+  border-color: #ffc107;
 }
 
-.btn-warning:not (:disabled ):not (.disabled ):active, .btn-warning:not
-	 (:disabled ):not (.disabled ).active, .show>.btn-warning.dropdown-toggle
-	{
-	color: #fff;
-	background-color: #d39e00;
-	border-color: #c69500;
+.btn-warning:not(:disabled):not(.disabled):active, .btn-warning:not(:disabled):not(.disabled).active,
+.show > .btn-warning.dropdown-toggle {
+  color: #212529;
+  background-color: #d39e00;
+  border-color: #c69500;
 }
 
 .btn-warning:not (:disabled ):not (.disabled ):active:focus,
@@ -4543,7 +4543,6 @@ none
 }
 
 .nav-link:hover, .nav-link:focus {
-  color: var(--yellow);
   text-decoration: none;
 }
 
@@ -4695,13 +4694,12 @@ none
 }
 
 .navbar-toggler {
-	padding: 0.25rem 0.75rem;
-	font-size: 1.25rem;
-	line-height: 1;
-	background-color: var(--yellow);
-	border: 1px solid transparent;
-	border-radius: 0.25rem;
-	text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
 }
 
 .navbar-toggler:hover, .navbar-toggler:focus {
@@ -4941,17 +4939,16 @@ none
 }
 
 .navbar-light .navbar-brand {
-	color: var(--yellow);
-}
-
-.navbar-light .navbar-nav .nav-link {
-	color: var(--gray);
+  color: rgba(0, 0, 0, 0.9);
 }
 
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-    color: var(--yellowHover);
+  color: rgba(0, 0, 0, 0.9);
 }
 
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.5);
+}
 
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus
 	{
@@ -4966,7 +4963,8 @@ none
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .nav-link.active {
-  color: var(--gray);
+    color: rgba(0, 0, 0, 0.9);
+
 }
 
 .navbar-light .navbar-toggler {
@@ -5639,14 +5637,11 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert {
-  position: absolute;
-  width: 100%;
-  padding: 1.0rem 0.75rem;
-  margin-top: 1rem;
+  position: relative;
+  padding: 0.75rem 1.25rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
-  z-index: 2;
 }
 
 .alert-heading {
@@ -5698,9 +5693,9 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-success {
-	color: #fffff;
-	background-color: #f7c600;
-	border-color: #f7c600;
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
 }
 
 .alert-success hr {
@@ -6146,15 +6141,15 @@ to {
 }
 
 .list-group-item-warning {
-	color: #fffff;
-	background-color: var(--yellow);
+  color: #856404;
+  background-color: #ffeeba;
 }
 
-.list-group-item-warning.list-group-item-action:hover,
-	.list-group-item-warning.list-group-item-action:focus {
-	color: #fffff;
-	background-color: var(--yelloHover);
+.list-group-item-warning.list-group-item-action:hover, .list-group-item-warning.list-group-item-action:focus {
+  color: #856404;
+  background-color: #ffe8a1;
 }
+
 
 .list-group-item-warning.list-group-item-action.active {
 	color: #fff;
