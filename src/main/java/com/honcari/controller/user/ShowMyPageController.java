@@ -26,8 +26,8 @@ public class ShowMyPageController {
 	/**
 	 * マイページに遷移するメソッド.
 	 * 
-	 * @param userId ユーザーID
-	 * @param model  リクエストスコープ
+	 * @param model リクエストスコープ
+	 * @param loginUser ログイン中のユーザー
 	 * @return マイページ画面
 	 */
 	@RequestMapping("/show_mypage")
