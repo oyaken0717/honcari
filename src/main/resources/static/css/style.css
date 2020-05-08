@@ -2,31 +2,96 @@
 
 @import url(//fonts.googleapis.com/css?family=Montserrat:400,700);
 
-/*　全体のデザインに関わるCSS */
+/*　全体のデザインに共通のCSS */
 :root { 
-	--yellow: #f7c600;
-	--primary: #f7c600;
-	--yelloHover: #e0a800;
-	--white: #fffff;
+	--yellow: #f7c600; 
+	--yellowHover: #e0a800; 
+	--primary: #f7c600; 
 	--gray: #808080;
 }
 
-.text-yellow{
-	color: var(--yellow); !important
-}
-
 a {
-  color: black;
-  text-decoration: none;
-  background-color: transparent;
+	color: black;
+	text-decoration: none;
+	background-color: transparent;
 }
 
 a:hover {
-  color: black;
-  text-decoration: underline;
+	color: black;
+	text-decoration: underline;
 }
 
-.content-wrapper{
+.btn-warning {
+	color: #fff;
+	background-color: var(--yellow);
+	border-color: var(--yellow);
+}
+
+.btn-warning:hover {
+	color: #fff;
+	background-color: #e0a800;
+	border-color: #d39e00;
+}
+
+.btn-warning:focus, .btn-warning.focus {
+	color: #fff;
+	background-color: #e0a800;
+	border-color: #d39e00;
+	box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+}
+
+.btn-warning.disabled, .btn-warning:disabled {
+	color: #fff;
+	background-color: #ffc107;
+	border-color: #ffc107;
+}
+
+.btn-warning:not (:disabled ):not (.disabled ):active, .btn-warning:not
+	 (:disabled ):not (.disabled ).active, .show>.btn-warning.dropdown-toggle
+	{
+	color: #fff;
+	background-color: #d39e00;
+	border-color: #c69500;
+}
+
+.alert {
+	position: absolute;
+	width: 100%;
+	padding: 1.0rem 0.75rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+	z-index: 2;
+}
+
+.alert-success {
+	color: #fffff;
+	background-color: #f7c600;
+	border-color: #f7c600;
+}
+
+.flash {
+	position: fixed;
+	margin: 0;
+}
+
+.list-group-item-warning {
+	color: #fffff;
+	background-color: var(--primary);
+}
+
+.list-group-item-warning.list-group-item-action:hover,
+	.list-group-item-warning.list-group-item-action:focus {
+	color: #fffff;
+	background-color: var(--yellowHover);
+}
+
+.text-yellow {
+	color: var(--yellow); !important
+}
+
+.content-wrapper {
 	padding-top: 55px;
 	padding-bottom: 55px;
 	margin-bottom: auto;
@@ -39,16 +104,14 @@ h2.section-heading {
 	text-align: center;
 }
 
-p.section-description{
+p.section-description {
 	text-align: center;
 	color: #6f6f6f;
 }
 
-h4.content-heading{
+h4.content-heading {
 	
 }
-
-/*　全体のデザインに関わるCSS */
 
 .carousel-item {
 	height: 65vh;
@@ -59,8 +122,41 @@ h4.content-heading{
 	-o-background-size: cover;
 	background-size: cover;
 }
+
 /* ヘッダー　*/
-.menu-btn{
+.nav-link:hover, .nav-link:focus {
+	color: var(--yellow);
+	text-decoration: none;
+}
+
+.navbar-toggler {
+	padding: 0.25rem 0.75rem;
+	font-size: 1.25rem;
+	line-height: 1;
+	background-color: var(--yellow);
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+	text-transform: uppercase;
+}
+
+.navbar-light .navbar-brand {
+	color: var(--primary);
+}
+
+.navbar-light .navbar-nav .nav-link {
+	color: var(--gray);
+}
+
+.navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
+	color: var(--yellowHover);
+}
+
+.navbar-light .navbar-nav .show>.nav-link, .navbar-light .navbar-nav .active>.nav-link,
+.navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+	color: var(--gray);
+}
+
+.menu-btn {
 	height: 100%;
 	font-size: 30px;
 	display: block;
@@ -74,8 +170,6 @@ h4.content-heading{
 	outline: none;
 }
 
-
-
 /* フッター　*/
 footer {
 	padding: 20px;
@@ -86,13 +180,13 @@ footer {
 }
 
 .copyright {
-    font-size: 90%;
-    line-height: 40px;
-    text-transform: none;
+	font-size: 90%;
+	line-height: 40px;
+	text-transform: none;
 }
 
 ul.social-buttons {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .social-btn {
@@ -131,7 +225,7 @@ ul.social-buttons {
 	background-image: url(/img/home.jpeg);
 	background-position: center center;
 }
-/* 本一覧ページ　*/
+
 #book-list {
 	font-size: 14px;
 	text-align: center;
@@ -258,12 +352,12 @@ ul.social-buttons {
 }
 
 .thumbnail {
-    height: 250px;
+	height: 250px;
 }
 
 .thumbnail img {
-    height: 100%;
-    width: auto;
+	height: 100%;
+	width: auto;
 }
 
 .book-card {
@@ -277,19 +371,19 @@ ul.social-buttons {
 }
 
 .book-title {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
 }
 
 .book-author {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
 }
 
 .book-bb {
@@ -297,17 +391,17 @@ ul.social-buttons {
 }
 
 #register-tr {
-  border-bottom: solid 1px #eee;
+	border-bottom: solid 1px #eee;
 }
 
 #book-list th {
-  text-align: center;
-  padding: 7px 0;
-  border-right:solid 1px white;
-  border-left:solid 1px white;
-  background-color: var(--yellow);
-  color: white;
-  border-radius: 5px 5px 5px 5px;
+	text-align: center;
+	padding: 7px 0;
+	border-right: solid 1px white;
+	border-left: solid 1px white;
+	background-color: var(- -yellow);
+	color: white;
+	border-radius: 5px 5px 5px 5px;
 }
 
 /* 
@@ -316,116 +410,106 @@ ul.social-buttons {
 	background-color:#fff3cd;
 	color: #856404;
 } */
-
 .full-width {
-     width:100vw; 
-     position: relative;
-     left: 50%;
-     right: 50%;
-     margin-left: -50vw;
-     margin-right: -50vw;
-     height: 18	0px;
- }
- 
- ul.category-list {
- 	list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
- }
- 
- li.category {
- 	margin-left: 10px;
-    margin-bottom: 10px;
- }
- 
- .card-text-title {
- 	border-bottom: 1px solid;
- }
- 
+	width: 100vw;
+	position: relative;
+	left: 50%;
+	right: 50%;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	height: 18 0px;
+}
+
+ul.category-list {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+li.category {
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.card-text-title {
+	border-bottom: 1px solid;
+}
+
 .pager .pagination {
-  margin-left: 50%;
-  margin-top: 3%;
+	margin-left: 50%;
+	margin-top: 3%;
 }
 
-.pager .pagination li{
-  display: inline;
-  margin: 3%;
-  padding: 0;
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  position: relative;
-  border-radius: 15px;
+.pager .pagination li {
+	display: inline;
+	margin: 3%;
+	padding: 0;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	position: relative;
+	border-radius: 15px;
 }
 
-
-.pager .pagination li a, .pager .pagination li span{
-  display: inline;
-  vertical-align: middle;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display:table;
-  text-decoration: none;
-  background-color: #F7C600;
-  color: white;
-  padding-top: 20%;
-  border-radius: 10px;
-  border-bottom: solid 4px #627295;
+.pager .pagination li a, .pager .pagination li span {
+	display: inline;
+	vertical-align: middle;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: table;
+	text-decoration: none;
+	background-color: #F7C600;
+	color: white;
+	padding-top: 20%;
+	border-radius: 10px;
+	border-bottom: solid 4px #627295;
 }
 
-.pager .pagination li span{
+.pager .pagination li span {
 	border-bottom: none;
 }
 
-.pager .pagination li a:hover,
-.pager .pagination li a.active{
-  color: #000;
-  background: #e0a800;
+.pager .pagination li a:hover, .pager .pagination li a.active {
+	color: #000;
+	background: #e0a800;
 }
 
-#book-title-mybook{
+#book-title-mybook {
 	text-align: left;
 }
 
-#register-success{
+#register-success {
 	color: white;
 }
 
-.pager .pagination li a .register-book-paging{
-  display: inline;
-  vertical-align: middle;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display:table;
-  text-decoration: none;
-  background-color: #F7C600;
-  color: white;
-  padding-top: 20%;
-  border-radius: 10px;
-  border-bottom: none;
+.pager .pagination li a .register-book-paging {
+	display: inline;
+	vertical-align: middle;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: table;
+	text-decoration: none;
+	background-color: #F7C600;
+	color: white;
+	padding-top: 20%;
+	border-radius: 10px;
+	border-bottom: none;
 }
-
 
 /* FAQ */
-
 .ui-state-active {
-	border: var(--yellow);
-	background: var(--yellow);
+	border: var(- -yellow);
+	background: var(- -yellow);
 	font-weight: normal;
 	color: #ffffff;
-}
-
-.flash{
-	position: fixed;
-	margin: 0;
 }
