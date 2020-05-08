@@ -508,8 +508,8 @@ li.category {
 
 /* FAQ */
 .ui-state-active {
-	border: var(- -yellow);
-	background: var(- -yellow);
+	border: var(--primary);
+	background: var(--primary);
 	font-weight: normal;
 	color: #ffffff;
 }
