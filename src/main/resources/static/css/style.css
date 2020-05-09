@@ -545,3 +545,29 @@ li.category {
 	border-radius: 10px;
 	opacity: 0.9;
 }
+
+/* 右下の本登録ボタン */
+.register-book-btn {
+	height: 140px;
+	width: 140px;
+	position: absolute;
+	bottom: 30px;
+	right: 30px;
+	position: fixed; 
+	border-radius: 100%;
+}
+
+.logo.large {
+	width: 140px;
+	height: 140px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+}
+
+.large-icon {
+	font-size: 3.5rem 
+}
