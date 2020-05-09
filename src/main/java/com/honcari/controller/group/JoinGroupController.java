@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -57,7 +58,7 @@ public class JoinGroupController {
 	 * @param redirect
 	 * @return グループ管理画面へ遷移
 	 */
-	@RequestMapping("/join")
+	@RequestMapping(value="/join",method = RequestMethod.POST)
 	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser, Model model,
 			RedirectAttributes redirect) {
 		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);

@@ -79,8 +79,8 @@
 			</div>
 			<hr>
 			<div class="slider">
-				<div class="shadow-sm mr-2 ml-2 bg-white" style="height: 346px;" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
-					<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="bd-placeholder-img card-img-top" width="100%" height="210" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a>
+				<div class="mr-2 ml-2 bg-white" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
+					<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="mx-auto bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a>
 					<div class="card-body">
 						<a class="card-text book-title text-dark" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 							<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
@@ -92,12 +92,8 @@
 		</div>
 	</div>
 </div>
-
-<div>
-	<a href="#"  class="logo" style="height: 80px; width: 80px;position: absolute;bottom: 30px;right: 30px; position: fixed; border-radius: 100%">
-	<i>ロゴ(仮)</i>
-	</a>
-</div>
+<!-- 本登録ボタン -->
+<div th:replace="fixed_register_book_btn::register_book_btn"></div>
 <!-- コンテンツ -->
 <footer th:replace="footer::footer"></footer>
 

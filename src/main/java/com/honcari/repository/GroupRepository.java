@@ -183,17 +183,29 @@ public class GroupRepository {
 	 * @param name 検索パラメータ
 	 * @return グループ情報リスト
 	 */
-	public List<Group> findByLikeName(String name) {
-//		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
-//				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
-//				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
-//				+ "g.owner_user_id = ou.user_id WHERE g.name LIKE :name ORDER BY g.group_id";
-		StringBuilder sql = getSQL();
-		sql.append(" WHERE g.name LIKE :name ORDER BY g.group_id");
-		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
-		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
+	public List<Group> findByLikeName(String name,Integer offset) {
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
+				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
+				+ "g.owner_user_id = ou.user_id WHERE g.name LIKE :name ORDER BY g.group_id OFFSET :offset LIMIT 9";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("offset", offset);
+		List<Group> groupList = template.query(sql.toString(), param, GROUP_ROW_MAPPER);
 		return groupList;
 	}
+	
+//	/**
+//	 * 受け取ったパラメータからグループ情報を取得するメソッド.
+//	 * 
+//	 * @param name 検索パラメータ
+//	 * @return グループ情報リスト
+//	 */
+//	public List<Group> findByLikeName2(String name,Integer offset) {
+//		StringBuilder sql = getSQL();
+//		sql.append(" WHERE g.name LIKE :name ORDER BY g.group_id");
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+//		List<Group> groupList = template.query(sql.toString(), param, GROUP_RESULT_SET_EXTRACTOR);
+//		return groupList;
+//	}
 	
 	/**
 	 * グループIDからグループ情報を取得するメソッド.
@@ -250,5 +262,11 @@ public class GroupRepository {
 		String sql = "DELETE FROM groups WHERE group_id = :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
 		template.update(sql, param);
+	}
+	
+	public Integer count(String name) {
+		String sql = "SELECT COUNT(*) FROM groups WHERE name LIKE :name";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		return template.queryForObject(sql, param,Integer.class);
 	}
 }

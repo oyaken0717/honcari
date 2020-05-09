@@ -28,8 +28,8 @@ public class SearchGroupService {
 	 * @param name グループ名
 	 * @return グループ情報リスト
 	 */
-	public List<Group> searchGroup(String name) {
-		return groupRepository.findByLikeName(name);
+	public List<Group> searchGroup(String name,Integer offset) {
+		return groupRepository.findByLikeName(name,offset);
 	}
 
 	/**
@@ -40,6 +40,10 @@ public class SearchGroupService {
 	 */
 	public Group searchGroupById(Integer id) {
 		return groupRepository.findByGroupId(id);
+	}
+	
+	public Integer count(String name) {
+		return groupRepository.count(name);
 	}
 
 }
