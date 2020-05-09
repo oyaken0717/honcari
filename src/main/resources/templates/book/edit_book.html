@@ -42,7 +42,7 @@
 						この本の説明：<br> <span th:text="${ownedBookInfo.book.description}">description</span>
 					</p>
 					<div th:unless="${#strings.isEmpty(ownedBookInfo.comment)}">
-						持ち主のコメント：<br>
+						コメント：<br>
 						<p th:text="${ownedBookInfo.comment}">comment</p>
 					</div>
 					<button class="btn btn-warning btn-lg btn-block"

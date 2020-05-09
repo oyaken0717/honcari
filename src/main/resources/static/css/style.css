@@ -224,6 +224,9 @@ ul.social-buttons {
 .home-image {
 	background-image: url(/img/home.jpeg);
 	background-position: center center;
+	background-color: #d4ba9f;
+	background-blend-mode: darken;
+	 filter: blur(1px);
 }
 
 #book-list {

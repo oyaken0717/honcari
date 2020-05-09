@@ -80,9 +80,9 @@
       				</div>
 				</div>
 				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${errorMessage}" style="text-align:center">
-					<div class="register-book-image">
+					<div class="register-book-imaged">
 					<div th:text="${errorMessage}" style="font-size:1.3rem;padding:29% 0 7% 0; font-weight:bold; opacity:1.0;"></div>
-					<span style="font-size:2rem; border-bottom:solid 1px; font-weight:bold; opacity:1.0;" th:href="@{/book/show_register}">新しく本を登録しよう<i class="fas fa-book"></i></span>
+					<a style="font-size:2rem; border-bottom:solid 1px; font-weight:bold; opacity:1.0;" th:href="@{/book/show_register}">新しく本を登録しよう<i class="fas fa-book"></i></a>
 				</div>
 			</div>
 		</div>
