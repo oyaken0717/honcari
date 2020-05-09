@@ -69,9 +69,10 @@
 					</td>
 				</tr>
 			</table>
-			<div class="pager">
+			<div class="pager row justify-content-center">
 				<ul class="pagination">
 					<li class="active"><a class="register-book-paging" th:if="${nowPageNumber} AND ${nowPageNumber} != 1" th:href="@{'/book/search_books?searchWord=' + ${searchWord} + '&pageNumber=' + ${nowPageNumber - 1}}">前へ</a></li>
+					<li style="margin:3%;"></li>
 					<li class="active"><a class="register-book-paging" th:if="${nowPageNumber}" th:href="@{'/book/search_books?searchWord=' + ${searchWord} + '&pageNumber=' + ${nowPageNumber + 1}}">次へ</a></li>
 				</ul>
 			</div>

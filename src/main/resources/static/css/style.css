@@ -414,13 +414,13 @@ ul.social-buttons {
 }
 
 #book-list th {
-  text-align: center;
-  padding: 7px 0;
-  border-right:solid 1px white;
-  border-left:solid 1px white;
-  background-color: var(--yellow);
-  color: white;
-  border-radius: 10px;
+	padding: 0.5em 1em;
+    margin: 2em 0;
+    color: white;
+    background: var(--yellow);/*背景色*/
+    border-left: solid 3px white;/*左線*/
+    border-right: solid 3px white;/*右線*/
+    
 }
 
 /* 
@@ -464,8 +464,8 @@ li.category {
 	margin: 3%;
 	padding: 0;
 	display: inline-block;
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 40px;
 	text-align: center;
 	position: relative;
 	border-radius: 15px;
@@ -519,7 +519,6 @@ li.category {
 	text-decoration: none;
 	background-color: #F7C600;
 	color: white;
-	padding-top: 20%;
 	border-radius: 10px;
 	border-bottom: none;
 }
