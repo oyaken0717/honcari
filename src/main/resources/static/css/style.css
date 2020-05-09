@@ -299,9 +299,32 @@ ul.social-buttons {
 /*  トップページのデザイン */
 .top-head-wrapper {
 	font-weight: 300;
-	padding: 10% 0;
+	padding-top: 7%;
+	padding-bottom: 7%;	
 	background-size: cover;
 	background-position: center center;
+	width: 100vw;
+    height: 100%;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    -ms-flex-pack: center;
+    -ms-flex-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.top-head-wrapper:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+  background: inherit;
+  filter: blur(1px);
+  z-index: -1;
 }
 
 .top-head-wrapper .title {
@@ -332,10 +355,6 @@ ul.social-buttons {
 
 .top-head-wrapper .badge-inverse {
 	background: #3e4555;
-}
-
-.top-head-wrapper .op-8 {
-	opacity: 0.8;
 }
 
 #edit-button {
