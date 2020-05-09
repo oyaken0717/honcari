@@ -3185,35 +3185,14 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 	}
 }
 
-.fade
-:not
- 
-(
-.show
- 
-)
-{
-opacity
-:
- 
-0;
+.fade:not(.show){
+ 	opacity:0;
 }
-.collapse
-:not
- 
-(
-.show
- 
-)
-{
-display
-:
- 
-none
-;
 
-
+.collapse:not(.show) {
+ 	display:none;
 }
+
 .collapsing {
 	position: relative;
 	height: 0;
