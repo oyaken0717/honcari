@@ -19,18 +19,11 @@
 	<nav th:replace="header::frag_header(0)"></nav>
 
 	<!-- page content -->
-	<div class="container content-wrapper">
+	<div class="container">
 		<div class="row mx-auto my-5">
-				<div class="alert alert-info alert-dismissible fade show mt-2" role="alert" th:if="${completeMessage} or ${updatePasswordMessage}">
-					<span th:text="${completeMessage}"></span><br th:if="${completeMessage} and ${updatePasswordMessage}">
-					<span th:text="${updatePasswordMessage}"></span>
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
 		
 				<!-- side bar -->
-				<div th:replace="mypage_side_menu::frag_mypage_side_menu(1,99)"></div>
+				<div th:replace="user_page_side_menu::side_menu(${user.userId},1,99)"></div>
 
 				<!-- main content -->
 				<!-- profile -->
@@ -42,29 +35,23 @@
 							th:unless="${user.imagePath}" th:src="@{/img/user_default.png}" width="100px" height="100px">
 					</div>
 					<div class="col-lg-10 mx-auto">
-					<div class="table-responsible">
-						<table class="table">
-							<tr>
-								<th width="30%">名前</th>
-								<td width="70%" th:text="${user.name}">本</td>
-							</tr>
-							<tr>
-								<th class="profile-item">メールアドレス</th>
-								<td th:text="${user.email}"></td>
-							</tr>
-							<tr>
-								<th class="profile-item">プロフィール</th>
-								<td style="white-space:pre-wrap" th:text="${user.profile}"></td>
-							</tr>
-						</table>
-					</div>
-					<a class="btn btn-warning" th:href="@{/user/show_edit}">プロフィール編集</a>
+						<div class="table-responsible">
+							<table class="table">
+								<tr>
+									<th width="30%">名前</th>
+									<td width="70%" th:text="${user.name}">本</td>
+								</tr>
+								<tr>
+									<th class="profile-item">プロフィール</th>
+									<td style="white-space:pre-wrap" th:text="${user.profile}"></td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 				
 		</div>
 	</div>
-	<footer th:replace="footer::footer"></footer>
 	
 	<!-- script -->
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

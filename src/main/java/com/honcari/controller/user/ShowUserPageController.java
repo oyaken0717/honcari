@@ -1,39 +1,38 @@
 package com.honcari.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.service.user.SearchUserByUserIdService;
 
 /**
- * マイページを表示するコントローラー.
+ * ユーザーページを表示するコントローラー.
  * 
  * @author katsuya.fujishima
  *
  */
 @Controller
 @RequestMapping("/user")
-public class ShowMyPageController {
-
+public class ShowUserPageController {
+	
 	@Autowired
 	private SearchUserByUserIdService searchUserByUserIdService;
 
 	/**
-	 * マイページに遷移するメソッド.
+	 * ユーザーページに遷移するメソッド.
 	 * 
-	 * @param model リクエストスコープ
-	 * @param loginUser ログイン中のユーザー
+	 * @param userId ユーザーID
+	 * @param model  リクエストスコープ
 	 * @return マイページ画面
 	 */
-	@RequestMapping("/show_mypage")
-	public String showMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = searchUserByUserIdService.showUser(loginUser.getUser().getUserId());
+	@RequestMapping("/show_user_page")
+	public String showUserPage(Integer userId, Model model) {
+		User user = searchUserByUserIdService.showUser(userId);
 		model.addAttribute("user", user);
-		return "user/mypage";
+		return "user/user_page";
 	}
+
 }
