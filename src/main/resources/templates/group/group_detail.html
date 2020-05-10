@@ -43,7 +43,7 @@
 	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
   			<li class="nav-item">
-    			<a class="nav-link text-dark" href="#about-group" data-toggle="tab">このグループについて</a>
+    			<a class="nav-link text-dark active" href="#about-group" data-toggle="tab">このグループについて</a>
  	 		</li>
  	 		<li class="nav-item">
    				 <a class="nav-link text-dark" href="#book-list" data-toggle="tab">シェアされている本</a>
@@ -54,11 +54,11 @@
     	</ul>
     	
     	<div class="tab-content content-wrapper">
-			<div class="tab-pane tab-content" id="about-group" th:unless="${group}==null">
+			<div class="tab-pane tab-content fade show active" id="about-group" th:unless="${group}==null">
 				<div th:text="${group.description}" class="text-center"></div>
 			</div>
 			
-			<div class="tab-pane tab-content" id="book-list" th:unless="${group.userList}==null">
+			<div class="tab-pane tab-content fade" id="book-list" th:unless="${group.userList}==null">
 				<div th:each="user:${group.userList}">
 					<div th:each="ownedBookInfo:${user.ownedBookInfoList}" >
 						<div th:text="${ownedBookInfo.book.title}" class="text-center"></div>
@@ -67,10 +67,11 @@
 				</div>
 			</div>
 			
-			<div class="tab-pane tab-content" id="users" th:unless="${group.userList}==null">
+			<div class="tab-pane tab-content fade" id="users" th:unless="${group.userList}==null">
 				<div th:each="user:${group.userList}">
 					<div class="text-center">
-						<a th:href="@{/user/show_user_page(userId=${user.userId})}" th:text="${user.name}"></a>
+						<a th:if="${userId != user.userId}" th:href="@{/user/show_user_page(userId=${user.userId})}" th:text="${user.name}"></a>
+						<a th:if="${userId == user.userId}" th:href="@{/user/show_mypage}" th:text="${user.name}"></a>
 					</div>
 				</div>
 			</div>
