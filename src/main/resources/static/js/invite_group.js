@@ -29,12 +29,23 @@ $(function() {
 					return true;
 				}
 				//追加するHTML
-				var addUserHTML = '<div class="row user"><span class="col-md-6 text-left">' + user.name +'</span>' +
-				'<span class="col-md-6 text-right"><button type="button" class="btn btn-info addUser">追加</button>' + 
-				'<input type="hidden" value="' + user.name + '"></span></div>';
+				var addUserHTML 
+					= '<div class="row user mt-1">'
+						+ '<div class="col-md-6 text-left position-relative">'
+							+ '<a class="position-absolute" style="top:50%;transform:translateY(-50%);" data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + user.profile + '">' 
+								+ user.name 
+							+ '</a>' 
+						+ '</div>'
+						+ '<span class="col-md-6 text-right">'
+							+ '<button type="button" class="btn btn-info addUser">追加</button>'
+							+ '<input type="hidden" value="' + user.name + '">'
+							+ '<input type="hidden" value="' + user.profile + '">'
+						+ '</span>'
+					+ '</div>';
 				
 				
 				$(".addUserList").append(addUserHTML);
+				$('[data-toggle="popover"]').popover();
 			})
 		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("エラーが発生しました！");
@@ -49,15 +60,26 @@ $(function() {
 	$(document).on("click", ".addUser", function() {
 		//ユーザー名を取得
 		var userName = $(this).next().val();
+		var profile = $(this).next().next().val();
 		//配列に格納
 		groupUser.push(userName);
 		//中身を初期化する
 		$(this).parents(".user").remove();
 		//グループに追加するユーザーのHTML
-		var deleteUserHTML = '<div class="row group-user"><span class="col text-left">' + userName +'</span>' +
-							'<span class="col text-right"><button type="button" class="btn btn-danger delete-user">削除</button>' +
-							'<input type="hidden" name="userNameList[' + listCount + ']" value="' + userName + '"></span></div>';
+		var deleteUserHTML 
+			= '<div class="row group-user mt-1">'
+				+ '<div class="col-md-6 text-left position-relative">'
+				+ '<a class="position-absolute" style="top:50%;transform:translateY(-50%);" data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + profile + '">' 
+				+ userName 
+			+ '</a>' 
+		+ '</div>'
+				+ '<span class="col text-right">'
+					+ '<button type="button" class="btn btn-danger delete-user">削除</button>'
+					+ '<input type="hidden" name="userNameList[' + listCount + ']" value="' + userName + '">'
+				+ '</span>'
+			+ '</div>';
 		$(".groupUserList").append(deleteUserHTML);
+		$('[data-toggle="popover"]').popover();
 		listCount++;
 	});
 	
