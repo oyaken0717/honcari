@@ -16,7 +16,9 @@
 			<a id="pageType1" href="user_page.html" th:href="@{/user/show_user_page(userId=${userId})}" 
 				class="list-group-item list-group-item-action side">プロフィール</a>
 			<a id="pageType2" href="user_book.html" th:href="@{/book/show_user_book(userId=${userId})}" 
-				class="list-group-item list-group-item-action side">所有書籍</a>
+				class="list-group-item list-group-item-action side">持っている本</a>
+			<a id="pageType3" href="user_group_management.html" th:href="@{/group/show_user_group(userId=${userId})}" 
+				class="list-group-item list-group-item-action side">グループ</a>
 		</div>
 		
 		<!-- 書籍カテゴリ選択リスト(デザイン要検討) -->
