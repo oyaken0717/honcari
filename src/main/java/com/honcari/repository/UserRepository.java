@@ -125,7 +125,7 @@ public class UserRepository {
 	 * @param user ユーザー
 	 */
 	public void insert(User user) {
-		String sql = "INSERT INTO Users(name,email,password,image_path,profile,update_password_date)VALUES(:name,:email,:password,:imagePath,:profile,:updatePasswordDate)";
+		String sql = "INSERT INTO Users(name,email,password,image_path,update_password_date)VALUES(:name,:email,:password,:imagePath,:updatePasswordDate)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
 		template.update(sql, param);
 	}
