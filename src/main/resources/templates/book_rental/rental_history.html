@@ -6,7 +6,7 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <header>
@@ -33,7 +33,7 @@
 			</ul>
 			<!-- タブ・コンテント -->
 			<div class="tab-content">
-				<div class="tab-pane fade show active" id="borrowing-list" >
+				<div class="tab-pane fade show active" id="borrowing-list">
 					<!-- 借りた本 -->
 					<div class="my-4 border-bottom">
 						<div th:if="${borrowedPage.isEmpty()}"><p class="text-center">借りた本はありません</p></div>
@@ -51,7 +51,7 @@
 											レンタル期間：<span th:text="${borrowedBook.deadline}">まで</span><br>
 											現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span>
 											<input type="hidden" th:value="${borrowedBook.bookRentalId}" name="bookRentalId">
-											<div><button class="btn btn-warning btn-sm" th:value="${status.count}" type="submit">もう一度借りる</button></div>
+											<div><button class="btn btn-warning btn-sm" style="disabled:true;cursor:default" th:value="${status.count}" type="submit">もう一度借りる</button></div>
 										</form>
 									</div>
 								</div>
@@ -109,8 +109,8 @@
 	<script>
 		$(function(){
 			$("form").each(function(){
-				if($(this).find(".book-status").text() != '貸出可') {
-					$(this).find("button").prop("disabled",true).css("cursor","default");
+				if($(this).find(".book-status").text() == '貸出可') {
+					$(this).find("button").prop("disabled",false).css("cursor","pointer");
 				}
 			});
 		});
