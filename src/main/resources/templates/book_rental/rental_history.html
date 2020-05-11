@@ -45,14 +45,39 @@
 								</div>
 								<div class="col-lg-6">
 									<div class="text-box">
-										<form action="#" method="POST">	
-											<strong th:text="${borrowedBook.ownedBookInfo.book.title}"></strong><br>
-											所有者：<a th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
-											レンタル期間：<span th:text="${borrowedBook.deadline}">まで</span><br>
-											現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span>
-											<input type="hidden" th:value="${borrowedBook.bookRentalId}" name="bookRentalId">
-											<div><button class="btn btn-warning btn-sm" style="disabled:true;cursor:default" th:value="${status.count}" type="submit">もう一度借りる</button></div>
-										</form>
+										<strong th:text="${borrowedBook.ownedBookInfo.book.title}"></strong><br>
+										所有者：<a th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
+										レンタル期間：<span th:text="${borrowedBook.deadline}">まで</span><br>
+										現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span><br>
+										<button class="btn btn-warning btn-sm re-borrow" disabled style="cursor:default" th:value="${status.count}" data-toggle="modal" data-show="true" data-target="#rental-request-form">もう一度借りる</button>
+										<!-- Modal -->
+										<div class="modal fade" id="rental-request-form" tabindex="-1" role="dialog">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<form method="post" th:action="@{/book_rental/send}" th:object="${rentalRequestForm}">
+														<div class="modal-header">
+															<h5 class="modal-title">貸出期限を設定</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<div id="error-message" th:errors="*{requestDeadline}" class="text-danger">貸出期限を入力してください</div>
+															<input type="date" name="requestDeadline" th:field="*{requestDeadline}">
+															<input type="hidden" name="ownedBookInfoId" th:value="${borrowedBook.ownedBookInfo.ownedBookInfoId}">
+															<input type="hidden" name="bookStatus" th:value="${borrowedBook.ownedBookInfo.bookStatus}">
+															<input type="hidden" name="ownedBookInfoVersion" th:value="${borrowedBook.ownedBookInfo.version}">
+															<input type="hidden" name="ownerId" th:value="${borrowedBook.ownedBookInfo.userId}">
+														</div>
+														<div class="modal-footer">
+															<button type="submit" class="btn btn-warning">リクエストを送信</button>
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+														</div>
+													</form>
+												</div>
+											</div>	
+										</div>
+										<!-- Modal -->
 									</div>
 								</div>
 							</div><hr th:unless="${status.last}">
@@ -108,9 +133,12 @@
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 	<script>
 		$(function(){
-			$("form").each(function(){
+			if (document.getElementById("error-message") !== null) {
+				$("#rental-request-form").modal();
+			}
+			$(".text-box").each(function(){
 				if($(this).find(".book-status").text() == '貸出可') {
-					$(this).find("button").prop("disabled",false).css("cursor","pointer");
+					$(this).find(".re-borrow").prop("disabled",false).css("cursor","pointer");
 				}
 			});
 		});

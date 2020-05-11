@@ -375,6 +375,25 @@ ul.social-buttons {
 	background: #3e4555;
 }
 
+.top-head-wrapper .fas {
+	font-size: 50px;
+	color: var(--primary);
+}
+
+.top-head-wrapper .service-description{
+	color: #6f6f6f;	
+}
+
+.top-head-wrapper .card.card-shadow {
+  height: 250px;
+  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+}
+
+.top-head-wrapper .wrap-service-box .card-body {
+  padding: 40px;
+}
+
 #edit-button {
 	font-size: 16px;
 }
