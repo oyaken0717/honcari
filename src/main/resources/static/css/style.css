@@ -574,12 +574,11 @@ li.category {
 }
 
 .register-book-image {
-	background-image: url(/img/register-book.jpg);
-	background-repeat: no-repeat;
-	background-size: contain;
-	height: 100%;
-	border-radius: 10px;
-	opacity: 0.9;
+  background-image: url(/img/register-book-top.jpg);
+  color: #fff;
+  padding: 2rem 1rem;
+  border-radius: 0.3rem;
+  background-size: cover;
 }
 
 /* 右下の本登録ボタン */
