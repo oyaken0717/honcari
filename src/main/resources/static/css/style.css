@@ -25,6 +25,7 @@ body {
   display: flex !important;
   -ms-flex-direction: column !important;
   flex-direction: column !important;
+  overflow-y: scroll;
 }
 
 a {
