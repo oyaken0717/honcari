@@ -6,7 +6,7 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <header>
@@ -33,7 +33,7 @@
 			</ul>
 			<!-- タブ・コンテント -->
 			<div class="tab-content">
-				<div class="tab-pane fade show active" id="borrowing-list" >
+				<div class="tab-pane fade show active" id="borrowing-list">
 					<!-- 借りた本 -->
 					<div class="my-4 border-bottom">
 						<div th:if="${borrowedPage.isEmpty()}"><p class="text-center">借りた本はありません</p></div>
