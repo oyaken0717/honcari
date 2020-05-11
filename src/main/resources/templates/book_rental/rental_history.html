@@ -36,7 +36,7 @@
 				<div class="tab-pane fade show active" id="borrowing-list" >
 					<!-- 借りた本 -->
 					<div class="my-4 border-bottom">
-						<div th:unless="${borrowedPage}"><p class="text-center">借りた本はありません</p></div>
+						<div th:if="${borrowedPage.isEmpty()}"><p class="text-center">借りた本はありません</p></div>
 						<div class="my-3" th:each="borrowedBook,status:${borrowedPage.content}">
 							<div class="row">
 								<div class="col-lg-6">
@@ -71,7 +71,7 @@
 				<div class="tab-pane fade" id="lending-list">
 					<!-- 貸した本 -->
 					<div class="my-4 border-bottom">
-						<div th:unless="${lentPage}"><p class="text-center">貸した本はありません</p></div>
+						<div th:if="${lentPage.isEmpty()}"><p class="text-center">貸した本はありません</p></div>
 						<div class="my-3" th:each="lentBook,status:${lentPage.content}">
 							<div class="row">
 								<div class="col-lg-6">

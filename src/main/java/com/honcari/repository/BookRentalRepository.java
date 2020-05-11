@@ -27,7 +27,7 @@ public class BookRentalRepository {
 
 	private final static String SQL = "SELECT br.book_rental_id br_book_rental_id, br.owned_booK_info_id br_owned_booK_info_id, "
 			+ "br.borrow_user_id br_borrow_user_id, br.request_deadline br_request_deadline, br.deadline br_deadline, "
-			+ "br.rental_status br_rental_status, br.version br_version, "
+			+ "br.rental_status br_rental_status, br.version br_version, br.approval_date br_approval_date, "
 			// ユーザーが保有している本の情報
 			+ "ob.owned_booK_info_id ob_owned_booK_info_id, ob.user_id ob_user_id, ob.book_id ob_book_id, ob.category_id "
 			+ "ob_category_id, ob.book_status ob_book_status, ob.comment ob_comment, ob.version ob_version, "
@@ -66,6 +66,7 @@ public class BookRentalRepository {
 		bookRental.setRequestDeadline(rs.getDate("br_request_deadline"));
 		bookRental.setDeadline(rs.getDate("br_deadline"));
 		bookRental.setVersion(rs.getInt("br_version"));
+		bookRental.setApprovalDate(rs.getTimestamp("br_approval_date"));
 		// 所有情報をインスタンス化
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
 		ownedBookInfo.setOwnedBookInfoId(rs.getInt("ob_owned_booK_info_id"));
@@ -152,7 +153,7 @@ public class BookRentalRepository {
 		String sql = "UPDATE book_rentals SET owned_book_info_id = :ownedBookInfoId, borrow_user_id = :borrowUserId, "
 				+ "rental_status = :rentalStatus, request_deadline = :requestDeadline, deadline = :deadline, "
 				+ "update_date = (SELECT NOW()), update_user = :updateUserName, "
-				+ "version = (:version + 1) WHERE book_rental_id = :bookRentalId AND version = :version";
+				+ "version = (:version + 1), approval_date = :approvalDate WHERE book_rental_id = :bookRentalId AND version = :version";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(bookRental);
 		return template.update(sql, param);
 	}
@@ -190,6 +191,23 @@ public class BookRentalRepository {
 	}
 
 	/**
+	 * 本の所有者のユーザーIDとレンタル状況から承認順にレンタル情報を取得する.
+	 * 
+	 * @param ownerUserId  所有者ユーザーID
+	 * @param rentalStatus レンタル状況
+	 * @return レンタル情報
+	 */
+	public List<BookRental> findByOwnerUserIdAndRentalStatusOrderByApprovalDate(Integer ownerUserId, Integer rentalStatus) {
+		String strSql = SQL;
+		strSql = strSql
+				+ " WHERE u1.user_id = :ownerUserId AND br.rental_status = :rentalStatus ORDER BY br.approval_date DESC";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("ownerUserId", ownerUserId)
+				.addValue("rentalStatus", rentalStatus);
+		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
+		return bookRentalList;
+	}
+
+	/**
 	 * 本の借り手のユーザーIDからレンタル情報を取得する.
 	 * 
 	 * @param borrowUserId 借り手ユーザー情報
@@ -215,6 +233,23 @@ public class BookRentalRepository {
 		String strSql = SQL;
 		strSql = strSql
 				+ " WHERE br.borrow_user_id = :borrowUserId AND br.rental_status = :rentalStatus ORDER BY br.book_rental_id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId)
+				.addValue("rentalStatus", rentalStatus);
+		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
+		return bookRentalList;
+	}
+
+	/**
+	 * 本の借り手のユーザーIDとレンタル状況から承認順にレンタル情報を取得する.
+	 * 
+	 * @param borrowUserId 借り手ユーザーID
+	 * @param rentalStatus レンタル状況
+	 * @return レンタル情報
+	 */
+	public List<BookRental> findByBorrowUserIdAndRentalStatusOrderByApprovalDate(Integer borrowUserId, Integer rentalStatus) {
+		String strSql = SQL;
+		strSql = strSql
+				+ " WHERE br.borrow_user_id = :borrowUserId AND br.rental_status = :rentalStatus ORDER BY br.approval_date DESC";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("borrowUserId", borrowUserId)
 				.addValue("rentalStatus", rentalStatus);
 		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
