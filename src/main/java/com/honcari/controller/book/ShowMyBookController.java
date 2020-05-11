@@ -12,7 +12,7 @@ import com.honcari.common.MyBookTypeEnum;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.service.book.GetOwnedBookInfoCountService;
-import com.honcari.service.book.ShowMyAllBooksService;
+import com.honcari.service.book.ShowAllMyBooksService;
 import com.honcari.service.book.ShowMyBooksByCategoryIdService;
 
 /**
@@ -26,7 +26,7 @@ import com.honcari.service.book.ShowMyBooksByCategoryIdService;
 public class ShowMyBookController {
 	
 	@Autowired
-	private ShowMyAllBooksService showMyAllBooksService;
+	private ShowAllMyBooksService showAllMyBooksService;
 	
 	@Autowired
 	private ShowMyBooksByCategoryIdService showMyBooksByCategoryIdService;
@@ -60,7 +60,7 @@ public class ShowMyBookController {
 		}else {
 			page = page * 20;
 		}
-		List<OwnedBookInfo> ownedBookInfoList = showMyAllBooksService.ShowMyAllBook(loginUser.getUser().getUserId(), page);
+		List<OwnedBookInfo> ownedBookInfoList = showAllMyBooksService.ShowAllMyBooks(loginUser.getUser().getUserId(), page);
 		if(ownedBookInfoList.size() == 0) {
 			model.addAttribute("errorMessage", "書籍が登録されていません。");
 			model.addAttribute("categoryNum", MyBookTypeEnum.MY_BOOK_LIST.getKey());
