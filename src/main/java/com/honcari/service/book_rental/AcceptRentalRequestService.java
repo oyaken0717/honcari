@@ -1,5 +1,7 @@
 package com.honcari.service.book_rental;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,7 @@ public class AcceptRentalRequestService {
 		}
 		bookRental.setDeadline(bookRental.getRequestDeadline());
 		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
+		bookRental.setApprovalDate(new Timestamp(System.currentTimeMillis()));
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
 		ownedBookInfo.setBookStatus(BookStatusEnum.LENDING.getValue());
