@@ -39,14 +39,28 @@ public class SearchGroupController {
 	 */
 	@RequestMapping("/to_search")
 	public String toSearchGroup(@AuthenticationPrincipal LoginUser loginUser, Model model) {
+		//デフォルトで全件検索
 		List<Group> groupList = searchGroupService.searchGroup("", 0);
+		
+		//検索結果がなかった際のスコープ格納
+		if (groupList.isEmpty())
+			model.addAttribute("groupList", null);
+		
+		//グループ名で曖昧検索し総データ数を取得
 		Integer count = searchGroupService.count("");
 		Integer totalPageNum = count / 9 + 1;
+		
 		model.addAttribute("userId", loginUser.getUser().getUserId());
 		model.addAttribute("groupList", groupList);
 		model.addAttribute("totalPageNum", totalPageNum);
 		model.addAttribute("name", "");
 		model.addAttribute("page",1);
+		
+		//詳細画面からの戻るボタン用にセッション格納
+		session.setAttribute("name", "");
+		session.setAttribute("page", 0);
+		
+		//グループ管理画面からのフラグを無効化
 		session.setAttribute("fromManagement", null);
 		return "group/search_group";
 	}
@@ -70,7 +84,12 @@ public class SearchGroupController {
 			groupList = searchGroupService.searchGroup(name, offset);
 			model.addAttribute("page",page+1);
 		}
+		
+		//検索結果がなかった際のスコープ格納
+		if (groupList.isEmpty())
+			model.addAttribute("groupList", null);
 
+		//グループ名で曖昧検索し総データ数を取得
 		Integer count = searchGroupService.count(name);
 		Integer totalPageNum = count / 9 + 1;
 
@@ -80,8 +99,11 @@ public class SearchGroupController {
 		// ページング用に検索窓の入力内容と検索結果件数をスコープに格納
 		model.addAttribute("name", name);
 		model.addAttribute("totalPageNum", totalPageNum);
-		if (groupList.isEmpty())
-			model.addAttribute("groupList", null);
+		
+		//詳細画面からの戻るボタン用にセッション格納
+		session.setAttribute("name", name);
+		session.setAttribute("page", page);
+		
 		return "group/search_group";
 	}
 

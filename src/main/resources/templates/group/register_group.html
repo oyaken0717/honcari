@@ -6,15 +6,22 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav th:replace="header::frag_header(2)"></nav>
+
+<section class="jumbotron text-center">
+    <div class="container content-wrapper">
+      <h1 class="jumbotron-heading">グループを作る</h1>
+    </div>
+</section>
+
 <div class="container content-wrapper">
-  <h2 class="section-heading">グループ作成</h2>
-   <p class="section-description">グループを作成して世界と本で繋がろう！</p>
-	<div class="row justify-content-md-center">
-	
+	<div class="full-width">
+		<h2 class="section-heading" style="color:gray">グループを作成して世界と本で繋がろう！</h2>
+	</div>
+	<div class="row justify-content-md-center" style="margin: 5%"> 
 		<div class="col-md-8 col-md-offset-4">
 			<form th:action="@{/group/register}" th:object="${registerGroupForm}" method="post">
 			  <div class="form-group">
@@ -25,23 +32,19 @@
 			  <div class="form-group">
 			    <label for="InputGroupDescription">説明文</label>
 			    <label th:errors="*{description}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
-			    <input type="text" th:field="*{description}" class="form-control" id="InputGroupDescription" placeholder="説明文">
+			    <textarea th:field="*{description}" class="form-control" id="InputGroupDescription" placeholder="説明文" rows="4" cols=""></textarea>
 			  </div>
 			  <div class="form-group">
 			    <label for="formGroupExampleInput2">ユーザー検索</label>
 			    <input type="text" class="form-control searchUser" id="formGroupExampleInput2" placeholder="ユーザー名">
-			  	<div class="addUserList">
+			    <div class="list-group addUserList">
 			  		<!-- jqueryで検索したユーザーリストを表示 -->
-			  	</div>
+			    </div>
 			  </div>
 			  <input type="hidden" class="form-control loginUserId" th:value="${user.userId}">
-			  <div>
+			  <div class="form-group">
 			    <label for="formGroupExampleInput2">招待するユーザー</label>
-			  	<div class="groupUserList">
-			  		<div class="row login-user">
-<!-- 			  			<span th:text="${user.name}" class="col-md-12 text-left">ログインユーザー</span>
- --><!-- 			  			<input type="hidden" name="userNameList[0]" th:value="${user.name}">
- -->			  		</div>
+			  	<div class="row mx-2 groupUserList">
 			  	</div>
 			  </div>
 			  <button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
@@ -53,7 +56,9 @@
 <!-- フッター -->
 <footer th:replace="footer::footer"></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" th:src="@{/js/register_group.js}"></script>
 </body>

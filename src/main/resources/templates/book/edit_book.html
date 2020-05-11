@@ -10,7 +10,7 @@
 	th:href="@{/css/style.css}">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
-	rel="stylesheet" type="text/css" />
+	rel="stylesheet" type="text/css">
 </head>
 <body>
 	<nav th:replace="header::frag_header(0)"></nav>
@@ -21,16 +21,13 @@
 			<!-- Column -->
 			<div class="col-lg-6">
 				<img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" th:src="@{${ownedBookInfo.book.thumbnailPath}}"
-					class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail" />
+					class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail">
 			</div>
 			<!-- Column -->
 			<div class="col-lg-6 mt-4">
 				<div class="text-box">
 					<p class="font-weight-bold">
-						貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}"
-							th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
-						所有者：<a th:href="@{#}"><span
-							th:text="${ownedBookInfo.user.name}">所有者</span></a>
+						貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}"></span>
 					</p>
 					<h3 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.title}">title</h3>
 					<h4 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.author}">author</h4>

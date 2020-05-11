@@ -6,7 +6,7 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav th:replace="header::frag_header(0)"></nav>
@@ -18,14 +18,15 @@
     <!-- Column -->
     <div class="col-lg-6"> 
 	  <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" 
-		th:src="@{${book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail" /> 
+		th:src="@{${book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail"> 
 	</div>
     <!-- Column -->
     <div class="col-lg-6 mt-4">
       <div class="text-box">
           <p class="font-weight-bold">
             貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}" th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
-            所有者：<a th:href="@{#}"><span th:text="${ownedBookInfo.user.name}">所有者</span></a>
+            所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}">
+             <span th:text="${ownedBookInfo.user.name}">所有者</span></a>
           </p>
           <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>
           <h5 class="font-weight-light mt-2 mb-4">著者：<span th:text="${book.author}">author</span></h5>

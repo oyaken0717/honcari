@@ -7,7 +7,7 @@
 <script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div th:if="${complete}" class="flash alert alert-warning alert-dismissible fade show" role="alert">
@@ -18,10 +18,15 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+
+<section class="jumbotron text-center">
+    <div class="container content-wrapper">
+      <h1 class="jumbotron-heading">グループを管理する</h1>
+    </div>
+</section>
+
 <div class="container content-wrapper">
 <nav th:replace="header::frag_header(0)"></nav>
-<h2 class="section-heading">グループ管理</h2>
-	<p class="section-description">あなたのグループをこの画面で管理することができます</p>
     	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
   			<li class="nav-item">

@@ -6,9 +6,9 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="/css/slick.css"/>
-<link rel="stylesheet" type="text/css" href="/css/slick-theme.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/css/slick.css">
+<link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
@@ -55,7 +55,7 @@
 <!-- ヘッダー画像 -->
 <div class="home-image jumbotron jumbotron-fluid">
 	 <div class="container">
-	   <h1 class="display-4 my-3 title text-yellow text-uppercase text-center font-weight-bold">Honcari</h1>
+	   <h1 class="display-4 my-3 title text-yellow text-center font-weight-bold">Honcari</h1>
 	   <p class="lead text-white font-weight-normal op-8 text-center font-weight-bold">-気軽に本をどこへでも-</p>
 	 </div>
 </div>
@@ -85,7 +85,7 @@
 						<a class="card-text book-title text-dark" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 							<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
 						</a><br>
-						<span>所有者：<a href="#" th:text="${ownedBookInfo.user.name}"></a></span><br>			
+						<span>所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}" th:text="${ownedBookInfo.user.name}"></a></span><br>			
 					</div>
 				</div>
 			</div>

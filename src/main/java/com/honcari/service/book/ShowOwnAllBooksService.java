@@ -17,7 +17,7 @@ import com.honcari.repository.OwnedBookInfoRepository;
  */
 @Service
 @Transactional
-public class ShowAllMyBooksService {
+public class ShowOwnAllBooksService {
 
 	@Autowired
 	private OwnedBookInfoRepository ownedBookInfoRepository;
@@ -28,7 +28,7 @@ public class ShowAllMyBooksService {
 	 * @param userId ユーザid
 	 * @return ユーザidに一致したユーザ情報
 	 */
-	public List<OwnedBookInfo> ShowAllMyBooks(Integer userId, Integer page) {
+	public List<OwnedBookInfo> showOwnAllBook(Integer userId, Integer page) {
 		return ownedBookInfoRepository.findByUserId(userId, page);
 	}
 }

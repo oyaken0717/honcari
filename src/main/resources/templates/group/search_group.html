@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta charset="UTF-8">
 <title>Honcari -気軽に本をどこへでも-</title>
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="/css/slick.css"/>
-<link rel="stylesheet" type="text/css" href="/css/slick-theme.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/css/slick.css">
+<link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
 </head>
 <body>
 <nav th:replace="header::frag_header(0)"></nav>
@@ -18,7 +19,7 @@
       <p class="lead"></p>
       <form th:action="@{/group/search}" method="post">
   		<div class="form-group">
-      		<input class="form-control-lg" name="name" type="search" placeholder="グループ検索..." aria-label="グループ検索...">
+      		<input class="form-control-lg" name="name" type="search" placeholder="グループを検索..." aria-label="グループを検索...">
       		<button type="submit" class="btn-lg btn-warning my-2 my-2 my-sm-0">検索</button>
       	</div>
       </form>
@@ -30,7 +31,7 @@
 		<h2 class="section-heading" style="color:gray">グループに参加してグループ内のユーザーと本をシェアしよう！</h2>
 	</div>
 	  <div style="margin: 50px 0 0 0">
-        <p class="text-center" style="color:gray" th:if="${groupList}==null">検索結果がありません</p>  
+        <p class="text-center" style="color:gray" th:if="${groupList}==null">検索結果がありませんでした</p>  
       </div>
       <div class="row" style="margin:70px">
         <div class="col-md-4" th:each="group:${groupList}">      
@@ -42,10 +43,8 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group" style="margin: 15px">
                   <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>
-           		  <input type="hidden" class="group-name" th:value="${group.name}">
-                  <input type="hidden" class="group-description" th:value="${group.description}">
                 </div>
-                <small class="text-muted" th:text="'オーナー: '+${group.ownerUser.name}">9 mins</small>
+                <small class="text-muted" th:text="'オーナー : '+${group.ownerUser.name}">9 mins</small>
               </div>
             </div>
           </div>

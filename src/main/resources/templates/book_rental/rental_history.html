@@ -6,7 +6,7 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <header>
@@ -33,11 +33,11 @@
 			</ul>
 			<!-- タブ・コンテント -->
 			<div class="tab-content">
-				<div class="tab-pane fade show active" id="borrowing-list" >
+				<div class="tab-pane fade show active" id="borrowing-list">
 					<!-- 借りた本 -->
 					<div class="my-4 border-bottom">
-						<div th:if="${borrowedList.size()}==0"><p class="text-center">借りた本はありません</p></div>
-						<div class="my-3" th:each="borrowedBook,status:${borrowedList}">
+						<div th:if="${borrowedPage.isEmpty()}"><p class="text-center">借りた本はありません</p></div>
+						<div class="my-3" th:each="borrowedBook,status:${borrowedPage.content}">
 							<div class="row">
 								<div class="col-lg-6">
 									<img th:src="@{${borrowedBook.ownedBookInfo.book.thumbnailPath}}" 
@@ -47,23 +47,32 @@
 									<div class="text-box">
 										<form action="#" method="POST">	
 											<strong th:text="${borrowedBook.ownedBookInfo.book.title}"></strong><br>
-											所有者：<span th:text="${borrowedBook.ownedBookInfo.user.name}">さん</span><br>
+											所有者：<a th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
 											レンタル期間：<span th:text="${borrowedBook.deadline}">まで</span><br>
 											現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span>
 											<input type="hidden" th:value="${borrowedBook.bookRentalId}" name="bookRentalId">
-											<div><button class="btn btn-warning btn-sm" th:value="${status.count}" type="submit">もう一度借りる</button></div>
+											<div><button class="btn btn-warning btn-sm" style="disabled:true;cursor:default" th:value="${status.count}" type="submit">もう一度借りる</button></div>
 										</form>
 									</div>
 								</div>
 							</div><hr th:unless="${status.last}">
 						</div>
 					</div>
+					<div class="pager row justify-content-center" th:if="${borrowedPage}">
+						<ul class="pagination">
+							<li th:each="pageNumber:${borrowedPageNumbers}">
+								<a th:if="${pageNumber!=borrowedPage.number + 1}" th:text="${pageNumber}" 
+									th:href="@{/book_rental/show_history(borrowedPageNum=${pageNumber})}"></a>
+								<span th:if="${pageNumber==borrowedPage.number + 1}" th:text="${pageNumber}"></span>
+							</li>
+						</ul>
+					</div>
 				</div>
 				<div class="tab-pane fade" id="lending-list">
 					<!-- 貸した本 -->
 					<div class="my-4 border-bottom">
-						<div th:if="${lentList.size()}==0"><p class="text-center">貸した本はありません</p></div>
-						<div class="my-3" th:each="lentBook,status:${lentList}">
+						<div th:if="${lentPage.isEmpty()}"><p class="text-center">貸した本はありません</p></div>
+						<div class="my-3" th:each="lentBook,status:${lentPage.content}">
 							<div class="row">
 								<div class="col-lg-6">
 									<img th:src="@{${lentBook.ownedBookInfo.book.thumbnailPath}}" 
@@ -72,13 +81,22 @@
 								<div class="col-lg-6">
 									<div class="text-box">
 										<strong th:text="${lentBook.ownedBookInfo.book.title}"></strong><br>
-										レンタル者：<span th:text="${lentBook.borrowUser.name}">さん</span><br>
+										レンタル者：<a th:href="@{/user/show_user_page(userId=${lentBook.borrowUser.userId})}" th:text="${lentBook.borrowUser.name}"></a><br>
 										レンタル期間：<span th:text="${lentBook.deadline}">まで</span><br>
 										現在のステータス：<span th:text="${lentBook.ownedBookInfo.getStatus()}"></span>
 									</div>
 								</div>
-							</div>
+							</div><hr th:unless="${status.last}">
 						</div>
+					</div>
+					<div class="pager row justify-content-center" th:if="${lentPage}">
+						<ul class="pagination">
+							<li th:each="pageNumber:${lentPageNumbers}">
+								<a th:if="${pageNumber!=lentPage.number + 1}" th:text="${pageNumber}" 
+									th:href="@{/book_rental/show_history(lentPageNum=${pageNumber})}"></a>
+								<span th:if="${pageNumber==lentPage.number + 1}" th:text="${pageNumber}"></span>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -91,8 +109,8 @@
 	<script>
 		$(function(){
 			$("form").each(function(){
-				if($(this).find(".book-status").text() != '貸出可') {
-					$(this).find("button").prop("disabled",true).css("cursor","default");
+				if($(this).find(".book-status").text() == '貸出可') {
+					$(this).find("button").prop("disabled",false).css("cursor","pointer");
 				}
 			});
 		});

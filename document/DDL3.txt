@@ -6,7 +6,7 @@ create table users(
   , email character varying(100) not null unique
   , password text not null
   , image_path text
-  , profile character varying(100)
+  , profile character varying(100) not null default 'こんにちは。よろしくお願いします。'
   , status integer not null default 0
   , update_password_date timestamp not null
 );
@@ -64,6 +64,7 @@ create table book_rentals(
   , rental_status integer not null
   , request_deadline date
   , deadline date
+  , approval_date timestamp
   , creation_date timestamp
   , creation_user text
   , update_date timestamp
