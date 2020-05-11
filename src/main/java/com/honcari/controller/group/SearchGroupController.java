@@ -47,6 +47,9 @@ public class SearchGroupController {
 		model.addAttribute("totalPageNum", totalPageNum);
 		model.addAttribute("name", "");
 		model.addAttribute("page",1);
+		if (groupList.isEmpty())
+			model.addAttribute("groupList", null);
+		
 		session.setAttribute("fromManagement", null);
 		return "group/search_group";
 	}
