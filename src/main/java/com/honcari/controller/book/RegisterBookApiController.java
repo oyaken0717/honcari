@@ -6,12 +6,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.Book;
 import com.honcari.domain.LoginUser;
@@ -28,7 +26,6 @@ import com.honcari.service.book.RegisterOwnedBookInfoService;
  *
  */
 @RestController
-@CrossOrigin
 @RequestMapping("/book_api")
 public class RegisterBookApiController {
 
@@ -46,14 +43,12 @@ public class RegisterBookApiController {
 	 * 
 	 * @param registerBookForm 書籍登録画面で送られたリクエストパラメータ
 	 * @param loginUser ログインしているユーザ情報
-	 * @param redirectAttributes リダイレクト先へリクエストスコープを格納する
 	 * @return 書籍登録画面
 	 */
 	@ResponseBody
-	@CrossOrigin
 	@RequestMapping(value="/register_book", method=RequestMethod.POST)
-	public Map<String, String> registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser, RedirectAttributes redirectAttributes) {
-		System.out.println(registerBookForm);
+	public Map<String, String> registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser) {
+		
 		Integer bookId = null;
 		Book book = new Book();
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
@@ -120,6 +115,8 @@ public class RegisterBookApiController {
 		}else {
 			bookId = bookList.get(0).getBookId();
 		}
+		
+		//owned_book_infoテーブルにデータを挿入する
 		ownedBookInfo.setUserId(loginUser.getUser().getUserId());
 		ownedBookInfo.setBookId(bookId);
 		ownedBookInfo.setCategoryId(Integer.parseInt(registerBookForm.getCategoryId()));

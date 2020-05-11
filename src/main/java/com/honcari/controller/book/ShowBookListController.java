@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.honcari.domain.Category;
 import com.honcari.domain.LoginUser;
 import com.honcari.service.book.ShowBookListOneCategory;
+import com.honcari.service.book.ShowBookListOneCategoryByPageService;
 import com.honcari.service.book.ShowBookListService;
 
 /**
@@ -29,6 +30,9 @@ public class ShowBookListController {
 	@Autowired
 	private ShowBookListOneCategory showBookListOneCategory;
 	
+	@Autowired 
+	private ShowBookListOneCategoryByPageService ShowBookListOneCategoryByPageService;
+	
 	/**
 	 * 本一覧を表示するメソッド.
 	 * 
@@ -43,8 +47,18 @@ public class ShowBookListController {
 	}
 	
 	@RequestMapping("/show_one_category")
-	public String showOneCategoryBookList(Model model, @AuthenticationPrincipal LoginUser loginUser, Integer categoryId) {
-		List<Category> categoryList = showBookListOneCategory.findByUserIdAndCategoryId(loginUser.getUser().getUserId(), categoryId);
+	public String showOneCategoryBookList(Model model, @AuthenticationPrincipal LoginUser loginUser, Integer categoryId, Integer page) {
+		if (page == null) {
+			page = 1;
+		}
+		
+		Integer userId = loginUser.getUser().getUserId();
+//		本の数を15で割った時の総ページ数
+		Integer totalPageNum = showBookListOneCategory.findByUserIdAndCategoryId(userId, categoryId).get(0).getOwnedBookInfoList().size() / 15 + 1;
+		
+		List<Category> categoryList = ShowBookListOneCategoryByPageService.findByUserIdAndCategoryId(userId, categoryId, page);
+		model.addAttribute("page", page);
+		model.addAttribute("totalPageNum", totalPageNum);
 		model.addAttribute("categoryList", categoryList);
 		return "book/book_list_category";
 	}
