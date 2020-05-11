@@ -570,3 +570,32 @@ li.category {
 .large-icon {
 	font-size: 3.5rem 
 }
+/* ここまで */
+
+/* グループ作成周りのcss */
+.select-user {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.add-user-icon {
+	font-size: 1.5rem;
+	color: #17a2b8;
+}
+
+.invite-user {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #DDFFFF;
+	margin-top: 5px;
+    margin-right: 5px;
+    padding-left: 0;
+    border-radius: 5px;
+}
+
+.delete-user-icon {
+	font-size: 1.5rem;
+	color: #dc3545;
+}
