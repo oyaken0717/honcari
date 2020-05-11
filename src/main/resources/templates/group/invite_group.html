@@ -10,11 +10,16 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(3)"></nav>
+
+<section class="jumbotron text-center">
+    <div class="container content-wrapper">
+      <h1 class="jumbotron-heading">グループに招待する</h1>
+    </div>
+</section>
+
 <div class="container content-wrapper">
 	<div class="row justify-content-md-center">
 		<div class="col-md-8 col-md-offset-4">
-	<h2 class="section-heading">ユーザーを招待する</h2>
-	<p class="section-description">グループにユーザーを招待できます</p>
 			<form th:action="@{/group/invite_group}" th:object="${inviteGroupForm}" method="post">
 			  <div class="form-group" style="color:grey">
 			    グループ名: <span th:text="${group.name}"></span>

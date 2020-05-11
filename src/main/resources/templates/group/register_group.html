@@ -10,11 +10,18 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(2)"></nav>
+
+<section class="jumbotron text-center">
+    <div class="container content-wrapper">
+      <h1 class="jumbotron-heading">グループを作る</h1>
+    </div>
+</section>
+
 <div class="container content-wrapper">
-  <h2 class="section-heading">グループ作成</h2>
-   <p class="section-description">グループを作成して世界と本で繋がろう！</p>
-	<div class="row justify-content-md-center">
-	
+	<div class="full-width">
+		<h2 class="section-heading" style="color:gray">グループを作成して世界と本で繋がろう！</h2>
+	</div>
+	<div class="row justify-content-md-center" style="margin: 5%"> 
 		<div class="col-md-8 col-md-offset-4">
 			<form th:action="@{/group/register}" th:object="${registerGroupForm}" method="post">
 			  <div class="form-group">

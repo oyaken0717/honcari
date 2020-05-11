@@ -58,7 +58,7 @@ public class JoinGroupController {
 	 * @param redirect
 	 * @return グループ管理画面へ遷移
 	 */
-	@RequestMapping(value="/join",method = RequestMethod.POST)
+	@RequestMapping(value="/join")
 	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser, Model model,
 			RedirectAttributes redirect) {
 		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);
