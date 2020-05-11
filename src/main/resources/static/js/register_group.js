@@ -2,11 +2,8 @@ $(function() {
 	//グループに追加するユーザーの配列
 	var groupUser = [];
 	
-	//ユーザー検索
-	$(".searchUser").on("keyup", function() {
-		var searchName = $(this).val();
+	function serachUser(searchName) {
 		var loginUserId = $(".loginUserId").val();
-		console.log(loginUserId);
 		var url = 'http://localhost:8080/search_user_api';
 		$.ajax({
 			url : url,
@@ -28,76 +25,94 @@ $(function() {
 				}
 				//追加するHTML
 				var addUserHTML 
-					= '<div class="row user mt-1">'
-						+ '<div class="col-md-6 text-left position-relative">'
-							+ '<a class="position-absolute" style="top:50%;transform:translateY(-50%);" data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + user.profile + '">' 
-								+ user.name 
-							+ '</a>' 
+					= '<a class="addUser" href="#">'
+						+ '<div class="row user ml-1 mt-1">'
+							+ '<img class="col-auto" src="/img/user_default.png" height="38">'
+							+ '<span class="col-auto select-user">'
+								+ '<object><a data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + user.profile + '">' 
+									+ user.name 
+								+ '</a></object>' 
+							+ '</span>'
+							+ '<span class="col-auto select-user">'
+									+ '<i class="far fa-plus-square add-user-icon"></i>'
+								+ '<input class="user-name" type="hidden" value="' + user.name + '">'
+								+ '<input class="user-profile" type="hidden" value="' + user.profile + '">'
+							+ '</span>'
 						+ '</div>'
-						+ '<span class="col-md-6 text-right">'
-							+ '<button type="button" class="btn btn-info addUser">追加</button>'
-							+ '<input type="hidden" value="' + user.name + '">'
-							+ '<input type="hidden" value="' + user.profile + '">'
-						+ '</span>'
-					+ '</div>';
+					+ '</a>' ;
 				
 				$(".addUserList").append(addUserHTML);
 				$('[data-toggle="popover"]').popover();
 			})
+			return false;
 		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("エラーが発生しました！");
 			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
 			console.log("textStatus     : " + textStatus);
 			console.log("errorThrown    : " + errorThrown.message);
 		});
+	}
+	
+	//ユーザー検索
+	$(".searchUser").on("keyup", function() {
+		var searchName = $(this).val()
+		serachUser(searchName);
 	});
 	
 	var listCount = 0;
 	//追加ボタンを押した時に発火
 	$(document).on("click", ".addUser", function() {
 		//ユーザー名を取得
-		var userName = $(this).next().val();
-		var profile = $(this).next().next().val();
+		var userName = $(this).find(".user-name").val();
+		var profile = $(this).find(".user-profile").val();
 		//配列に格納
 		groupUser.push(userName);
 		//中身を初期化する
-		$(this).parents(".user").remove();
+		$(this).remove();
 		//グループに追加するユーザーのHTML
 		var deleteUserHTML 
-			= '<div class="row group-user mt-1">'
-				+ '<div class="col-md-6 text-left position-relative">'
-					+ '<a class="position-absolute" style="top:50%;transform:translateY(-50%);" data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + profile + '">' 
+			= '<span class="col-auto invite-user">'
+				+ '<img class="col-auto pl-0" src="/img/user_default.png" height="38">'
+				+ '<span class="mx-1">'
+					+ '<a data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + profile + '">' 
 						+ userName 
 					+ '</a>' 
-				+ '</div>'
-				+ '<span class="col text-right">'
-					+ '<button type="button" class="btn btn-danger delete-user">削除</button>'
-					+ '<input type="hidden" name="userNameList[' + listCount + ']" value="' + userName + '">'
 				+ '</span>'
-			+ '</div>';
+				+ '<span class="mt-1">'
+					+ '<a class="delete-user" href="#">'
+						+ '<i class="far fa-window-close delete-user-icon"></i>'
+						+ '<input class="user-name" type="hidden" name="userNameList[' + listCount + ']" value="' + userName + '">'
+					+ '</a>'
+				+ '</span>'
+			+ '</span>';
+		listCount++;
 		$(".groupUserList").append(deleteUserHTML);
 		$('[data-toggle="popover"]').popover();
-		listCount++;
+		return false;
 	});
 	
 	//削除ボタンを押した時に発火
 	$(document).on("click", ".delete-user", function() {
 		//ユーザー名を取得
-		var userName = $(this).next().val();
+		var userName = $(this).find(".user-name").val();
 		//ボタンを押したユーザーのHTMLを削除
-		$(this).parents(".group-user").remove();
+		$(this).parents(".invite-user").remove();
 		//配列から削除
 		groupUser = groupUser.filter(function(user) {
 			return user !== userName;
 		});
 		
-		listCount = 1;
+		listCount = 0;
 		//リスト番号を1から採番
-		$(".group-user").each(function() {
+		$(".invite-user").each(function() {
 			var inputName = $(this).find("input").attr("name");
 			inputName = inputName.replace(/userNameList\[[0-9]{1,2}/g, "userNameList[" + listCount);
 			$(this).find("input").attr("name", inputName);
 			listCount++;
 		});
+		console.log(groupUser);
+		//検索結果の更新
+		serachUser($(".searchUser").val());
+		return false;
 	});
 });
