@@ -15,7 +15,7 @@ import com.honcari.repository.OwnedBookInfoRepository;
  *
  */
 @Service
-public class ShowMyBooksByCategoryIdService {
+public class ShowOwnBooksByCategoryIdService {
 
 	@Autowired
 	private OwnedBookInfoRepository ownedBookInfoRepository;

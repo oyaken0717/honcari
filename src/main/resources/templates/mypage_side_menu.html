@@ -11,7 +11,7 @@
 <body>
   <!-- side bar -->
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 float-left" th:fragment="frag_mypage_side_menu(page,category)">
-		<div class="list-group" th:fragment="frag_mypage_side_menu_for_my_book(page)">
+		<div class="list-group">
 			<a id="page1" href="mypage.html" th:href="@{/user/show_mypage}" 
 				class="list-group-item list-group-item-action side">プロフィール</a>
 			<a id="page2" href="mybook.html" th:href="@{/book/show_mybook?page=0}" 
@@ -23,7 +23,7 @@
 		</div>
 		
 		<!-- 書籍カテゴリ選択リスト(デザイン要検討) -->
-		<div id="my-book-category" class="list-group">
+		<div id="my-book-category" class="book-category list-group">
 			<a id="category0" href="mybook.html" th:href="@{/book/show_mybook?page=0}" 
 				class="list-group-item list-group-item-action side-category">全カテゴリー</a>
 					

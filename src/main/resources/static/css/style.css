@@ -292,16 +292,39 @@ ul.social-buttons {
 	display: block;
 }
 
-#my-book-category {
+.book-category {
 	margin-top: 40px;
 }
 
 /*  トップページのデザイン */
 .top-head-wrapper {
 	font-weight: 300;
-	padding: 10% 0;
+	padding-top: 7%;
+	padding-bottom: 7%;	
 	background-size: cover;
 	background-position: center center;
+	width: 100vw;
+    height: 100%;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    -ms-flex-pack: center;
+    -ms-flex-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.top-head-wrapper:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+  background: inherit;
+  filter: blur(1px);
+  z-index: -1;
 }
 
 .top-head-wrapper .title {
@@ -332,10 +355,6 @@ ul.social-buttons {
 
 .top-head-wrapper .badge-inverse {
 	background: #3e4555;
-}
-
-.top-head-wrapper .op-8 {
-	opacity: 0.8;
 }
 
 #edit-button {
@@ -395,13 +414,13 @@ ul.social-buttons {
 }
 
 #book-list th {
-  text-align: center;
-  padding: 7px 0;
-  border-right:solid 1px white;
-  border-left:solid 1px white;
-  background-color: var(--yellow);
-  color: white;
-  border-radius: 10px;
+	padding: 0.5em 1em;
+    margin: 2em 0;
+    color: white;
+    background: var(--yellow);/*背景色*/
+    border-left: solid 3px white;/*左線*/
+    border-right: solid 3px white;/*右線*/
+    
 }
 
 /* 
@@ -437,7 +456,6 @@ li.category {
 }
 
 .pager .pagination {
-	margin-left: 50%;
 	margin-top: 3%;
 }
 
@@ -446,8 +464,8 @@ li.category {
 	margin: 3%;
 	padding: 0;
 	display: inline-block;
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 40px;
 	text-align: center;
 	position: relative;
 	border-radius: 15px;
@@ -501,7 +519,6 @@ li.category {
 	text-decoration: none;
 	background-color: #F7C600;
 	color: white;
-	padding-top: 20%;
 	border-radius: 10px;
 	border-bottom: none;
 }
@@ -526,4 +543,30 @@ li.category {
 	height: 100%;
 	border-radius: 10px;
 	opacity: 0.9;
+}
+
+/* 右下の本登録ボタン */
+.register-book-btn {
+	height: 140px;
+	width: 140px;
+	position: absolute;
+	bottom: 30px;
+	right: 30px;
+	position: fixed; 
+	border-radius: 100%;
+}
+
+.logo.large {
+	width: 140px;
+	height: 140px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+}
+
+.large-icon {
+	font-size: 3.5rem 
 }

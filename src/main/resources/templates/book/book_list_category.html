@@ -73,12 +73,12 @@
 			<div class="col-md-12" th:each="category: ${categoryList}">
 				<div class="row">
 					<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
-						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="bd-placeholder-img card-img-top" width="100%" height="210" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a>
+						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a>
 						<div class="p-2">
 							<a class="card-text book-title text-dark" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 								<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
 							</a><br>
-							<span>所有者：<a href="#" th:text="${ownedBookInfo.user.name}"></a></span><br>			
+							<span>所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}" th:text="${ownedBookInfo.user.name}"></a></span><br>			
 						</div>
 					</div>
 				</div>
@@ -86,6 +86,8 @@
 		</div>
 	</div>
 </div>
+<!-- 本登録ボタン -->
+<div th:replace="fixed_register_book_btn::register_book_btn"></div>
 <!-- コンテンツ -->
 <footer th:replace="footer::footer"></footer>
 

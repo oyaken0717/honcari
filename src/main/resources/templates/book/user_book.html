@@ -22,11 +22,11 @@
   		<span th:text="${successMessage}"></span>
 	</div>
 	<!-- page content -->
-	<div class="container content-wrapper">
+	<div class="container" style="padding-top: 55px">
 		<div class="row mx-auto my-5">
 		
 				<!-- side bar -->
-				<div th:replace="mypage_side_menu::frag_mypage_side_menu(2,${categoryNum})"></div>
+				<div th:replace="user_page_side_menu::side_menu(${user.userId},2,${categoryNum})"></div>
 				
 				<!-- main content -->
 				
@@ -41,7 +41,7 @@
       							</span>
       						</td>
       						<td>
-      							<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
+      							<span class="card-text" style="text-align: left" th:text="${ownedBookInfo.book.title}"></span>
       						</td>
       						<td>
       							<p class="card-text book-author" th:text="${ownedBookInfo.book.author}"></p>
@@ -64,7 +64,7 @@
       						</div>
       					</div>
       				</div> -->
-      				<div class="pager row justify-content-center">
+      				<div class="pager">
       					<ul class="pagination" th:if="${categoryNum} == 0">
       						<li class="active mybook-list" th:each="i : ${#numbers.sequence(1, pageCount)}">
       							<a th:unless="${i == page /20 + 1}" th:href="@{'/book/show_mybook?page=' + ${i - 1}}" th:text="${i}"></a>
@@ -79,16 +79,11 @@
       					</ul>
       				</div>
 				</div>
-				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${errorMessage}" style="text-align:center">
-					<div class="register-book-imaged">
-					<div th:text="${errorMessage}" style="font-size:1.3rem;padding:29% 0 7% 0; font-weight:bold; opacity:1.0;"></div>
-					<a style="font-size:2rem; border-bottom:solid 1px; font-weight:bold; opacity:1.0;" th:href="@{/book/show_register}">新しく本を登録しよう<i class="fas fa-book"></i></a>
-				</div>
+				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" style="margin-top:70px" th:if="${errorMessage}">
+					<div th:text="${errorMessage}" style="text-align:center"></div>
 			</div>
 		</div>
 	</div>
-	<!-- 本登録ボタン -->
-	<div th:replace="fixed_register_book_btn::register_book_btn"></div>
 	<footer th:replace="footer::footer"></footer>
 	<!-- script -->
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
