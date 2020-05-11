@@ -8,27 +8,26 @@
 	<!-- Style CSS -->
 	<link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
 	<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-	<!-- navbar -->
-	<nav th:replace="header::frag_header(0)"></nav>
+	<header>
+		<!-- navbar -->
+		<nav th:replace="header::frag_header(0)"></nav>
 
+		<div id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert" th:if="${completeMessage} or ${updatePasswordMessage}">
+			<span th:text="${completeMessage}"></span><br th:if="${completeMessage} and ${updatePasswordMessage}">
+			<span th:text="${updatePasswordMessage}"></span>
+		</div>
+	</header>
+		
 	<!-- page content -->
 	<div class="container content-wrapper">
 		<div class="row mx-auto my-5">
-				<div class="alert alert-info alert-dismissible fade show mt-2" role="alert" th:if="${completeMessage} or ${updatePasswordMessage}">
-					<span th:text="${completeMessage}"></span><br th:if="${completeMessage} and ${updatePasswordMessage}">
-					<span th:text="${updatePasswordMessage}"></span>
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-		
 				<!-- side bar -->
 				<div th:replace="mypage_side_menu::frag_mypage_side_menu(1,99)"></div>
 
@@ -69,5 +68,12 @@
 	<!-- script -->
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+	<script>
+	$(function(){
+		setTimeout(() => {
+			$('#flash').alert('close');
+		}, 3000);
+	});
+	</script>
 </body>
 </html>
