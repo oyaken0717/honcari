@@ -80,15 +80,21 @@
       				</div>
 				</div>
 				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${errorMessage}" style="text-align:center">
-					<div class="register-book-image">
-					<div th:text="${errorMessage}" style="font-size:1.3rem;padding:29% 0 7% 0; font-weight:bold; opacity:1.0;"></div>
-					<a style="font-size:2rem; border-bottom:solid 1px; font-weight:bold; opacity:1.0;" th:href="@{/book/show_register}">新しく本を登録しよう<i class="fas fa-book"></i></a>
+					<div th:text="${errorMessage}" style="font-size:1.3rem;padding:20% 0 7% 0; font-weight:bold;"></div>
+					<!-- <a style="font-size:2rem; border-bottom:solid 1px; font-weight:bold; opacity:1.0;" th:href="@{/book/show_register}">新しく本を登録しよう<i class="fas fa-book"></i></a> -->
+					<div class="register-book-btn-mypage row justify-content-center">
+						<a href="#" th:href="@{/book/show_register}" class="logo large">
+							<i class="fas fa-book large-icon"></i>
+							<span class="mt-1">登録</span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	<!-- 本登録ボタン -->
-	<div th:replace="fixed_register_book_btn::register_book_btn"></div>
+	<div th:if="${ownedBookInfoList}">
+		<div th:replace="fixed_register_book_btn::register_book_btn"></div>
+	</div>
 	<footer th:replace="footer::footer"></footer>
 	<!-- script -->
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
