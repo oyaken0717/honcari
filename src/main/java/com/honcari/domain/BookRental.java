@@ -1,5 +1,6 @@
 package com.honcari.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.honcari.common.RentalStatusEnum;
@@ -18,6 +19,8 @@ public class BookRental {
 	private Date requestDeadline;
 	/** 貸出期限 */
 	private Date deadline;
+	/** 承認日時 */
+	private Timestamp approvalDate;
 	/** 本所有情報 */
 	private OwnedBookInfo ownedBookInfo;
 	/** 借り手ユーザー */
@@ -106,6 +109,14 @@ public class BookRental {
 		this.deadline = deadline;
 	}
 
+	public Timestamp getApprovalDate() {
+		return approvalDate;
+	}
+
+	public void setApprovalDate(Timestamp approvalDate) {
+		this.approvalDate = approvalDate;
+	}
+
 	public OwnedBookInfo getOwnedBookInfo() {
 		return ownedBookInfo;
 	}
@@ -150,9 +161,9 @@ public class BookRental {
 	public String toString() {
 		return "BookRental [bookRentalId=" + bookRentalId + ", ownedBookInfoId=" + ownedBookInfoId + ", borrowUserId="
 				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", requestDeadline=" + requestDeadline
-				+ ", deadline=" + deadline + ", ownedBookInfo=" + ownedBookInfo + ", borrowUser=" + borrowUser
-				+ ", creationUserName=" + creationUserName + ", updateUserName=" + updateUserName + ", version="
-				+ version + "]";
+				+ ", deadline=" + deadline + ", approvalDate=" + approvalDate + ", ownedBookInfo=" + ownedBookInfo
+				+ ", borrowUser=" + borrowUser + ", creationUserName=" + creationUserName + ", updateUserName="
+				+ updateUserName + ", version=" + version + "]";
 	}
 
 }
