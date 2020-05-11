@@ -1,7 +1,14 @@
 package com.honcari.domain;
 
+/**
+ * GoogleBooksAPIから取得したデータ用のドメイン.
+ * 
+ * @author hatakeyamakouta
+ *
+ */
 public class SmallThumbnail {
 
+	/**	サムネイルパス */
 	private String smallThumbnail;
 
 	public String getSmallThumbnail() {

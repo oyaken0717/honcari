@@ -1,7 +1,14 @@
 package com.honcari.domain;
 
+/**
+ * ISBNコード用のドメイン
+ * 
+ * @author hatakeyamakouta
+ *
+ */
 public class Identifier {
 
+	/**	ISBNコード */
 	private String identifier;
 
 	public String getIdentifier() {
