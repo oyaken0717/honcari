@@ -64,6 +64,7 @@ create table book_rentals(
   , rental_status integer not null
   , request_deadline date
   , deadline date
+  , approval_date timestamp
   , creation_date timestamp
   , creation_user text
   , update_date timestamp
