@@ -1,5 +1,6 @@
 package com.honcari.controller.group;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class ShowGroupDetailController {
 	 * @return グループ詳細画面へ遷移
 	 */
 	@RequestMapping("/show_detail")
-	public String showGroupDetail(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+	public String showGroupDetail(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
 		Group group = showGroupDetailService.showGroupDetail(id);
 		
 		//ログインユーザーがグループ内にすでに存在しているかを確認
@@ -54,8 +55,7 @@ public class ShowGroupDetailController {
 		model.addAttribute("group", group);
 		model.addAttribute("userId", loginUser.getUser().getUserId());
 		
-		//グループ管理画面から遷移してきたことを示すフラグを無効化
-		session.setAttribute("fromManagement", null);
+		session.setAttribute("referer",request.getHeader("REFERER"));
 
 		return "group/group_detail";
 	}

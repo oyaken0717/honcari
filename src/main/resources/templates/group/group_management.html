@@ -10,7 +10,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div th:if="${complete}" class="flash alert alert-warning alert-dismissible fade show" role="alert">
+<div th:if="${complete}" class="flash alert alert-success alert-dismissible fade show" role="alert">
   <strong th:if="${rejectInvite}">グループに参加しませんでした。</strong>
   <strong th:if="${outGroup}">グループから抜けました。</strong>
   <strong th:if="${joinGroup}">グループに参加しました！</strong>
@@ -54,15 +54,14 @@
 		              <p class="text-muted" th:text="${group.description}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 		              <div class="d-flex justify-content-between align-items-center">
 		                <div class="btn-group" style="margin: 15px">
-		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>
+		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a><!-- 
 		           		  <input type="hidden" class="group-name" th:value="${group.name}">
-		                  <input type="hidden" class="group-description" th:value="${group.description}">
+		                  <input type="hidden" class="group-description" th:value="${group.description}"> -->
 		                </div>
 		                <div th:if="${userId}==${group.ownerUserId}" style="margin: 10px">
 		                  <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
 		                </div>
-<!-- 		                <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
- -->		              </div>
+		              </div>
 		            </div>
 		          </div>
 		        </div>
@@ -81,8 +80,8 @@
 		                <div class="btn-group" style="margin: 15px">
 		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
 		                  <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
-		           		  <input type="hidden" class="group-name" th:value="${group.name}">
-		                  <input type="hidden" class="group-description" th:value="${group.description}">
+<!-- 		           		  <input type="hidden" class="group-name" th:value="${group.name}">
+		                  <input type="hidden" class="group-description" th:value="${group.description}"> -->
 		                </div>
 		                <div >
 		                </div>
@@ -110,8 +109,8 @@
 		                <div class="btn-group" style="margin: 15px">
 		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
 		                  <a th:href="@{/group/reject_invite_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Reject</a>
-		           		  <input type="hidden" class="group-name" th:value="${group.name}">
-		                  <input type="hidden" class="group-description" th:value="${group.description}">
+<!-- 		           		  <input type="hidden" class="group-name" th:value="${group.name}">
+		                  <input type="hidden" class="group-description" th:value="${group.description}"> -->
 		                </div>
 		                <div >
 		                </div>
