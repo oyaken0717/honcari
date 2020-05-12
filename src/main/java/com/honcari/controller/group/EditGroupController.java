@@ -1,5 +1,8 @@
 package com.honcari.controller.group;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,9 @@ public class EditGroupController {
 
 	@Autowired
 	private EditGroupService editGroupService;
+	
+	@Autowired
+	private HttpSession session;
 
 	@ModelAttribute
 	public EditGroupForm setUpEditGroupForm() {
@@ -43,9 +49,11 @@ public class EditGroupController {
 	 * @return グループ編集画面へ遷移
 	 */
 	@RequestMapping("/to_edit_group")
-	public String toEditGroup(Integer groupId, Model model) {
+	public String toEditGroup(Integer groupId, Model model,HttpServletRequest request) {
 		Group group = showGroupDetailService.showGroupDetail(groupId);
 		model.addAttribute("group", group);
+		session.setAttribute("referer", request.getHeader("REFERER"));
+
 		return "group/edit_group";
 	}
 
@@ -58,9 +66,9 @@ public class EditGroupController {
 	 * @return 編集したグループの詳細画面へ遷移
 	 */
 	@RequestMapping(value="/edit_group",method = RequestMethod.POST)
-	public String editGroup(@Validated EditGroupForm form, BindingResult result, Model model) {
+	public String editGroup(@Validated EditGroupForm form, BindingResult result, Model model,HttpServletRequest request) {
 		if (result.hasErrors()) {
-			return toEditGroup(form.getGroupId(), model);
+			return toEditGroup(form.getGroupId(), model,request);
 		}
 		editGroupService.editGroup(form);
 		return "redirect:/group/show_detail?id=" + form.getGroupId();
