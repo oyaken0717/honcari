@@ -6,7 +6,7 @@ package com.honcari.common;
  * @author katsuya.fujishima
  *
  */
-public enum MyBookType {
+public enum MyBookTypeEnum {
 	/**	書籍一覧 */
 	MY_BOOK_LIST(0),
 	/** 文学・小説 */
@@ -36,7 +36,7 @@ public enum MyBookType {
 	 * 
 	 * @param key key値
 	 */
-	private MyBookType(Integer key) {
+	private MyBookTypeEnum(Integer key) {
 		this.key = key;
 	}
 
@@ -50,8 +50,8 @@ public enum MyBookType {
 	 * @param key key値
 	 * @return 渡されたkeyを含むEnum
 	 */
-	public static MyBookType of(Integer key) {
-		for (MyBookType page : MyBookType.values()) {
+	public static MyBookTypeEnum of(Integer key) {
+		for (MyBookTypeEnum page : MyBookTypeEnum.values()) {
 			if (page.key == key) {
 				return page;
 			}

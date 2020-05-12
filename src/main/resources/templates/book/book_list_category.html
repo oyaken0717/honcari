@@ -6,7 +6,7 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav th:replace="header::frag_header(1)"></nav>
@@ -60,7 +60,7 @@
 <div>
 	<div class="jumbotron jumbotron-fluid" style="'background-image:url(/img/home.jpeg)'">
 	  <div class="container">
-	    <h1 class="display-4 my-3 title text-white text-uppercase">Honcari</h1>
+	    <h1 class="display-4 my-3 title text-white">Honcari</h1>
 	    <p class="lead text-white font-weight-normal op-8">-気軽に本をどこへでも-</p>
 	  </div>
 	</div>
@@ -72,8 +72,17 @@
 		<div class="row">
 			<div class="col-md-12" th:each="category: ${categoryList}">
 				<div class="row">
-					<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
-						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><img class="bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}"></a>
+					<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${category.ownedBookInfoList}">
+						<div th:if="${ownedBookInfo.bookStatus} == 1">
+							<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
+								<img class="bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
+							</a>
+						</div>
+						<div th:if="${ownedBookInfo.bookStatus} != 1" class="now-lending">
+							<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
+								<img class="bd-placeholder-img thumbnail" style="opacity: 0.5" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
+							</a>
+						</div>
 						<div class="p-2">
 							<a class="card-text book-title text-dark" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 								<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
@@ -84,6 +93,14 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="pager row justify-content-center">
+		<ul class="pagination" th:if="${categoryList} != null">
+			<li class="active mybook-list" th:each="i : ${#numbers.sequence(1, totalPageNum)}">
+				<a th:unless="${i} == ${page}" th:href="@{'/show_one_category?categoryId=' + ${categoryList[0].categoryId} + '&page=' + ${i}}" th:text="${i}"></a>
+				<span th:if="${i} == ${page}" th:href="@{'/show_one_category?categoryId=' + ${categoryList[0].categoryId} + '&page=' + ${i}}" th:text="${i}"></span>
+			</li>
+		</ul>
 	</div>
 </div>
 <!-- 本登録ボタン -->

@@ -4,10 +4,33 @@
 
 /*　全体のデザインに共通のCSS */
 :root { 
-	--yellow: #f7c600; 
-	--yellowHover: #e0a800; 
 	--primary: #f7c600; 
+	--secondary: #332900;
+	--yellow: #f7c600; 
+	--yellowHover: #cca300; 
+	--green: #00f700;
+	--blue: #00c6f7;
+	--purple: #6300f7; 
+	--red: #f70063;
 	--gray: #808080;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #fff;
+  padding-top: 55px;
+  min-height: 100vh;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-direction: column !important;
+  flex-direction: column !important;
+  overflow-y: scroll;
 }
 
 a {
@@ -29,29 +52,53 @@ a:hover {
 
 .btn-warning:hover {
 	color: #fff;
-	background-color: #e0a800;
-	border-color: #d39e00;
+	background-color: var(--yellowHover);
+	border-color: var(--yellowHover);
 }
 
 .btn-warning:focus, .btn-warning.focus {
 	color: #fff;
-	background-color: #e0a800;
-	border-color: #d39e00;
+	background-color: var(--yellowHover);
+	border-color: var(--yellowHover);
 	box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
 }
 
 .btn-warning.disabled, .btn-warning:disabled {
 	color: #fff;
-	background-color: #ffc107;
-	border-color: #ffc107;
+	background-color: var(--yellow);
+	border-color: var(--yellow);
 }
 
 .btn-warning:not (:disabled ):not (.disabled ):active, .btn-warning:not
 	 (:disabled ):not (.disabled ).active, .show>.btn-warning.dropdown-toggle
 	{
 	color: #fff;
-	background-color: #d39e00;
-	border-color: #c69500;
+	background-color: var(--yellow);
+	border-color: var(--yellow);
+}
+
+.btn-outline-secondary {
+	color: var(--secondary);
+	border-color: var(--secondary);
+}
+
+.btn-outline-secondary:hover {
+	color: #fff;
+	background-color: var(--secondary);
+	border-color: var(--secondary);
+}
+
+.btn-outline-secondary.disabled, .btn-outline-secondary:disabled {
+	color: var(--secondary);
+	background-color: transparent;
+}
+
+.btn-outline-secondary:not (:disabled ):not (.disabled ):active,
+	.btn-outline-secondary:not (:disabled ):not (.disabled ).active, .show>.btn-outline-secondary.dropdown-toggle
+	{
+	color: #fff;
+	background-color: var(--secondary);
+	border-color: var(--secondary);
 }
 
 .alert {
@@ -67,8 +114,8 @@ a:hover {
 
 .alert-success {
 	color: white;
-	background-color: #f7c600;
-	border-color: #f7c600;
+	background-color: var(--primary);
+	border-color: var(--primary);
 }
 
 .flash {
@@ -168,6 +215,12 @@ h4.content-heading {
 	transition: all 0.3s;
 	border-radius: 100%;
 	outline: none;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+	color: #fff;
+	text-decoration: none;
+	background-color: #F7C600;
 }
 
 /* フッター　*/
@@ -357,6 +410,25 @@ ul.social-buttons {
 	background: #3e4555;
 }
 
+.top-head-wrapper .fas {
+	font-size: 50px;
+	color: var(--primary);
+}
+
+.top-head-wrapper .service-description{
+	color: #6f6f6f;	
+}
+
+.top-head-wrapper .card.card-shadow {
+  height: 250px;
+  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+}
+
+.top-head-wrapper .wrap-service-box .card-body {
+  padding: 40px;
+}
+
 #edit-button {
 	font-size: 16px;
 }
@@ -372,6 +444,30 @@ ul.social-buttons {
 
 .thumbnail {
 	height: 250px;
+}
+
+.thumbnail-no {
+	height: 250px;
+}
+
+.now-lending {
+	position: relative;
+}
+
+.now-lending:after {
+	background: #0031f7;
+	bottom: 0;
+	color: #fff;
+	content: "Now Lending";
+	font-size: 15px;
+	font-weight: 700;
+	height: 23px;
+	letter-spacing: 1px;
+	line-height: 22px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	z-index: 600;
 }
 
 .thumbnail img {
@@ -409,7 +505,8 @@ ul.social-buttons {
 	border-bottom-style: double !important;
 }
 
-#register-tr {
+/* 本登録・マイブックの一覧共通のデザイン */
+#book-list-tr {
 	border-bottom: solid 1px #eee;
 }
 
@@ -420,15 +517,8 @@ ul.social-buttons {
     background: var(--yellow);/*背景色*/
     border-left: solid 3px white;/*左線*/
     border-right: solid 3px white;/*右線*/
-    
 }
 
-/* 
-他と合わせるためにコメントアウトしましたby湯口
-.register-btn {
-	background-color:#fff3cd;
-	color: #856404;
-} */
 .full-width {
 	width: 100vw;
 	position: relative;
@@ -464,7 +554,7 @@ li.category {
 	margin: 3%;
 	padding: 0;
 	display: inline-block;
-	width: 40px;
+	width: 60px;
 	height: 40px;
 	text-align: center;
 	position: relative;
@@ -498,10 +588,22 @@ li.category {
 	background: #e0a800;
 }
 
+#book-image-link{
+	padding:10px 0 10px 0;
+}
+
+/* mybookのデザイン */
 #book-title-mybook {
 	text-align: left;
 }
 
+#mybook-error{
+	font-size:1.3rem;
+	padding:20% 0 7% 0;
+	font-weight:bold;
+}
+
+/* 本登録のデザイン */
 #register-success {
 	color: white;
 }
@@ -523,6 +625,26 @@ li.category {
 	border-bottom: none;
 }
 
+.register-book-image {
+  background-image: url(/img/register-book-top.jpg);
+  color: #fff;
+  padding: 2rem 1rem;
+  border-radius: 0.3rem;
+  background-size: cover;
+}
+
+
+.register-book-white-btn{
+	background-color:white;
+	color:#6f6f6f;
+}
+
+.table-responsive-register-book {
+	display: block;
+	width: 100%;
+	-webkit-overflow-scrolling: touch;
+}
+
 /* FAQ */
 .ui-state-active {
 	border: var(--primary);
@@ -534,15 +656,6 @@ li.category {
 .flash{
 	position: fixed;
 	margin: 0;
-}
-
-.register-book-image {
-	background-image: url(/img/register-book.jpg);
-	background-repeat: no-repeat;
-	background-size: contain;
-	height: 100%;
-	border-radius: 10px;
-	opacity: 0.9;
 }
 
 /* 右下の本登録ボタン */
@@ -569,4 +682,55 @@ li.category {
 
 .large-icon {
 	font-size: 3.5rem 
+}
+
+.register-book-btn-mypage {
+	height: 140px;
+	width: 140px;
+	position: absolute;
+	border-radius: 100%;
+	margin-left: 40%;
+}
+/* ここまで */
+
+/* グループ作成周りのcss */
+.select-user {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 38px;
+}
+
+.add-user-icon {
+	font-size: 1.5rem;
+	color: #17a2b8;
+	margin-top: 7px;
+}
+
+.invite-user {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #DDFFFF;
+	margin-top: 5px;
+    margin-right: 5px;
+    padding-left: 0;
+    border-radius: 5px;
+}
+
+.delete-user-icon {
+	font-size: 1.5rem;
+	color: #dc3545;
+	margin-top: 7px;
+}
+
+/* 貸し出し不可の時の */
+.no-lending {
+	position: absolute;
+	top: 0;
+	left: 0;
+	-ms-transform: translate(-50%,-50%);
+	margin:0;
+	padding:0;
+	background-color: z;
+	color: whi
 }

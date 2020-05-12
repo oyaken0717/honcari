@@ -1,5 +1,7 @@
 package com.honcari.controller.book_rental;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,10 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.BookRental;
 import com.honcari.domain.LoginUser;
+import com.honcari.form.RentalRequestForm;
 import com.honcari.service.book_rental.SearchBorrowedHistoryService;
 import com.honcari.service.book_rental.SearchLentHistoryService;
 
@@ -31,6 +35,15 @@ public class ShowRentalHistoryController {
 	
 	@Autowired
 	private SearchLentHistoryService searchLentHistoryService;
+	
+	@ModelAttribute
+	public RentalRequestForm setUpRentalRequestForm() {
+		RentalRequestForm form = new RentalRequestForm();
+		LocalDate defaultDeadline = LocalDate.now().plusWeeks(2);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		form.setRequestDeadline(formatter.format(defaultDeadline));
+		return form;
+	}
 	
 	/** 1ページに表示する数 */
 	private static final int VIEW_SIZE = 10;

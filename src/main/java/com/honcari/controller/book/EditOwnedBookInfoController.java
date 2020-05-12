@@ -5,12 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honcari.common.BookStatusEnum;
 import com.honcari.domain.Category;
 import com.honcari.domain.OwnedBookInfo;
+import com.honcari.form.EditOwnedBookInfoForm;
 import com.honcari.service.book.EditOwnedBookInfoService;
 import com.honcari.service.book.FindAllCategoryService;
 import com.honcari.service.book.FindByOwnedBookInfoService;
@@ -23,7 +27,7 @@ import com.honcari.service.book.FindByOwnedBookInfoService;
  */
 @Controller
 @RequestMapping("/book")
-public class EditBookController {
+public class EditOwnedBookInfoController {
 
 	@Autowired
 	private EditOwnedBookInfoService editOwnedBookInfoService;
@@ -61,12 +65,28 @@ public class EditBookController {
 	 * @return マイブック
 	 */
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String editBook(Integer ownedBookInfoId, Integer categoryId, String comment, Integer bookStatus, RedirectAttributes redirectAttributes) {
-		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
-		ownedBookInfo.setCategoryId(categoryId);
-		ownedBookInfo.setComment(comment);
-		ownedBookInfo.setBookStatus(bookStatus);
-		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
+	public String editBook(@Validated EditOwnedBookInfoForm editOwnedBookInfoForm, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+		
+		//書籍情報をowned_book_infoテーブルから取得する
+		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(editOwnedBookInfoForm.getOwnedBookInfoId());
+		
+		//編集されたカテゴリid, コメント, 書籍状況を取得していたownedBookInfoにセットする
+		ownedBookInfo.setCategoryId(editOwnedBookInfoForm.getCategoryId());
+		ownedBookInfo.setComment(editOwnedBookInfoForm.getComment());
+		ownedBookInfo.setBookStatus(editOwnedBookInfoForm.getBookStatus());
+		
+		//書籍情報編集画面に遷移した時点でのversionをセットする
+		ownedBookInfo.setVersion(editOwnedBookInfoForm.getVersion());
+		
+		//owned_book_infoテーブルを更新する
+		//更新時にversionの値が不一致の場合例外処理を行う(EditOwnedBookInfoServiceにてtry-catch)
+		try {
+			editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			model.addAttribute("errorMessage", "書籍情報変更に失敗しました");
+			return showEditBook(model, ownedBookInfo.getOwnedBookInfoId());
+		}
 		redirectAttributes.addFlashAttribute("successMessage", "書籍情報を変更しました");
 		return "redirect:/book/show_mybook";
 	}
@@ -78,18 +98,24 @@ public class EditBookController {
 	 * @return マイブック
 	 */
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String deleteBook(Integer ownedBookInfoId, Model model, RedirectAttributes redirectAttributes) {
-		System.out.println(ownedBookInfoId);
+	public String deleteBook(Integer ownedBookInfoId, Integer version, Model model, RedirectAttributes redirectAttributes) {
+		
+		//書籍情報をowned_book_infoテーブルから取得する
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
-		if(ownedBookInfo.getBookStatus() == 2) {
+		
+		//ownedBookInfoのbookStatusが貸し出し承認待ち、もしくは貸し出し中だった場合は削除処理を行わず編集画面に戻す
+		if(ownedBookInfo.getBookStatus() == BookStatusEnum.BEFORE_LENDING.getValue()) {
 			model.addAttribute("errorMessage", "貸し出し承認待ち中の書籍です");
 			return showEditBook(model, ownedBookInfoId);
 		}
-		if(ownedBookInfo.getBookStatus() == 3) {
+		if(ownedBookInfo.getBookStatus() == BookStatusEnum.LENDING.getValue()) {
 			model.addAttribute("errorMessage", "貸し出し中の書籍です");
 			return showEditBook(model, ownedBookInfoId);
 		}
-		ownedBookInfo.setBookStatus(4);
+		
+		//ownedBookInfoのbookStatusを削除に変更し更新処理を行う
+		ownedBookInfo.setBookStatus(BookStatusEnum.DELETE.getValue());
+		ownedBookInfo.setVersion(version);
 		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
 		redirectAttributes.addFlashAttribute("successMessage", "書籍の登録を削除しました");
 		return "redirect:/book/show_mybook";

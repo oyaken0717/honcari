@@ -34,7 +34,7 @@ public class SearchBorrowedHistoryService {
 	 * @return 借りた履歴のリスト
 	 */
 	public List<BookRental> showBorrowedList(Integer userId) {
-		return bookLendingRepository.findByBorrowUserIdAndRentalStatus(userId, RentalStatusEnum.RETURNED.getValue());
+		return bookLendingRepository.findByBorrowUserIdAndRentalStatusOrderByApprovalDate(userId, RentalStatusEnum.RETURNED.getValue());
 	}
 	
 	/**

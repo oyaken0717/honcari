@@ -6,7 +6,7 @@
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav th:replace="header::frag_header(0)"></nav>
@@ -18,7 +18,7 @@
     <!-- Column -->
     <div class="col-lg-6"> 
 	  <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" 
-		th:src="@{${book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail" /> 
+		th:src="@{${book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail-img" alt="thumbnail"> 
 	</div>
     <!-- Column -->
     <div class="col-lg-6 mt-4">
@@ -63,8 +63,8 @@
    				     <input type="hidden" name="ownerId" th:value="${ownedBookInfo.userId}">
    				   </div>
     			   <div class="modal-footer">
+    				 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">閉じる</button>
     				 <button type="submit" class="btn btn-warning">リクエストを送信</button>
-    				 <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
   				   </div>
   				  </form>
   				  </div>
