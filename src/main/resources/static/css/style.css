@@ -615,6 +615,11 @@ li.category {
 	color:#6f6f6f;
 }
 
+.table-responsive-register-book {
+	display: block;
+	width: 100%;
+	-webkit-overflow-scrolling: touch;
+}
 
 /* FAQ */
 .ui-state-active {

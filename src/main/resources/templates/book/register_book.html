@@ -36,7 +36,7 @@
 		</div>
 	<div class="container content-wrapper">
 		<div class="row">
-		<div class="table-responsive">
+		<div class="table-responsive-register-book">
 		<br>
 			<table id="book-list" th:if="${volumeInfoList}">
 				<tr class="mt-3 mb-3">
@@ -47,7 +47,7 @@
 					<td th:unless="${item.volumeInfo.imageLinks}"><img class="book-img">No Photo</td>
 					<td th:if="${item.volumeInfo.authors}"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
 					<td th:unless="${item.volumeInfo.authors}"><span>ー</span></td>
-					<td th:if="${item.volumeInfo.title}"><span th:text="${item.volumeInfo.title}"></span></td>
+					<td th:if="${item.volumeInfo.title}" class="text-left"><span th:text="${item.volumeInfo.title}"></span></td>
 					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.publishedDate}"><span th:text="${item.volumeInfo.publishedDate}"></span></td>
 					<td th:unless="${item.volumeInfo.publishedDate}"><span>ー</span></td>
