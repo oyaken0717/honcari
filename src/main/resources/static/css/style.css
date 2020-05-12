@@ -452,6 +452,7 @@ ul.social-buttons {
 	border-bottom-style: double !important;
 }
 
+/* 本登録・マイブックの一覧のデザイン */
 #register-tr {
 	border-bottom: solid 1px #eee;
 }
@@ -466,12 +467,6 @@ ul.social-buttons {
     
 }
 
-/* 
-他と合わせるためにコメントアウトしましたby湯口
-.register-btn {
-	background-color:#fff3cd;
-	color: #856404;
-} */
 .full-width {
 	width: 100vw;
 	position: relative;
@@ -566,6 +561,14 @@ li.category {
 	border-bottom: none;
 }
 
+.register-book-image {
+  background-image: url(/img/register-book-top.jpg);
+  color: #fff;
+  padding: 2rem 1rem;
+  border-radius: 0.3rem;
+  background-size: cover;
+}
+
 /* FAQ */
 .ui-state-active {
 	border: var(--primary);
@@ -577,14 +580,6 @@ li.category {
 .flash{
 	position: fixed;
 	margin: 0;
-}
-
-.register-book-image {
-  background-image: url(/img/register-book-top.jpg);
-  color: #fff;
-  padding: 2rem 1rem;
-  border-radius: 0.3rem;
-  background-size: cover;
 }
 
 /* 右下の本登録ボタン */
