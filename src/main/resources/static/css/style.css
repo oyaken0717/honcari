@@ -592,14 +592,15 @@ li.category {
 
 /* グループ作成周りのcss */
 .select-user {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 38px;
 }
 
 .add-user-icon {
 	font-size: 1.5rem;
 	color: #17a2b8;
+	margin-top: 7px;
 }
 
 .invite-user {
@@ -616,4 +617,5 @@ li.category {
 .delete-user-icon {
 	font-size: 1.5rem;
 	color: #dc3545;
+	margin-top: 7px;
 }
