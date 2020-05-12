@@ -35,8 +35,8 @@
 						<tr>
 							<th width="25%">書籍サムネイル</th><th width="30%">タイトル</th><th width="30%">著者</th><th width="15%">登録内容変更</th>
 						</tr>
-						<tr th:each="ownedBookInfo:${ownedBookInfoList}" id="register-tr">
-							<td style="padding:10px 0 10px 0" height="110px"><span class="thumbnail">
+						<tr th:each="ownedBookInfo:${ownedBookInfoList}" id="book-list-tr">
+							<td id="book-image-link" height="110px"><span class="thumbnail">
       								<img class="card-img mx-auto d-block" th:src="${ownedBookInfo.book.thumbnailPath}" alt="">
       							</span>
       						</td>
@@ -79,8 +79,8 @@
       					</ul>
       				</div>
 				</div>
-				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 float-left" th:if="${errorMessage}" style="text-align:center">
-					<div th:text="${errorMessage}" style="font-size:1.3rem;padding:20% 0 7% 0; font-weight:bold;"></div>
+				<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12 text-center" th:if="${errorMessage}">
+					<div id="mybook-error" th:text="${errorMessage}"></div>
 					<!-- <a style="font-size:2rem; border-bottom:solid 1px; font-weight:bold; opacity:1.0;" th:href="@{/book/show_register}">新しく本を登録しよう<i class="fas fa-book"></i></a> -->
 					<div class="register-book-btn-mypage row justify-content-center">
 						<a href="#" th:href="@{/book/show_register}" class="logo large">

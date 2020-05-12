@@ -452,8 +452,8 @@ ul.social-buttons {
 	border-bottom-style: double !important;
 }
 
-/* 本登録・マイブックの一覧のデザイン */
-#register-tr {
+/* 本登録・マイブックの一覧共通のデザイン */
+#book-list-tr {
 	border-bottom: solid 1px #eee;
 }
 
@@ -464,7 +464,6 @@ ul.social-buttons {
     background: var(--yellow);/*背景色*/
     border-left: solid 3px white;/*左線*/
     border-right: solid 3px white;/*右線*/
-    
 }
 
 .full-width {
@@ -536,10 +535,22 @@ li.category {
 	background: #e0a800;
 }
 
+#book-image-link{
+	padding:10px 0 10px 0;
+}
+
+/* mybookのデザイン */
 #book-title-mybook {
 	text-align: left;
 }
 
+#mybook-error{
+	font-size:1.3rem;
+	padding:20% 0 7% 0;
+	font-weight:bold;
+}
+
+/* 本登録のデザイン */
 #register-success {
 	color: white;
 }
@@ -568,6 +579,13 @@ li.category {
   border-radius: 0.3rem;
   background-size: cover;
 }
+
+
+.register-book-white-btn{
+	background-color:white;
+	color:#6f6f6f;
+}
+
 
 /* FAQ */
 .ui-state-active {
