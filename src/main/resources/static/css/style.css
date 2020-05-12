@@ -188,6 +188,12 @@ h4.content-heading {
 	outline: none;
 }
 
+.dropdown-item.active, .dropdown-item:active {
+	color: #fff;
+	text-decoration: none;
+	background-color: #F7C600;
+}
+
 /* フッター　*/
 footer {
 	padding: 20px;
