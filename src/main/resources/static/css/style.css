@@ -392,6 +392,30 @@ ul.social-buttons {
 	height: 250px;
 }
 
+.thumbnail-no {
+	height: 250px;
+}
+
+.now-lending {
+	position: relative;
+}
+
+.now-lending:after {
+	background: #0031f7;
+	bottom: 0;
+	color: #fff;
+	content: "Now Lending";
+	font-size: 15px;
+	font-weight: 700;
+	height: 23px;
+	letter-spacing: 1px;
+	line-height: 22px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	z-index: 600;
+}
+
 .thumbnail img {
 	height: 100%;
 	width: auto;
@@ -618,4 +642,16 @@ li.category {
 	font-size: 1.5rem;
 	color: #dc3545;
 	margin-top: 7px;
+}
+
+/* 貸し出し不可の時の */
+.no-lending {
+	position: absolute;
+	top: 0;
+	left: 0;
+	-ms-transform: translate(-50%,-50%);
+	margin:0;
+	padding:0;
+	background-color: z;
+	color: whi
 }
