@@ -734,3 +734,22 @@ li.category {
 	background-color: z;
 	color: whi
 }
+
+a.disabled{
+    pointer-events: none;
+}
+
+.group-detail{
+	margin-left: 150px;
+	margin-right: 150px;
+}
+
+.group-image {
+  background-image: url(/img/group.jpg);
+  color: #fff;
+  padding: 2rem 1rem;
+  border-radius: 0.3rem;
+  background-size: cover;
+  padding-top: 70px;
+  padding-bottom: 70px
+}

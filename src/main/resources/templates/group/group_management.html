@@ -10,6 +10,8 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<nav th:replace="header::frag_header(0)"></nav>
+
 <div th:if="${complete}" class="flash alert alert-success alert-dismissible fade show" role="alert">
   <strong th:if="${rejectInvite}">グループに参加しませんでした。</strong>
   <strong th:if="${outGroup}">グループから抜けました。</strong>
@@ -19,14 +21,12 @@
   </button>
 </div>
 
-<section class="jumbotron text-center">
-    <div class="container content-wrapper">
-      <h1 class="jumbotron-heading">グループを管理する</h1>
-    </div>
+<section class="group-image text-center">
+      <h2 class="section-heading">グループを管理する</h2>
+      <p class="section-description" style="color:white">グループを管理することができます</p>
 </section>
 
 <div class="container content-wrapper">
-<nav th:replace="header::frag_header(0)"></nav>
     	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
   			<li class="nav-item">
