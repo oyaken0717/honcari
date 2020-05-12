@@ -98,7 +98,7 @@ public class EditOwnedBookInfoController {
 	 * @return マイブック
 	 */
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String deleteBook(Integer ownedBookInfoId, Model model, RedirectAttributes redirectAttributes) {
+	public String deleteBook(Integer ownedBookInfoId, Integer version, Model model, RedirectAttributes redirectAttributes) {
 		
 		//書籍情報をowned_book_infoテーブルから取得する
 		OwnedBookInfo ownedBookInfo = findByOwnedBookInfoService.findByOwnedBookInfoId(ownedBookInfoId);
@@ -115,6 +115,7 @@ public class EditOwnedBookInfoController {
 		
 		//ownedBookInfoのbookStatusを削除に変更し更新処理を行う
 		ownedBookInfo.setBookStatus(BookStatusEnum.DELETE.getValue());
+		ownedBookInfo.setVersion(version);
 		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
 		redirectAttributes.addFlashAttribute("successMessage", "書籍の登録を削除しました");
 		return "redirect:/book/show_mybook";

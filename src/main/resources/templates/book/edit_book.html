@@ -45,8 +45,8 @@
 					<button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#book-edit-form">登録情報を変更する</button>
 					<br>
 					<form th:action="@{/book/delete}" method="POST">
-						<input type="hidden" name="ownedBookInfoId"
-							th:value="${ownedBookInfo.ownedBookInfoId}">
+						<input type="hidden" name="ownedBookInfoId" th:value="${ownedBookInfo.ownedBookInfoId}">
+						<input type="hidden" name="version" th:value="${ownedBookInfo.version}">
 						<button class="btn btn-warning btn-lg btn-block">登録を解除する</button>
 					</form>
 				</div>
