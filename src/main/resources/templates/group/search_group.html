@@ -19,7 +19,7 @@
       <div class="search-book-for-add form-group form-inline justify-content-center">
 	      <form th:action="@{/group/search}" method="get">
 	      		<input class="form-control" name="name" type="search" placeholder="グループを検索..." aria-label="グループを検索...">
-	      		<button type="submit" class="btn register-book-white-btn my-2 my-2 my-sm-0">検索</button>
+	      		<button type="submit" class="btn btn-warning my-2 my-2 my-sm-0">検索</button>
 	      </form>
       </div>
   </section>
@@ -45,9 +45,9 @@
           </div>
         </div>
       </div>
-			<div class="row pager justify-content-center">
-				<ul class="pagination" th:if="${groupList} != null">
-					<li class="active" th:each="i : ${#numbers.sequence(1, totalPageNum)}">
+			<div  class="row pager justify-content-center"  th:unless="${groupList} == null">
+				<ul class="pagination">
+					<li th:class="active" th:each="i : ${#numbers.sequence(1, totalPageNum)}" >
 						<a th:class="(${i}==${page})? 'active disabled':''" th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}">
 						<span th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}"></span>
 						</a>
