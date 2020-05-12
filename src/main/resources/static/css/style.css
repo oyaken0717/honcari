@@ -4,9 +4,14 @@
 
 /*　全体のデザインに共通のCSS */
 :root { 
-	--yellow: #f7c600; 
-	--yellowHover: #e0a800; 
 	--primary: #f7c600; 
+	--secondary: #332900;
+	--yellow: #f7c600; 
+	--yellowHover: #cca300; 
+	--green: #00f700;
+	--blue: #00c6f7;
+	--purple: #6300f7; 
+	--red: #f70063;
 	--gray: #808080;
 }
 
@@ -47,29 +52,53 @@ a:hover {
 
 .btn-warning:hover {
 	color: #fff;
-	background-color: #e0a800;
-	border-color: #d39e00;
+	background-color: var(--yellowHover);
+	border-color: var(--yellowHover);
 }
 
 .btn-warning:focus, .btn-warning.focus {
 	color: #fff;
-	background-color: #e0a800;
-	border-color: #d39e00;
+	background-color: var(--yellowHover);
+	border-color: var(--yellowHover);
 	box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
 }
 
 .btn-warning.disabled, .btn-warning:disabled {
 	color: #fff;
-	background-color: #ffc107;
-	border-color: #ffc107;
+	background-color: var(--yellow);
+	border-color: var(--yellow);
 }
 
 .btn-warning:not (:disabled ):not (.disabled ):active, .btn-warning:not
 	 (:disabled ):not (.disabled ).active, .show>.btn-warning.dropdown-toggle
 	{
 	color: #fff;
-	background-color: #d39e00;
-	border-color: #c69500;
+	background-color: var(--yellow);
+	border-color: var(--yellow);
+}
+
+.btn-outline-secondary {
+	color: var(--secondary);
+	border-color: var(--secondary);
+}
+
+.btn-outline-secondary:hover {
+	color: #fff;
+	background-color: var(--secondary);
+	border-color: var(--secondary);
+}
+
+.btn-outline-secondary.disabled, .btn-outline-secondary:disabled {
+	color: var(--secondary);
+	background-color: transparent;
+}
+
+.btn-outline-secondary:not (:disabled ):not (.disabled ):active,
+	.btn-outline-secondary:not (:disabled ):not (.disabled ).active, .show>.btn-outline-secondary.dropdown-toggle
+	{
+	color: #fff;
+	background-color: var(--secondary);
+	border-color: var(--secondary);
 }
 
 .alert {
@@ -85,8 +114,8 @@ a:hover {
 
 .alert-success {
 	color: white;
-	background-color: #f7c600;
-	border-color: #f7c600;
+	background-color: var(--primary);
+	border-color: var(--primary);
 }
 
 .flash {

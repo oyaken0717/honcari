@@ -61,7 +61,7 @@
 											<input type="hidden" th:value="${bookRental.rentalStatus}" name="rentalStatus">
 											<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
 											<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
-											<div><button class="cancel-btn btn btn-secondary btn-sm" type="submit">キャンセル</button></div>
+											<div><button class="cancel-btn btn btn-outline-secondary btn-sm" type="submit">キャンセル</button></div>
 										</form>
 									</div>
 								</div>
@@ -139,7 +139,7 @@
 											<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
 											<div>
 												<input type="submit" name="accept" th:value="承認" class="submit submit-btn btn btn-warning btn-sm">
-												<input type="submit" name="refuse" th:value="却下" class="submit submit-btn btn btn-secondary btn-sm">
+												<input type="submit" name="refuse" th:value="却下" class="submit submit-btn btn btn-outline-secondary btn-sm">
 											</div>
 										</form>
 									</div>
@@ -184,7 +184,7 @@
 											<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+											<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">閉じる</button>
 											<button type="submit" class="btn btn-warning">本の返却を登録</button>
 										</div>
 									</form>
