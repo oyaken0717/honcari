@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.Group;
+import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.service.group.ShowGroupManagementService;
 import com.honcari.service.user.SearchUserByUserIdService;
@@ -42,15 +44,17 @@ public class ShowUserGroupManagementController {
 	 * @return 所属グループ画面
 	 */
 	@RequestMapping("/show_user_group")
-	public String showBelongGroup(Integer userId, Model model,HttpServletRequest request) {
+	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser,Integer userId, Model model,HttpServletRequest request) {
 		//所属しているグループ情報が含まれるログインユーザーの情報（グループドメインから持ってくるよう修正予定）
-		User belongUser = showGroupManagementService.showGroupListByBelongUserIdAndStatus(userId, 1);
+//		User belongUser = showGroupManagementService.showGroupListByBelongUserIdAndStatus(userId, 1);
 		
 		//自身が作成したグループのリスト
-		List<Group> ownGroupList = showGroupManagementService.showGroupListByOwnerUserId(userId);
+//		List<Group> ownGroupList = showGroupManagementService.showGroupListByOwnerUserId(userId);
 		
-		model.addAttribute("belongUser", belongUser);
-		model.addAttribute("ownGroupList", ownGroupList);
+		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
+		
+//		model.addAttribute("belongUser", belongUser);
+		model.addAttribute("belongGroupList", belongGroupList);
 		model.addAttribute("user", searchUserByUserIdService.showUser(userId));
 		
 		session.setAttribute("referer", request.getHeader("REFERER"));

@@ -45,10 +45,10 @@
 				<div class="tab-pane fade show active" id="joined-groups">
 					<!-- 参加しているグループ -->
 					<div class="my-4">
-						<div th:if="${belongUser}==null"><p class="text-center">参加しているグループはありません</p></div>
+						<div th:if="${belongGroupList}==null"><p class="text-center">参加しているグループはありません</p></div>
 						<div class="my-3">
 							<div class="row" style="margin:70px">
-								<div class="col-md-4" th:each="group:${belongUser.groupList}">        
+								<div class="col-md-4" th:each="group:${belongGroupList}">        
 									<div class="card mb-4 shadow-sm" style="height: 12rem;" >
 										<div class="card-body">
 											<p class="card-text" th:text="${group.name}" style="overflow: hidden;"></p>
@@ -58,6 +58,7 @@
 													<input type="hidden" class="group-name" th:value="${group.name}">
 													<input type="hidden" class="group-description" th:value="${group.description}">
 											</div>
+											<small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
 										</div>
 									</div>
 								</div>

@@ -31,7 +31,7 @@ public class RejectInviteGroupController {
 	 * @param redirect
 	 * @return
 	 */
-	@RequestMapping(value="/reject_invite_group",method = RequestMethod.POST)
+	@RequestMapping(value="/reject_invite_group")
 	public String rejectInviteGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser,
 			RedirectAttributes redirect) {
 		rejectInviteGroupService.rejectInviteGroup(loginUser.getUser().getUserId(), groupId);

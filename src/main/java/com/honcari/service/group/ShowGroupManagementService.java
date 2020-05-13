@@ -34,8 +34,11 @@ public class ShowGroupManagementService {
 	 * @param status ステータス
 	 * @return ユーザー情報
 	 */
-	public User showGroupListByBelongUserIdAndStatus(Integer userId,Integer status){
-		return userRepository.findByUserIdAndRelationStatus(userId,status);
+//	public User showGroupListByBelongUserIdAndStatus(Integer userId,Integer status){
+//		return userRepository.findByUserIdAndRelationStatus(userId,status);
+//	}
+	public List<Group> showGroupListByBelongUserIdAndStatus(Integer userId,Integer status){
+		return groupRepository.findByUserIdAndStatus(userId, status);
 	}
 	
 	/**
