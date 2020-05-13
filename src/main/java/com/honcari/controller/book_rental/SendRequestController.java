@@ -19,7 +19,6 @@ import com.honcari.controller.book.ShowBookDetailController;
 import com.honcari.domain.LoginUser;
 import com.honcari.form.ExtendRequestForm;
 import com.honcari.form.RentalRequestForm;
-import com.honcari.service.book_rental.SendRentalMailService;
 import com.honcari.service.book_rental.SendRentalRequestService;
 
 /**
@@ -37,9 +36,6 @@ public class SendRequestController {
 
 	@Autowired
 	private SendRentalRequestService sendRentalRequestService;
-	
-	@Autowired
-	private SendRentalMailService sendRentalMailService;
 
 	@ModelAttribute
 	public RentalRequestForm setUpForm() {
@@ -92,7 +88,6 @@ public class SendRequestController {
 		try {
 			sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, borrowUserName, requestDeadline,
 					ownedBookInfoVersion);
-			sendRentalMailService.sendRentalMail(borrowUserName, ownedBookInfoId, "貸出リクエストのお知らせ");
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを送信しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();

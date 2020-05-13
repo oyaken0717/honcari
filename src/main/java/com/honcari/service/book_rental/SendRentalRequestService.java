@@ -30,15 +30,18 @@ public class SendRentalRequestService {
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
 
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
+
 	/**
 	 * 本の貸出申請を送る.
 	 * 
 	 * @param ownedBookInfoId ユーザーが所有している書籍情報ID
 	 * @param borrowUserId    借り手ユーザーID
-	 * @param requestDeadline        貸出期限
+	 * @param requestDeadline 貸出期限
 	 */
-	public void sendRentalRequest(Integer ownedBookInfoId, Integer borrowUserId, String borrowUserName, Date requestDeadline,
-			Integer ownedBookInfoVersion) {
+	public void sendRentalRequest(Integer ownedBookInfoId, Integer borrowUserId, String borrowUserName,
+			Date requestDeadline, Integer ownedBookInfoVersion) {
 		BookRental bookRental = new BookRental();
 		bookRental.setOwnedBookInfoId(ownedBookInfoId);
 		bookRental.setBorrowUserId(borrowUserId);
@@ -59,6 +62,7 @@ public class SendRentalRequestService {
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild updating status of the book!");
 		}
+		sendRentalMailService.sendRentalMail(borrowUserName, ownedBookInfoId, "貸出リクエストのお知らせ");
 	}
 
 }
