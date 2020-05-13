@@ -1,7 +1,6 @@
 package com.honcari.service.book_rental;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +21,7 @@ public class SendExtendRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
-	
+
 	@Autowired
 	private SendRentalMailService sendRentalMailService;
 
@@ -34,20 +33,18 @@ public class SendExtendRequestService {
 	 */
 	public void sendExtendRequest(ExtendRequestForm form, String updateUserName) {
 		BookRental bookRental = bookRentalRepository.load(form.getBookRentalId());
-		// データベースのバージョンが更新されていた場合は例外処理を行う
-		Integer bookRentalVersion = form.getBookRentalVersion();
-		if (bookRental.getVersion() != bookRentalVersion) {
-			throw new OptimisticLockingFailureException("Faild to send extend request of the book!");
-		}
 		bookRental.setRequestDeadline(java.sql.Date.valueOf(form.getRequestDeadline()));
 		bookRental.setRentalStatus(RentalStatusEnum.WAIT_EXTEND.getValue());
 		bookRental.setUpdateUserName(updateUserName);
-		bookRental.setVersion(bookRentalVersion);
-		int updateCount = bookRentalRepository.update(bookRental);
+		bookRental.setVersion(form.getBookRentalVersion());
+
 		// データベースの更新ができなかった場合は例外処理を行う
+		int updateCount = bookRentalRepository.update(bookRental);
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild to send extend request of the book!");
 		}
+
+		// メール送信
 		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
