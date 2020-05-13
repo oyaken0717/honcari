@@ -4,7 +4,8 @@ $(function() {
 	
 	function serachUser(searchName) {
 		var loginUserId = $(".loginUserId").val();
-		var url = 'https://honcari.herokuapp.com/search_user_api';
+		var url = location.href;
+		url = url.replace(/group\/to_register/g, "search_user_api")
 		$.ajax({
 			url : url,
 			type : 'GET',

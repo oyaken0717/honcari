@@ -39,7 +39,8 @@ $(function() {
 		var comment = $('#register-comment').val();
 		var bookStatusRadio = element.bookStatus;
 		var bookStatus = bookStatusRadio.value;
-		var url = 'https://honcari.herokuapp.com/book_api/register_book';
+		var url = location.href
+		url = url.replace(/book\/search_books/g, "book_api/register_book");
 		$.ajax({
 			url : url,
 			type : 'POST',
