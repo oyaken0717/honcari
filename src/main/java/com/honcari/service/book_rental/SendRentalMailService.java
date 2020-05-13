@@ -39,9 +39,7 @@ public class SendRentalMailService {
 	/**
 	 * メールの送信処理を行う.
 	 * 
-	 * @param doneUserName    動作したユーザー名
-	 * @param ownedBookInfoId ユーザーの所有する本情報ID
-	 * @param rentalStatus    貸出状況
+	 * @param bookRental レンタル情報
 	 */
 	public void sendRentalMail(BookRental bookRental) {
 		Context context = new Context();
