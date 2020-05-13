@@ -41,7 +41,7 @@
     	</ul>
     	<!-- タブ・コンテント -->
     	<div class="tab-content">
-			<div class="tab-pane" id="joined-groups" th:if="${belongUser}==null">
+			<div class="tab-pane active" id="joined-groups" th:if="${belongUser}==null">
 				<div class="text-center" style="margin: 10px">参加しているグループはありません</div>
 			</div>   			
 			<div class="tab-pane active" id="joined-groups" th:unless="${belongUser}==null" >
