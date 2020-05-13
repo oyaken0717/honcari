@@ -55,8 +55,12 @@ public class ShowGroupDetailController {
 		model.addAttribute("b", b);
 		model.addAttribute("group", group);
 		model.addAttribute("userId", loginUser.getUser().getUserId());
-
+		
 		String returnParam = request.getHeader("REFERER").substring(21);
+		if(request.getHeader("REFERER").contains("heroku")) {
+			returnParam = request.getHeader("REFERER").substring(29);
+		}		
+		
 		if(request.getHeader("REFERER").contains("invite")==false&&request.getHeader("REFERER").contains("edit")==false) {
 			session.setAttribute("returnParam", returnParam);
 		}
