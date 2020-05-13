@@ -275,7 +275,7 @@ ul.social-buttons {
 
 /* 本一覧ページ　*/
 .home-image {
-	background-image: url(/img/home.jpeg);
+	background-image: url(/img/shelf3.jpg);
 	background-position: center center;
 }
 
@@ -733,4 +733,23 @@ li.category {
 	padding:0;
 	background-color: z;
 	color: whi
+}
+
+a.disabled{
+    pointer-events: none;
+}
+
+.group-detail{
+	margin-left: 150px;
+	margin-right: 150px;
+}
+
+.group-image {
+  background-image: url(/img/group.jpg);
+  color: #fff;
+  padding: 2rem 1rem;
+  border-radius: 0.3rem;
+  background-size: cover;
+  padding-top: 70px;
+  padding-bottom: 70px
 }

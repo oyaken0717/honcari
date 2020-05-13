@@ -13,23 +13,18 @@
 <nav th:replace="header::frag_header(0)"></nav>
 <main role="main">
 
-  <section class="jumbotron text-center">
-    <div class="container content-wrapper">
-      <h1 class="jumbotron-heading">グループを探す</h1>
-      <p class="lead"></p>
-      <form th:action="@{/group/search}" method="post">
-  		<div class="form-group">
-      		<input class="form-control-lg" name="name" type="search" placeholder="グループを検索..." aria-label="グループを検索...">
-      		<button type="submit" class="btn-lg btn-warning my-2 my-2 my-sm-0">検索</button>
-      	</div>
-      </form>
-    </div>
+  <section class="group-image text-center">
+      <h2 class="section-heading">グループを探す</h2>
+      <p class="section-description" style="color:white">グループに参加してグループ内のユーザーと本をシェアしよう！</p>
+      <div class="search-book-for-add form-group form-inline justify-content-center">
+	      <form th:action="@{/group/search}" method="get">
+	      		<input class="form-control" name="name" type="search" placeholder="グループを検索..." aria-label="グループを検索...">
+	      		<button type="submit" class="btn btn-warning my-2 my-2 my-sm-0">検索</button>
+	      </form>
+      </div>
   </section>
 
     <div class="container content-wrapper">
-	<div class="full-width">
-		<h2 class="section-heading" style="color:gray">グループに参加してグループ内のユーザーと本をシェアしよう！</h2>
-	</div>
 	  <div style="margin: 50px 0 0 0">
         <p class="text-center" style="color:gray" th:if="${groupList}==null">検索結果がありませんでした</p>  
       </div>
@@ -50,10 +45,10 @@
           </div>
         </div>
       </div>
-			<div class="row pager justify-content-center">
-				<ul class="pagination" th:if="${groupList} != null">
-					<li class="active" th:each="i : ${#numbers.sequence(1, totalPageNum)}">
-						<a  th:class="(${i}==${page})? 'active':''" th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}">
+			<div  class="row pager justify-content-center"  th:unless="${groupList} == null">
+				<ul class="pagination">
+					<li th:class="active" th:each="i : ${#numbers.sequence(1, totalPageNum)}" >
+						<a th:class="(${i}==${page})? 'active disabled':''" th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}">
 						<span th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}"></span>
 						</a>
 					</li>

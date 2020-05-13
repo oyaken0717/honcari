@@ -2,6 +2,7 @@ package com.honcari.controller.group;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class ShowGroupManagementController {
 	 * @return グループ管理画面へ遷移
 	 */
 	@RequestMapping("/to_management")
-	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser, Model model) {
+	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser, Model model,HttpServletRequest request) {
 		//所属しているグループ情報が含まれるログインユーザーの情報（グループドメインから持ってくるよう修正予定）
 		User belongUser = showGroupManagementService
 				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
@@ -57,8 +58,8 @@ public class ShowGroupManagementController {
 		model.addAttribute("notApprovedUser", notApprovedUser);
 		model.addAttribute("ownGroupList", ownGroupList);
 		
-		//グループ詳細画面から遷移してきたことを示すフラグ
-		session.setAttribute("fromManagement", "fromManagement");
+		session.setAttribute("referer", request.getHeader("REFERER"));
+		
 		return "group/group_management";
 	}
 

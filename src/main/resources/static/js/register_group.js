@@ -4,7 +4,8 @@ $(function() {
 	
 	function serachUser(searchName) {
 		var loginUserId = $(".loginUserId").val();
-		var url = 'http://localhost:8080/search_user_api';
+		var url = location.href;
+		url = url.replace(/group\/(to_register|register)/g, "search_user_api")
 		$.ajax({
 			url : url,
 			type : 'GET',
@@ -108,7 +109,6 @@ $(function() {
 			$(this).find("input").attr("name", inputName);
 			listCount++;
 		});
-		console.log(groupUser);
 		//検索結果の更新
 		serachUser($(".searchUser").val());
 		return false;
