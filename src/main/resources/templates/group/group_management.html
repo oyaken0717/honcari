@@ -30,7 +30,7 @@
     	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
   			<li class="nav-item">
-    			<a class="nav-link text-dark" href="#joined-groups" data-toggle="tab">参加しているグループ</a>
+    			<a class="nav-link text-dark active" href="#joined-groups" data-toggle="tab">参加しているグループ</a>
  	 		</li>
  	 		<li class="nav-item">
    				 <a class="nav-link text-dark" href="#own-groups" data-toggle="tab">作成したグループ</a>
@@ -44,7 +44,7 @@
 			<div class="tab-pane" id="joined-groups" th:if="${belongUser}==null">
 				<div class="text-center" style="margin: 10px">参加しているグループはありません</div>
 			</div>   			
-			<div class="tab-pane " id="joined-groups" th:unless="${belongUser}==null" >
+			<div class="tab-pane active" id="joined-groups" th:unless="${belongUser}==null" >
 		      <div class="row" style="margin:70px">
 		        <div class="col-md-4" th:each="group:${belongUser.groupList}">        
 		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
