@@ -2,6 +2,7 @@ package com.honcari.controller.group;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,7 @@ public class ShowGroupManagementController {
 		model.addAttribute("belongUser", belongUser);
 		model.addAttribute("notApprovedUser", notApprovedUser);
 		model.addAttribute("ownGroupList", ownGroupList);
-		
-		//グループ詳細画面から遷移してきたことを示すフラグ
-		session.setAttribute("fromManagement", "fromManagement");
+				
 		return "group/group_management";
 	}
 

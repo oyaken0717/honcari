@@ -22,32 +22,32 @@
   		<span id="register-success"></span>
 	</div>
 		<div class="register-book-image text-center">
-	<h2 class="section-heading" style="padding-top: 50px">マイブックに本を登録しよう</h2>
+	<h2 class="section-heading">マイブックに本を登録しよう</h2>
 	<p class="section-description">書籍名もしくはISBNコードにて検索</p>
 			<div class="search-book-for-add row justify-content-center">
 			<form th:action="@{/book/search_books}" method="POST" th:object="${searchGoogleBookForm}">
 				<p th:errors="*{searchWord}" style="color:red">　</p>
 				<span class="form-inline">
 	    		<input type="text" name="searchWord" class="form-control" placeholder="登録する本を検索..." th:field="*{searchWord}">　
-				<button class="btn btn-warning my-2 my-sm-0" style="background-color:white; color:#6f6f6f">検索</button>
+				<button class="btn btn-warning my-2 my-sm-0 register-book-white-btn">検索</button>
 				</span>
 			</form>
 			</div>
 		</div>
 	<div class="container content-wrapper">
 		<div class="row">
-		<div class="table-responsive">
+		<div class="table-responsive-register-book">
 		<br>
 			<table id="book-list" th:if="${volumeInfoList}">
 				<tr class="mt-3 mb-3">
 					<th width="20%">書籍サムネイル</th><th width="20%">著者</th><th width="20%">タイトル</th><th width="20%">出版日</th><th width="20%">登録</th>
 				</tr>
-				<tr th:each="item : ${volumeInfoList}" id="register-tr">
-					<td th:if="${item.volumeInfo.imageLinks}" style="padding:10px 0 10px 0"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
+				<tr th:each="item : ${volumeInfoList}" id="book-list-tr">
+					<td th:if="${item.volumeInfo.imageLinks}" id="book-image-link"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
 					<td th:unless="${item.volumeInfo.imageLinks}"><img class="book-img">No Photo</td>
 					<td th:if="${item.volumeInfo.authors}"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
 					<td th:unless="${item.volumeInfo.authors}"><span>ー</span></td>
-					<td th:if="${item.volumeInfo.title}"><span th:text="${item.volumeInfo.title}"></span></td>
+					<td th:if="${item.volumeInfo.title}" class="text-left"><span th:text="${item.volumeInfo.title}"></span></td>
 					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.publishedDate}"><span th:text="${item.volumeInfo.publishedDate}"></span></td>
 					<td th:unless="${item.volumeInfo.publishedDate}"><span>ー</span></td>

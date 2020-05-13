@@ -275,7 +275,7 @@ ul.social-buttons {
 
 /* 本一覧ページ　*/
 .home-image {
-	background-image: url(/img/home.jpeg);
+	background-image: url(/img/shelf3.jpg);
 	background-position: center center;
 }
 
@@ -446,6 +446,30 @@ ul.social-buttons {
 	height: 250px;
 }
 
+.thumbnail-no {
+	height: 250px;
+}
+
+.now-lending {
+	position: relative;
+}
+
+.now-lending:after {
+	background: #0031f7;
+	bottom: 0;
+	color: #fff;
+	content: "Now Lending";
+	font-size: 15px;
+	font-weight: 700;
+	height: 23px;
+	letter-spacing: 1px;
+	line-height: 22px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	z-index: 600;
+}
+
 .thumbnail img {
 	height: 100%;
 	width: auto;
@@ -481,8 +505,8 @@ ul.social-buttons {
 	border-bottom-style: double !important;
 }
 
-/* 本登録・マイブックの一覧のデザイン */
-#register-tr {
+/* 本登録・マイブックの一覧共通のデザイン */
+#book-list-tr {
 	border-bottom: solid 1px #eee;
 }
 
@@ -493,7 +517,6 @@ ul.social-buttons {
     background: var(--yellow);/*背景色*/
     border-left: solid 3px white;/*左線*/
     border-right: solid 3px white;/*右線*/
-    
 }
 
 .full-width {
@@ -565,10 +588,22 @@ li.category {
 	background: #e0a800;
 }
 
+#book-image-link{
+	padding:10px 0 10px 0;
+}
+
+/* mybookのデザイン */
 #book-title-mybook {
 	text-align: left;
 }
 
+#mybook-error{
+	font-size:1.3rem;
+	padding:20% 0 7% 0;
+	font-weight:bold;
+}
+
+/* 本登録のデザイン */
 #register-success {
 	color: white;
 }
@@ -596,6 +631,18 @@ li.category {
   padding: 2rem 1rem;
   border-radius: 0.3rem;
   background-size: cover;
+}
+
+
+.register-book-white-btn{
+	background-color:white;
+	color:#6f6f6f;
+}
+
+.table-responsive-register-book {
+	display: block;
+	width: 100%;
+	-webkit-overflow-scrolling: touch;
 }
 
 /* FAQ */
@@ -648,14 +695,15 @@ li.category {
 
 /* グループ作成周りのcss */
 .select-user {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 38px;
 }
 
 .add-user-icon {
 	font-size: 1.5rem;
 	color: #17a2b8;
+	margin-top: 7px;
 }
 
 .invite-user {
@@ -672,4 +720,36 @@ li.category {
 .delete-user-icon {
 	font-size: 1.5rem;
 	color: #dc3545;
+	margin-top: 7px;
+}
+
+/* 貸し出し不可の時の */
+.no-lending {
+	position: absolute;
+	top: 0;
+	left: 0;
+	-ms-transform: translate(-50%,-50%);
+	margin:0;
+	padding:0;
+	background-color: z;
+	color: whi
+}
+
+a.disabled{
+    pointer-events: none;
+}
+
+.group-detail{
+	margin-left: 150px;
+	margin-right: 150px;
+}
+
+.group-image {
+  background-image: url(/img/group.jpg);
+  color: #fff;
+  padding: 2rem 1rem;
+  border-radius: 0.3rem;
+  background-size: cover;
+  padding-top: 70px;
+  padding-bottom: 70px
 }

@@ -11,17 +11,13 @@
 <body>
 <nav th:replace="header::frag_header(2)"></nav>
 
-<section class="jumbotron text-center">
-    <div class="container content-wrapper">
-      <h1 class="jumbotron-heading">グループを作る</h1>
-    </div>
+<section class="group-image text-center">
+      <h2 class="section-heading">グループを作る</h2>
+      <p class="section-description" style="color:white">グループを作成して世界と本で繋がろう！</p>
 </section>
 
 <div class="container content-wrapper">
-	<div class="full-width">
-		<h2 class="section-heading" style="color:gray">グループを作成して世界と本で繋がろう！</h2>
-	</div>
-	<div class="row justify-content-md-center" style="margin: 5%"> 
+	<div class="row justify-content-md-center" > 
 		<div class="col-md-8 col-md-offset-4">
 			<form th:action="@{/group/register}" th:object="${registerGroupForm}" method="post">
 			  <div class="form-group">
@@ -45,6 +41,7 @@
 			  <div class="form-group">
 			    <label for="formGroupExampleInput2">招待するユーザー</label>
 			  	<div class="row mx-2 groupUserList">
+			  		<!-- 招待するユーザーを追加するところ -->
 			  	</div>
 			  </div>
 			  <button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">

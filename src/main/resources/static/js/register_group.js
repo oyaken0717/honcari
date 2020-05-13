@@ -4,7 +4,8 @@ $(function() {
 	
 	function serachUser(searchName) {
 		var loginUserId = $(".loginUserId").val();
-		var url = 'http://localhost:8080/search_user_api';
+		var url = location.href;
+		url = url.replace(/group\/(to_register|register)/g, "search_user_api")
 		$.ajax({
 			url : url,
 			type : 'GET',
@@ -25,21 +26,19 @@ $(function() {
 				}
 				//追加するHTML
 				var addUserHTML 
-					= '<a class="addUser" href="#">'
-						+ '<div class="row user ml-1 mt-1">'
-							+ '<img class="col-auto" src="/img/user_default.png" height="38">'
-							+ '<span class="col-auto select-user">'
-								+ '<object><a data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + user.profile + '">' 
-									+ user.name 
-								+ '</a></object>' 
-							+ '</span>'
-							+ '<span class="col-auto select-user">'
-									+ '<i class="far fa-plus-square add-user-icon"></i>'
-								+ '<input class="user-name" type="hidden" value="' + user.name + '">'
-								+ '<input class="user-profile" type="hidden" value="' + user.profile + '">'
-							+ '</span>'
-						+ '</div>'
-					+ '</a>' ;
+					= '<div class="row user ml-1 mt-1">'
+						+ '<img class="col-auto" src="/img/user_default.png" height="38">'
+						+ '<span class="col-auto select-user">'
+							+ '<object><a tabindex="0" data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + user.profile + '">' 
+								+ user.name 
+							+ '</a></object>' 
+						+ '</span>'
+						+ '<a class="col-auto select-user addUser" href="#">'
+								+ '<i class="far fa-plus-square add-user-icon"></i>'
+							+ '<input class="user-name" type="hidden" value="' + user.name + '">'
+							+ '<input class="user-profile" type="hidden" value="' + user.profile + '">'
+						+ '</a>'
+					+ '</div>';
 				
 				$(".addUserList").append(addUserHTML);
 				$('[data-toggle="popover"]').popover();
@@ -68,17 +67,17 @@ $(function() {
 		//配列に格納
 		groupUser.push(userName);
 		//中身を初期化する
-		$(this).remove();
+		$(this).parent(".user").remove();
 		//グループに追加するユーザーのHTML
 		var deleteUserHTML 
 			= '<span class="col-auto invite-user">'
 				+ '<img class="col-auto pl-0" src="/img/user_default.png" height="38">'
-				+ '<span class="mx-1">'
-					+ '<a data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + profile + '">' 
+				+ '<span class="mx-2 select-user">'
+					+ '<a tabindex="0" data-toggle="popover" data-trigger="hover" data-placement="right" title="プロフィール文" data-content="' + profile + '">' 
 						+ userName 
 					+ '</a>' 
 				+ '</span>'
-				+ '<span class="mt-1">'
+				+ '<span class="mt-1 select-user">'
 					+ '<a class="delete-user" href="#">'
 						+ '<i class="far fa-window-close delete-user-icon"></i>'
 						+ '<input class="user-name" type="hidden" name="userNameList[' + listCount + ']" value="' + userName + '">'
@@ -110,7 +109,6 @@ $(function() {
 			$(this).find("input").attr("name", inputName);
 			listCount++;
 		});
-		console.log(groupUser);
 		//検索結果の更新
 		serachUser($(".searchUser").val());
 		return false;

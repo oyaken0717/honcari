@@ -1,9 +1,9 @@
 spring:
   datasource:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/honcari
-      username: postgres
-      password: postgres
+      url: ${DATABASE_URL_HONCARI:jdbc:postgresql://localhost:5432/honcari}
+      username: ${DATABASE_USER:postgres}
+      password: ${DATABASE_PASSWORD:postgres}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -11,4 +11,4 @@ spring:
     password: tdrfpzcsqedgkbre
     properties:
       mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.enable: true  
