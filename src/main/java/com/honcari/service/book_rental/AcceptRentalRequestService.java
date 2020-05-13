@@ -3,7 +3,6 @@ package com.honcari.service.book_rental;
 import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.honcari.common.BookStatusEnum;
@@ -27,6 +26,9 @@ public class AcceptRentalRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	/**
 	 * 本の貸出申請を承認する.
@@ -39,25 +41,23 @@ public class AcceptRentalRequestService {
 	public void acceptRentalRequest(Integer bookRentalId, String updateUserName, Integer bookRentalVersion,
 			Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
-		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
-
-		// データベースのバージョンが更新されていた場合は例外処理を行う
-		if (bookRental.getVersion() != bookRentalVersion || ownedBookInfo.getVersion() != ownedBookInfoVersion) {
-			throw new OptimisticLockingFailureException("Faild to accept book rental!");
-		}
 		bookRental.setDeadline(bookRental.getRequestDeadline());
 		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
 		bookRental.setApprovalDate(new Timestamp(System.currentTimeMillis()));
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
+		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
 		ownedBookInfo.setBookStatus(BookStatusEnum.LENDING.getValue());
 		ownedBookInfo.setVersion(ownedBookInfoVersion);
+
+		// データベースの更新ができなかった場合は例外処理を行う
 		int updateBookRentalCount = bookRentalRepository.update(bookRental);
 		int updateOwnedBookInfoCount = ownedBookInfoRepository.update(ownedBookInfo);
-		// データベースの更新ができなかった場合は例外処理を行う
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
 			throw new IllegalStateException("Faild to accept book rental!");
 		}
+		//メール送信を行う
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }

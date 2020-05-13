@@ -88,7 +88,6 @@ public class SendRequestController {
 		try {
 			sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, borrowUserName, requestDeadline,
 					ownedBookInfoVersion);
-			// TODO 貸し手にメール送信
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを送信しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();
