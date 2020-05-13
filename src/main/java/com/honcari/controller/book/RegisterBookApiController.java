@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +26,7 @@ import com.honcari.service.book.RegisterOwnedBookInfoService;
  * @author hatakeyamakouta
  *
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/book_api")
 public class RegisterBookApiController {

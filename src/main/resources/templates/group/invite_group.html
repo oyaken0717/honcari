@@ -29,16 +29,15 @@
 			  <div class="form-group">
 			    <label for="formGroupExampleInput2">ユーザー検索</label>  <label th:errors="*{userNameList}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
 			    <input type="text" class="form-control searchUser" id="formGroupExampleInput2" placeholder="ユーザー名">
-			  	<div class="addUserList">
+			  	<div class="list-group addUserList">
 			  		<!-- jqueryで検索したユーザーリストを表示 -->
 			  	</div>
 			  </div>
 			  <input type="hidden" class="form-control loginUserId" th:value="${user.userId}">
-			  <div>
+			  <div class="form-group">
 			    <label for="formGroupExampleInput2">招待するユーザー</label>
-			  	<div class="groupUserList">
-			  		<div class="row login-user">
-		  		</div>
+			  	<div class="row mx-2 groupUserList">
+			  		<!-- 招待するユーザーを追加するところ -->
 			  	</div>
 			  </div>
 			  <input type="hidden"  class="groupId" name="groupId" th:value="${group.id}">
