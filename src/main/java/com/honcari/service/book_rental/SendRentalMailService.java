@@ -77,6 +77,11 @@ public class SendRentalMailService {
 			mailHeading = "貸出申請否認のお知らせ";
 			mailSubHeading = "貸出申請を否認しました";
 			emailTo = bookRental.getBorrowUser().getEmail();
+		} else if (rentalStatus == RentalStatusEnum.RETURNED.getValue()) {
+			doneUserName = bookRental.getOwnedBookInfo().getUser().getName();
+			mailHeading = "返却完了のお知らせ";
+			mailSubHeading = "本の返却を確認しました";
+			emailTo = bookRental.getBorrowUser().getEmail();
 		}
 
 		context.setVariable("doneUserName", doneUserName);

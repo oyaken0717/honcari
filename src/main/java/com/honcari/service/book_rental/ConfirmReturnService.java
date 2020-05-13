@@ -24,6 +24,9 @@ public class ConfirmReturnService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	/**
 	 * 本の返却を確認する.
@@ -51,6 +54,8 @@ public class ConfirmReturnService {
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
 			throw new IllegalStateException("Faild to confirm book return!");
 		}
+		//メール送信
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }
