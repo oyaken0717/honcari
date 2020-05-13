@@ -62,7 +62,8 @@ public class SendRentalRequestService {
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild updating status of the book!");
 		}
-		sendRentalMailService.sendRentalMail(borrowUserName, ownedBookInfoId, "貸出リクエストのお知らせ");
+		//メール送信を行う
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }

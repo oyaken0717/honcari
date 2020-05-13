@@ -26,6 +26,9 @@ public class CancelRentalRequestService {
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
 
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
+
 	/**
 	 * 本の貸出リクエストをキャンセルする.
 	 * 
@@ -54,6 +57,8 @@ public class CancelRentalRequestService {
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
 			throw new IllegalStateException("Faild to cancel book rental request!");
 		}
+		// メールを送信する
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }

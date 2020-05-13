@@ -22,6 +22,9 @@ public class SendExtendRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	/**
 	 * 貸出期間の延長処理を行う.
@@ -45,6 +48,7 @@ public class SendExtendRequestService {
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild to send extend request of the book!");
 		}
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }

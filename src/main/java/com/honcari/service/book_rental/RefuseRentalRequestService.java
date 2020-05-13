@@ -27,6 +27,9 @@ public class RefuseRentalRequestService {
 
 	@Autowired
 	private OwnedBookInfoRepository ownedBookInfoRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	/**
 	 * 本の貸出申請を拒否する.
@@ -56,7 +59,8 @@ public class RefuseRentalRequestService {
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
 			throw new IllegalStateException("Faild to refuse book rental!");
 		}
-
+		//メール送信を行う
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }

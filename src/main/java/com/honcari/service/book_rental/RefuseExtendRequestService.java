@@ -21,6 +21,9 @@ public class RefuseExtendRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	/**
 	 * 貸出延長申請を拒否する.
@@ -43,5 +46,8 @@ public class RefuseExtendRequestService {
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild to refuse book rental!");
 		}
+		//メール送信を行う
+		bookRental.setRentalStatus(RentalStatusEnum.REJECTED.getValue());
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 }

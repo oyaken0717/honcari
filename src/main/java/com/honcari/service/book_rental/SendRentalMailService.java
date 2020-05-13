@@ -15,6 +15,8 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+import com.honcari.common.RentalStatusEnum;
+import com.honcari.domain.BookRental;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.repository.OwnedBookInfoRepository;
 
@@ -39,17 +41,49 @@ public class SendRentalMailService {
 	 * 
 	 * @param doneUserName    動作したユーザー名
 	 * @param ownedBookInfoId ユーザーの所有する本情報ID
-	 * @param subject         件名
+	 * @param rentalStatus    貸出状況
 	 */
-	public void sendRentalMail(String doneUserName, Integer ownedBookInfoId, String subject) {
+	public void sendRentalMail(BookRental bookRental) {
 		Context context = new Context();
-		OwnedBookInfo ownedBookInfo = ownedBookInfoRepository.findByOwnedBookInfoId(ownedBookInfoId);
+		OwnedBookInfo ownedBookInfo = ownedBookInfoRepository.findByOwnedBookInfoId(bookRental.getOwnedBookInfoId());
+		Integer rentalStatus = bookRental.getRentalStatus();
+		String doneUserName = null;
+		String mailHeading = null;
+		String mailSubHeading = null;
+		String emailTo = null;
+
+		if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
+			doneUserName = bookRental.getCreationUserName();
+			mailHeading = "貸出申請送信のお知らせ";
+			mailSubHeading = "貸出申請を送信しました";
+			emailTo = ownedBookInfo.getUser().getEmail();
+		} else if (rentalStatus == RentalStatusEnum.CANCELED.getValue()) {
+			doneUserName = bookRental.getBorrowUser().getName();
+			mailHeading = "貸出申請キャンセルのお知らせ";
+			mailSubHeading = "貸出申請をキャンセルしました";
+			emailTo = bookRental.getOwnedBookInfo().getUser().getEmail();
+		} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
+			doneUserName = bookRental.getBorrowUser().getName();
+			mailHeading = "貸出延長申請送信のお知らせ";
+			mailSubHeading = "貸出延長申請を送信しました";
+			emailTo = bookRental.getOwnedBookInfo().getUser().getEmail();
+		} else if (rentalStatus == RentalStatusEnum.APPROVED.getValue()) {
+			doneUserName = bookRental.getOwnedBookInfo().getUser().getName();
+			mailHeading = "貸出申請承認のお知らせ";
+			mailSubHeading = "貸出申請を承認しました";
+			emailTo = bookRental.getBorrowUser().getEmail();
+		} else if (rentalStatus == RentalStatusEnum.REJECTED.getValue()) {
+			doneUserName = bookRental.getOwnedBookInfo().getUser().getName();
+			mailHeading = "貸出申請否認のお知らせ";
+			mailSubHeading = "貸出申請を否認しました";
+			emailTo = bookRental.getBorrowUser().getEmail();
+		}
+
 		context.setVariable("doneUserName", doneUserName);
-		context.setVariable("book", ownedBookInfo.getBook());
-		String mailSubHeading = "貸出リクエストを送りました";
-		context.setVariable("mailHeading", subject);
+		context.setVariable("mailHeading", mailHeading);
 		context.setVariable("mailSubHeading", mailSubHeading);
-		createRentalMail(ownedBookInfo.getUser().getEmail(), subject, context);
+		context.setVariable("book", ownedBookInfo.getBook());
+		createRentalMail(emailTo, mailHeading, context);
 	}
 
 	/**

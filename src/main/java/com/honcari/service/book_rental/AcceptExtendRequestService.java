@@ -23,6 +23,9 @@ public class AcceptExtendRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	/**
 	 * 本の貸出延長申請を承認する.
@@ -47,6 +50,8 @@ public class AcceptExtendRequestService {
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild to accept book rental!");
 		}
+		//メール送信を行う
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }

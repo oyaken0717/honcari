@@ -27,6 +27,9 @@ public class AcceptRentalRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	/**
 	 * 本の貸出申請を承認する.
@@ -58,6 +61,8 @@ public class AcceptRentalRequestService {
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
 			throw new IllegalStateException("Faild to accept book rental!");
 		}
+		//メール送信を行う
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }

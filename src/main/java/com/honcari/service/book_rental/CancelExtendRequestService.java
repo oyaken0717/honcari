@@ -21,6 +21,9 @@ public class CancelExtendRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	public void cancelExtendRequest(Integer bookRentalId, String updateUserName, Integer bookRentalVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
@@ -37,7 +40,9 @@ public class CancelExtendRequestService {
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild to cancel extend book rental request!");
 		}
-
+		// メールを送信する
+		bookRental.setRentalStatus(RentalStatusEnum.CANCELED.getValue());
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 
 }
