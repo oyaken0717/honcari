@@ -33,29 +33,33 @@ public class ShowGroupDetailController {
 	/**
 	 * グループ詳細情報を表示するためのメソッド.
 	 * 
-	 * @param id グループid
+	 * @param id        グループid
 	 * @param model
 	 * @param loginUser ログインユーザー
 	 * @return グループ詳細画面へ遷移
 	 */
 	@RequestMapping("/show_detail")
-	public String showGroupDetail(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
+	public String showGroupDetail(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser,
+			HttpServletRequest request) {
 		Group group = showGroupDetailService.showGroupDetail(id);
-		
-		//ログインユーザーがグループ内にすでに存在しているかを確認
+
+		// ログインユーザーがグループ内にすでに存在しているかを確認
 		boolean b = group.getUserList().stream().map(u -> u.getUserId())
 				.anyMatch(u -> u == loginUser.getUser().getUserId());
-		
-		//ログインユーザーがグループのオーナーか否かを確認
+
+		// ログインユーザーがグループのオーナーか否かを確認
 		if (loginUser.getUser().getUserId() == group.getOwnerUserId()) {
 			model.addAttribute("owner", "owner");
 		}
-		
+
 		model.addAttribute("b", b);
 		model.addAttribute("group", group);
 		model.addAttribute("userId", loginUser.getUser().getUserId());
-		
-		session.setAttribute("referer",request.getHeader("REFERER"));
+
+		String returnParam = request.getHeader("REFERER").substring(21);
+		if(request.getHeader("REFERER").contains("invite")==false&&request.getHeader("REFERER").contains("edit")==false) {
+			session.setAttribute("returnParam", returnParam);
+		}
 
 		return "group/group_detail";
 	}

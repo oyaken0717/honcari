@@ -52,8 +52,10 @@ public class EditGroupController {
 	public String toEditGroup(Integer groupId, Model model,HttpServletRequest request) {
 		Group group = showGroupDetailService.showGroupDetail(groupId);
 		model.addAttribute("group", group);
-		session.setAttribute("referer", request.getHeader("REFERER"));
-
+		
+		String returnParam = request.getHeader("REFERER").substring(21);
+		model.addAttribute("returnParam",returnParam);
+		
 		return "group/edit_group";
 	}
 

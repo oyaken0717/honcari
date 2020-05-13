@@ -27,7 +27,7 @@
 			    説明文： <span th:text="${group.description}"></span>
 			  </div>
 			  <div class="form-group">
-			    <label for="formGroupExampleInput2">ユーザー検索</label>  <label th:errors="*{userNameList}"  class="control-label" style="color: red" for="InputGroupDescription"></label></br>
+			    <label for="formGroupExampleInput2">ユーザー検索</label>  <label th:errors="*{userNameList}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
 			    <input type="text" class="form-control searchUser" id="formGroupExampleInput2" placeholder="ユーザー名">
 			  	<div class="addUserList">
 			  		<!-- jqueryで検索したユーザーリストを表示 -->
@@ -43,7 +43,7 @@
 			  </div>
 			  <input type="hidden"  class="groupId" name="groupId" th:value="${group.id}">
 			  <button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
-					招待する</button><a th:href="@{'/group/show_detail?id=' + ${group.id}}"class="btn btn-secondary btn-sm btn-block">戻る</a>
+					招待する</button><a th:href="@{${returnParam}}" class="btn btn-secondary btn-sm btn-block">戻る</a>
 			</form>
 		</div>
 	</div>
