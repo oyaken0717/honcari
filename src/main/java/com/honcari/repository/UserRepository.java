@@ -245,6 +245,16 @@ public class UserRepository {
 		template.update(sql, param);
 	}
 	
+	/**
+	 * ユーザ情報を削除するメソッド.
+	 * 
+	 * @param userId ユーザid
+	 */
+	public void delete(Integer userId) {
+		String sql = "DELETE FROM users WHERE user_id = :userId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		template.update(sql, param);
+	}
 //	/**
 //	 * ユーザidとcategoryIDにてユーザ情報を取得する
 //	 * 

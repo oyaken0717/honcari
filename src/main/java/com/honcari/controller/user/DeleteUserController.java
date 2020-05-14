@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.honcari.domain.BookRental;
 import com.honcari.domain.LoginUser;
-import com.honcari.domain.User;
 import com.honcari.service.book_rental.SearchByBorrowerService;
 import com.honcari.service.book_rental.SearchByOwnerService;
-import com.honcari.service.user.EditUserService;
-import com.honcari.service.user.SearchUserByUserIdService;
+import com.honcari.service.user.DeleteUserService;
 
 /**
  * ユーザ情報を削除するコントローラ.
@@ -28,11 +26,8 @@ import com.honcari.service.user.SearchUserByUserIdService;
 public class DeleteUserController {
 	
 	@Autowired
-	private SearchUserByUserIdService searchUserByUserIdService;
+	private DeleteUserService deleteUserService;
 
-	@Autowired
-	private EditUserService editUserService;
-	
 	@Autowired
 	private SearchByOwnerService searchByOwnerService;
 	
@@ -60,9 +55,7 @@ public class DeleteUserController {
 		if(bookRentalListByOwner.size() != 0 || bookRentalListByBorrower.size() != 0) {
 			return "faq";
 		}
-		User user = searchUserByUserIdService.showUser(userId);
-		user.setStatus(9);
-		editUserService.editUser(user);
+		deleteUserService.deleteUser(userId);
 		return "redirect:/user/to_login";
 	}	
 }
