@@ -33,7 +33,7 @@
  				 <div class="col-lg-9 col-md-9 col-sm-11 col-xs-11 float-left" th:if="${ownedBookInfoList}">
  				 	<table id="book-list">
 						<tr>
-							<th width="25%">書籍サムネイル</th><th width="30%">タイトル</th><th width="30%">著者</th><th width="15%">登録内容変更</th>
+							<th width="30%">書籍サムネイル</th><th width="35%">タイトル</th><th width="35%">著者</th>
 						</tr>
 						<tr th:each="ownedBookInfo:${ownedBookInfoList}" id="register-tr">
 							<td style="padding:10px 0 10px 0" height="110px"><span class="thumbnail">
@@ -46,11 +46,8 @@
       						<td>
       							<p class="card-text book-author" th:text="${ownedBookInfo.book.author}"></p>
       						</td>
-      						<td>
-      							<a id="edit-button" class="btn btn-warning register-btn" th:href="@{'/book/show_edit?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}"><span>変更</span></a>
-      						</td>
-				</tr>
-				</table>
+						</tr>
+					</table>
 					<!-- <div class="col-lg-3 col-md-5 col-sm-5 mb-5 float-left book-card" th:each="ownedBookInfo:${ownedBookInfoList}">
      					<div class="card">
       						<a class="thumbnail" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
