@@ -40,6 +40,7 @@ public class EditOwnedBookInfoService {
 		//更新処理を行う(更新が0件だった場合例外処理)
 		int updateCount = ownedBookInfoRepository.update(ownedBookInfo);
 		if (updateCount != 1) {
+			System.out.println("kotti?");
 			throw new IllegalStateException("Faild updating status of the book!");
 		}
 	}
