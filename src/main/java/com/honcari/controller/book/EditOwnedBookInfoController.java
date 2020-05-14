@@ -84,7 +84,7 @@ public class EditOwnedBookInfoController {
 			editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
 		}catch(Exception ex) {
 			ex.printStackTrace();
-			model.addAttribute("errorMessage", "貸出承認待ち、もしくは貸出中の書籍です");
+			model.addAttribute("errorMessage", "書籍情報の更新に失敗しました");
 			return showEditBook(model, ownedBookInfo.getOwnedBookInfoId());
 		}
 		redirectAttributes.addFlashAttribute("successMessage", "書籍情報を変更しました");
@@ -105,11 +105,11 @@ public class EditOwnedBookInfoController {
 		
 		//ownedBookInfoのbookStatusが貸し出し承認待ち、もしくは貸し出し中だった場合は削除処理を行わず編集画面に戻す
 		if(ownedBookInfo.getBookStatus() == BookStatusEnum.BEFORE_LENDING.getValue()) {
-			model.addAttribute("errorMessage", "貸出承認待ち、もしくは貸出中の書籍です");
+			model.addAttribute("errorMessage", "貸出承認待ちの書籍です");
 			return showEditBook(model, ownedBookInfoId);
 		}
 		if(ownedBookInfo.getBookStatus() == BookStatusEnum.LENDING.getValue()) {
-			model.addAttribute("errorMessage", "貸出承認待ち、もしくは貸出中の書籍です");
+			model.addAttribute("errorMessage", "貸出中の書籍です");
 			return showEditBook(model, ownedBookInfoId);
 		}
 		
