@@ -255,4 +255,15 @@ public class BookRentalRepository {
 		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
 		return bookRentalList;
 	}
+	
+	/**
+	 * book_rentalsテーブルから該当ユーザidを削除するメソッド.
+	 * 
+	 * @param userId ユーザid
+	 */
+	public void delete(Integer userId) {
+		String sql = "DELETE FROM book_rentals WHERE borrow_user_id = :userId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		template.update(sql, param);
+	}
 }

@@ -169,9 +169,27 @@ public class OwnedBookInfoRepository {
 		return template.queryForObject(sql, param, Integer.class);
 	}
 	
+	/**
+	 * owned_book_infoテーブル内でカテゴリid別に件数を取得するメソッド.
+	 * 
+	 * @param userId ユーザid
+	 * @param categoryId カテゴリid
+	 * @return where句のカテゴリid別の件数
+	 */
 	public Integer getOwnedBookInfoCountByCategoryId(Integer userId, Integer categoryId) {
 		String sql = "SELECT COUNT(*) FROM owned_book_info WHERE user_id = :userId AND book_status != 4 AND category_id = :categoryId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
 		return template.queryForObject(sql, param, Integer.class);
+	}
+	
+	/**
+	 * WHERE句のユーザidの書籍情報を削除するメソッド.
+	 * 
+	 * @param userId ユーザid
+	 */
+	public void delete(Integer userId) {
+		String sql = "DELETE FROM owned_book_info WHERE user_id = :userId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		template.update(sql, param);
 	}
 }
