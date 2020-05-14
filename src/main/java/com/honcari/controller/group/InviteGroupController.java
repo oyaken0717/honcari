@@ -67,6 +67,9 @@ public class InviteGroupController {
 		model.addAttribute("user", loginUser.getUser());
 		
 		String returnParam = request.getHeader("REFERER").substring(21);
+		if(request.getHeader("REFERER").contains("heroku")) {
+			returnParam = request.getHeader("REFERER").substring(29);
+		}
 		model.addAttribute("returnParam",returnParam);
 		
 		return "group/invite_group";

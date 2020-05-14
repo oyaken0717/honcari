@@ -54,6 +54,9 @@ public class EditGroupController {
 		model.addAttribute("group", group);
 		
 		String returnParam = request.getHeader("REFERER").substring(21);
+		if(request.getHeader("REFERER").contains("heroku")) {
+			returnParam = request.getHeader("REFERER").substring(29);
+		}
 		model.addAttribute("returnParam",returnParam);
 		
 		return "group/edit_group";
