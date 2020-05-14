@@ -10,7 +10,7 @@
 	<h2><span th:text="${mailHeading}">貸出リクエストのお知らせ</span></h2>
 	<p>こんにちは。いつもHoncariをご利用いただきありがとうございます。</p>
 	<p><span th:text="${doneUserName}">犬岡大二郎</span>さんが下記の本について<span th:text="${mailSubHeading}">貸出リクエストを送りました</span>！</p>
-	<p><a th:href="@{http://localhost:8080/book_rental/show_list}">レンタル管理画面</a>よりご確認をお願いいたします。</p>
+	<p><a th:href="@{${rentalListPath}}">レンタル管理画面</a>よりご確認をお願いいたします。</p>
 	<!-- コンテンツ -->
     <div> 
 	  <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/features/feature22/img1.jpg" 
@@ -20,7 +20,7 @@
         <h4 th:text="${book.title}" style="font-weight: 300;margin-top: 0.5rem;margin-bottom: 1.5rem;text-align:center;">title</h4>
         <h4 th:text="${book.author}" style="font-weight: 300;margin-top: 0.5rem;margin-bottom: 1.5rem;text-align:center;">著者</h4>
    </div>
-	<p>送信元：<a th:href="@{http://localhost:8080/}">Honcari</a></p>
+	<p>送信元：<a th:href="@{${applicationPath}}">Honcari</a></p>
 </div>
 </body>
 </html>

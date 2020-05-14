@@ -68,7 +68,11 @@ public class RegisterBookController {
 		//TODO 計算おかしい…？
 		GoogleBooks googleBooks = googleBookApiService.getBook(searchGoogleBookForm.getSearchWord(), pageNumber - 1);
 		List<VolumeInfo> volumeInfoList = googleBooks.getItems();
-		model.addAttribute("volumeInfoList", volumeInfoList);
+		if(volumeInfoList == null) {
+			model.addAttribute("nothing", "書籍が見つかりませんでした。");
+		}else {
+			model.addAttribute("volumeInfoList", volumeInfoList);
+		}
 		List<Category> categoryList = getAllCategoryService.findAll();
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("searchWord", searchGoogleBookForm.getSearchWord());

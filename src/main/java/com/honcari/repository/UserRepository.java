@@ -192,7 +192,11 @@ public class UserRepository {
 	public User findAnyUserByName(String name) {
 		String sql = BASE_SQL_FROM_USERS + "WHERE name=:name;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
-		return template.queryForObject(sql, param, USER_ROW_MAPPER);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		if(userList.isEmpty()) {
+			return null;
+		}
+		return userList.get(0);
 	}
 	
 	/**
@@ -241,6 +245,16 @@ public class UserRepository {
 		template.update(sql, param);
 	}
 	
+	/**
+	 * ユーザ情報を削除するメソッド.
+	 * 
+	 * @param userId ユーザid
+	 */
+	public void delete(Integer userId) {
+		String sql = "DELETE FROM users WHERE user_id = :userId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		template.update(sql, param);
+	}
 //	/**
 //	 * ユーザidとcategoryIDにてユーザ情報を取得する
 //	 * 

@@ -33,7 +33,7 @@
  				 <div class="col-lg-9 col-md-9 col-sm-11 col-xs-11 float-left" th:if="${ownedBookInfoList}">
  				 	<table id="book-list">
 						<tr>
-							<th width="25%">書籍サムネイル</th><th width="30%">タイトル</th><th width="30%">著者</th><th width="15%">登録内容変更</th>
+							<th width="22%">書籍サムネイル</th><th width="30%">タイトル</th><th width="30%">著者</th><th width="18%">登録内容変更</th>
 						</tr>
 						<tr th:each="ownedBookInfo:${ownedBookInfoList}" id="book-list-tr">
 							<td id="book-image-link" height="110px"><span class="thumbnail">
@@ -43,7 +43,7 @@
       						<td class="text-left">
       							<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
       						</td>
-      						<td>
+      						<td class="text-left p-4">
       							<p class="card-text book-author" th:text="${ownedBookInfo.book.author}"></p>
       						</td>
       						<td>

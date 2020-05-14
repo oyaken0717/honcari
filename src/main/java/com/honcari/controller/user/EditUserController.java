@@ -103,7 +103,7 @@ public class EditUserController {
 				|| (!confirmPassword.isEmpty() && newPassword.isEmpty())) {
 			result.rejectValue("confirmPassword", null, "パスワードが一致していません");
 		}
-		if(result.getErrorCount() > 1 
+		if(result.getErrorCount() >= 1 
 				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getImagePath()))) {
 			return showEditUser(model, loginUser);
 		}

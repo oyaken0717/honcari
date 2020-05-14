@@ -27,5 +27,6 @@ public class RegisterOwnedBookInfoService {
 	 */
 	public void registerOwnedBookInfo(OwnedBookInfo ownedBookInfo) {
 		ownedBookInfoRepository.insertOwnedBookInfo(ownedBookInfo);
+		System.out.println(ownedBookInfo);
 	}
 }

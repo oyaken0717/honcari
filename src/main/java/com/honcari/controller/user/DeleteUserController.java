@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.honcari.domain.BookRental;
+import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
-import com.honcari.domain.User;
 import com.honcari.service.book_rental.SearchByBorrowerService;
 import com.honcari.service.book_rental.SearchByOwnerService;
-import com.honcari.service.user.EditUserService;
-import com.honcari.service.user.SearchUserByUserIdService;
+import com.honcari.service.group.SearchGroupByUserIdService;
+import com.honcari.service.user.DeleteUserService;
 
 /**
  * ユーザ情報を削除するコントローラ.
@@ -28,16 +28,16 @@ import com.honcari.service.user.SearchUserByUserIdService;
 public class DeleteUserController {
 	
 	@Autowired
-	private SearchUserByUserIdService searchUserByUserIdService;
+	private DeleteUserService deleteUserService;
 
-	@Autowired
-	private EditUserService editUserService;
-	
 	@Autowired
 	private SearchByOwnerService searchByOwnerService;
 	
 	@Autowired
 	private SearchByBorrowerService searchByBorrowerService;
+	
+	@Autowired
+	private SearchGroupByUserIdService searchGroupByUserIdService;
 	
 	/**
 	 * ユーザ情報を削除するメソッド(statusを9に変更する)
@@ -51,18 +51,20 @@ public class DeleteUserController {
 		Integer userId = loginUser.getUser().getUserId();
 		List<BookRental> bookRentalListByOwner = searchByOwnerService.searchRentalListByOwner(userId);
 		List<BookRental> bookRentalListByBorrower = searchByBorrowerService.searchRentalListByBorrower(userId);
+		List<Group> groupList = searchGroupByUserIdService.searchGroupByUserId(userId);
 		if(bookRentalListByOwner.size() != 0) {
 			model.addAttribute("ownerError", "貸し出しリクエスト承認待ち、もしくは貸し出し中の本があります");
 		}
 		if(bookRentalListByBorrower.size() != 0){
 			model.addAttribute("borrowerError", "貸し出しリクエスト送信中、もしくは借りている本があります");
 		}
-		if(bookRentalListByOwner.size() != 0 || bookRentalListByBorrower.size() != 0) {
+		if(groupList.size() != 0) {
+			model.addAttribute("groupError", "オーナーになっているグループがあります。オーナー権を委任して下さい");
+		}
+		if(bookRentalListByOwner.size() != 0 || bookRentalListByBorrower.size() != 0 || groupList.size() != 0) {
 			return "faq";
 		}
-		User user = searchUserByUserIdService.showUser(userId);
-		user.setStatus(9);
-		editUserService.editUser(user);
+		deleteUserService.deleteUser(userId);
 		return "redirect:/user/to_login";
 	}	
 }

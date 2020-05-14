@@ -286,4 +286,19 @@ public class GroupRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		return template.queryForObject(sql, param,Integer.class);
 	}
+	
+	/**
+	 * ユーザidからグループ一覧を取得するメソッド.
+	 * 
+	 * @param userId ユーザid
+	 * @return ユーザidに一致したグループ一覧
+	 */
+	public List<Group> findByUserId(Integer userId){
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
+				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
+				+ "g.owner_user_id = ou.user_id WHERE g.owner_user_id = :userId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		return template.query(sql, param, GROUP_ROW_MAPPER);
+	}
 }

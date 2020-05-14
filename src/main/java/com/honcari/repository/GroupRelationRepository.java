@@ -94,5 +94,16 @@ public class GroupRelationRepository {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(gr);
 		template.update(sql, param);	
 	}
+	
+	/**
+	 * デリートメソッド.
+	 * 
+	 * @param userId ユーザid
+	 */
+	public void delete(Integer userId) {
+		String sql = "DELETE FROM group_relations WHERE user_id = :userId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		template.update(sql, param);
+	}
 
 }
