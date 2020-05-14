@@ -80,7 +80,7 @@
 			<hr>
 			<div class="slider">
 				<div class="mr-2 ml-2 bg-white" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
-					<div th:if="${ownedBookInfo.bookStatus} == 1">
+					<div th:if="${ownedBookInfo.bookStatus} != 3">
 						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 							<img class="mx-auto bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 						</a>
