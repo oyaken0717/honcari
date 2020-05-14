@@ -3,6 +3,7 @@ package com.honcari.service.book_rental;
 import java.nio.charset.StandardCharsets;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -35,6 +36,9 @@ public class SendRentalMailService {
 
 	@Autowired
 	private OwnedBookInfoRepository ownedBookInfoRepository;
+	
+	@Autowired
+	private HttpServletRequest request;
 
 	/**
 	 * メールの送信処理を行う.
@@ -81,11 +85,16 @@ public class SendRentalMailService {
 			mailSubHeading = "本の返却を確認しました";
 			emailTo = bookRental.getBorrowUser().getEmail();
 		}
-
+		
+		String url = request.getRequestURL().toString();
+		String rentalListPath = url.replace(request.getRequestURI(), "/book_rental/show_list");
+		String applicationPath = url.replace(request.getRequestURI(), "/");
 		context.setVariable("doneUserName", doneUserName);
 		context.setVariable("mailHeading", mailHeading);
 		context.setVariable("mailSubHeading", mailSubHeading);
 		context.setVariable("book", ownedBookInfo.getBook());
+		context.setVariable("rentalListPath", rentalListPath);
+		context.setVariable("applicationPath", applicationPath);
 		createRentalMail(emailTo, mailHeading, context);
 	}
 
