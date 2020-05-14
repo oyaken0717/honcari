@@ -192,7 +192,11 @@ public class UserRepository {
 	public User findAnyUserByName(String name) {
 		String sql = BASE_SQL_FROM_USERS + "WHERE name=:name;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
-		return template.queryForObject(sql, param, USER_ROW_MAPPER);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		if(userList.isEmpty()) {
+			return null;
+		}
+		return userList.get(0);
 	}
 	
 	/**
