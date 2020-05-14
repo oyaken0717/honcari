@@ -64,7 +64,7 @@
       						</div>
       					</div>
       				</div> -->
-      				<div class="pager">
+      				<div class="pager row justify-content-center">
       					<ul class="pagination" th:if="${categoryNum} == 0">
       						<li class="active mybook-list" th:each="i : ${#numbers.sequence(1, pageCount)}">
       							<a th:unless="${i == page /20 + 1}" th:href="@{'/book/show_mybook?page=' + ${i - 1}}" th:text="${i}"></a>
