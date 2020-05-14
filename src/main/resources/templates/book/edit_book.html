@@ -14,6 +14,9 @@
 </head>
 <body>
 	<nav th:replace="header::frag_header(0)"></nav>
+	<div id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert" th:if="${errorMessage}">
+  		<span th:text="${errorMessage}"></span>
+	</div>
 	<div class="container content-wrapper">
 		<h2 class="section-heading">登録情報の変更・解除</h2>
 		<!-- Row -->
@@ -27,7 +30,7 @@
 			<div class="col-lg-6 mt-4">
 				<div class="text-box">
 					<p class="font-weight-bold">
-						貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}"></span>
+						貸出状況：<span id="book-status" th:text="${ownedBookInfo.getStatus()}"></span>&nbsp;&nbsp;&nbsp;&nbsp;カテゴリ：<span th:text="${ownedBookInfo.category.name}"></span>
 					</p>
 					<h3 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.title}">title</h3>
 					<h4 class="font-weight-light mt-2 mb-4" th:text="${ownedBookInfo.book.author}">author</h4>
@@ -78,6 +81,9 @@
 								<label for="book-status-1">
 									<input id="book-status-1" type="radio" name="bookStatus" value="1" th:checked="${ownedBookInfo.bookStatus == 1}">&nbsp;貸出可
 								</label>
+							</div>
+							<div th:unless="${ownedBookInfo.bookStatus == 0} or ${ownedBookInfo.bookStatus == 1}">
+								<input type="hidden" name="bookStatus" th:value="${ownedBookInfo.bookStatus}">
 							</div>
 							<input type="hidden" name="ownedBookInfoId" th:value="${ownedBookInfo.ownedBookInfoId}">
 							<input type="hidden" name="version" th:value="${ownedBookInfo.version}">
