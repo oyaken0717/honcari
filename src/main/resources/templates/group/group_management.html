@@ -41,12 +41,12 @@
     	</ul>
     	<!-- タブ・コンテント -->
     	<div class="tab-content">
-			<div class="tab-pane active" id="joined-groups" th:if="${belongUser}==null">
+			<div class="tab-pane active" id="joined-groups" th:if="${belongGroupList}==null">
 				<div class="text-center" style="margin: 10px">参加しているグループはありません</div>
 			</div>   			
-			<div class="tab-pane active" id="joined-groups" th:unless="${belongUser}==null" >
+			<div class="tab-pane active" id="joined-groups" th:unless="${belongGroupList}==null" >
 		      <div class="row" style="margin:70px">
-		        <div class="col-md-4" th:each="group:${belongUser.groupList}">        
+		        <div class="col-md-4" th:each="group:${belongGroupList}">        
 		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
 		            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
 		            <div class="card-body">
@@ -54,13 +54,12 @@
 		              <p class="text-muted" th:text="${group.description}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 		              <div class="d-flex justify-content-between align-items-center">
 		                <div class="btn-group" style="margin: 15px">
-		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a><!-- 
-		           		  <input type="hidden" class="group-name" th:value="${group.name}">
-		                  <input type="hidden" class="group-description" th:value="${group.description}"> -->
+		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>
 		                </div>
 		                <div th:if="${userId}==${group.ownerUserId}" style="margin: 10px">
 		                  <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
 		                </div>
+		                <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small> 
 		              </div>
 		            </div>
 		          </div>
@@ -80,10 +79,6 @@
 		                <div class="btn-group" style="margin: 15px">
 		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
 		                  <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
-<!-- 		           		  <input type="hidden" class="group-name" th:value="${group.name}">
-		                  <input type="hidden" class="group-description" th:value="${group.description}"> -->
-		                </div>
-		                <div >
 		                </div>
  		                <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
  		              </div>
@@ -93,13 +88,13 @@
 		      </div>			
 		    </div>
 		    
-			<div class="tab-pane" id="own-groups" th:if="${ownGroupList}==null">
+			<div class="tab-pane" id="own-groups" th:if="${notApprovedGroupList}==null">
 				<div class="text-center" style="margin: 10px">自身で作成したグループはありません</div>
 			</div>
 			
-			<div class="tab-pane" id="not-approved-list" th:unless="${notApprovedUser}==null">
+			<div class="tab-pane" id="not-approved-list" th:unless="${notApprovedGroupList}==null">
 		      <div class="row" style="margin:70px">
-		        <div class="col-md-4" th:each="group:${notApprovedUser.groupList}">        
+		        <div class="col-md-4" th:each="group:${notApprovedGroupList}">        
 		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
 		            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
 		            <div class="card-body">
@@ -108,12 +103,9 @@
 		              <div class="d-flex justify-content-between align-items-center">
 		                <div class="btn-group" style="margin: 15px">
 		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-		                  <a th:href="@{/group/reject_invite_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Reject</a>
-<!-- 		           		  <input type="hidden" class="group-name" th:value="${group.name}">
-		                  <input type="hidden" class="group-description" th:value="${group.description}"> -->
+		                  <a th:href="@{/group/reject_invite_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary" onclick="return confirm('この招待を拒否します。よろしいですか？')">Reject</a>
 		                </div>
-		                <div >
-		                </div>
+					    <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
  		              </div>
 		            </div>
 		          </div>

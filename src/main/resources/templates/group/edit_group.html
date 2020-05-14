@@ -30,7 +30,7 @@
 			    <input type="text" th:field="${group.description}" class="form-control" id="InputGroupDescription" placeholder="説明文">
 			  </div>
 				<button class="btn btn-warning btn-lg btn-block">変更する</button>
-				<a th:href="@{/return_page}"class="btn btn-secondary btn-sm btn-block">戻る</a>			
+				<a th:href="@{${returnParam}}" class="btn btn-secondary btn-sm btn-block">戻る</a>			
 			  <input type="hidden" name="groupId" th:value="${group.id}">
 			　<input type="hidden" name="groupStatus" th:value="${group.groupStatus}">
 			　<input type="hidden" name="ownerUserId" th:value="${group.ownerUserId}">

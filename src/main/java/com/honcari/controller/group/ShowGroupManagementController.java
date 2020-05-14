@@ -41,25 +41,26 @@ public class ShowGroupManagementController {
 	 * @return グループ管理画面へ遷移
 	 */
 	@RequestMapping("/to_management")
-	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser, Model model,HttpServletRequest request) {
+	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser, Model model) {
 		//所属しているグループ情報が含まれるログインユーザーの情報（グループドメインから持ってくるよう修正予定）
-		User belongUser = showGroupManagementService
-				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
-		
+//		User belongUser = showGroupManagementService
+//				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
+//		
 		//招待は来ているが承認していないグループの情報が含まれたログインユーザーの情報（グループドメインから持ってくるよう修正予定）
-		User notApprovedUser = showGroupManagementService
-				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 0);
+//		User notApprovedUser = showGroupManagementService
+//				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 0);
+		
+		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
+		List<Group> notApprovedGroupList = showGroupManagementService.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 0);
 		
 		//自身が作成したグループのリスト
 		List<Group> ownGroupList = showGroupManagementService
 				.showGroupListByOwnerUserId(loginUser.getUser().getUserId());
 		
-		model.addAttribute("belongUser", belongUser);
-		model.addAttribute("notApprovedUser", notApprovedUser);
+		model.addAttribute("belongGroupList", belongGroupList);
+		model.addAttribute("notApprovedGroupList", notApprovedGroupList);
 		model.addAttribute("ownGroupList", ownGroupList);
-		
-		session.setAttribute("referer", request.getHeader("REFERER"));
-		
+				
 		return "group/group_management";
 	}
 

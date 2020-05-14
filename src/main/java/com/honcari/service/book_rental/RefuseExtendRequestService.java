@@ -1,7 +1,6 @@
 package com.honcari.service.book_rental;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +20,9 @@ public class RefuseExtendRequestService {
 
 	@Autowired
 	private BookRentalRepository bookRentalRepository;
+	
+	@Autowired
+	private SendRentalMailService sendRentalMailService;
 
 	/**
 	 * 貸出延長申請を拒否する.
@@ -31,17 +33,18 @@ public class RefuseExtendRequestService {
 	 */
 	public void refuseExtendRequest(Integer bookRentalId, String updateUserName, Integer bookRentalVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
-		// データベースのバージョンが更新されていた場合は例外処理を行う
-		if (bookRental.getVersion() != bookRentalVersion) {
-			throw new OptimisticLockingFailureException("Faild to refuse book rental!");
-		}
 		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
-		int updateCount = bookRentalRepository.update(bookRental);
+
 		// データベースの更新ができなかった場合は例外処理を行う
+		int updateCount = bookRentalRepository.update(bookRental);
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild to refuse book rental!");
 		}
+		
+		//メール送信を行う
+		bookRental.setRentalStatus(RentalStatusEnum.REJECTED.getValue());
+		sendRentalMailService.sendRentalMail(bookRental);
 	}
 }

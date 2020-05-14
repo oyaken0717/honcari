@@ -4,3 +4,11 @@ spring:
       url: ${DATABASE_URL_HONCARI:jdbc:postgresql://localhost:5432/honcari}
       username: ${DATABASE_USER:postgres}
       password: ${DATABASE_PASSWORD:postgres}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: honcari.web@gmail.com
+    password: tdrfpzcsqedgkbre
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true  

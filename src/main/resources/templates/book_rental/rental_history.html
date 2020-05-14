@@ -47,7 +47,7 @@
 									<div class="text-box">
 										<strong th:text="${borrowedBook.ownedBookInfo.book.title}"></strong><br>
 										所有者：<a th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
-										レンタル期間：<span th:text="${borrowedBook.deadline}">まで</span><br>
+										レンタル終了日：<span th:text="${borrowedBook.deadline}"></span><br>
 										現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span><br>
 										<button class="btn btn-warning btn-sm re-borrow" disabled style="cursor:default" th:value="${status.count}" data-toggle="modal" data-show="true" data-target="#rental-request-form">もう一度借りる</button>
 										<!-- Modal -->

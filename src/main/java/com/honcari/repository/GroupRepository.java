@@ -252,6 +252,23 @@ public class GroupRepository {
 		return groupList;
 	}
 	
+	/**
+	 * 受け取ったパラメータからグループ情報を取得するメソッド.
+	 * 
+	 * @param ownerUserId 検索パラメータ
+	 * @return グループ情報リスト
+	 */
+	public List<Group> findByUserIdAndStatus(Integer userId, Integer status) {
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
+				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
+				+ "g.owner_user_id = ou.user_id LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id WHERE gr.user_id = :userId AND gr.relation_status = :status";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId",userId).addValue("status", status);
+		List<Group> groupList = template.query(sql, param, GROUP_ROW_MAPPER);
+		if(groupList.isEmpty())return null;
+		return groupList;
+	}
+	
 	public void update(Group group) {
 		String sql = "UPDATE groups SET name=:name,description=:description,owner_user_id=:ownerUserId,group_status=:groupStatus WHERE group_id=:id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(group);

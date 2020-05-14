@@ -73,12 +73,12 @@
 			<div class="col-md-12" th:each="category: ${categoryList}">
 				<div class="row">
 					<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${category.ownedBookInfoList}">
-						<div th:if="${ownedBookInfo.bookStatus} == 1">
+						<div th:if="${ownedBookInfo.bookStatus} != 3">
 							<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 								<img class="bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 							</a>
 						</div>
-						<div th:if="${ownedBookInfo.bookStatus} != 1" class="now-lending">
+						<div th:if="${ownedBookInfo.bookStatus} == 3" class="now-lending">
 							<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 								<img class="bd-placeholder-img thumbnail" style="opacity: 0.5" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 							</a>
