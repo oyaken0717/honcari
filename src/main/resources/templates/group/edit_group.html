@@ -22,6 +22,7 @@
 			<form th:action="@{/group/edit_group}" th:object="${editGroupForm}" method="post">
 			  <div class="form-group">
 			    <label for="InputGroupName">グループ名</label>
+			    <label th:errors="*{name}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
 			    <input type="text" th:field="${group.name}" class="form-control" id="InputGroupName" placeholder="グループ名">
 			  </div>
 			  <div class="form-group">

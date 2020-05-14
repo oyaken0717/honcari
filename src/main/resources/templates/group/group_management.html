@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Honcari -気軽に本をどこへでも-</title>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
@@ -12,7 +12,7 @@
 <body>
 <nav th:replace="header::frag_header(0)"></nav>
 
-<div th:if="${complete}" class="flash alert alert-success alert-dismissible fade show" role="alert">
+<div th:if="${complete}" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert">
   <strong th:if="${rejectInvite}">グループに参加しませんでした。</strong>
   <strong th:if="${outGroup}">グループから抜けました。</strong>
   <strong th:if="${joinGroup}">グループに参加しました！</strong>
@@ -45,21 +45,18 @@
 				<div class="text-center" style="margin: 10px">参加しているグループはありません</div>
 			</div>   			
 			<div class="tab-pane active" id="joined-groups" th:unless="${belongGroupList}==null" >
-		      <div class="row" style="margin:70px">
-		        <div class="col-md-4" th:each="group:${belongGroupList}">        
-		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
-		            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-		            <div class="card-body">
-		              <p class="card-text" th:text="${group.name}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		              <p class="text-muted" th:text="${group.description}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		              <div class="d-flex justify-content-between align-items-center">
-		                <div class="btn-group" style="margin: 15px">
+		      <div class="row" style="margin:40px">
+		        <div class="col-md-4" th:each="group:${belongGroupList}">      
+		          <div class="mb-4">
+		            <img class="card-img disp-block blockcenter" src="../static/img/group_default.jpg" th:src="@{/img/group_default.jpg}" alt="Card image cap">
+		            <div class="card-img-overlay">
+		              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
+		              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <div class="text-center" style="bottom:0">
+		                <div class="btn-group">
 		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>
 		                </div>
-		                <div th:if="${userId}==${group.ownerUserId}" style="margin: 10px">
-		                  <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
-		                </div>
-		                <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small> 
+               			<small>オーナー： <a th:href="${'/user/show_user_page?userId=' + group.ownerUser.userId}" style="color:white" th:text="${group.ownerUser.name}"></a></small>
 		              </div>
 		            </div>
 		          </div>
@@ -68,24 +65,23 @@
       		</div>
 
 			<div class="tab-pane" id="own-groups" th:unless="${ownGroupList}==null">
-		      <div class="row" style="margin:70px">
-		        <div class="col-md-4" th:each="group:${ownGroupList}">        
-		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
-		            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-		            <div class="card-body">
-		              <p class="card-text" th:text="${group.name}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		              <p class="text-muted" th:text="${group.description}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		              <div class="d-flex justify-content-between align-items-center">
-		                <div class="btn-group" style="margin: 15px">
-		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-		                  <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
+			  <div class="row" style="margin:40px">
+		        <div class="col-md-4" th:each="group:${ownGroupList}">      
+		          <div class="mb-4">
+		            <img class="card-img disp-block blockcenter" src="../static/img/group_default.jpg" th:src="@{/img/group_default.jpg}" alt="Card image cap">
+		            <div class="card-img-overlay">
+		              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
+		              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <div class="text-center" style="bottom:0">
+		                <div class="btn-group">
+		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>
 		                </div>
- 		                <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
- 		              </div>
+                		<small>オーナー： <a th:href="${'/user/show_user_page?userId=' + group.ownerUser.userId}" style="color:white" th:text="${group.ownerUser.name}"></a></small>
+		              </div>
 		            </div>
 		          </div>
 		        </div>
-		      </div>			
+		      </div>				
 		    </div>
 		    
 			<div class="tab-pane" id="own-groups" th:if="${notApprovedGroupList}==null">
@@ -93,32 +89,36 @@
 			</div>
 			
 			<div class="tab-pane" id="not-approved-list" th:unless="${notApprovedGroupList}==null">
-		      <div class="row" style="margin:70px">
-		        <div class="col-md-4" th:each="group:${notApprovedGroupList}">        
-		          <div class="card mb-4 shadow-sm" style="height: 12rem;" >
-		            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-		            <div class="card-body">
-		              <p class="card-text" th:text="${group.name}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		              <p class="text-muted" th:text="${group.description}" style="overflow: hidden;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		              <div class="d-flex justify-content-between align-items-center">
-		                <div class="btn-group" style="margin: 15px">
-		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-		                  <a th:href="@{/group/reject_invite_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary" onclick="return confirm('この招待を拒否します。よろしいですか？')">Reject</a>
+			  <div class="row" style="margin:40px">
+		        <div class="col-md-4" th:each="group:${belongGroupList}">      
+		          <div class="mb-4">
+		            <img class="card-img disp-block blockcenter" src="../static/img/group_default.jpg" th:src="@{/img/group_default.jpg}" alt="Card image cap">
+		            <div class="card-img-overlay">
+		              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
+		              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		              <div class="text-center" style="bottom:0">
+		                <div class="btn-group">
+		                  <a th:href="@{/group/show_detail(id=${group.id})}" class="btn btn-sm btn-warning">View</a>
 		                </div>
-					    <small class="text-muted" th:text="'オーナー：'+${group.ownerUser.name}">9 mins</small>
- 		              </div>
+                		<small>オーナー： <a th:href="${'/user/show_user_page?userId=' + group.ownerUser.userId}" style="color:white" th:text="${group.ownerUser.name}"></a></small>
+		              </div>
 		            </div>
 		          </div>
 		        </div>
-		      </div>			
+		      </div>				
 		     </div>
 		     
 			<div class="tab-pane" id="not-approved-list" th:if="${notApprovedUser}==null">
-				<div class="text-center" style="margin: 10px">現在招待されているグループはありません</div>
+				<div class="text-center" style="margin:40px">現在招待されているグループはありません</div>
 			</div>
    		  </div>   		  
  </div>
  <footer th:replace="footer::footer"></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/slick.min.js"></script>
+<script type="text/javascript" src="/js/slick_option.js"></script>
+<script src="../static/js/group_detail.js" th:src="@{/js/group_detail.js}"></script>
 
 </body>
 <style>
@@ -127,7 +127,8 @@
     display: -webkit-box;
 	overflow: hidden;
 	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;	
+	-webkit-box-orient: vertical;
+		height:50px;	
 }
 </style>
 </html>

@@ -1,4 +1,8 @@
 $(function() {	
+	
+	setTimeout(() => {
+		$('#flash').alert('close');
+	}, 3000);
 
 $(document).on('click', '#show-detail-btn', function(){
 		var groupName = $(this).nextAll('.group-name').val();
@@ -10,4 +14,6 @@ $(document).on('click', '#show-detail-btn', function(){
 			element.insertAdjacentHTML('beforeend', '<p class="card-text">' + groupName + '</p>' + 
 					'<p class="text-muted" style="overflow: hidden;">' + groupDescription + '</p>');
 		});
+
 });
+
