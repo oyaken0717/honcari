@@ -105,7 +105,7 @@ public class RegisterBookApiController {
 			}else {
 				thumbnailPath = registerBookForm.getThumbnailPath();
 			}
-			
+			//ISBNコードが存在しない場合は、GoogleBookIDをISBNコードとして登録(仮)
 			book.setIsbnId(registerBookForm.getIsbnId());
 			book.setTitle(title);
 			book.setAuthor(author);
