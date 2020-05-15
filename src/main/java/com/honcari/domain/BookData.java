@@ -10,6 +10,11 @@ import java.util.List;
  */
 public class BookData {
 
+	/**	googleが管理する本id 
+	 * ISBNコードが存在しない場合はGoogleBookIDをISBNコードとして登録(仮)
+	 * */
+	private String id;
+	
 	/**	サムネイルパス */
 	private SmallThumbnail imageLinks;
 	
@@ -31,6 +36,14 @@ public class BookData {
 	/**	ページ数 */
 	private String pageCount;
 
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public SmallThumbnail getImageLinks() {
 		return imageLinks;
 	}
@@ -86,10 +99,11 @@ public class BookData {
 	public void setPageCount(String pageCount) {
 		this.pageCount = pageCount;
 	}
+
 	@Override
 	public String toString() {
-		return "BookData [imageLinks=" + imageLinks + ", authors=" + authors + ", title=" + title + ", publishedDate="
-				+ publishedDate + ", industryIdentifiers=" + industryIdentifiers + ", description=" + description
-				+ ", pageCount=" + pageCount + "]";
+		return "BookData [id=" + id + ", imageLinks=" + imageLinks + ", authors=" + authors + ", title=" + title
+				+ ", publishedDate=" + publishedDate + ", industryIdentifiers=" + industryIdentifiers + ", description="
+				+ description + ", pageCount=" + pageCount + "]";
 	}
 }
