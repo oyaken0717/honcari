@@ -65,6 +65,6 @@ public class DeleteUserController {
 			return "faq";
 		}
 		deleteUserService.deleteUser(userId);
-		return "redirect:/user/to_login";
+		return "redirect:/logout";
 	}	
 }
