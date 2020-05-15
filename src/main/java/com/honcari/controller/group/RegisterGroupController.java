@@ -74,7 +74,10 @@ public class RegisterGroupController {
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());
 		group.setOwnerUserId(loginUser.getUser().getUserId());
-		group.setGroupStatus(0);
+		group.setGroupStatus(form.getStatus());
+		if(form.getStatus()==null) {
+			group.setGroupStatus(0);
+		}
 		group = registerGroupService.insertGroup(group, userList);
 		redirectAttributesm.addFlashAttribute("complete", "complete");
 		redirectAttributesm.addFlashAttribute("registerGroup", "registerGroup");

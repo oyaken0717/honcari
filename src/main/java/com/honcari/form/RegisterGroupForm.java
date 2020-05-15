@@ -19,6 +19,8 @@ public class RegisterGroupForm {
 	private String description;
 	/** ユーザー名のリスト */
 	private List<String> userNameList;
+	
+	private Integer status;
 
 	public String getName() {
 		return name;
@@ -44,10 +46,20 @@ public class RegisterGroupForm {
 		this.userNameList = userNameList;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "RegisterGroupForm [name=" + name + ", description=" + description + ", userNameList=" + userNameList
-				+ "]";
+				+ ", status=" + status + "]";
 	}
+
+	
 
 }

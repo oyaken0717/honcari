@@ -86,6 +86,9 @@ public class EditGroupController {
 		if (result.hasErrors()) {
 			return toEditGroup(form.getGroupId(), model, request);
 		}
+		if(form.getGroupStatus()==null) {
+			form.setGroupStatus(0);
+		}
 		editGroupService.editGroup(form);
 		return "redirect:/group/show_detail?id=" + form.getGroupId();
 	}

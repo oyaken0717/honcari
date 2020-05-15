@@ -31,6 +31,7 @@
   <div class="group-image">
   	<div class="group-detail">
       <h1 class="display-3" th:text="${group.name}">Hello, world!</h1>
+      <span th:if="${group.groupStatus} == 1">（非公開グループ）</span>
       <p align="right"><a class="btn btn-warning btn-lg" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a></p>
       <p align="right"><a class="btn btn-primary btn-lg" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a></p>
 <!-- 	  <a class="btn btn-primary btn-sm" th:href="@{/group/search(name=${session.name},page=${session.page})}" role="button" >&laquo; 戻る</a>

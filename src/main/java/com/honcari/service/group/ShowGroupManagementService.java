@@ -22,23 +22,14 @@ import com.honcari.repository.UserRepository;
 public class ShowGroupManagementService {
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
 	private GroupRepository groupRepository;
 	
-	/**
-	 * ユーザーが所属しているグループを検索するためのメソッド.
-	 * 
-	 * @param userId ユーザーid
-	 * @param status ステータス
-	 * @return ユーザー情報
-	 */
-//	public User showGroupListByBelongUserIdAndStatus(Integer userId,Integer status){
-//		return userRepository.findByUserIdAndRelationStatus(userId,status);
-//	}
-	public List<Group> showGroupListByBelongUserIdAndStatus(Integer userId,Integer status){
+	public List<Group> showGroupListByBelongUserIdAndRelationStatus(Integer userId,Integer status){
 		return groupRepository.findByUserIdAndStatus(userId, status);
+	}
+	
+	public List<Group> showGroupListByBelongUserIdAndGroupStatus(Integer userId,Integer groupStatus,Integer relationStatus){
+		return groupRepository.findByUserIdAndGroupStatus(userId, groupStatus, relationStatus);
 	}
 	
 	/**
@@ -49,6 +40,10 @@ public class ShowGroupManagementService {
 	 */
 	public List<Group> showGroupListByOwnerUserId(Integer userId){
 		return groupRepository.findByOwnerUserId(userId);
+	}
+	
+	public List<Group> showGroupListByOwnerUserIdAndStatus(Integer userId,Integer status){
+		return groupRepository.findByOwnerUserIdAndStatus(userId,status);
 	}
 
 }

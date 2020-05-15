@@ -50,8 +50,8 @@ public class ShowGroupManagementController {
 //		User notApprovedUser = showGroupManagementService
 //				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 0);
 		
-		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
-		List<Group> notApprovedGroupList = showGroupManagementService.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 0);
+		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 1);
+		List<Group> notApprovedGroupList = showGroupManagementService.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 0);
 		
 		//自身が作成したグループのリスト
 		List<Group> ownGroupList = showGroupManagementService
