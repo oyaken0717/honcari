@@ -31,7 +31,7 @@ public class OutFromGroupController {
 	 * @param redirectAttributes
 	 * @return グループ管理画面へ遷移
 	 */
-	@RequestMapping(value = "/out_group",method = RequestMethod.POST)
+	@RequestMapping(value = "/out_group")
 	public String outGroup(Integer id, @AuthenticationPrincipal LoginUser loginUser,RedirectAttributes redirectAttributes) {
 		deleteGroupRelationService.outGroup(loginUser.getUser().getUserId(), id);
 		
