@@ -101,7 +101,7 @@ public class GroupRepository {
 				book.setPublishedDate(rs.getString("b_published_date"));
 				book.setDescription(rs.getString("b_description"));
 				book.setPageCount(rs.getString("b_page_count"));
-				book.setThumbnailPath(rs.getString("b_page_count"));
+				book.setThumbnailPath(rs.getString("b_thumbnail_path"));
 				ownedBookInfo.setBook(book);
 				ownedBookInfoList.add(ownedBookInfo);
 

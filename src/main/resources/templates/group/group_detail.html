@@ -74,12 +74,31 @@
 			</div>
 			
 			<div class="tab-pane tab-content fade" id="book-list" th:unless="${group.userList}==null">
-				<div th:each="user:${group.userList}">
+					<div class="row"th:each="user: ${group.userList}">
+						<div class="col-md-12" >
+							<div class="row" >
+								<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${user.ownedBookInfoList}">
+									<div th:if="${ownedBookInfo.bookStatus} != 3">
+										<img class="bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
+									</div>
+									<div th:if="${ownedBookInfo.bookStatus} == 3" class="now-lending">
+										<img class="bd-placeholder-img thumbnail" style="opacity: 0.5" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
+									</div>
+									<div class="p-2">
+											<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
+										<br>
+										<span>所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.userId})}" th:text="${user.name}"></a></span><br>			
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+<!-- 				<div th:each="user:${group.userList}">
 					<div th:each="ownedBookInfo:${user.ownedBookInfoList}" >
 						<div th:text="${ownedBookInfo.book.title}" class="text-center"></div>
 					</div>
 					<div th:if="${user==null}"></div>
-				</div>
+				</div> -->
 			</div>
 			
 			<div class="tab-pane tab-content fade" id="users" th:unless="${group.userList}==null">
