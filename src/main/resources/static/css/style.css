@@ -457,6 +457,7 @@ ul.social-buttons {
 .now-lending:after {
 	background: #f70031;
 	bottom: 0;
+	left: 0;
 	color: #fff;
 	content: "Now Lending";
 	font-size: 15px;
