@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Honcari -気軽に本をどこへでも-</title>
+<!-- Style CSS -->
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div th:if="${NumOfPendingApproval} != 0" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert" th:fragment="pending_approval">
+  	<span th:text="'レンタル申請が' + ${NumOfPendingApproval} + '件来ています。'"></span>
+  	<a href="#">→詳細はこちら</a>
+</div>
+</body>
+</html>
