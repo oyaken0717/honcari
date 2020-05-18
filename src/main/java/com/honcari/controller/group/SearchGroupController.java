@@ -90,7 +90,7 @@ public class SearchGroupController {
 		
 		//キーワード検索およびページング直後のページ処理
 		List<Group> groupList = new ArrayList<>();
-		if (page == null) {
+		if (page == null) { //曖昧検索
 			groupList = searchGroupService.searchGroup(name, 0);
 			model.addAttribute("page", 1);
 			if(totalPageNum<=5) {
@@ -100,20 +100,39 @@ public class SearchGroupController {
 				model.addAttribute("firstPage",1);
 				model.addAttribute("lastPage",5);
 			}
-		} else{
+		} else{ //ページ遷移
 			Integer offset = (page-1) * 9;
 			groupList = searchGroupService.searchGroup(name, offset);
 			model.addAttribute("page", page);
-			if(totalPageNum>5&&page<=4) {
+			if(page<=4&&totalPageNum<=5) { //指定ページが4以下で総ページ数が5以下の場合はページ範囲は1~総ページ数
+				model.addAttribute("firstPage",1);
+				model.addAttribute("lastPage",totalPageNum);
+			}
+			else if(page<=4&&totalPageNum>=5) { //指定ページが4以下で総ページ数が5以上の場合はページ範囲は1~5
 				model.addAttribute("firstPage",1);
 				model.addAttribute("lastPage",5);
-			}else if(page==totalPageNum||page+1==totalPageNum) {
+			}
+			else if(5<=page&&page==totalPageNum||page+1==totalPageNum) {
 				model.addAttribute("firstPage",totalPageNum-4);
 				model.addAttribute("lastPage",totalPageNum);
-			}else{
+			}else {
 				model.addAttribute("firstPage",page-2);
 				model.addAttribute("lastPage",page+2);
 			}
+//			if(totalPageNum<=5) {
+//				model.addAttribute("firstPage",1);
+//				model.addAttribute("lastPage",totalPageNum);
+//			}
+//			if(totalPageNum>5&&page<=4) {
+//				model.addAttribute("firstPage",1);
+//				model.addAttribute("lastPage",5);
+//			}else if(page==totalPageNum||page+1==totalPageNum) {
+//				model.addAttribute("firstPage",totalPageNum-4);
+//				model.addAttribute("lastPage",totalPageNum);
+//			}else{
+//				model.addAttribute("firstPage",page-2);
+//				model.addAttribute("lastPage",page+2);
+//			}
 		}
 
 		// ページング用に検索窓の入力内容と検索結果件数をスコープに格納
