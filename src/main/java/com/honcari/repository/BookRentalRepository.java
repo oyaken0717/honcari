@@ -270,4 +270,19 @@ public class BookRentalRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		template.update(sql, param);
 	}
+	
+	/**
+	 * 承認待ち件数を取得するメソッド.
+	 * 
+	 * @param loginUserId ログインユーザーid
+	 * @return 承認待ち件数
+	 */
+	public int countPendingApproval(Integer userId) {
+		String strSql = SQL;
+		strSql = strSql
+				+ " WHERE ob.user_id=:userId AND br.rental_status=0";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
+		return bookRentalList.size();
+	}
 }

@@ -33,9 +33,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private HttpSession session;
 
 	@Override
-	public UserDetails loadUserByUsername(String email)
+	public UserDetails loadUserByUsername(String emailOrName)
 			throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email);
+		User user = userRepository.findByEmail(emailOrName);
+		
+		if (user == null) {
+			user = userRepository.findByName(emailOrName);
+		}
 		
 		if (user == null) {
 			System.out.println("ログイン失敗");

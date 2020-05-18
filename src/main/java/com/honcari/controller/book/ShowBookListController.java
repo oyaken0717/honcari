@@ -13,6 +13,7 @@ import com.honcari.domain.LoginUser;
 import com.honcari.service.book.ShowBookListOneCategory;
 import com.honcari.service.book.ShowBookListOneCategoryByPageService;
 import com.honcari.service.book.ShowBookListService;
+import com.honcari.service.book_rental.CountPendingApproval;
 
 /**
  * 本一覧を表示するコントローラ.
@@ -33,6 +34,9 @@ public class ShowBookListController {
 	@Autowired 
 	private ShowBookListOneCategoryByPageService ShowBookListOneCategoryByPageService;
 	
+	@Autowired
+	private CountPendingApproval countPendingApproval;
+	
 	/**
 	 * 本一覧を表示するメソッド.
 	 * 
@@ -41,7 +45,10 @@ public class ShowBookListController {
 	 */
 	@RequestMapping("")
 	public String showBookList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		List<Category> categoryList = showBookListService.findByUserId(loginUser.getUser().getUserId());
+		Integer userId = loginUser.getUser().getUserId();
+		List<Category> categoryList = showBookListService.findByUserId(userId);
+		int NumOfPendingApproval = countPendingApproval.countPendingApproval(userId);
+		model.addAttribute("NumOfPendingApproval", NumOfPendingApproval);
 		model.addAttribute("categoryList", categoryList);
 		
 		if(categoryList==null) {
@@ -62,6 +69,8 @@ public class ShowBookListController {
 		Integer totalPageNum = showBookListOneCategory.findByUserIdAndCategoryId(userId, categoryId).get(0).getOwnedBookInfoList().size() / 15 + 1;
 		
 		List<Category> categoryList = ShowBookListOneCategoryByPageService.findByUserIdAndCategoryId(userId, categoryId, page);
+		int NumOfPendingApproval = countPendingApproval.countPendingApproval(userId);
+		model.addAttribute("NumOfPendingApproval", NumOfPendingApproval);
 		model.addAttribute("page", page);
 		model.addAttribute("totalPageNum", totalPageNum);
 		model.addAttribute("categoryList", categoryList);
