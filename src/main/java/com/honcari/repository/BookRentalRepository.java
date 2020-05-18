@@ -121,19 +121,18 @@ public class BookRentalRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-	
+
 	/**
 	 * IDからレンタル情報を取得する.
 	 * 
 	 * @param bookRentalId レンタル情報ID
-	 * @return　レンタル情報
+	 * @return レンタル情報
 	 */
 	public BookRental load(Integer bookRentalId) {
 		String sql = SQL + "WHERE br.book_rental_id = :bookRentalId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("bookRentalId", bookRentalId);
 		return template.queryForObject(sql, param, BOOK_RENTAL_ROW_MAPPER);
 	}
-	
 
 	/**
 	 * 本のレンタル情報を登録する.
@@ -201,7 +200,8 @@ public class BookRentalRepository {
 	 * @param rentalStatus レンタル状況
 	 * @return レンタル情報
 	 */
-	public List<BookRental> findByOwnerUserIdAndRentalStatusOrderByApprovalDate(Integer ownerUserId, Integer rentalStatus) {
+	public List<BookRental> findByOwnerUserIdAndRentalStatusOrderByApprovalDate(Integer ownerUserId,
+			Integer rentalStatus) {
 		String strSql = SQL;
 		strSql = strSql
 				+ " WHERE u1.user_id = :ownerUserId AND br.rental_status = :rentalStatus ORDER BY br.approval_date DESC";
@@ -250,7 +250,8 @@ public class BookRentalRepository {
 	 * @param rentalStatus レンタル状況
 	 * @return レンタル情報
 	 */
-	public List<BookRental> findByBorrowUserIdAndRentalStatusOrderByApprovalDate(Integer borrowUserId, Integer rentalStatus) {
+	public List<BookRental> findByBorrowUserIdAndRentalStatusOrderByApprovalDate(Integer borrowUserId,
+			Integer rentalStatus) {
 		String strSql = SQL;
 		strSql = strSql
 				+ " WHERE br.borrow_user_id = :borrowUserId AND br.rental_status = :rentalStatus ORDER BY br.approval_date DESC";
@@ -259,7 +260,7 @@ public class BookRentalRepository {
 		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
 		return bookRentalList;
 	}
-	
+
 	/**
 	 * book_rentalsテーブルから該当ユーザidを削除するメソッド.
 	 * 
@@ -270,7 +271,7 @@ public class BookRentalRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		template.update(sql, param);
 	}
-	
+
 	/**
 	 * 承認待ち件数を取得するメソッド.
 	 * 
@@ -279,10 +280,22 @@ public class BookRentalRepository {
 	 */
 	public int countPendingApproval(Integer userId) {
 		String strSql = SQL;
-		strSql = strSql
-				+ " WHERE ob.user_id=:userId AND br.rental_status=0";
+		strSql = strSql + " WHERE ob.user_id=:userId AND br.rental_status=0";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<BookRental> bookRentalList = template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
 		return bookRentalList.size();
+	}
+
+	/**
+	 * ユーザーの所有する本情報IDからレンタル情報を取得する.
+	 * 
+	 * @param owendBookInfoId ユーザーの所有する本情報ID
+	 * @return レンタル情報一覧
+	 */
+	public List<BookRental> findByOwnedBookInfoId(Integer ownedBookInfoId) {
+		String strSql = SQL;
+		strSql = strSql + " WHERE ob.owned_booK_info_id = :ownedBookInfoId AND br.rental_status = 1";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("ownedBookInfoId", ownedBookInfoId);
+		return template.query(strSql, param, BOOK_RENTAL_ROW_MAPPER);
 	}
 }

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.domain.BookRental;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.form.RentalRequestForm;
 import com.honcari.service.book.ShowBookDetailService;
+import com.honcari.service.book_rental.SearchByOwnedBookInfoService;
 
 /**
  * 本の詳細ページを表示するコントローラ.
@@ -29,6 +31,9 @@ public class ShowBookDetailController {
 	
 	@Autowired
 	private ShowBookDetailService showBookDetailService;
+	
+	@Autowired
+	private SearchByOwnedBookInfoService searchByOwnedBookInfoService;
 	
 	@ModelAttribute
 	public RentalRequestForm setUpForm() {
@@ -52,10 +57,14 @@ public class ShowBookDetailController {
 	@RequestMapping("/show_detail")
 	public String showBookDetail(Model model, Integer ownedBookInfoId, @AuthenticationPrincipal LoginUser loginUser) {
 		OwnedBookInfo ownedBookInfo = showBookDetailService.searchByOwnedBookId(ownedBookInfoId);
+		BookRental bookRental = searchByOwnedBookInfoService.searchByOwnedBookInfo(ownedBookInfoId);
+		
 		if(ownedBookInfo.getUserId() == loginUser.getUser().getUserId()) {
 			return "error/500";
 		}
+		
 		model.addAttribute("ownedBookInfo", ownedBookInfo);
+		model.addAttribute("bookRental", bookRental);
 		model.addAttribute("book", ownedBookInfo.getBook());
 		return "book/book_detail";
 	}
