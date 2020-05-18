@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.honcari.domain.Group;
@@ -29,9 +30,6 @@ public class SearchGroupController {
 	@Autowired
 	private SearchGroupService searchGroupService;
 
-	@Autowired
-	private HttpSession session;
-
 	/**
 	 * グループ検索画面へ遷移するためのメソッド.
 	 * 
@@ -50,7 +48,16 @@ public class SearchGroupController {
 
 		model.addAttribute("userId", loginUser.getUser().getUserId());
 		model.addAttribute("groupList", groupList);
+		
+		//ページ数表示範囲を設定
 		model.addAttribute("totalPageNum", totalPageNum);
+		model.addAttribute("firstPage",1);
+		model.addAttribute("lastPage",5);
+		if(totalPageNum<=5) {
+			model.addAttribute("firstPage",1);
+			model.addAttribute("lastPage",totalPageNum);
+		}
+		
 		model.addAttribute("name", "");
 		model.addAttribute("page", 1);
 
@@ -58,13 +65,7 @@ public class SearchGroupController {
 		if (groupList.size() == 0) {
 			model.addAttribute("groupList", null);
 		}
-
-		// 詳細画面からの戻るボタン用にセッション格納
-//		session.setAttribute("name", "");
-//		session.setAttribute("page", 0);
-
-		// グループ管理画面からのフラグを無効化
-//		session.setAttribute("fromManagement", null);
+		
 		return "group/search_group";
 	}
 
@@ -79,13 +80,14 @@ public class SearchGroupController {
 	@RequestMapping("/search")
 	public String searchGroup(String name, Model model, @AuthenticationPrincipal LoginUser loginUser, Integer page) {
 		List<Group> groupList = new ArrayList<>();
+		//キーワード検索直後のページ処理
 		if (page == null) {
 			groupList = searchGroupService.searchGroup(name, 0);
 			model.addAttribute("page", 1);
-		} else {
-			Integer offset = page * 9;
+		} else{
+			Integer offset = (page-1) * 9;
 			groupList = searchGroupService.searchGroup(name, offset);
-			model.addAttribute("page", page + 1);
+			model.addAttribute("page", page);
 		}
 
 		// グループ名で曖昧検索し総データ数を取得
@@ -93,21 +95,33 @@ public class SearchGroupController {
 		Integer totalPageNum = count / 9 + 1;
 		if (count % 9 == 0)
 			totalPageNum = count / 9;
-
+		
 		model.addAttribute("userId", loginUser.getUser().getUserId());
 		model.addAttribute("groupList", groupList);
 
 		// ページング用に検索窓の入力内容と検索結果件数をスコープに格納
 		model.addAttribute("name", name);
 		model.addAttribute("totalPageNum", totalPageNum);
-
+		
+		//ページ数表示範囲を設定
+		if(totalPageNum<=5) {
+			model.addAttribute("firstPage",1);
+			model.addAttribute("lastPage",totalPageNum);
+		}else if(totalPageNum>=5&&page<=4) {
+			model.addAttribute("firstPage",1);
+			model.addAttribute("lastPage",5);
+		}
+		else if(page==totalPageNum||page+1==totalPageNum) {
+			model.addAttribute("firstPage",totalPageNum-4);
+			model.addAttribute("lastPage",totalPageNum);
+		}else{
+			model.addAttribute("firstPage",page-2);
+			model.addAttribute("lastPage",page+2);
+		}
+		
 		// 検索結果がなかった際のスコープ格納
 		if (groupList.isEmpty())
 			model.addAttribute("groupList", null);
-
-		// 詳細画面からの戻るボタン用にセッション格納
-//		session.setAttribute("name", name);
-//		session.setAttribute("page", page);
 
 		return "group/search_group";
 	}
