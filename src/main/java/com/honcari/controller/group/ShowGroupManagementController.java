@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
@@ -24,14 +25,12 @@ import com.honcari.service.group.ShowGroupManagementService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("group")
 public class ShowGroupManagementController {
 
 	@Autowired
 	private ShowGroupManagementService showGroupManagementService;
-
-	@Autowired
-	private HttpSession session;
 
 	/**
 	 * グループ管理画面を表示するためのメソッド.
@@ -42,13 +41,6 @@ public class ShowGroupManagementController {
 	 */
 	@RequestMapping("/to_management")
 	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser, Model model) {
-		//所属しているグループ情報が含まれるログインユーザーの情報（グループドメインから持ってくるよう修正予定）
-//		User belongUser = showGroupManagementService
-//				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
-//		
-		//招待は来ているが承認していないグループの情報が含まれたログインユーザーの情報（グループドメインから持ってくるよう修正予定）
-//		User notApprovedUser = showGroupManagementService
-//				.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 0);
 		
 		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 1);
 		List<Group> notApprovedGroupList = showGroupManagementService.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 0);

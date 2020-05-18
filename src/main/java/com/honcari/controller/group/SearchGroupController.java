@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.service.group.SearchGroupService;
@@ -24,6 +25,7 @@ import com.honcari.service.group.SearchGroupService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/group")
 public class SearchGroupController {
 
@@ -79,47 +81,50 @@ public class SearchGroupController {
 	 */
 	@RequestMapping("/search")
 	public String searchGroup(String name, Model model, @AuthenticationPrincipal LoginUser loginUser, Integer page) {
-		List<Group> groupList = new ArrayList<>();
-		//キーワード検索直後のページ処理
-		if (page == null) {
-			groupList = searchGroupService.searchGroup(name, 0);
-			model.addAttribute("page", 1);
-		} else{
-			Integer offset = (page-1) * 9;
-			groupList = searchGroupService.searchGroup(name, offset);
-			model.addAttribute("page", page);
-		}
-
+		
 		// グループ名で曖昧検索し総データ数を取得
 		Integer count = searchGroupService.count(name);
 		Integer totalPageNum = count / 9 + 1;
 		if (count % 9 == 0)
 			totalPageNum = count / 9;
 		
-		model.addAttribute("userId", loginUser.getUser().getUserId());
-		model.addAttribute("groupList", groupList);
+		//キーワード検索およびページング直後のページ処理
+		List<Group> groupList = new ArrayList<>();
+		if (page == null) {
+			groupList = searchGroupService.searchGroup(name, 0);
+			model.addAttribute("page", 1);
+			if(totalPageNum<=5) {
+				model.addAttribute("firstPage",1);
+				model.addAttribute("lastPage",totalPageNum);
+			}else {
+				model.addAttribute("firstPage",1);
+				model.addAttribute("lastPage",5);
+			}
+		} else{
+			Integer offset = (page-1) * 9;
+			groupList = searchGroupService.searchGroup(name, offset);
+			model.addAttribute("page", page);
+			if(totalPageNum>5&&page<=4) {
+				model.addAttribute("firstPage",1);
+				model.addAttribute("lastPage",5);
+			}else if(page==totalPageNum||page+1==totalPageNum) {
+				model.addAttribute("firstPage",totalPageNum-4);
+				model.addAttribute("lastPage",totalPageNum);
+			}else{
+				model.addAttribute("firstPage",page-2);
+				model.addAttribute("lastPage",page+2);
+			}
+		}
 
 		// ページング用に検索窓の入力内容と検索結果件数をスコープに格納
 		model.addAttribute("name", name);
 		model.addAttribute("totalPageNum", totalPageNum);
 		
-		//ページ数表示範囲を設定
-		if(totalPageNum<=5) {
-			model.addAttribute("firstPage",1);
-			model.addAttribute("lastPage",totalPageNum);
-		}else if(totalPageNum>5&&page<=4) {
-			model.addAttribute("firstPage",1);
-			model.addAttribute("lastPage",5);
-		}
-		else if(page==totalPageNum||page+1==totalPageNum) {
-			model.addAttribute("firstPage",totalPageNum-4);
-			model.addAttribute("lastPage",totalPageNum);
-		}else{
-			model.addAttribute("firstPage",page-2);
-			model.addAttribute("lastPage",page+2);
-		}
+		//曖昧検索結果とユーザーIDをスコープにに格納
+		model.addAttribute("userId", loginUser.getUser().getUserId());
+		model.addAttribute("groupList", groupList);
 		
-		// 検索結果がなかった際のスコープ格納
+		// 曖昧検索結果がなかった際のスコープ格納
 		if (groupList.isEmpty())
 			model.addAttribute("groupList", null);
 

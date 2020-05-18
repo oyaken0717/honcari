@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Category;
 import com.honcari.domain.GoogleBooks;
 import com.honcari.domain.VolumeInfo;
@@ -24,6 +25,7 @@ import com.honcari.service.book.GoogleBookApiService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/book")
 public class RegisterBookController {
 

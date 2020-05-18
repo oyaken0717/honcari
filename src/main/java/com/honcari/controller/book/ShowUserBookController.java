@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.service.book.GetOwnedBookInfoCountService;
 import com.honcari.service.book.ShowOwnAllBooksService;
@@ -20,6 +21,7 @@ import com.honcari.service.user.SearchUserByUserIdService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/book")
 public class ShowUserBookController {
 	

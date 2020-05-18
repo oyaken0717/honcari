@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.common.RentalStatusEnum;
 import com.honcari.domain.BookRental;
 import com.honcari.domain.LoginUser;
@@ -24,6 +25,7 @@ import com.honcari.service.book_rental.SearchByOwnerService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/book_rental")
 public class ShowPendingListController {
 	

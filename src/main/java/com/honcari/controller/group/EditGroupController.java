@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.form.EditGroupForm;
 import com.honcari.service.group.EditGroupService;
@@ -24,6 +25,7 @@ import com.honcari.service.group.ShowGroupDetailService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/group")
 public class EditGroupController {
 

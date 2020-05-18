@@ -12,9 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
+import com.honcari.domain.GroupRelation;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
+import com.honcari.service.group.SearchGroupRelationService;
 import com.honcari.service.group.ShowGroupDetailService;
 
 /**
@@ -24,11 +27,15 @@ import com.honcari.service.group.ShowGroupDetailService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/group")
 public class ShowGroupDetailController {
 
 	@Autowired
 	private ShowGroupDetailService showGroupDetailService;
+	
+	@Autowired
+	private SearchGroupRelationService searchGroupRelationService;
 
 	@Autowired
 	private HttpSession session;
@@ -53,8 +60,7 @@ public class ShowGroupDetailController {
 			});
 		});
 		
-		model.addAttribute("ownedBookInfoList",ownedBookInfoList);
-		System.out.println(group);
+		GroupRelation groupRelation = searchGroupRelationService.searchByUserIdAndGroupIdAndStatus(loginUser.getUser().getUserId(),id,0);
 
 		// ログインユーザーがグループ内にすでに存在しているかを確認
 		boolean b = group.getUserList().stream().map(u -> u.getUserId())
@@ -67,6 +73,8 @@ public class ShowGroupDetailController {
 
 		model.addAttribute("b", b);
 		model.addAttribute("group", group);
+		model.addAttribute("groupRelation",groupRelation);
+		model.addAttribute("ownedBookInfoList",ownedBookInfoList);
 		model.addAttribute("userId", loginUser.getUser().getUserId());
 		
 		//戻る機能
@@ -74,7 +82,6 @@ public class ShowGroupDetailController {
 		if(request.getHeader("REFERER").contains("heroku")) {
 			returnParam = request.getHeader("REFERER").substring(29);
 		}		
-		
 		if(request.getHeader("REFERER").contains("invite")==false&&request.getHeader("REFERER").contains("edit")==false) {
 			session.setAttribute("returnParam", returnParam);
 		}

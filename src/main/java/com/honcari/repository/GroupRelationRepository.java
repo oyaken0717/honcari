@@ -105,5 +105,11 @@ public class GroupRelationRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		template.update(sql, param);
 	}
+	
+	public Integer countByUserIdAndStatus(Integer userId,Integer status) {
+		String sql = "SELECT COUNT(*) FROM group_relations WHERE user_id = :userId AND relation_status = :status";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
+		return template.queryForObject(sql, param,Integer.class);
+	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.BookRental;
 import com.honcari.domain.LoginUser;
 import com.honcari.form.RentalRequestForm;
@@ -27,6 +28,7 @@ import com.honcari.service.book_rental.SearchLentHistoryService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/book_rental")
 public class ShowRentalHistoryController {
 	

@@ -22,4 +22,5 @@ public class CountPendingApproval {
 	public int countPendingApproval(Integer userId) {
 		return bookRentalRepository.countPendingApproval(userId);
 	}
+	
 }

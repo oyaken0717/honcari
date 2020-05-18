@@ -35,7 +35,7 @@
 					<a class="nav-link text-dark active" href="#borrowing-list" data-toggle="tab">レンタル申請中</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-dark" href="#lending-list" data-toggle="tab">レンタル承認待ち</a>
+					<a class="nav-link text-dark" href="#lending-list" data-toggle="tab">レンタル承認待ち <span th:if="${NumOfPendingApproval}!=0" class="badge-pill badge-danger" th:text="${NumOfPendingApproval}">10</span></a>
 				</li>
 			</ul>
 			<!-- タブ・コンテント -->

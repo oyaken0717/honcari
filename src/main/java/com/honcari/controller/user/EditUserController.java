@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.EditUserForm;
@@ -31,6 +32,7 @@ import com.honcari.service.user.SearchUserByUserIdService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/user")
 public class EditUserController {
 	

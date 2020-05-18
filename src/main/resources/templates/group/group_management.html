@@ -36,7 +36,7 @@
    				 <a class="nav-link text-dark" href="#own-groups" data-toggle="tab">作成したグループ</a>
   			</li>
   			<li class="nav-item">
-   				 <a class="nav-link text-dark" href="#not-approved-list" data-toggle="tab">招待されているグループ</a>
+   				 <a class="nav-link text-dark" href="#not-approved-list" data-toggle="tab">招待されているグループ <span th:if="${NumOfGroupPendingApproval}!=0" class="badge-pill badge-danger" th:text="${NumOfGroupPendingApproval}">10</span></a>
   			</li>
     	</ul>
     	<!-- タブ・コンテント -->
@@ -90,7 +90,7 @@
 			
 			<div class="tab-pane" id="not-approved-list" th:unless="${notApprovedGroupList}==null">
 			  <div class="row" style="margin:40px">
-		        <div class="col-md-4" th:each="group:${belongGroupList}">      
+		        <div class="col-md-4" th:each="group:${notApprovedGroupList}">      
 		          <div class="mb-4">
 		            <img class="card-img disp-block blockcenter" src="../static/img/group_default.jpg" th:src="@{/img/group_default.jpg}" alt="Card image cap">
 		            <div class="card-img-overlay">

@@ -1,19 +1,21 @@
 package com.honcari.controller.book;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Category;
+import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.service.book.ShowBookListOneCategory;
 import com.honcari.service.book.ShowBookListOneCategoryByPageService;
 import com.honcari.service.book.ShowBookListService;
 import com.honcari.service.book_rental.CountPendingApproval;
+import com.honcari.service.group.ShowGroupManagementService;
 
 /**
  * 本一覧を表示するコントローラ.
@@ -23,6 +25,7 @@ import com.honcari.service.book_rental.CountPendingApproval;
  */
 @Controller
 @RequestMapping("/")
+@CommonAttribute
 public class ShowBookListController {
 
 	@Autowired
@@ -37,6 +40,9 @@ public class ShowBookListController {
 	@Autowired
 	private CountPendingApproval countPendingApproval;
 	
+	@Autowired
+	private ShowGroupManagementService showGroupManagementService;
+	
 	/**
 	 * 本一覧を表示するメソッド.
 	 * 
@@ -47,11 +53,14 @@ public class ShowBookListController {
 	public String showBookList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		Integer userId = loginUser.getUser().getUserId();
 		List<Category> categoryList = showBookListService.findByUserId(userId);
-		int NumOfPendingApproval = countPendingApproval.countPendingApproval(userId);
-		model.addAttribute("NumOfPendingApproval", NumOfPendingApproval);
-		model.addAttribute("categoryList", categoryList);
 		
-		if(categoryList==null) {
+		//共通処理にしたためコメントアウト
+//		int NumOfPendingApproval = countPendingApproval.countPendingApproval(userId);
+//		model.addAttribute("NumOfPendingApproval", NumOfPendingApproval);
+		
+		model.addAttribute("categoryList", categoryList);
+		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 1);
+		if(belongGroupList==null) {
 			return "redirect:/group/to_search";
 		}
 		

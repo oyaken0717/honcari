@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Category;
 import com.honcari.domain.LoginUser;
 import com.honcari.service.book.SearchBookService;
@@ -19,6 +20,7 @@ import com.honcari.service.book.SearchBookService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/book")
 public class SearchBookController {
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.common.MyBookTypeEnum;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
@@ -22,6 +23,7 @@ import com.honcari.service.book.ShowOwnAllBooksService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/book")
 public class ShowMyBookController {
 	
