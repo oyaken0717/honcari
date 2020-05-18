@@ -40,7 +40,6 @@ public class ConfirmReturnController {
 		try {
 			confirmReturnService.confirmReturn(bookRentalId, updateStatus, processingUserName, bookRentalVersion,
 					ownedBookInfoVersion);
-			// TODO 借り手にメール送信
 			redirectAttributes.addFlashAttribute("successMessage", "本の返却を確認しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -48,10 +48,10 @@ public class AcceptRequestController {
 			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
 				acceptRentalRequestService.acceptRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
 						ownedBookInfoVersion);
+			  //延長承認待ちの状態を仮定しているが、実際は存在しないby湯口
 			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
 				acceptExtendRequestService.acceptExtendRequest(bookRentalId, updateUserName, bookRentalVersion);
 			}
-			// TODO 借り手にメール送信
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを承認しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();

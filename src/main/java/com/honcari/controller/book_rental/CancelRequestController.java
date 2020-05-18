@@ -49,10 +49,10 @@ public class CancelRequestController {
 			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
 				cancelRentalRequestService.cancelRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
 						ownedBookInfoVersion);
+			  //延長承認待ちの状態を仮定しているが、実際は存在しないby湯口
 			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
 				cancelExtendRequestService.cancelExtendRequest(bookRentalId, updateUserName, bookRentalVersion);
 			}
-			// TODO 貸し手にメール送信
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストをキャンセルしました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();
