@@ -47,7 +47,8 @@
 									<div class="text-box">
 										<strong th:text="${borrowedBook.ownedBookInfo.book.title}"></strong><br>
 										所有者：<a th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
-										レンタル終了日：<span th:text="${borrowedBook.deadline}"></span><br>
+										レンタル期間：<span th:text="${#dates.format(borrowedBook.beginning, 'yyyy年MM月dd日')}"></span>〜
+													<span th:text="${#dates.format(borrowedBook.deadline, 'yyyy年MM月dd日')}"></span><br>
 										現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span><br>
 										<button class="btn btn-warning btn-sm re-borrow" disabled style="cursor:default" th:value="${status.count}" data-toggle="modal" data-show="true" data-target="#rental-request-form">もう一度借りる</button>
 										<!-- Modal -->
@@ -62,7 +63,9 @@
 															</button>
 														</div>
 														<div class="modal-body">
+															<div id="error-message" th:errors="*{requestBeginning}" class="text-danger">貸出期間を入力してください</div>
 															<div id="error-message" th:errors="*{requestDeadline}" class="text-danger">貸出期限を入力してください</div>
+															<input type="date" name="requestBeginning" th:field="*{requestBeginning}">〜
 															<input type="date" name="requestDeadline" th:field="*{requestDeadline}">
 															<input type="hidden" name="ownedBookInfoId" th:value="${borrowedBook.ownedBookInfo.ownedBookInfoId}">
 															<input type="hidden" name="bookStatus" th:value="${borrowedBook.ownedBookInfo.bookStatus}">
@@ -107,7 +110,8 @@
 									<div class="text-box">
 										<strong th:text="${lentBook.ownedBookInfo.book.title}"></strong><br>
 										レンタル者：<a th:href="@{/user/show_user_page(userId=${lentBook.borrowUser.userId})}" th:text="${lentBook.borrowUser.name}"></a><br>
-										レンタル期間：<span th:text="${lentBook.deadline}">まで</span><br>
+										レンタル期間：<span th:text="${#dates.format(lentBook.beginning, 'yyyy年MM月dd日')}"></span>〜
+													<span th:text="${#dates.format(lentBook.deadline, 'yyyy年MM月dd日')}"></span><br>
 										現在のステータス：<span th:text="${lentBook.ownedBookInfo.getStatus()}"></span>
 									</div>
 								</div>
