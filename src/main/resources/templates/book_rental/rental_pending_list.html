@@ -74,7 +74,7 @@
 				<div class="tab-pane fade" id="lending-list">
 					<!-- 貸す承認待ちの本リスト -->
 					<div class="my-4 book-bb border-bottom">
-						<div th:if="${lendPendingList.size()}==0"><p class="text-center">申請中の本はありません</p></div>
+						<div th:if="${lendPendingList.size()}==0"><p class="text-center">承認待ちの本はありません</p></div>
 						<div class="my-3" th:each="bookRental,status:${lendPendingList}">
 							<div class="row">
 								<div class="col-lg-6">

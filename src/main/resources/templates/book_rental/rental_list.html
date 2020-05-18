@@ -43,6 +43,7 @@
 				<!-- 借りる側の本リスト -->
 				<div class="tab-pane fade show active" id="borrowing-list">
 					<!-- 借りている本リスト -->
+					<div class="my-4 book-bb border-bottom">
 					<div th:if="${borrowList.size()}==0"><p class="text-center">借りている本はありません</p></div>
 					<div class="my-3" th:each="bookRental,status:${borrowList}">
 						<div class="row">
@@ -58,13 +59,15 @@
 								</div>
 							</div>
 						</div><hr th:unless="${status.last}">
+					  </div>
 					</div><!-- /借りている本リスト -->
 				</div><!-- /借りる側の本リスト -->
 			
 				<!-- 貸す側の本リスト -->
 				<div class="tab-pane fade" id="lending-list">
 					<!-- 貸している本リスト -->
-					<div th:if="${lendList.size()}==0"><p class="text-center">貸している本はありません</p></div>
+					<div class="my-4 book-bb border-bottom">
+  					<div th:if="${lendList.size()}==0"><p class="text-center">貸している本はありません</p></div>
 					<div class="my-3" th:each="bookRental,status:${lendList}">
 						<div class="row">
 							<div class="col-lg-6">
@@ -107,6 +110,7 @@
 							</div>	
 						</div><hr th:unless="${status.last}">
 					</div><!-- /貸している本リスト -->
+				  </div>
 				</div><!-- /貸す側の本リスト -->
 			</div>
 		</div>
