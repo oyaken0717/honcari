@@ -54,7 +54,8 @@
 								<div class="text-box">
 									<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
 									所有者：<a th:href="@{/user/show_user_page(userId=${bookRental.ownedBookInfo.user.userId})}" th:text="${bookRental.ownedBookInfo.user.name}"></a><br>
-									レンタル期間：<span id="rental-period" th:text="${bookRental.deadline}">まで</span><br>
+									レンタル期間：<span th:text="${#dates.format(bookRental.beginning, 'yyyy年MM月dd日')}"></span>〜
+												<span id="rental-period" th:text="${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span><br>
 									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 								</div>
 							</div>
@@ -77,7 +78,8 @@
 								<div class="text-box">
 									<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
 									レンタル先：<a th:href="@{/user/show_user_page(userId=${bookRental.borrowUser.userId})}" th:text="${bookRental.borrowUser.name}"></a><br>
-									レンタル期間：<span th:text="${bookRental.deadline}">まで</span><br>
+									レンタル期間：<span th:text="${#dates.format(bookRental.beginning, 'yyyy年MM月dd日')}"></span>〜	
+												<span th:text="${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span><br>
 									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 									<div><button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#return-confirm-form">返却されたらこちら</button></div>
 								</div>

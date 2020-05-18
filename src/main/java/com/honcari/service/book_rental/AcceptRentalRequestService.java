@@ -41,6 +41,7 @@ public class AcceptRentalRequestService {
 	public void acceptRentalRequest(Integer bookRentalId, String updateUserName, Integer bookRentalVersion,
 			Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
+		bookRental.setBeginning(bookRental.getRequestBeginning());
 		bookRental.setDeadline(bookRental.getRequestDeadline());
 		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
 		bookRental.setApprovalDate(new Timestamp(System.currentTimeMillis()));
