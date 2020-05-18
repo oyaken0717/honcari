@@ -13,21 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.honcari.common.RentalStatusEnum;
 import com.honcari.domain.BookRental;
 import com.honcari.domain.LoginUser;
-import com.honcari.form.ExtendRequestForm;
 import com.honcari.form.RentalRequestForm;
 import com.honcari.service.book_rental.SearchByBorrowerService;
 import com.honcari.service.book_rental.SearchByOwnerService;
 
 /**
- * 貸出管理画面を表示する.
+ * 貸出承認待ちの本一覧を表示する.
  * 
  * @author shumpei
  *
  */
 @Controller
 @RequestMapping("/book_rental")
-public class ShowListController {
-
+public class ShowPendingListController {
+	
 	@Autowired
 	private SearchByOwnerService searchByOwnerService;
 
@@ -38,12 +37,7 @@ public class ShowListController {
 	public RentalRequestForm setUpRentalRequestForm() {
 		return new RentalRequestForm();
 	}
-
-	@ModelAttribute
-	public ExtendRequestForm setUpExtendRequestForm() {
-		return new ExtendRequestForm();
-	}
-
+	
 	/**
 	 * 貸出管理画面を表示する.
 	 * 
@@ -51,27 +45,26 @@ public class ShowListController {
 	 * @param model  リクエストスコープ
 	 * @return 貸出管理画面
 	 */
-	@RequestMapping("/show_list")
-	public String showList(@AuthenticationPrincipal LoginUser loginUser, Model model) {
+	@RequestMapping("/show_pending_list")
+	public String showPendingList(@AuthenticationPrincipal LoginUser loginUser, Model model) {
 		Integer userId = loginUser.getUser().getUserId();
 		List<BookRental> BookRentalListByOwner = searchByOwnerService.searchRentalListByOwner(userId);
 		List<BookRental> BookRentalListByBorrower = searchByBorrowerService.searchRentalListByBorrower(userId);
 
-		// 貸している本リスト
-		List<BookRental> lendList = BookRentalListByOwner.stream()
-				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.APPROVED.getValue()
-						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_RETURNING.getValue())
+		// 貸す承認待ち本リスト
+		List<BookRental> lendPendingList = BookRentalListByOwner.stream()
+				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.WAIT_APPROVAL.getValue()
+						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_EXTEND.getValue())
+				.collect(Collectors.toList());
+		// 借りる承認待ち本リスト
+		List<BookRental> borrowPendingList = BookRentalListByBorrower.stream()
+				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.WAIT_APPROVAL.getValue()
+						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_EXTEND.getValue())
 				.collect(Collectors.toList());
 
-		// 借りている本リスト
-		List<BookRental> borrowList = BookRentalListByBorrower.stream()
-				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.APPROVED.getValue()
-						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_RETURNING.getValue())
-				.collect(Collectors.toList());
-
-		model.addAttribute("lendList", lendList);
-		model.addAttribute("borrowList", borrowList);
-		return "book_rental/rental_list";
+		model.addAttribute("lendPendingList", lendPendingList);
+		model.addAttribute("borrowPendingList", borrowPendingList);
+		return "book_rental/rental_pending_list";
 	}
 
 }
