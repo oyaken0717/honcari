@@ -43,6 +43,11 @@ public class ShowBookListController {
 	public String showBookList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Category> categoryList = showBookListService.findByUserId(loginUser.getUser().getUserId());
 		model.addAttribute("categoryList", categoryList);
+		
+		if(categoryList==null) {
+			return "redirect:/group/to_search";
+		}
+		
 		return "book/book_list";
 	}
 	

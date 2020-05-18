@@ -47,8 +47,8 @@
       </div>
 			<div  class="row pager justify-content-center"  th:unless="${groupList} == null">
 				<ul class="pagination">
-					<li th:class="active" th:each="i : ${#numbers.sequence(1, totalPageNum)}" >
-						<a th:class="(${i}==${page})? 'active disabled':''" th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}">
+					<li th:class="active" th:each="i : ${#numbers.sequence(firstPage, lastPage)}" >
+						<a th:class="(${i}==${page})? 'active disabled':''" th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i}}" th:text="${i}">
 						<span th:href="@{'/group/search?name=' + ${name} + '&page=' + ${i - 1}}" th:text="${i}"></span>
 						</a>
 					</li>
