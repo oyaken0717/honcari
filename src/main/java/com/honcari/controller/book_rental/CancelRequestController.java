@@ -58,7 +58,7 @@ public class CancelRequestController {
 			ex.printStackTrace();
 			redirectAttributes.addFlashAttribute("errorMessage", "貸出リクエストのキャンセルに失敗しました！");
 		}
-		return "redirect:/book_rental/show_list";
+		return "redirect:/book_rental/show_pending_list";
 	}
 
 }

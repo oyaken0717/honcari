@@ -57,7 +57,7 @@ public class AcceptRequestController {
 			ex.printStackTrace();
 			redirectAttributes.addFlashAttribute("errorMessage", "貸出リクエストの承認に失敗しました！");
 		}
-		return "redirect:/book_rental/show_list";
+		return "redirect:/book_rental/show_pending_list";
 	}
 
 }
