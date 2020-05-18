@@ -55,7 +55,8 @@
 										<form th:action="@{/book_rental/cancel}" method="POST">
 											<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
 											所有者：<a th:href="@{/user/show_user_page(userId=${bookRental.ownedBookInfo.user.userId})}" th:text="${bookRental.ownedBookInfo.user.name}"></a><br>
-											レンタル希望期間：<span th:text="${bookRental.requestDeadline}">まで</span><br>
+											レンタル希望期間：<span th:text="${#dates.format(bookRental.requestBeginning, 'yyyy年MM月dd日')}"></span>〜
+														   <span th:text="${#dates.format(bookRental.requestDeadline, 'yyyy年MM月dd日')}"></span><br>
 											ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
 											<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
 											<input type="hidden" th:value="${bookRental.rentalStatus}" name="rentalStatus">

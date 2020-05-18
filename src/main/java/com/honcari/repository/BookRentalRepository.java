@@ -26,7 +26,7 @@ import com.honcari.domain.User;
 public class BookRentalRepository {
 
 	private final static String SQL = "SELECT br.book_rental_id br_book_rental_id, br.owned_booK_info_id br_owned_booK_info_id, "
-			+ "br.borrow_user_id br_borrow_user_id, br.request_beginning br_request_begining, br.beginning br_beginning"
+			+ "br.borrow_user_id br_borrow_user_id, br.request_beginning br_request_beginning, br.beginning br_beginning, "
 			+ "br.request_deadline br_request_deadline, br.deadline br_deadline, "
 			+ "br.rental_status br_rental_status, br.version br_version, br.approval_date br_approval_date, "
 			// ユーザーが保有している本の情報
