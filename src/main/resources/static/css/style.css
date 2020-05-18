@@ -754,3 +754,7 @@ a.disabled{
   padding-top: 70px;
   padding-bottom: 70px
 }
+
+.category-image {
+	background-image: url(/img/add_book_top.jpg);
+}
