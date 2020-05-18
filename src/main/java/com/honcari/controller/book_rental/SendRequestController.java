@@ -76,9 +76,10 @@ public class SendRequestController {
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId, loginUser);
 		}
 
-		// 貸出期限のエラーチェック
+		// 貸出期間のエラーチェック
+		Date requestBeginning = Date.valueOf(form.getRequestBeginning());
 		Date requestDeadline = Date.valueOf(form.getRequestDeadline());
-		String errorMessage = checkRequestDeadline(form.getRequestDeadline());
+		String errorMessage = checkRequestDeadline(form.getRequestBeginning(), form.getRequestDeadline());
 		if (Objects.nonNull(errorMessage)) {
 			result.rejectValue("requestDeadline", "500", errorMessage);
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId, loginUser);
@@ -86,8 +87,8 @@ public class SendRequestController {
 
 		// 貸出申請を処理する
 		try {
-			sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, borrowUserName, requestDeadline,
-					ownedBookInfoVersion);
+			sendRentalRequestService.sendRentalRequest(ownedBookInfoId, borrowUserId, borrowUserName, requestBeginning,
+					requestDeadline, ownedBookInfoVersion);
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを送信しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -98,20 +99,31 @@ public class SendRequestController {
 	}
 
 	/**
-	 * 貸出期限のエラーチェックを行う.
+	 * 貸出期間のエラーチェックを行う.
 	 * 
+	 * @param requestBeginning 申請貸出開始日
 	 * @param requestDeadline 申請貸出期限
 	 * @return エラーメッセージ
 	 */
-	public String checkRequestDeadline(String requestDeadline) {
+	public String checkRequestDeadline(String requestBeginning, String requestDeadline) {
 		LocalDate sendRequestDate = LocalDate.now();
+		LocalDate beginningDate = LocalDate.parse(requestBeginning);
 		LocalDate deadlineDate = LocalDate.parse(requestDeadline);
-		LocalDate maxRequestDate = sendRequestDate.plusMonths(2);
+		LocalDate maxRequestDate = sendRequestDate.plusMonths(1);
+		if (beginningDate.isBefore(sendRequestDate)) {
+			return "貸出開始日は本日以降の日付を入力してください";
+		}
 		if (deadlineDate.isBefore(sendRequestDate)) {
 			return "貸出期限は本日以降の日付を入力してください";
 		}
+		if (deadlineDate.isBefore(beginningDate)) {
+			return "貸出期限は貸出開始日以降の日付を入力してください";
+		}
 		if (deadlineDate.isAfter(maxRequestDate)) {
-			return "貸出期限は本日から２ヶ月以内の日付を入力してください";
+			return "貸出期限は本日から1ヶ月以内の日付を入力してください";
+		}
+		if (deadlineDate.isBefore(beginningDate.plusDays(7))) {
+			return "最低貸出期間は１週間です";
 		}
 		return null;
 	}

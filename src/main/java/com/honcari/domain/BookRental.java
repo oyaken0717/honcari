@@ -15,6 +15,10 @@ public class BookRental {
 	private Integer borrowUserId;
 	/** 貸し借り状況 */
 	private Integer rentalStatus;
+	/** 申請貸出開始日 */
+	private Date requestBeginning;
+	/** 貸出開始日 */
+	private Date beginning;
 	/** 申請貸出期限 */
 	private Date requestDeadline;
 	/** 貸出期限 */
@@ -36,15 +40,19 @@ public class BookRental {
 	}
 
 	public BookRental(Integer bookRentalId, Integer ownedBookInfoId, Integer borrowUserId, Integer rentalStatus,
-			Date requestDeadline, Date deadline, OwnedBookInfo ownedBookInfo, User borrowUser, String creationUserName,
-			String updateUserName, Integer version) {
+			Date requestBeginning, Date beginning, Date requestDeadline, Date deadline, Timestamp approvalDate,
+			OwnedBookInfo ownedBookInfo, User borrowUser, String creationUserName, String updateUserName,
+			Integer version) {
 		super();
 		this.bookRentalId = bookRentalId;
 		this.ownedBookInfoId = ownedBookInfoId;
 		this.borrowUserId = borrowUserId;
 		this.rentalStatus = rentalStatus;
+		this.requestBeginning = requestBeginning;
+		this.beginning = beginning;
 		this.requestDeadline = requestDeadline;
 		this.deadline = deadline;
+		this.approvalDate = approvalDate;
 		this.ownedBookInfo = ownedBookInfo;
 		this.borrowUser = borrowUser;
 		this.creationUserName = creationUserName;
@@ -91,6 +99,22 @@ public class BookRental {
 
 	public void setRentalStatus(Integer rentalStatus) {
 		this.rentalStatus = rentalStatus;
+	}
+
+	public Date getRequestBeginning() {
+		return requestBeginning;
+	}
+
+	public void setRequestBeginning(Date requestBeginning) {
+		this.requestBeginning = requestBeginning;
+	}
+
+	public Date getBeginning() {
+		return beginning;
+	}
+
+	public void setBeginning(Date beginning) {
+		this.beginning = beginning;
 	}
 
 	public Date getRequestDeadline() {
@@ -160,10 +184,11 @@ public class BookRental {
 	@Override
 	public String toString() {
 		return "BookRental [bookRentalId=" + bookRentalId + ", ownedBookInfoId=" + ownedBookInfoId + ", borrowUserId="
-				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", requestDeadline=" + requestDeadline
-				+ ", deadline=" + deadline + ", approvalDate=" + approvalDate + ", ownedBookInfo=" + ownedBookInfo
-				+ ", borrowUser=" + borrowUser + ", creationUserName=" + creationUserName + ", updateUserName="
-				+ updateUserName + ", version=" + version + "]";
+				+ borrowUserId + ", rentalStatus=" + rentalStatus + ", requestBeginning=" + requestBeginning
+				+ ", beginning=" + beginning + ", requestDeadline=" + requestDeadline + ", deadline=" + deadline
+				+ ", approvalDate=" + approvalDate + ", ownedBookInfo=" + ownedBookInfo + ", borrowUser=" + borrowUser
+				+ ", creationUserName=" + creationUserName + ", updateUserName=" + updateUserName + ", version="
+				+ version + "]";
 	}
 
 }

@@ -38,15 +38,17 @@ public class SendRentalRequestService {
 	 * @param ownedBookInfoId ユーザーが所有している書籍情報ID
 	 * @param borrowUserId    借り手ユーザーID
 	 * @param borrowUserName 借り手ユーザー名
+	 * @param requestBegining 貸出開始日
 	 * @param requestDeadline 貸出期限
 	 * @param ownedBookInfoVersion　ユーザーが所有している書籍情報バージョン
 	 */
 	public void sendRentalRequest(Integer ownedBookInfoId, Integer borrowUserId, String borrowUserName,
-			Date requestDeadline, Integer ownedBookInfoVersion) {
+			Date requestBeginning, Date requestDeadline, Integer ownedBookInfoVersion) {
 		BookRental bookRental = new BookRental();
 		bookRental.setOwnedBookInfoId(ownedBookInfoId);
 		bookRental.setBorrowUserId(borrowUserId);
 		bookRental.setRentalStatus(RentalStatusEnum.WAIT_APPROVAL.getValue());
+		bookRental.setRequestBeginning(requestBeginning);
 		bookRental.setRequestDeadline(requestDeadline);
 		bookRental.setCreationUserName(borrowUserName);
 		bookRentalRepository.insert(bookRental);
