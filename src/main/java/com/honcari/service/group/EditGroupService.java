@@ -27,6 +27,7 @@ public class EditGroupService {
 	 * @param form グループ編集フォーム
 	 */
 	public void editGroup(EditGroupForm form) {
+		System.out.println(form);
 		Group group = new Group();
 		group.setId(form.getGroupId());
 		group.setName(form.getName());

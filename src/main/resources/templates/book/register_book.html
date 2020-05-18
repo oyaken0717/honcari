@@ -54,7 +54,7 @@
 					<td th:unless="${item.volumeInfo.publishedDate}"><span>ー</span></td>
 					<td><button id="register-btn" class="btn btn-warning register-btn" data-toggle="modal" data-target="#book-register-form">登録</button>
 					<input th:if="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="${item.volumeInfo.industryIdentifiers[0].identifier}">
-					<input th:unless="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="ー">
+					<input th:unless="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="${item.volumeInfo.id}">
 					<input th:if="${item.volumeInfo.title}" type="hidden" class="title" th:value="${item.volumeInfo.title}">
 					<input th:unless="${item.volumeInfo.title}" type="hidden" class="title" th:value="ー">
 					<input th:if="${item.volumeInfo.authors}" type="hidden" class="author" th:value="${item.volumeInfo.authors[0]}">

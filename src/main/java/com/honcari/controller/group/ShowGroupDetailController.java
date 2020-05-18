@@ -1,5 +1,6 @@
 package com.honcari.controller.group;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,12 +11,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.honcari.domain.Category;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
-import com.honcari.service.book.ShowBookListService;
+import com.honcari.domain.OwnedBookInfo;
 import com.honcari.service.group.ShowGroupDetailService;
 
 /**
@@ -46,6 +45,15 @@ public class ShowGroupDetailController {
 	public String showGroupDetail(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser,
 			HttpServletRequest request) {
 		Group group = showGroupDetailService.showGroupDetail(id);
+		
+		List<OwnedBookInfo>ownedBookInfoList = new ArrayList<>();
+		group.getUserList().forEach(user -> {
+			user.getOwnedBookInfoList().forEach(ownedBookInfo ->{
+				ownedBookInfoList.add(ownedBookInfo);
+			});
+		});
+		
+		model.addAttribute("ownedBookInfoList",ownedBookInfoList);
 		System.out.println(group);
 
 		// ログインユーザーがグループ内にすでに存在しているかを確認

@@ -93,6 +93,16 @@ public class GroupRepository {
 				ownedBookInfo.setCategoryId(rs.getInt("o_category_id"));
 				ownedBookInfo.setBookStatus(rs.getInt("o_book_status"));
 				ownedBookInfo.setComment(rs.getString("o_comment"));
+				User ownedBookInfoUser = new User();
+				ownedBookInfoUser.setUserId(rs.getInt("obu_user_id"));
+				ownedBookInfoUser.setName(rs.getString(("obu_name")));
+				ownedBookInfoUser.setEmail(rs.getString("obu_email"));
+				ownedBookInfoUser.setPassword(rs.getString("obu_password"));
+				ownedBookInfoUser.setImagePath(rs.getString("obu_image_path"));
+				ownedBookInfoUser.setProfile(rs.getString("obu_profile"));
+				ownedBookInfoUser.setStatus(rs.getInt("obu_status"));
+				ownedBookInfoUser.setUpdatePasswordDate(rs.getTimestamp("obu_update_password_date"));
+				ownedBookInfo.setUser(ownedBookInfoUser);
 				Book book = new Book();
 				book.setBookId(rs.getInt("b_book_id"));
 				book.setIsbnId(rs.getString("b_isbn_id"));
@@ -142,10 +152,11 @@ public class GroupRepository {
 		SQL.append("g.group_status g_group_status,ou.user_id ou_user_id,ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path,ou.profile ou_profile, ou.status ou_status,");
 		SQL.append("u.user_id u_user_id, u.name u_name, u.email u_email,u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, ");
 		SQL.append("o.owned_book_info_id o_owned_book_info_id, o.user_id o_user_id, o.book_id o_book_id, o.category_id o_category_id, ");
-		SQL.append("o.book_status o_book_status, o.comment o_comment, b.book_id b_book_id, b.isbn_id b_isbn_id, b.title b_title, b.author b_author, b.published_date b_published_date, b.description b_description,");
+		SQL.append("o.book_status o_book_status, o.comment o_comment, obu.user_id obu_user_id, obu.name obu_name, obu.email obu_email, obu.password obu_password, obu.image_path obu_image_path, obu.profile obu_profile,");
+		SQL.append("obu.status obu_status, obu.update_password_date obu_update_password_date,b.book_id b_book_id, b.isbn_id b_isbn_id, b.title b_title, b.author b_author, b.published_date b_published_date, b.description b_description,");
 		SQL.append("b.page_count b_page_count, b.thumbnail_path b_thumbnail_path FROM groups g LEFT OUTER JOIN group_relations gr ");
 		SQL.append("ON g.group_id = gr.group_id LEFT OUTER JOIN users ou ON g.owner_user_id = ou.user_id LEFT OUTER JOIN users u ON gr.user_id = u.user_id LEFT OUTER JOIN owned_book_info o ");
-		SQL.append("ON u.user_id = o.user_id LEFT OUTER JOIN books b ON o.book_id = b.book_id ");//AND o.book_status <> 1
+		SQL.append("ON u.user_id = o.user_id LEFT OUTER JOIN users obu ON o.user_id = obu.user_id LEFT OUTER JOIN books b ON o.book_id = b.book_id ");//AND o.book_status <> 1
 		return SQL;
 	}
 	
@@ -187,7 +198,7 @@ public class GroupRepository {
 		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
 				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
 				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
-				+ "g.owner_user_id = ou.user_id WHERE g.name LIKE :name ORDER BY g.group_id OFFSET :offset LIMIT 9";
+				+ "g.owner_user_id = ou.user_id WHERE g.name LIKE :name AND g.group_status = 0 ORDER BY g.group_id OFFSET :offset LIMIT 9";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("offset", offset);
 		List<Group> groupList = template.query(sql.toString(), param, GROUP_ROW_MAPPER);
 		return groupList;
@@ -252,6 +263,17 @@ public class GroupRepository {
 		return groupList;
 	}
 	
+	public List<Group> findByOwnerUserIdAndStatus(Integer ownerUserId,Integer status) {
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
+				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
+				+ "g.owner_user_id = ou.user_id WHERE owner_user_id = :ownerUserId AND g.group_status = status order by group_id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("ownerUserId",ownerUserId).addValue("status", status);
+		List<Group> groupList = template.query(sql, param, GROUP_ROW_MAPPER);
+		if(groupList.isEmpty())return null;
+		return groupList;
+	}
+	
 	/**
 	 * 受け取ったパラメータからグループ情報を取得するメソッド.
 	 * 
@@ -262,8 +284,25 @@ public class GroupRepository {
 		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
 				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
 				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
-				+ "g.owner_user_id = ou.user_id LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id WHERE gr.user_id = :userId AND gr.relation_status = :status";
+				+ "g.owner_user_id = ou.user_id LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id WHERE gr.user_id = :userId AND gr.relation_status = :status ORDER BY g.group_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId",userId).addValue("status", status);
+		List<Group> groupList = template.query(sql, param, GROUP_ROW_MAPPER);
+		if(groupList.isEmpty())return null;
+		return groupList;
+	}
+	
+	/**
+	 * 受け取ったパラメータからグループ情報を取得するメソッド.
+	 * 
+	 * @param ownerUserId 検索パラメータ
+	 * @return グループ情報リスト
+	 */
+	public List<Group> findByUserIdAndGroupStatus(Integer userId,Integer groupStatus, Integer relationStatus) {
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
+				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
+				+ "g.owner_user_id = ou.user_id LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id WHERE gr.user_id = :userId AND g.group_status = :groupStatus AND gr.relation_status = :relationStatus ORDER BY g.group_id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId",userId).addValue("groupStatus", groupStatus).addValue("relationStatus", relationStatus);
 		List<Group> groupList = template.query(sql, param, GROUP_ROW_MAPPER);
 		if(groupList.isEmpty())return null;
 		return groupList;

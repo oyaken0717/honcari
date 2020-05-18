@@ -31,6 +31,7 @@
   <div class="group-image">
   	<div class="group-detail">
       <h1 class="display-3" th:text="${group.name}">Hello, world!</h1>
+      <span th:if="${group.groupStatus} == 1">（非公開グループ）</span>
       <p align="right"><a class="btn btn-warning btn-lg" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a></p>
       <p align="right"><a class="btn btn-primary btn-lg" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a></p>
 <!-- 	  <a class="btn btn-primary btn-sm" th:href="@{/group/search(name=${session.name},page=${session.page})}" role="button" >&laquo; 戻る</a>
@@ -74,10 +75,10 @@
 			</div>
 			
 			<div class="tab-pane tab-content fade" id="book-list" th:unless="${group.userList}==null">
-					<div class="row"th:each="user: ${group.userList}">
-						<div class="col-md-12" >
-							<div class="row" >
-								<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${user.ownedBookInfoList}">
+					<div class="row">
+						<div class="col-md-12 " >
+							<div class="row ">
+								<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${ownedBookInfoList}">
 									<div th:if="${ownedBookInfo.bookStatus} != 3">
 										<img class="bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 									</div>
@@ -87,7 +88,7 @@
 									<div class="p-2">
 											<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
 										<br>
-										<span>所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.userId})}" th:text="${user.name}"></a></span><br>			
+										<span>所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.userId})}" th:text="${ownedBookInfo.user.name}"></a></span><br>			
 									</div>
 								</div>
 							</div>

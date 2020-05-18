@@ -49,12 +49,13 @@ public class ShowUserGroupManagementController {
 //		User belongUser = showGroupManagementService.showGroupListByBelongUserIdAndStatus(userId, 1);
 		
 		//自身が作成したグループのリスト
-//		List<Group> ownGroupList = showGroupManagementService.showGroupListByOwnerUserId(userId);
+		List<Group> ownGroupList = showGroupManagementService.showGroupListByOwnerUserIdAndStatus(userId,0);
 		
-		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndStatus(loginUser.getUser().getUserId(), 1);
+		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndGroupStatus(userId, 0,1);
 		
 //		model.addAttribute("belongUser", belongUser);
 		model.addAttribute("belongGroupList", belongGroupList);
+		model.addAttribute("ownGroupList", ownGroupList);
 		model.addAttribute("user", searchUserByUserIdService.showUser(userId));
 		
 		session.setAttribute("referer", request.getHeader("REFERER"));
