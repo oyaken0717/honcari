@@ -53,24 +53,34 @@
    				 <a class="nav-link text-dark" href="#book-list" data-toggle="tab">シェアされている本</a>
   			</li>
   			<li class="nav-item">
-   				 <a class="nav-link text-dark" href="#users" data-toggle="tab">ユーザー</a>
+   				 <a class="nav-link text-dark" href="#discussion" data-toggle="tab">ディスカッション</a>
   			</li>
     	</ul>
     	
     	<div class="tab-content content-wrapper">
 			<div class="tab-pane tab-content fade show active" id="about-group" th:unless="${group}==null">
 				<div class="row">
-			      <div class="col-md-8">
-			        <h2>グループ概要</h2>
-			        <p th:text="${group.description}">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+			      <div class="col-md-7">
+			        <h3>グループ概要</h3>
+			        <p class="text-muted" th:text="${group.description}">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
 			      </div>
-			      <div class="col-md-4">
-			        <h3>メンバー</h3>
-			        <span th:each="user:${group.userList}">
-						<a th:if="${userId != user.userId}" th:href="@{/user/show_user_page(userId=${user.userId})}" th:text="${user.name}"></a>
-						<a th:if="${userId == user.userId}" th:href="@{/user/show_mypage}" th:text="${user.name}"></a>、
-					</span>
+			      <div class="col-md-5">
+				      <div>
+				        <h3>オーナー</h3>
+				        <div class="text-muted">
+							<a class="text-muted" th:if="${userId != group.ownerUserId}" th:href="@{/user/show_user_page(userId=${group.ownerUserId})}" th:text="${group.ownerUser.name}"></a>
+							<a class="text-muted" th:if="${userId == group.ownerUserId}" th:href="@{/user/show_mypage}" th:text="${group.ownerUser.name}"></a>
+						</div>
+					  </div>
+					  <hr>
+					  <div>
+						<h3>メンバー</h3>
+				        <div class="text-muted" th:each="user:${group.userList}">
+							<a class="text-muted" th:href="${userId == user.userId} ? '/user/show_mypage' : '/user/show_user_page(userId=${user.userId})'" th:text="${user.name}"></a>
+ 						</div>
+					  </div>
 			      </div>
+
 		      </div>
 			</div>
 			
@@ -102,11 +112,10 @@
 				</div> -->
 			</div>
 			
-			<div class="tab-pane tab-content fade" id="users" th:unless="${group.userList}==null">
-				<div th:each="user:${group.userList}">
+			<div class="tab-pane tab-content fade" id="discussion">
+				<div>
 					<div class="text-center">
-						<a th:if="${userId != user.userId}" th:href="@{/user/show_user_page(userId=${user.userId})}" th:text="${user.name}"></a>
-						<a th:if="${userId == user.userId}" th:href="@{/user/show_mypage}" th:text="${user.name}"></a>
+						coming soon...
 					</div>
 				</div>
 			</div>

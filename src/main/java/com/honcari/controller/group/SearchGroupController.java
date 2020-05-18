@@ -107,7 +107,7 @@ public class SearchGroupController {
 		if(totalPageNum<=5) {
 			model.addAttribute("firstPage",1);
 			model.addAttribute("lastPage",totalPageNum);
-		}else if(totalPageNum>=5&&page<=4) {
+		}else if(totalPageNum>5&&page<=4) {
 			model.addAttribute("firstPage",1);
 			model.addAttribute("lastPage",5);
 		}
