@@ -31,8 +31,10 @@ public class ShowBookDetailController {
 	@ModelAttribute
 	public RentalRequestForm setUpForm() {
 		RentalRequestForm form = new RentalRequestForm();
-		LocalDate defaultDeadline = LocalDate.now().plusWeeks(2);
+		LocalDate defaultBeginning = LocalDate.now();
+		LocalDate defaultDeadline = defaultBeginning.plusWeeks(2);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		form.setRequestBeginning(formatter.format(defaultBeginning));
 		form.setRequestDeadline(formatter.format(defaultDeadline));
 		return form;
 	}
