@@ -48,7 +48,7 @@ create table owned_book_info(
   owned_book_info_id serial primary key
    , user_id integer not null references users(user_id)
    , book_id integer not null references books(book_id)
-   , category_id integer not null references category(category_id)
+   , category_id integer not null references category(category_id) 
    , book_status integer not null
    , comment text
    , version integer not null default 0
@@ -61,6 +61,8 @@ create table book_rentals(
   , owned_book_info_id integer not null references owned_book_info(owned_book_info_id)
   , borrow_user_id integer not null references users(user_id)
   , rental_status integer not null
+  , request_beginning date
+  , beginning date
   , request_deadline date
   , deadline date
   , approval_date timestamp

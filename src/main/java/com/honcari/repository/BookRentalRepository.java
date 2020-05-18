@@ -26,7 +26,8 @@ import com.honcari.domain.User;
 public class BookRentalRepository {
 
 	private final static String SQL = "SELECT br.book_rental_id br_book_rental_id, br.owned_booK_info_id br_owned_booK_info_id, "
-			+ "br.borrow_user_id br_borrow_user_id, br.request_deadline br_request_deadline, br.deadline br_deadline, "
+			+ "br.borrow_user_id br_borrow_user_id, br.request_beginning br_request_begining, br.beginning br_beginning"
+			+ "br.request_deadline br_request_deadline, br.deadline br_deadline, "
 			+ "br.rental_status br_rental_status, br.version br_version, br.approval_date br_approval_date, "
 			// ユーザーが保有している本の情報
 			+ "ob.owned_booK_info_id ob_owned_booK_info_id, ob.user_id ob_user_id, ob.book_id ob_book_id, ob.category_id "
@@ -63,6 +64,8 @@ public class BookRentalRepository {
 		bookRental.setOwnedBookInfoId(rs.getInt("br_owned_booK_info_id"));
 		bookRental.setBorrowUserId(rs.getInt("br_borrow_user_id"));
 		bookRental.setRentalStatus(rs.getInt("br_rental_status"));
+		bookRental.setRequestBeginning(rs.getDate("br_request_beginning"));
+		bookRental.setBeginning(rs.getDate("br_beginning"));
 		bookRental.setRequestDeadline(rs.getDate("br_request_deadline"));
 		bookRental.setDeadline(rs.getDate("br_deadline"));
 		bookRental.setVersion(rs.getInt("br_version"));
@@ -138,8 +141,8 @@ public class BookRentalRepository {
 	 * @param bookRental レンタル情報
 	 */
 	public void insert(BookRental bookRental) {
-		String sql = "INSERT INTO book_rentals (owned_book_info_id, borrow_user_id, rental_status, request_deadline, creation_date ,creation_user) "
-				+ "VALUES (:ownedBookInfoId, :borrowUserId, :rentalStatus, :requestDeadline, (SELECT NOW()), :creationUserName)";
+		String sql = "INSERT INTO book_rentals (owned_book_info_id, borrow_user_id, rental_status, request_beginning, request_deadline, creation_date ,creation_user) "
+				+ "VALUES (:ownedBookInfoId, :borrowUserId, :rentalStatus, :requestBeginning, :requestDeadline, (SELECT NOW()), :creationUserName)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(bookRental);
 		template.update(sql, param);
 	}
@@ -151,7 +154,8 @@ public class BookRentalRepository {
 	 */
 	public int update(BookRental bookRental) {
 		String sql = "UPDATE book_rentals SET owned_book_info_id = :ownedBookInfoId, borrow_user_id = :borrowUserId, "
-				+ "rental_status = :rentalStatus, request_deadline = :requestDeadline, deadline = :deadline, "
+				+ "rental_status = :rentalStatus, request_beginning = :requestBeginning, beginning = :beginning, "
+				+ "request_deadline = :requestDeadline, deadline = :deadline, "
 				+ "update_date = (SELECT NOW()), update_user = :updateUserName, "
 				+ "version = (:version + 1), approval_date = :approvalDate WHERE book_rental_id = :bookRentalId AND version = :version";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(bookRental);

@@ -49,14 +49,16 @@
  				   <div class="modal-content">
  				   <form method="post" th:action="@{/book_rental/send}" th:object="${rentalRequestForm}">
  				     <div class="modal-header">
-  				      <h5 class="modal-title">貸出期限を設定</h5>
+  				      <h5 class="modal-title">貸出期間を選択</h5>
   				      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
   				        <span aria-hidden="true">&times;</span>
   				      </button>
   				    </div>
    				   <div class="modal-body">
-   				   	<div id="error-message" th:errors="*{requestDeadline}" class="text-danger">貸出期限を入力してください</div>
-   				    <input type="date" name="requestDeadline" th:field="*{requestDeadline}">
+   				   	<div id="error-message" th:errors="*{requestBeginning}" class="text-danger">貸出期間を入力してください</div>
+   				   	<div id="error-message" th:errors="*{requestDeadline}" class="text-danger">貸出期間を入力してください</div>
+   				     <input type="date" name="requestBeginning" th:field="*{requestBeginning}">〜
+   				     <input type="date" name="requestDeadline" th:field="*{requestDeadline}">
    				     <input type="hidden" name="ownedBookInfoId" th:value="${ownedBookInfo.ownedBookInfoId}">
    				     <input type="hidden" name="bookStatus" th:value="${ownedBookInfo.bookStatus}">
    				     <input type="hidden" name="ownedBookInfoVersion" th:value="${ownedBookInfo.version}">

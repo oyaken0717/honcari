@@ -18,6 +18,9 @@ public class RentalRequestForm {
 	private Integer ownerId;
 	/** バージョン */
 	private Integer ownedBookInfoVersion;
+	/** 貸出開始日 */
+	@NotBlank(message = "貸出開始日を入力してください")
+	private String requestBeginning;
 	/** 貸出期限 */
 	@NotBlank(message = "貸出期限を入力してください")
 	private String requestDeadline;
@@ -52,6 +55,14 @@ public class RentalRequestForm {
 
 	public void setOwnedBookInfoVersion(Integer ownedBookInfoVersion) {
 		this.ownedBookInfoVersion = ownedBookInfoVersion;
+	}
+
+	public String getRequestBeginning() {
+		return requestBeginning;
+	}
+
+	public void setRequestBeginning(String requestBeginning) {
+		this.requestBeginning = requestBeginning;
 	}
 
 	public String getRequestDeadline() {
