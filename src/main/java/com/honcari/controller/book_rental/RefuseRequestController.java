@@ -48,6 +48,7 @@ public class RefuseRequestController {
 			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
 				refuseRentalRequestService.refuseRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
 						ownedBookInfoVersion);
+			  //延長承認待ちの状態を仮定しているが、実際は存在しないby湯口
 			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
 				refuseExtendRequestService.refuseExtendRequest(bookRentalId, updateUserName, bookRentalVersion);
 			}
@@ -57,7 +58,7 @@ public class RefuseRequestController {
 			ex.printStackTrace();
 			redirectAttributes.addFlashAttribute("errorMessage", "貸出リクエストの却下に失敗しました！");
 		}
-		return "redirect:/book_rental/show_list";
+		return "redirect:/book_rental/show_pending_list";
 	}
 
 }

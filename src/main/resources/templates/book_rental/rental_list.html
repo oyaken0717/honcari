@@ -25,7 +25,7 @@
 	<div class="row mx-auto my-5">
 
 		<!-- side bar -->
-		<div th:replace="mypage_side_menu::frag_mypage_side_menu(3,99)"></div>
+		<div th:replace="mypage_side_menu::frag_mypage_side_menu(4,99)"></div>
 
 		<!-- main content -->
 		<div class="col-lg-9 col-md-9 col-sm-11 col-xs-11 float-left book-detail-wrapper">
@@ -42,34 +42,8 @@
 			<div class="tab-content">
 				<!-- 借りる側の本リスト -->
 				<div class="tab-pane fade show active" id="borrowing-list">
-					<!-- 借りる承認待ち本リスト -->
-					<div class="my-4 book-bb border-bottom">
-						<div th:if="${borrowPendingList.size()}==0"><p class="text-center">申請中の本はありません</p></div>
-						<div class="my-3" th:each="bookRental,status:${borrowPendingList}">
-							<div class="row">
-								<div class="col-lg-6">
-									<img th:src="@{${bookRental.ownedBookInfo.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
-								</div>
-								<div class="col-lg-6">
-									<div class="text-box">
-										<form th:action="@{/book_rental/cancel}" method="POST">
-											<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
-											所有者：<a th:href="@{/user/show_user_page(userId=${bookRental.ownedBookInfo.user.userId})}" th:text="${bookRental.ownedBookInfo.user.name}"></a><br>
-											レンタル希望期間：<span th:text="${bookRental.requestDeadline}">まで</span><br>
-											ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
-											<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
-											<input type="hidden" th:value="${bookRental.rentalStatus}" name="rentalStatus">
-											<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
-											<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
-											<div><button class="cancel-btn btn btn-outline-secondary btn-sm" type="submit">キャンセル</button></div>
-										</form>
-									</div>
-								</div>
-							</div><hr th:unless="${status.last}">
-						</div>
-					</div><!-- /借りる承認待ち本リスト -->
-						
 					<!-- 借りている本リスト -->
+					<div class="my-4 book-bb border-bottom">
 					<div th:if="${borrowList.size()}==0"><p class="text-center">借りている本はありません</p></div>
 					<div class="my-3" th:each="bookRental,status:${borrowList}">
 						<div class="row">
@@ -82,74 +56,18 @@
 									所有者：<a th:href="@{/user/show_user_page(userId=${bookRental.ownedBookInfo.user.userId})}" th:text="${bookRental.ownedBookInfo.user.name}"></a><br>
 									レンタル期間：<span id="rental-period" th:text="${bookRental.deadline}">まで</span><br>
 									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
-									<div><button class="btn btn-warning btn-sm" data-toggle="modal" 
-										data-show="true" data-target="#extend-request-form" type="submit">延長申請</button></div>
 								</div>
 							</div>
-							<!-- Modal -->
-							<div class="modal fade" id="extend-request-form" tabindex="-1" role="dialog">
-  								<div class="modal-dialog modal-dialog-centered" role="document">
-  									<div class="modal-content">
-  										<form method="post" th:action="@{/book_rental/send_extend}" th:object="${extendRequestForm}">
-  											<div class="modal-header">
-  												<h5 class="modal-title">延長期限を設定</h5>
-  												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  													<span aria-hidden="true">&times;</span>
-  												</button>
-  											</div>
-  											<div class="modal-body">
-  												<div id="error-message" th:errors="*{requestDeadline}" class="text-danger">延長期限を入力してください</div>
-  												<input id="extend-date" type="date" name="requestDeadline" th:value="${bookRental.deadline}" th:field="*{requestDeadline}">
-  												<input type="hidden" name="bookRentalId" th:value="${bookRental.bookRentalId}">
-  												<input type="hidden" name="defaultDeadline" th:value="${bookRental.deadline}">
-  												<input type="hidden" name="bookRentalVersion" th:value="${bookRental.version}">
-  											</div>
-  											<div class="modal-footer">
-  												<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">閉じる</button>
-  												<button type="submit" class="btn btn-warning">延長リクエストを送信</button>
-  											</div>
-  										</form>
-  									</div>
-  								</div>	
-  							</div>
 						</div><hr th:unless="${status.last}">
+					  </div>
 					</div><!-- /借りている本リスト -->
 				</div><!-- /借りる側の本リスト -->
 			
 				<!-- 貸す側の本リスト -->
 				<div class="tab-pane fade" id="lending-list">
-					<!-- 貸す承認待ちの本リスト -->
-					<div class="my-4 book-bb border-bottom">
-						<div th:if="${lendPendingList.size()}==0"><p class="text-center">申請中の本はありません</p></div>
-						<div class="my-3" th:each="bookRental,status:${lendPendingList}">
-							<div class="row">
-								<div class="col-lg-6">
-									<img th:src="@{${bookRental.ownedBookInfo.book.thumbnailPath}}" class="rounded img-fluid mx-auto d-block book-detail">
-								</div>
-								<div class="col-lg-6">
-									<div class="text-box">
-										<form th:action="@{/book_rental/determine}" method="POST">
-											<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
-											レンタル希望者：<a th:href="@{/user/show_user_page(userId=${bookRental.borrowUser.userId})}" th:text="${bookRental.borrowUser.name}"></a><br>
-											レンタル希望期間：<span th:text="${bookRental.requestDeadline}">まで</span><br>
-											ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
-											<input type="hidden" th:value="${bookRental.bookRentalId}" name="bookRentalId">
-											<input type="hidden" th:value="${bookRental.rentalStatus}" name="rentalStatus">
-											<input type="hidden" th:value="${bookRental.version}" name="bookRentalVersion">
-											<input type="hidden" th:value="${bookRental.ownedBookInfo.version}" name="ownedBookInfoVersion">
-											<div>
-												<input type="submit" name="accept" th:value="承認" class="submit submit-btn btn btn-warning btn-sm">
-												<input type="submit" name="refuse" th:value="却下" class="submit submit-btn btn btn-outline-secondary btn-sm">
-											</div>
-										</form>
-									</div>
-								</div>
-							</div><hr th:unless="${status.last}">
-						</div>
-					</div><!-- /貸す承認待ちの本リスト -->
-				
 					<!-- 貸している本リスト -->
-					<div th:if="${lendList.size()}==0"><p class="text-center">貸している本はありません</p></div>
+					<div class="my-4 book-bb border-bottom">
+  					<div th:if="${lendList.size()}==0"><p class="text-center">貸している本はありません</p></div>
 					<div class="my-3" th:each="bookRental,status:${lendList}">
 						<div class="row">
 							<div class="col-lg-6">
@@ -192,6 +110,7 @@
 							</div>	
 						</div><hr th:unless="${status.last}">
 					</div><!-- /貸している本リスト -->
+				  </div>
 				</div><!-- /貸す側の本リスト -->
 			</div>
 		</div>

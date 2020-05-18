@@ -94,7 +94,7 @@ public class SendRequestController {
 			result.rejectValue("requestDeadline", "500", "貸出申請に失敗しました");
 			return showBookDetailController.showBookDetail(model, ownedBookInfoId, loginUser);
 		}
-		return "redirect:/book_rental/show_list";
+		return "redirect:/book_rental/show_pending_list";
 	}
 
 	/**
