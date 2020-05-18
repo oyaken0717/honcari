@@ -16,9 +16,11 @@
 				class="list-group-item list-group-item-action side">プロフィール</a>
 			<a id="page2" href="mybook.html" th:href="@{/book/show_mybook?page=0}" 
 				class="list-group-item list-group-item-action side">マイブック</a>
-			<a id="page3" href="lend_management.html" th:href="@{/book_rental/show_list}" 
-				class="list-group-item list-group-item-action side">レンタル管理</a>
-			<a id="page4" href="lental_history.html" th:href="@{/book_rental/show_history}" 
+			<a id="page3" href="lend_management.html" th:href="@{/book_rental/show_pending_list}" 
+				class="list-group-item list-group-item-action side">レンタル申請中/承認待ち</a>
+			<a id="page4" href="lend_management.html" th:href="@{/book_rental/show_list}" 
+				class="list-group-item list-group-item-action side">レンタル中</a>
+			<a id="page5" href="lental_history.html" th:href="@{/book_rental/show_history}" 
 				class="list-group-item list-group-item-action side">レンタル履歴</a>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
