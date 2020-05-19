@@ -321,7 +321,7 @@ public class GroupRepository {
 	}
 	
 	public Integer count(String name) {
-		String sql = "SELECT COUNT(*) FROM groups WHERE name LIKE :name";
+		String sql = "SELECT COUNT(*) FROM groups WHERE name LIKE :name AND group_status = 0";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		return template.queryForObject(sql, param,Integer.class);
 	}

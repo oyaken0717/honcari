@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.common.BookStatusEnum;
 import com.honcari.domain.Category;
 import com.honcari.domain.OwnedBookInfo;
@@ -26,6 +27,7 @@ import com.honcari.service.book.FindByOwnedBookInfoService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/book")
 public class EditOwnedBookInfoController {
 
