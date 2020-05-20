@@ -45,9 +45,6 @@ public class InviteGroupController {
 
 	@Autowired
 	private RegisterGroupService registerGroupService;
-	
-	@Autowired
-	private HttpSession session;
 
 	@ModelAttribute
 	public InviteGroupForm setInviteGroupForm() {

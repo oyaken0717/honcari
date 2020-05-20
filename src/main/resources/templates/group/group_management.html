@@ -11,8 +11,14 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(0)"></nav>
+<!-- <div th:if="${requestedOwnerGroupList}" th:each="group:${requestedOwnerGroupList}"  class="alert alert-success alert-dismissible fade show flash" role="alert" th:fragment="pending_approval">
+  	<span>グループ名：</span> <a th:href="@{/group/show_detail(id=${group.id})}"><strong th:text="${group.name}"> </strong></a><span> からオーナー権限の委任依頼が来ています。</span> 
+  	<a th:href="@{/group/approve_owner_request(groupId=${group.id})}" onclick="return confirm('この依頼に承諾します。よろしいですか？')">承諾する</a>  /  <a th:href="@{/group/reject_owner_request(groupId=${group.id})}" onclick="return confirm('この依頼を拒否します。よろしいですか？')">拒否する</a>
+</div> -->
 
 <div th:if="${complete}" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert">
+  <strong th:if="${approveOwnerRequest}">オーナー委任依頼に承諾しました！</strong>
+  <strong th:if="${rejectOwnerRequest}">オーナー委任依頼を拒否しました。</strong>
   <strong th:if="${rejectInvite}">グループに参加しませんでした。</strong>
   <strong th:if="${outGroup}">グループから抜けました。</strong>
   <strong th:if="${joinGroup}">グループに参加しました！</strong>
@@ -25,6 +31,12 @@
       <h2 class="section-heading">グループを管理する</h2>
       <p class="section-description" style="color:white">グループを管理することができます</p>
 </section>
+<div th:if="${requestedOwnerGroupList}" class="alert alert-success alert-dismissible fade show flash" role="alert" th:fragment="pending_approval">
+	<div th:if="${requestedOwnerGroupList}" th:each="group:${requestedOwnerGroupList}">
+		<strong style="color:red">グループ名：</strong> <a th:href="@{/group/show_detail(id=${group.id})}"><strong th:text="${group.name}"> </strong></a><strong style="color:red"> からオーナー権限の委任依頼が来ています。</strong> 
+  		<a th:href="@{/group/approve_owner_request(groupId=${group.id})}" onclick="return confirm('この依頼に承諾します。よろしいですか？')"><strong>承諾する</strong></a>  /  <a th:href="@{/group/reject_owner_request(groupId=${group.id})}" onclick="return confirm('この依頼を拒否します。よろしいですか？')"><strong>拒否する</strong></a>
+  	</div>
+</div>
 
 <div class="container content-wrapper">
     	<!-- タブ・メニュー -->
@@ -33,7 +45,7 @@
     			<a class="nav-link text-dark active" href="#joined-groups" data-toggle="tab">参加しているグループ</a>
  	 		</li>
  	 		<li class="nav-item">
-   				 <a class="nav-link text-dark" href="#own-groups" data-toggle="tab">作成したグループ</a>
+   				 <a class="nav-link text-dark" href="#own-groups" data-toggle="tab">自身がオーナーのグループ</a>
   			</li>
   			<li class="nav-item">
    				 <a class="nav-link text-dark" href="#not-approved-list" data-toggle="tab">招待されているグループ <span th:if="${NumOfGroupPendingApproval}!=0" class="badge-pill badge-danger" th:text="${NumOfGroupPendingApproval}">10</span></a>

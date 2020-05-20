@@ -9,6 +9,7 @@ public class Group {
 	private String description;
 	private Integer ownerUserId;
 	private Integer groupStatus;
+	private Integer requestedOwnerUserId;
 	private List<User> userList;
 	private User ownerUser;
 	public Integer getId() {
@@ -41,6 +42,12 @@ public class Group {
 	public void setGroupStatus(Integer groupStatus) {
 		this.groupStatus = groupStatus;
 	}
+	public Integer getRequestedOwnerUserId() {
+		return requestedOwnerUserId;
+	}
+	public void setRequestedOwnerUserId(Integer requestedOwnerUserId) {
+		this.requestedOwnerUserId = requestedOwnerUserId;
+	}
 	public List<User> getUserList() {
 		return userList;
 	}
@@ -56,8 +63,9 @@ public class Group {
 	@Override
 	public String toString() {
 		return "Group [id=" + id + ", name=" + name + ", description=" + description + ", ownerUserId=" + ownerUserId
-				+ ", groupStatus=" + groupStatus + ", userList=" + userList + ", ownerUser=" + ownerUser + "]";
+				+ ", groupStatus=" + groupStatus + ", requestedOwnerUserId=" + requestedOwnerUserId + ", userList="
+				+ userList + ", ownerUser=" + ownerUser + "]";
 	}
-
+	
 	
 }

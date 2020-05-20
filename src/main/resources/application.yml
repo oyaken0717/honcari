@@ -11,4 +11,12 @@ spring:
     password: tdrfpzcsqedgkbre
     properties:
       mail.smtp.auth: true
-      mail.smtp.starttls.enable: true  
+      mail.smtp.starttls.enable: true    
+      
+#cloud.aws:
+#  credentials:
+#    accessKey: ${AWS_ACCESS_KEY_ID:}
+#    secretKey: ${AWS_SECRET_ACCESS_KEY:}
+#  region:
+#    static: ${AWS_DEFAULT_REGION:ap-northeast-1}
+#    auto: false

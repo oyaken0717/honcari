@@ -4,18 +4,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
+import com.honcari.domain.LoginUser;
+import com.honcari.domain.User;
 import com.honcari.form.EditGroupForm;
 import com.honcari.service.group.EditGroupService;
+import com.honcari.service.group.RegisterGroupService;
 import com.honcari.service.group.ShowGroupDetailService;
 
 /**
@@ -51,9 +54,17 @@ public class EditGroupController {
 	 * @return グループ編集画面へ遷移
 	 */
 	@RequestMapping("/to_edit_group")
-	public String toEditGroup(Integer groupId, Model model, HttpServletRequest request) {
+	public String toEditGroup(Integer groupId, Model model, HttpServletRequest request, @AuthenticationPrincipal LoginUser loginUser) {
 		Group group = showGroupDetailService.showGroupDetail(groupId);
+		if(group.getRequestedOwnerUserId()!=null) {
+			group.getUserList().forEach((user -> {
+				if(user.getUserId()==group.getRequestedOwnerUserId()) {
+					model.addAttribute("requestedOwnerUserName",user.getName());
+				}
+			}));
+		}
 		model.addAttribute("group", group);
+		model.addAttribute("user", loginUser.getUser());
 
 		String returnParam = request.getHeader("REFERER").substring(21);
 		if (request.getHeader("REFERER").contains("heroku")) {
@@ -84,13 +95,12 @@ public class EditGroupController {
 	 */
 	@RequestMapping(value = "/edit_group")
 	public String editGroup(@Validated EditGroupForm form, BindingResult result, Model model,
-			HttpServletRequest request) {
+			HttpServletRequest request,@AuthenticationPrincipal LoginUser loginUser) {
 		if (result.hasErrors()) {
-			return toEditGroup(form.getGroupId(), model, request);
+			return toEditGroup(form.getGroupId(), model, request,loginUser);
 		}
-		if(form.getGroupStatus()==null) {
-			form.setGroupStatus(0);
-		}
+
+		
 		editGroupService.editGroup(form);
 		return "redirect:/group/show_detail?id=" + form.getGroupId();
 	}

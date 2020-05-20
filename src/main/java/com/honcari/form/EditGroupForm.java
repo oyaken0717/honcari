@@ -23,50 +23,75 @@ public class EditGroupForm {
 	/** グループの状態 */
 	private Integer groupStatus;
 	
+	private Integer requestedOwnerUserId;
+	
+	private String userName;
+
 	public Integer getGroupId() {
 		return groupId;
 	}
+
 	public void setGroupId(Integer groupId) {
 		this.groupId = groupId;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Integer getOwnerUserId() {
 		return ownerUserId;
 	}
+
 	public void setOwnerUserId(Integer ownerUserId) {
 		this.ownerUserId = ownerUserId;
 	}
+
 	public Integer getGroupStatus() {
 		return groupStatus;
 	}
+
 	public void setGroupStatus(Integer groupStatus) {
 		this.groupStatus = groupStatus;
 	}
+
+	public Integer getRequestedOwnerUserId() {
+		return requestedOwnerUserId;
+	}
+
+	public void setRequestedOwnerUserId(Integer requestedOwnerUserId) {
+		this.requestedOwnerUserId = requestedOwnerUserId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Override
 	public String toString() {
 		return "EditGroupForm [groupId=" + groupId + ", name=" + name + ", description=" + description
-				+ ", ownerUserId=" + ownerUserId + ", groupStatus=" + groupStatus + "]";
+				+ ", ownerUserId=" + ownerUserId + ", groupStatus=" + groupStatus + ", requestedOwnerUserId="
+				+ requestedOwnerUserId + ", userName=" + userName + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 
+	
+	
 }

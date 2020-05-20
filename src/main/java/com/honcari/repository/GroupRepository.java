@@ -51,6 +51,7 @@ public class GroupRepository {
 				group.setDescription(rs.getString("g_description"));
 				group.setOwnerUserId(rs.getInt("g_owner_user_id"));
 				group.setGroupStatus(rs.getInt("g_group_status"));
+				group.setRequestedOwnerUserId(rs.getInt("g_requested_owner_user_id"));
 				group.setUserList(userList);
 				group.setOwnerUser(ownerUser);
 				ownerUser =  new User();
@@ -129,6 +130,7 @@ public class GroupRepository {
 		group.setDescription(rs.getString("description"));
 		group.setOwnerUserId(rs.getInt("owner_user_id"));
 		group.setGroupStatus(rs.getInt("group_status"));
+		group.setRequestedOwnerUserId(rs.getInt("requested_owner_user_id"));
 		User ownerUser =  new User();
 		ownerUser.setUserId(rs.getInt("ou_user_id"));
 		ownerUser.setName(rs.getString("ou_name"));
@@ -141,6 +143,17 @@ public class GroupRepository {
 		return group;
 	};
 	
+	private static final RowMapper<Group> GROUP_ROW_MAPPER2 = (rs, i) -> {
+		Group group = new Group();
+		group.setId(rs.getInt("group_id"));
+		group.setName(rs.getString("name"));
+		group.setDescription(rs.getString("description"));
+		group.setOwnerUserId(rs.getInt("owner_user_id"));
+		group.setGroupStatus(rs.getInt("group_status"));
+		group.setRequestedOwnerUserId(rs.getInt("requested_owner_user_id"));
+		return group;
+	};
+	
 	/**
 	 * SQL文を取得するメソッド.
 	 * 
@@ -148,7 +161,7 @@ public class GroupRepository {
 	 */
 	private static final StringBuilder getSQL() {
 		StringBuilder SQL = new StringBuilder();
-		SQL.append("SELECT g.group_id g_group_id, g.name g_name, g.description g_description, g.owner_user_id g_owner_user_id, ");
+		SQL.append("SELECT g.group_id g_group_id, g.name g_name, g.description g_description, g.owner_user_id g_owner_user_id, g.requested_owner_user_id g_requested_owner_user_id,");
 		SQL.append("g.group_status g_group_status,ou.user_id ou_user_id,ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path,ou.profile ou_profile, ou.status ou_status,");
 		SQL.append("u.user_id u_user_id, u.name u_name, u.email u_email,u.password u_password, u.image_path u_image_path, u.profile u_profile, u.status u_status, ");
 		SQL.append("o.owned_book_info_id o_owned_book_info_id, o.user_id o_user_id, o.book_id o_book_id, o.category_id o_category_id, ");
@@ -195,7 +208,7 @@ public class GroupRepository {
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByLikeName(String name,Integer offset) {
-		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status,g.requested_owner_user_id, ou.user_id ou_user_id,"
 				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
 				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
 				+ "g.owner_user_id = ou.user_id WHERE g.name LIKE :name AND g.group_status = 0 ORDER BY g.group_id OFFSET :offset LIMIT 9";
@@ -253,7 +266,7 @@ public class GroupRepository {
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByOwnerUserId(Integer ownerUserId) {
-		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, g.requested_owner_user_id,ou.user_id ou_user_id,"
 				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
 				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
 				+ "g.owner_user_id = ou.user_id WHERE owner_user_id = :ownerUserId order by group_id";
@@ -264,7 +277,7 @@ public class GroupRepository {
 	}
 	
 	public List<Group> findByOwnerUserIdAndStatus(Integer ownerUserId,Integer status) {
-		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, g.requested_owner_user_id, ou.user_id ou_user_id,"
 				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
 				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
 				+ "g.owner_user_id = ou.user_id WHERE owner_user_id = :ownerUserId AND g.group_status = status order by group_id";
@@ -281,7 +294,7 @@ public class GroupRepository {
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByUserIdAndStatus(Integer userId, Integer status) {
-		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status,g.requested_owner_user_id, ou.user_id ou_user_id,"
 				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
 				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
 				+ "g.owner_user_id = ou.user_id LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id WHERE gr.user_id = :userId AND gr.relation_status = :status ORDER BY g.group_id";
@@ -298,7 +311,7 @@ public class GroupRepository {
 	 * @return グループ情報リスト
 	 */
 	public List<Group> findByUserIdAndGroupStatus(Integer userId,Integer groupStatus, Integer relationStatus) {
-		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status,g.requested_owner_user_id, ou.user_id ou_user_id,"
 				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
 				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
 				+ "g.owner_user_id = ou.user_id LEFT OUTER JOIN group_relations gr ON g.group_id = gr.group_id WHERE gr.user_id = :userId AND g.group_status = :groupStatus AND gr.relation_status = :relationStatus ORDER BY g.group_id";
@@ -308,8 +321,16 @@ public class GroupRepository {
 		return groupList;
 	}
 	
+	public List<Group> findByRequestedOwnerUserId(Integer userId) {
+		String sql = "SELECT group_id,name,description,owner_user_id,group_status,requested_owner_user_id FROM groups WHERE requested_owner_user_id = :userId ORDER BY group_id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId",userId);
+		List<Group> groupList = template.query(sql, param, GROUP_ROW_MAPPER2);
+		if(groupList.isEmpty())return null;
+		return groupList;
+	}
+	
 	public void update(Group group) {
-		String sql = "UPDATE groups SET name=:name,description=:description,owner_user_id=:ownerUserId,group_status=:groupStatus WHERE group_id=:id";
+		String sql = "UPDATE groups SET name=:name,description=:description,owner_user_id=:ownerUserId,group_status=:groupStatus,requested_owner_user_id = :requestedOwnerUserId WHERE group_id=:id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(group);
 		template.update(sql, param);
 	}
@@ -326,6 +347,12 @@ public class GroupRepository {
 		return template.queryForObject(sql, param,Integer.class);
 	}
 	
+	public Integer countOwnerRequest(Integer userId) {
+		String sql = "SELECT COUNT(*) FROM groups WHERE requested_owner_user_id = :userId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId",userId);
+		return template.queryForObject(sql, param,Integer.class);
+	}
+	
 	/**
 	 * ユーザidからグループ一覧を取得するメソッド.
 	 * 
@@ -333,7 +360,7 @@ public class GroupRepository {
 	 * @return ユーザidに一致したグループ一覧
 	 */
 	public List<Group> findByUserId(Integer userId){
-		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status, ou.user_id ou_user_id,"
+		String sql = "SELECT g.group_id,g.name,g.description,g.owner_user_id,g.group_status,g.requested_owner_user_id, ou.user_id ou_user_id,"
 				+ "ou.name ou_name, ou.email ou_email,ou.password ou_password, ou.image_path ou_image_path, "
 				+ "ou.profile ou_profile, ou.status ou_status FROM groups g LEFT OUTER JOIN users ou ON "
 				+ "g.owner_user_id = ou.user_id WHERE g.owner_user_id = :userId";

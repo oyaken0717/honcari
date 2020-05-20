@@ -76,13 +76,27 @@ public class RegisterGroupService {
 	
 	/**
 	 * グループidとユーザー名で曖昧検索するためのメソッド.
+	 * グループ内のユーザーは対象外
 	 * 
 	 * @param name ユーザー名
 	 * @param userId ユーザーid
 	 * @param groupId グループid
 	 * @return ユーザー情報リスト
 	 */
-	public List<User> findByNameLikeAndGroupId(String name, Integer userId, Integer groupId) {
-		return userRepository.findByNameLikeAndGroupId(name, userId,groupId);
+	public List<User> findByNameLikeAndGroupIdForInvite(String name, Integer userId, Integer groupId) {
+		return userRepository.findByNameLikeAndGroupIdForInvite(name, userId,groupId);
+	}
+	
+	/**
+	 * グループidとユーザー名で曖昧検索するためのメソッド.
+	 * グループ内のユーザーのみ対象
+	 * 
+	 * @param name ユーザー名
+	 * @param userId ユーザーid
+	 * @param groupId グループid
+	 * @return ユーザー情報リスト
+	 */
+	public List<User> findByNameLikeAndGroupIdForOwnerTransfer(String name, Integer userId, Integer groupId) {
+		return userRepository.findByNameLikeAndGroupIdForOwnerTransfer(name, userId,groupId);
 	}
 }
