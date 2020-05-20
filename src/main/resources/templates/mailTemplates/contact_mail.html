@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Style CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div>
+	<h2><span th:text="${mailHeading}">お問い合わせを受け付けました</span></h2>
+	<p>こんにちは。いつもHoncariをご利用いただきありがとうございます。</p>
+	<p><span th:text="${doneUserName}">犬岡大二郎</span>様のお問い合わせを受け付けました！</p>
+	<p>ご返信にお時間を頂戴する場合がございますがご了承ください。</p>
+	<!-- コンテンツ -->
+    <p>&lt;お問い合わせ内容&gt;</p>
+    <pre th:text="${content}"></pre>
+	<p>送信元：<a th:href="@{${applicationPath}}">Honcari</a></p>
+</div>
+</body>
+</html>
