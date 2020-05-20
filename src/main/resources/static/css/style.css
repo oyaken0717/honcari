@@ -282,6 +282,7 @@ ul.social-buttons {
 #book-list {
 	font-size: 14px;
 	text-align: center;
+	margin: 0 auto;
 }
 
 .add-book-top {
@@ -639,11 +640,23 @@ li.category {
 	background-color:white;
 	color:#6f6f6f;
 }
-
+/* 
 .table-responsive-register-book {
 	display: block;
 	width: 100%;
 	-webkit-overflow-scrolling: touch;
+} */
+
+#book-list{
+	width:100%;
+}
+
+#book-list .register-book-th{
+	width:20%;
+}
+
+#book-list td{
+	padding: 10px;
 }
 
 /* FAQ */
