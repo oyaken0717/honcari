@@ -70,15 +70,15 @@
 				      <div>
 				        <h3>繧ｪ繝ｼ繝翫�ｼ</h3>
 				        <div class="text-muted">
-							<a class="text-muted" th:if="${userId != group.ownerUserId}" th:href="@{/user/show_user_page(userId=${group.ownerUserId})}" th:text="${group.ownerUser.name}"></a>
-							<a class="text-muted" th:if="${userId == group.ownerUserId}" th:href="@{/user/show_mypage}" th:text="${group.ownerUser.name}"></a>
+							<a class="text-muted a-link" th:if="${userId != group.ownerUserId}" th:href="@{/user/show_user_page(userId=${group.ownerUserId})}" th:text="${group.ownerUser.name}"></a>
+							<a class="text-muted a-link" th:if="${userId == group.ownerUserId}" th:href="@{/user/show_mypage}" th:text="${group.ownerUser.name}"></a>
 						</div>
 					  </div>
 					  <hr>
 					  <div>
 						<h3>繝｡繝ｳ繝舌�ｼ</h3>
 				        <div class="text-muted" th:each="user:${group.userList}">
-							<a class="text-muted" th:href="${userId == user.userId} ? '/user/show_mypage' : '/user/show_user_page(userId=${user.userId})'" th:text="${user.name}"></a>
+							<a class="text-muted a-link" th:href="${userId == user.userId} ? '/user/show_mypage' : '/user/show_user_page(userId=${user.userId})'" th:text="${user.name}"></a>
  						</div>
 					  </div>
 			      </div>
