@@ -88,8 +88,8 @@
 			
 			<div class="tab-pane tab-content fade" id="book-list" th:unless="${group.userList}==null">
 					<div class="row">
-						<div class="col-md-12 " >
-							<div class="row ">
+						<div class="col-md-12">
+							<div class="row">
 								<div class="shadow-sm ml-4 mb-4 p-0 bg-white col-md-2" th:each="ownedBookInfo: ${ownedBookInfoList}">
 									<div th:if="${ownedBookInfo.bookStatus} != 3">
 										<img class="bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
@@ -98,9 +98,10 @@
 										<img class="bd-placeholder-img thumbnail" style="opacity: 0.5" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 									</div>
 									<div class="p-2">
-											<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
-										<br>
-										<span>謇�譛芽���ｼ�<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.userId})}" th:text="${ownedBookInfo.user.name}"></a></span><br>			
+										<div class="mb-3 div-book-title">
+											<span class="card-text book-title" style="text-align:left" th:text="${ownedBookInfo.book.title}"></span>
+										</div>
+										<span class="book-owner">謇�譛芽���ｼ�<a class="a-link" th:href="@{/user/show_user_page(userId=${ownedBookInfo.userId})}" th:text="${ownedBookInfo.user.name}"></a></span><br>			
 									</div>
 								</div>
 							</div>

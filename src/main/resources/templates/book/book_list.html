@@ -94,10 +94,12 @@
 						</a>
 					</div>
 					<div class="card-body">
-						<a class="card-text book-title a-link" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
-							<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
-						</a><br>
-						<span>所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}" th:text="${ownedBookInfo.user.name}" class="a-link"></a></span><br>			
+						<div class="mb-3 div-book-title">
+							<a class="card-text book-title a-link" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
+								<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
+							</a>
+						</div>
+						<span class="book-owner">所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}" th:text="${ownedBookInfo.user.name}" class="a-link"></a></span><br>			
 					</div>
 				</div>
 			</div>

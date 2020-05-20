@@ -494,6 +494,14 @@ ul.social-buttons {
 	border: none;
 }
 
+.card-body {
+	padding: 0.5rem;
+}
+
+.div-book-title {
+	height: 48px;
+}
+
 .book-title {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -502,7 +510,7 @@ ul.social-buttons {
 	-webkit-line-clamp: 2;
 }
 
-.book-author {
+.book-author, .book-owner {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
