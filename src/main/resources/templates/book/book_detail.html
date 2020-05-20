@@ -30,7 +30,7 @@
           	<span th:if="${bookRental}" th:text="${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span>
           </p>
           <p  class="font-weight-bold">
-            所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}">
+            所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}" class="a-link">
              <span th:text="${ownedBookInfo.user.name}">所有者</span></a>
           </p>
           <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>

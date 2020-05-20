@@ -47,7 +47,7 @@
 				<tr th:each="item : ${volumeInfoList}" id="book-list-tr">
 					<td th:if="${item.volumeInfo.imageLinks}" id="book-image-link"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
 					<td th:unless="${item.volumeInfo.imageLinks}"><img class="book-img">No Photo</td>
-					<td th:if="${item.volumeInfo.title}" class="text-left"><a th:href="@{'https://books.google.co.jp/books?id=' + ${item.id}}" target="_blank"><span th:text="${item.volumeInfo.title}"></span></a></td>
+					<td th:if="${item.volumeInfo.title}" class="text-left"><a class="a-link" th:href="@{'https://books.google.co.jp/books?id=' + ${item.id}}" target="_blank"><span th:text="${item.volumeInfo.title}"></span></a></td>
 					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.authors}" class="text-left p-4"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
 					<td th:unless="${item.volumeInfo.authors}" class="text-left p-4"><span>ー</span></td>
