@@ -113,7 +113,7 @@ public class SendRentalMailService {
 				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
 				helper.setFrom("greatpotato@gmail.com");
 				helper.setTo(emailTo);
-				helper.setSubject("Hocari :" + subject);
+				helper.setSubject("【Hocari】" + subject);
 				helper.setText(getMailBody("book_rental_mail", context), true);
 			}
 		});
@@ -127,7 +127,7 @@ public class SendRentalMailService {
 	 * @param context  メール内容
 	 * @return メール本文
 	 */
-	private String getMailBody(String htmlPath, Context context) {
+	public String getMailBody(String htmlPath, Context context) {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(mailTemplateResolver());
 		return templateEngine.process(htmlPath, context);
@@ -138,7 +138,7 @@ public class SendRentalMailService {
 	 * 
 	 * @return メールテンプレート
 	 */
-	private ClassLoaderTemplateResolver mailTemplateResolver() {
+	public ClassLoaderTemplateResolver mailTemplateResolver() {
 		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 		templateResolver.setTemplateMode(TemplateMode.HTML);
 		templateResolver.setPrefix("templates/mailTemplates/");
