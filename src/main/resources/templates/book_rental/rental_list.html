@@ -54,7 +54,7 @@
 							<div class="col-lg-6">
 								<div class="text-box">
 									<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
-									所有者：<a th:href="@{/user/show_user_page(userId=${bookRental.ownedBookInfo.user.userId})}" th:text="${bookRental.ownedBookInfo.user.name}"></a><br>
+									所有者：<a class="a-link" th:href="@{/user/show_user_page(userId=${bookRental.ownedBookInfo.user.userId})}" th:text="${bookRental.ownedBookInfo.user.name}"></a><br>
 									レンタル期間：<span th:text="${#dates.format(bookRental.beginning, 'yyyy年MM月dd日')}"></span>〜
 												<span id="rental-period" th:text="${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span><br>
 									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
@@ -78,7 +78,7 @@
 							<div class="col-lg-6">
 								<div class="text-box">
 									<strong th:text="${bookRental.ownedBookInfo.book.title}"></strong><br>
-									レンタル先：<a th:href="@{/user/show_user_page(userId=${bookRental.borrowUser.userId})}" th:text="${bookRental.borrowUser.name}"></a><br>
+									レンタル先：<a class="a-link" th:href="@{/user/show_user_page(userId=${bookRental.borrowUser.userId})}" th:text="${bookRental.borrowUser.name}"></a><br>
 									レンタル期間：<span th:text="${#dates.format(bookRental.beginning, 'yyyy年MM月dd日')}"></span>〜	
 												<span th:text="${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span><br>
 									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>

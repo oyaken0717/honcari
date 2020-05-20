@@ -47,7 +47,7 @@
 								<div class="col-lg-6">
 									<div class="text-box">
 										<strong th:text="${borrowedBook.ownedBookInfo.book.title}"></strong><br>
-										所有者：<a th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
+										所有者：<a class="a-link" th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
 										レンタル期間：<span th:text="${#dates.format(borrowedBook.beginning, 'yyyy年MM月dd日')}"></span>〜
 													<span th:text="${#dates.format(borrowedBook.deadline, 'yyyy年MM月dd日')}"></span><br>
 										現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span><br>
@@ -110,7 +110,7 @@
 								<div class="col-lg-6">
 									<div class="text-box">
 										<strong th:text="${lentBook.ownedBookInfo.book.title}"></strong><br>
-										レンタル者：<a th:href="@{/user/show_user_page(userId=${lentBook.borrowUser.userId})}" th:text="${lentBook.borrowUser.name}"></a><br>
+										レンタル者：<a class="a-link" th:href="@{/user/show_user_page(userId=${lentBook.borrowUser.userId})}" th:text="${lentBook.borrowUser.name}"></a><br>
 										レンタル期間：<span th:text="${#dates.format(lentBook.beginning, 'yyyy年MM月dd日')}"></span>〜
 													<span th:text="${#dates.format(lentBook.deadline, 'yyyy年MM月dd日')}"></span><br>
 										現在のステータス：<span th:text="${lentBook.ownedBookInfo.getStatus()}"></span>
