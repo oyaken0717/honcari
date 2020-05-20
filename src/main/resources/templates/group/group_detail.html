@@ -1,25 +1,26 @@
 <!doctype html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Honcari -気軽に本をどこへでも-</title>
+<title>Honcari | グループ詳細</title>
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="/css/slick.css">
 <link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
+<link rel="shortcut icon" href="/img/favicon.ico">
  </head>
  <body >
 <main role="main">
 
 <div th:if="${complete}" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert">
-  <strong th:if="${registerGroup}">グループを作成しました!!</strong>
+  <strong th:if="${registerGroup}">繧ｰ繝ｫ繝ｼ繝励ｒ菴懈�舌＠縺ｾ縺励◆!!</strong>
 	  <div th:if="${inviteGroup}">
 		  <span th:if="${inviteGroup}" th:each="user:${userList}">
-		  	<strong th:text="${user.name} + さん"></strong>&nbsp;&nbsp;
+		  	<strong th:text="${user.name} + 縺輔ｓ"></strong>&nbsp;&nbsp;
 		  </span>
-		  <span>をこのグループに招待しました。相手が承認するまでお待ちください。</span>
+		  <span>繧偵％縺ｮ繧ｰ繝ｫ繝ｼ繝励↓諡帛ｾ�縺励∪縺励◆縲ら嶌謇九′謇ｿ隱阪☆繧九∪縺ｧ縺雁ｾ�縺｡縺上□縺輔＞縲�</span>
 	  </div>
-  <strong th:if="${joinGroup}">グループに参加しました!!</strong>
+  <strong th:if="${joinGroup}">繧ｰ繝ｫ繝ｼ繝励↓蜿ょ刈縺励∪縺励◆!!</strong>
  	  <button type="button" class="close hideMe" data-dismiss="alert" aria-label="Close">
 	    <span aria-hidden="true">&times;</span>
 	  </button>
@@ -31,30 +32,30 @@
   <div class="group-image">
   	<div class="group-detail">
       <h1 class="display-3" th:text="${group.name}">Hello, world!</h1>
-      <span th:if="${group.groupStatus} == 1">（非公開グループ）</span>
-      <p align="right"><a class="btn btn-warning btn-lg" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a></p>
-      <p align="right"><a class="btn btn-secondary btn-lg" th:href="@{'/group/reject_invite_group?groupId=' + ${group.id}}" role="button" th:if="${groupRelation}" onclick="return confirm('このグループに参加しません。よろしいですか？')">このグループに参加しない &raquo;</a></p>
-      <p align="right"><a class="btn btn-primary btn-lg" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a></p>
-<!-- 	  <a class="btn btn-primary btn-sm" th:href="@{/group/search(name=${session.name},page=${session.page})}" role="button" >&laquo; 戻る</a>
- -->  <a class="btn btn-primary btn-sm" th:href="@{${session.returnParam}}" role="button" >&laquo; 戻る</a>
+      <span th:if="${group.groupStatus} == 1">�ｼ磯撼蜈ｬ髢九げ繝ｫ繝ｼ繝暦ｼ�</span>
+      <p align="right"><a class="btn btn-warning btn-lg" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励↓蜿ょ刈縺励∪縺吶�ゅｈ繧阪＠縺�縺ｧ縺吶°�ｼ�')">縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励↓蜿ょ刈縺吶ｋ &raquo;</a></p>
+      <p align="right"><a class="btn btn-secondary btn-lg" th:href="@{'/group/reject_invite_group?groupId=' + ${group.id}}" role="button" th:if="${groupRelation}" onclick="return confirm('縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励↓蜿ょ刈縺励∪縺帙ｓ縲ゅｈ繧阪＠縺�縺ｧ縺吶°�ｼ�')">縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励↓蜿ょ刈縺励↑縺� &raquo;</a></p>
+      <p align="right"><a class="btn btn-primary btn-lg" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null}" onclick="return confirm('譛ｬ蠖薙↓縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励°繧画栢縺代∪縺吶°�ｼ�')">縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励ｒ謚懊¢繧� &raquo;</a></p>
+<!-- 	  <a class="btn btn-primary btn-sm" th:href="@{/group/search(name=${session.name},page=${session.page})}" role="button" >&laquo; 謌ｻ繧�</a>
+ -->  <a class="btn btn-primary btn-sm" th:href="@{${session.returnParam}}" role="button" >&laquo; 謌ｻ繧�</a>
     </div>
   </div>
 
   <div class="container content-wrapper">
 	  <div>
-		   <p align="right" class=".mt-5"><a class="btn btn-warning btn-sm" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId}">このグループに招待する</a>&nbsp;&nbsp;
+		   <p align="right" class=".mt-5"><a class="btn btn-warning btn-sm" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId}">縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励↓諡帛ｾ�縺吶ｋ</a>&nbsp;&nbsp;
 		   <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary" th:if="${userId}==${group.ownerUserId}">Edit</a></p>
 	  </div>
-	<!-- タブ・メニュー -->
+	<!-- 繧ｿ繝悶�ｻ繝｡繝九Η繝ｼ -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
   			<li class="nav-item">
-    			<a class="nav-link text-dark active" href="#about-group" data-toggle="tab">このグループについて</a>
+    			<a class="nav-link text-dark active" href="#about-group" data-toggle="tab">縺薙�ｮ繧ｰ繝ｫ繝ｼ繝励↓縺､縺�縺ｦ</a>
  	 		</li>
  	 		<li class="nav-item">
-   				 <a class="nav-link text-dark" href="#book-list" data-toggle="tab">シェアされている本</a>
+   				 <a class="nav-link text-dark" href="#book-list" data-toggle="tab">繧ｷ繧ｧ繧｢縺輔ｌ縺ｦ縺�繧区悽</a>
   			</li>
   			<li class="nav-item">
-   				 <a class="nav-link text-dark" href="#discussion" data-toggle="tab">ディスカッション</a>
+   				 <a class="nav-link text-dark" href="#discussion" data-toggle="tab">繝�繧｣繧ｹ繧ｫ繝�繧ｷ繝ｧ繝ｳ</a>
   			</li>
     	</ul>
     	
@@ -62,12 +63,12 @@
 			<div class="tab-pane tab-content fade show active" id="about-group" th:unless="${group}==null">
 				<div class="row">
 			      <div class="col-md-7">
-			        <h3>グループ概要</h3>
+			        <h3>繧ｰ繝ｫ繝ｼ繝玲ｦりｦ�</h3>
 			        <p class="text-muted" th:text="${group.description}">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
 			      </div>
 			      <div class="col-md-5">
 				      <div>
-				        <h3>オーナー</h3>
+				        <h3>繧ｪ繝ｼ繝翫�ｼ</h3>
 				        <div class="text-muted">
 							<a class="text-muted" th:if="${userId != group.ownerUserId}" th:href="@{/user/show_user_page(userId=${group.ownerUserId})}" th:text="${group.ownerUser.name}"></a>
 							<a class="text-muted" th:if="${userId == group.ownerUserId}" th:href="@{/user/show_mypage}" th:text="${group.ownerUser.name}"></a>
@@ -75,7 +76,7 @@
 					  </div>
 					  <hr>
 					  <div>
-						<h3>メンバー</h3>
+						<h3>繝｡繝ｳ繝舌�ｼ</h3>
 				        <div class="text-muted" th:each="user:${group.userList}">
 							<a class="text-muted" th:href="${userId == user.userId} ? '/user/show_mypage' : '/user/show_user_page(userId=${user.userId})'" th:text="${user.name}"></a>
  						</div>
@@ -99,7 +100,7 @@
 									<div class="p-2">
 											<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
 										<br>
-										<span>所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.userId})}" th:text="${ownedBookInfo.user.name}"></a></span><br>			
+										<span>謇�譛芽���ｼ�<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.userId})}" th:text="${ownedBookInfo.user.name}"></a></span><br>			
 									</div>
 								</div>
 							</div>
@@ -127,7 +128,7 @@
 
 </main>
 
-<!-- コンテンツ -->
+<!-- 繧ｳ繝ｳ繝�繝ｳ繝� -->
 <footer th:replace="footer::footer"></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
@@ -138,7 +139,7 @@
   </body>
 <style>
 .tab-content{
-  /** ５行以上で省略 */
+  /** �ｼ戊｡御ｻ･荳翫〒逵∫払 */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
