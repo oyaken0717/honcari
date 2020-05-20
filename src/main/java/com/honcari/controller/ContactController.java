@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.LoginUser;
@@ -53,7 +54,7 @@ public class ContactController {
 	 * @param loginUser ログイン中のユーザー
 	 * @return お問い合わせ画面
 	 */
-	@RequestMapping("/contact")
+	@RequestMapping(value = "/contact", method = RequestMethod.POST)
 	public String contact(@Validated ContactForm contactForm, BindingResult result, 
 			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
