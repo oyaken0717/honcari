@@ -101,7 +101,7 @@ public class RegisterBookApiController {
 			}
 			
 			if(registerBookForm.getThumbnailPath() == null || registerBookForm.getThumbnailPath().equals("undefined")) {
-				thumbnailPath = "ー";
+				thumbnailPath = "NoPhoto";
 			}else {
 				thumbnailPath = registerBookForm.getThumbnailPath();
 			}

@@ -23,14 +23,14 @@
 	</div>
 		<div class="register-book-image text-center">
 	<h2 class="section-heading">マイブックに本を登録しよう</h2>
-	<p class="section-description">書籍名もしくはISBNコードにて検索</p>
+	<p class="section-description">キーワードで検索</p>
 			<div class="search-book-for-add row justify-content-center">
 			<form th:action="@{/book/search_books}" method="POST" th:object="${searchGoogleBookForm}">
 				<p th:if="${nothing}" th:text="${nothing}" style="color:red"></p>
 				<p th:errors="*{searchWord}" style="color:red">　</p>
 				<span class="form-inline">
-	    		<input type="text" name="searchWord" class="form-control" placeholder="登録する本を検索..." th:field="*{searchWord}">　
-				<button class="btn btn-warning my-2 my-sm-0 register-book-white-btn">検索</button>
+	    		<input type="text" name="searchWord" class="form-control" placeholder="書籍名 / 著者名 / ISBN など" th:field="*{searchWord}" size="25%">　
+				<button class="btn btn-warning my-2 my-sm-0 register-book-white-btn">探す</button>
 				</span>
 			</form>
 			</div>
@@ -46,7 +46,7 @@
 				<tr th:each="item : ${volumeInfoList}" id="book-list-tr">
 					<td th:if="${item.volumeInfo.imageLinks}" id="book-image-link"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
 					<td th:unless="${item.volumeInfo.imageLinks}"><img class="book-img">No Photo</td>
-					<td th:if="${item.volumeInfo.title}" class="text-left"><span th:text="${item.volumeInfo.title}"></span></td>
+					<td th:if="${item.volumeInfo.title}" class="text-left"><a th:href="@{'https://books.google.co.jp/books?id=' + ${item.id}}" target="_blank"><span th:text="${item.volumeInfo.title}"></span></a></td>
 					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.authors}" class="text-left p-4"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
 					<td th:unless="${item.volumeInfo.authors}" class="text-left p-4"><span>ー</span></td>
@@ -54,7 +54,7 @@
 					<td th:unless="${item.volumeInfo.publishedDate}"><span>ー</span></td>
 					<td><button id="register-btn" class="btn btn-warning register-btn" data-toggle="modal" data-target="#book-register-form">登録</button>
 					<input th:if="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="${item.volumeInfo.industryIdentifiers[0].identifier}">
-					<input th:unless="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="${item.volumeInfo.id}">
+					<input th:unless="${item.volumeInfo.industryIdentifiers}" type="hidden" class="isbn-id" th:value="${item.id}">
 					<input th:if="${item.volumeInfo.title}" type="hidden" class="title" th:value="${item.volumeInfo.title}">
 					<input th:unless="${item.volumeInfo.title}" type="hidden" class="title" th:value="ー">
 					<input th:if="${item.volumeInfo.authors}" type="hidden" class="author" th:value="${item.volumeInfo.authors[0]}">
