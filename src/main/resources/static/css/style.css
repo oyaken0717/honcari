@@ -45,7 +45,7 @@ a:hover {
 }
 
 .btn-warning {
-	color: #fff;
+	color: #fff !important;
 	background-color: var(--yellow);
 	border-color: var(--yellow);
 }
