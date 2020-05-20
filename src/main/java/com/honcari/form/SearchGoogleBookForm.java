@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 public class SearchGoogleBookForm {
 
 	/**	検索ワード */
-	@NotBlank(message="検索ワードを入力しよう")
+	@NotBlank(message="キーワードを入力しよう")
 	private String searchWord;
 	
 	private Integer pageNumber;

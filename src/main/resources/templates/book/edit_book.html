@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Honcari -気軽に本をどこへでも-</title>
+<title>Honcari | 本情報の編集・解除</title>
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"
 	rel="stylesheet">
@@ -11,6 +11,8 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
 	rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/img/favicon.ico">
+	
 </head>
 <body>
 	<nav th:replace="header::frag_header(0)"></nav>
@@ -18,7 +20,7 @@
   		<span th:text="${errorMessage}"></span>
 	</div>
 	<div class="container content-wrapper">
-		<h2 class="section-heading">登録情報の変更・解除</h2>
+		<h2 class="section-heading">登録情報の編集・解除</h2>
 		<!-- Row -->
 		<div class="row align-items-center">
 			<!-- Column -->

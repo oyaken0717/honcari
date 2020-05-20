@@ -2,11 +2,12 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Honcari -気軽に本をどこへでも-</title>
+<title>Honcari | レンタル履歴</title>
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/img/favicon.ico">
 </head>
 <body>
 <header>
@@ -46,7 +47,7 @@
 								<div class="col-lg-6">
 									<div class="text-box">
 										<strong th:text="${borrowedBook.ownedBookInfo.book.title}"></strong><br>
-										所有者：<a th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
+										所有者：<a class="a-link" th:href="@{/user/show_user_page(userId=${borrowedBook.ownedBookInfo.user.userId})}" th:text="${borrowedBook.ownedBookInfo.user.name}"></a><br>
 										レンタル期間：<span th:text="${#dates.format(borrowedBook.beginning, 'yyyy年MM月dd日')}"></span>〜
 													<span th:text="${#dates.format(borrowedBook.deadline, 'yyyy年MM月dd日')}"></span><br>
 										現在のステータス：<span class="book-status" th:value="${status.count}" th:text="${borrowedBook.ownedBookInfo.getStatus()}"></span><br>
@@ -109,7 +110,7 @@
 								<div class="col-lg-6">
 									<div class="text-box">
 										<strong th:text="${lentBook.ownedBookInfo.book.title}"></strong><br>
-										レンタル者：<a th:href="@{/user/show_user_page(userId=${lentBook.borrowUser.userId})}" th:text="${lentBook.borrowUser.name}"></a><br>
+										レンタル者：<a class="a-link" th:href="@{/user/show_user_page(userId=${lentBook.borrowUser.userId})}" th:text="${lentBook.borrowUser.name}"></a><br>
 										レンタル期間：<span th:text="${#dates.format(lentBook.beginning, 'yyyy年MM月dd日')}"></span>〜
 													<span th:text="${#dates.format(lentBook.deadline, 'yyyy年MM月dd日')}"></span><br>
 										現在のステータス：<span th:text="${lentBook.ownedBookInfo.getStatus()}"></span>

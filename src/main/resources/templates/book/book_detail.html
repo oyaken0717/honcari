@@ -2,11 +2,12 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Honcari -気軽に本をどこへでも-</title>
+<title>Honcari | 本の詳細</title>
 <!-- Style CSS -->
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/img/favicon.ico">
 </head>
 <body>
 <nav th:replace="header::frag_header(0)"></nav>
@@ -29,7 +30,7 @@
           	<span th:if="${bookRental}" th:text="${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span>
           </p>
           <p  class="font-weight-bold">
-            所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}">
+            所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}" class="a-link">
              <span th:text="${ownedBookInfo.user.name}">所有者</span></a>
           </p>
           <h3 class="font-weight-light mt-2 mb-4" th:text="${book.title}">title</h3>
