@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.domain.LoginUser;
 import com.honcari.form.ContactForm;
@@ -54,12 +55,12 @@ public class ContactController {
 	 */
 	@RequestMapping("/contact")
 	public String contact(@Validated ContactForm contactForm, BindingResult result, 
-			Model model, @AuthenticationPrincipal LoginUser loginUser) {
+			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
 			return showContact(model, loginUser);
 		}
 		sendContactMailService.sendContactMailToCustomer(contactForm);
-		model.addAttribute("successMessage", "お問い合わせを送信しました！");
+		redirectAttributes.addFlashAttribute("successMessage", "お問い合わせを送信しました！");
 		return "redirect:/show_contact";
 	}
 
