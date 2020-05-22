@@ -36,7 +36,7 @@ public class SendRentalMailService {
 
 	@Autowired
 	private OwnedBookInfoRepository ownedBookInfoRepository;
-	
+
 	@Autowired
 	private HttpServletRequest request;
 
@@ -85,7 +85,7 @@ public class SendRentalMailService {
 			mailSubHeading = "本の返却を確認しました";
 			emailTo = bookRental.getBorrowUser().getEmail();
 		}
-		
+
 		String url = request.getRequestURL().toString();
 		String rentalListPath = url.replace(request.getRequestURI(), "/book_rental/show_list");
 		String applicationPath = url.replace(request.getRequestURI(), "/");
@@ -141,8 +141,8 @@ public class SendRentalMailService {
 	public ClassLoaderTemplateResolver mailTemplateResolver() {
 		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 		templateResolver.setTemplateMode(TemplateMode.HTML);
-		templateResolver.setPrefix("templates/mailTemplates/");
-		templateResolver.setSuffix(".html");
+		templateResolver.setPrefix("templates/mailTemplates/"); // メールファイルの頭につく文字列（ディレクトリ）を指定
+		templateResolver.setSuffix(".html"); // メールファイルの後ろのつく文字列（拡張子）を指定
 		templateResolver.setCharacterEncoding("UTF-8");
 		templateResolver.setCacheable(true);
 		return templateResolver;
