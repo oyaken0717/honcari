@@ -24,17 +24,18 @@ public class ConfirmReturnController {
 	private ConfirmReturnService confirmReturnService;
 
 	/**
-	 * 本の返却を確認する.
-	 * 
-	 * @param bookRentalId 貸出情報ID
-	 * @param updateStatus 貸出状況
-	 * @param loginUser    ログインユーザー
-	 * @return 貸出管理画面
+	 * @param loginUser            ログインユーザー
+	 * @param bookRentalId         貸出情報ID
+	 * @param updateStatus         貸出状況
+	 * @param bookRentalVersion    貸出情報バージョン
+	 * @param ownedBookInfoVersion 所有本情報バージョン
+	 * @param redirectAttributes
+	 * @return 貸出中の本一覧画面
 	 */
 	@RequestMapping(value = "/confirm_return", method = RequestMethod.POST)
-	public String confirmReturn(Integer bookRentalId, Integer updateStatus,
-			@AuthenticationPrincipal LoginUser loginUser, Integer bookRentalVersion, Integer ownedBookInfoVersion
-			, RedirectAttributes redirectAttributes) {
+	public String confirmReturn(@AuthenticationPrincipal LoginUser loginUser, Integer bookRentalId,
+			Integer updateStatus, Integer bookRentalVersion, Integer ownedBookInfoVersion,
+			RedirectAttributes redirectAttributes) {
 		String processingUserName = loginUser.getUser().getName();
 
 		try {

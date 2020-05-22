@@ -37,10 +37,10 @@ public class ConfirmReturnService {
 	public void confirmReturn(Integer bookRentalId, Integer bookStatus, String updateUserName,
 			Integer bookRentalVersion, Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
-		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
-		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setRentalStatus(RentalStatusEnum.RETURNED.getValue());
+		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
+		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
 		ownedBookInfo.setBookStatus(bookStatus);
 		ownedBookInfo.setVersion(ownedBookInfoVersion);
 
