@@ -133,7 +133,7 @@ public class EditUserController {
 		}
 		user.setStatus(0);
 		user.setUpdatePasswordDate(new Timestamp(System.currentTimeMillis()));
-		if(editUserForm.getProfileImage()!=null) {
+		if(!"".equals(editUserForm.getProfileImage().getOriginalFilename())) {
 			s3UploadHelper.saveUserFile(editUserForm.getProfileImage(), loginUser.getUser().getUserId());
 			String groupImageUrl = "https://"+BUCKET_NAME+".s3-ap-northeast-1.amazonaws.com/"+USER_FOLDER_NAME+"/"+loginUser.getUser().getUserId();
 			user.setImagePath(groupImageUrl);
