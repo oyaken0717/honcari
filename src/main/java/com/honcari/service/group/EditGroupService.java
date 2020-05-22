@@ -32,8 +32,8 @@ public class EditGroupService {
 	@Autowired
 	private SearchGroupService searchGroupService;
 	
-	private static final String BUCKET_NAME = System.getenv("AWS_BUCKET_NAME");
-    private static final String GROUP_FOLDER_NAME = System.getenv("AWS_GROUP_FOLDER_NAME");
+	private static final String BUCKET_NAME = System.getenv("AWS_BUCKET_NAME");    
+	private static final String GROUP_FOLDER_NAME = System.getenv("AWS_GROUP_FOLDER_NAME");
 	
 	/**
 	 * グループ情報編集のためのメソッド.
@@ -56,7 +56,7 @@ public class EditGroupService {
 			User user = registerGroupService.findByName(form.getUserName());
 			group.setRequestedOwnerUserId(user.getUserId());
 		}
-		if(form.getGroupImage()!=null) {
+		if(!"".equals(form.getGroupImage().getOriginalFilename())) {
 			s3UploadHelper.saveGroupFile(form.getGroupImage(),group.getId());
 			String groupImageUrl = "https://"+BUCKET_NAME+".s3-ap-northeast-1.amazonaws.com/"+GROUP_FOLDER_NAME+"/"+group.getId();
 	    	group.setGroupImage(groupImageUrl);

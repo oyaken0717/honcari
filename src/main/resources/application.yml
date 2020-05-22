@@ -13,6 +13,7 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true    
 
+
 cloud:
   aws:
     credentials:
@@ -25,3 +26,4 @@ cloud:
     region:
       auto: false
       static: ap-northeast-1
+      
