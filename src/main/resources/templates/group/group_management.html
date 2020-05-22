@@ -60,7 +60,7 @@
 			<div class="tab-pane active fade" id="joined-groups" th:unless="${belongGroupList}==null" >
 		      <div class="row" style="margin:40px">
 		        <div class="col-md-4" th:each="group:${belongGroupList}">      
-				  <div class="mb-4 group-card DivLink">   
+				  <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
 		              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
 		              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 		              <div class="text-center" style="bottom:0">
@@ -75,7 +75,7 @@
 			<div class="tab-pane fade" id="own-groups" th:unless="${ownGroupList}==null">
 			  <div class="row" style="margin:40px">
 		        <div class="col-md-4" th:each="group:${ownGroupList}">      
-				  <div class="mb-4 group-card DivLink">   
+				  <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
 		              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
 		              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 		              <div class="text-center" style="bottom:0">
@@ -94,7 +94,7 @@
 			<div class="tab-pane fade" id="not-approved-list" th:unless="${notApprovedGroupList}==null">
 			  <div class="row" style="margin:40px">
 		        <div class="col-md-4" th:each="group:${notApprovedGroupList}">      
-				  <div class="mb-4 group-card DivLink">   
+				  <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
 		              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
 		              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 		              <div class="text-center" style="bottom:0">

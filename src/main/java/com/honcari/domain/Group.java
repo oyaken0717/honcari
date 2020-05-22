@@ -12,6 +12,7 @@ public class Group {
 	private Integer requestedOwnerUserId;
 	private List<User> userList;
 	private User ownerUser;
+	private String groupImage;
 	public Integer getId() {
 		return id;
 	}
@@ -60,12 +61,19 @@ public class Group {
 	public void setOwnerUser(User ownerUser) {
 		this.ownerUser = ownerUser;
 	}
+	public String getGroupImage() {
+		return groupImage;
+	}
+	public void setGroupImage(String groupImage) {
+		this.groupImage = groupImage;
+	}
 	@Override
 	public String toString() {
 		return "Group [id=" + id + ", name=" + name + ", description=" + description + ", ownerUserId=" + ownerUserId
 				+ ", groupStatus=" + groupStatus + ", requestedOwnerUserId=" + requestedOwnerUserId + ", userList="
-				+ userList + ", ownerUser=" + ownerUser + "]";
+				+ userList + ", ownerUser=" + ownerUser + ", groupImage=" + groupImage + "]";
 	}
+	
 	
 	
 }

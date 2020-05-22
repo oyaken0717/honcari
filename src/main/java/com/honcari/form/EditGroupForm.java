@@ -2,6 +2,8 @@ package com.honcari.form;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * グループ内容編集フォーム.
  * 
@@ -26,6 +28,8 @@ public class EditGroupForm {
 	private Integer requestedOwnerUserId;
 	
 	private String userName;
+	
+	private MultipartFile groupImage;
 
 	public Integer getGroupId() {
 		return groupId;
@@ -83,15 +87,20 @@ public class EditGroupForm {
 		this.userName = userName;
 	}
 
+	public MultipartFile getGroupImage() {
+		return groupImage;
+	}
+
+	public void setGroupImage(MultipartFile groupImage) {
+		this.groupImage = groupImage;
+	}
+
 	@Override
 	public String toString() {
 		return "EditGroupForm [groupId=" + groupId + ", name=" + name + ", description=" + description
 				+ ", ownerUserId=" + ownerUserId + ", groupStatus=" + groupStatus + ", requestedOwnerUserId="
-				+ requestedOwnerUserId + ", userName=" + userName + "]";
+				+ requestedOwnerUserId + ", userName=" + userName + ", groupImage=" + groupImage + "]";
 	}
-
-	
-
 	
 	
 }

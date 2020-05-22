@@ -33,11 +33,12 @@ public class RegisterUserService {
 	 * @param form ユーザー登録フォーム
 	 */
 	public void registerUser(RegisterUserForm form) {
+		String profileImage = "https://honcari-image.s3-ap-northeast-1.amazonaws.com/profile-image/user_default.png";
 		User user = new User();
 		user.setName(form.getName());
 		user.setEmail(form.getEmail());
 		user.setPassword(passwordEncoder.encode(form.getPassword()));
-		user.setImagePath(null);
+		user.setImagePath(profileImage);
 		user.setProfile(null);
 		user.setUpdatePasswordDate(new Timestamp(System.currentTimeMillis()));
 		userRepository.insert(user);

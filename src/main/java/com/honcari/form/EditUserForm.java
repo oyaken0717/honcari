@@ -4,6 +4,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * ユーザー情報編集用フォーム.
  * 
@@ -29,7 +31,7 @@ public class EditUserForm {
 	/**	入力された現在のパスワード */
 	private String inputCurrentPassword;
 	/**	画像 */
-	private String imagePath;
+	private MultipartFile profileImage;
 	/**	自己紹介文 */
 	private String profile;
 	public Integer getUserId() {
@@ -74,11 +76,11 @@ public class EditUserForm {
 	public void setInputCurrentPassword(String inputCurrentPassword) {
 		this.inputCurrentPassword = inputCurrentPassword;
 	}
-	public String getImagePath() {
-		return imagePath;
+	public MultipartFile getProfileImage() {
+		return profileImage;
 	}
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setProfileImage(MultipartFile profileImage) {
+		this.profileImage = profileImage;
 	}
 	public String getProfile() {
 		return profile;
@@ -88,9 +90,11 @@ public class EditUserForm {
 	}
 	@Override
 	public String toString() {
-		return "EditUserForm [userId=" + userId + ", name=" + name + ", email=" + email
-				+ ", password=" + password + ", confirmPassword=" + confirmPassword + ", currentPassword="
-				+ currentPassword + ", inputCurrentPassword=" + inputCurrentPassword + ", imagePath=" + imagePath
-				+ ", profile=" + profile + "]";
+		return "EditUserForm [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", confirmPassword=" + confirmPassword + ", currentPassword=" + currentPassword
+				+ ", inputCurrentPassword=" + inputCurrentPassword + ", profileImage=" + profileImage + ", profile="
+				+ profile + "]";
 	}
+
+	
 }

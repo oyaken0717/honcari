@@ -11,14 +11,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
-import com.honcari.domain.User;
 import com.honcari.form.EditGroupForm;
 import com.honcari.service.group.EditGroupService;
-import com.honcari.service.group.RegisterGroupService;
 import com.honcari.service.group.ShowGroupDetailService;
 
 /**
@@ -95,13 +94,17 @@ public class EditGroupController {
 	 */
 	@RequestMapping(value = "/edit_group")
 	public String editGroup(@Validated EditGroupForm form, BindingResult result, Model model,
-			HttpServletRequest request,@AuthenticationPrincipal LoginUser loginUser) {
+			HttpServletRequest request,@AuthenticationPrincipal LoginUser loginUser,RedirectAttributes redirectAttributesm) {
 		if (result.hasErrors()) {
 			return toEditGroup(form.getGroupId(), model, request,loginUser);
 		}
+		if(form.getGroupImage().getSize()>1048576) {
+			result.rejectValue("profileImage", null, "ファイルサイズが大きすぎます");
+		}
 
-		
-		editGroupService.editGroup(form);
+		Group group = editGroupService.editGroup(form);
+		redirectAttributesm.addFlashAttribute("groupImageUrl", group.getGroupImage());
+
 		return "redirect:/group/show_detail?id=" + form.getGroupId();
 	}
 
