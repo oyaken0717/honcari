@@ -2,6 +2,8 @@ package com.honcari.service.user;
 
 import java.sql.Timestamp;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,14 +28,21 @@ public class RegisterUserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+    private String User_Folder_Name = System.getenv("AWS_USER_FOLDER_NAME");
+	private String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
 
 	/**
 	 * ユーザー登録処理.
 	 * 
 	 * @param form ユーザー登録フォーム
 	 */
-	public void registerUser(RegisterUserForm form) {
-		String profileImage = "https://honcari-image.s3-ap-northeast-1.amazonaws.com/profile-image/user_default.png";
+	public void registerUser(RegisterUserForm form,HttpServletRequest request) {
+		if (!request.getHeader("REFERER").contains("heroku")) {
+			User_Folder_Name = "profile-image-test";
+			Bucket_Name = "honcari-image-test";
+		}
+		String profileImage = "https://"+Bucket_Name+".s3-ap-northeast-1.amazonaws.com/"+User_Folder_Name+"/user_default.png";
 		User user = new User();
 		user.setName(form.getName());
 		user.setEmail(form.getEmail());

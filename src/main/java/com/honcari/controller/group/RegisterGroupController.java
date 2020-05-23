@@ -3,6 +3,8 @@ package com.honcari.controller.group;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -36,11 +38,9 @@ public class RegisterGroupController {
 
 	@Autowired
 	private RegisterGroupService registerGroupService;
-	
-	private static final String BUCKET_NAME = System.getenv("AWS_BUCKET_NAME");
-	
-    private static final String GROUP_FOLDER = System.getenv("AWS_GROUP_FOLDER_NAME");
 
+	private  String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
+    private  String Group_Folder_Name = System.getenv("AWS_GROUP_FOLDER_NAME");
 
 	@ModelAttribute
 	public RegisterGroupForm setRegisterGroupForm() {
@@ -63,7 +63,7 @@ public class RegisterGroupController {
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result,
-			RedirectAttributes redirectAttributesm, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+			RedirectAttributes redirectAttributesm, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
 		if (result.hasErrors()) {
 			return toRegisterGroup(model, loginUser);
 		}
@@ -77,7 +77,11 @@ public class RegisterGroupController {
 			});
 		}
 		
-		String groupImageUrl = "https://"+BUCKET_NAME+".s3-ap-northeast-1.amazonaws.com/"+GROUP_FOLDER+"/group_default.jpg";
+		if (!request.getHeader("REFERER").contains("heroku")) {
+			Group_Folder_Name="group-test";
+			Bucket_Name="honcari-image-test";
+		}
+		String groupImageUrl = "https://"+Bucket_Name+".s3-ap-northeast-1.amazonaws.com/"+Group_Folder_Name+"/group_default.jpg";
 		Group group = new Group();
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());

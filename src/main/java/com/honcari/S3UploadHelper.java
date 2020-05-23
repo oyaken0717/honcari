@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,9 @@ public class S3UploadHelper {
 	
     private static final String S3_BUCKET_PREFIX = "s3://";
     private static final String DIRECTORY_DELIMITER = "/";
-    private static final String GROUP_FOLDER_NAME = System.getenv("AWS_GROUP_FOLDER_NAME");
-    private static final String USER_FOLDER_NAME = System.getenv("AWS_USER_FOLDER_NAME");
-
-
-//    @Value("")
-	private static final String BUCKET_NAME = System.getenv("AWS_BUCKET_NAME");
+    private String Group_Folder_Name = System.getenv("AWS_GROUP_FOLDER_NAME");
+    private String User_Folder_Name = System.getenv("AWS_USER_FOLDER_NAME");
+	private  String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -35,12 +33,16 @@ public class S3UploadHelper {
 //    @Autowired
 //    AmazonS3 amazonS3;
 
-    public String saveGroupFile(MultipartFile multipartFile,Integer groupId){
+    public String saveGroupFile(MultipartFile multipartFile,Integer groupId,HttpServletRequest request){
+		if (!request.getHeader("REFERER").contains("heroku")) {
+			Group_Folder_Name="group-test";
+			Bucket_Name = "honcari-image-test";
+		}
     	String objectKey = new StringBuilder()
           .append(S3_BUCKET_PREFIX)
-          .append(BUCKET_NAME)
+          .append(Bucket_Name)
           .append(DIRECTORY_DELIMITER)
-          .append(GROUP_FOLDER_NAME)
+          .append(Group_Folder_Name)
           .append(DIRECTORY_DELIMITER)
           .append(groupId)
           .toString();
@@ -55,12 +57,16 @@ public class S3UploadHelper {
         return objectKey;
      }
     
-    public String saveUserFile(MultipartFile multipartFile,Integer userId){
+    public String saveUserFile(MultipartFile multipartFile,Integer userId,HttpServletRequest request){
+		if (!request.getHeader("REFERER").contains("heroku")) {
+			User_Folder_Name="profile-image-test";
+			Bucket_Name = "honcari-image-test";
+		}
     	String objectKey = new StringBuilder()
           .append(S3_BUCKET_PREFIX)
-          .append(BUCKET_NAME)
+          .append(Bucket_Name)
           .append(DIRECTORY_DELIMITER)
-          .append(USER_FOLDER_NAME)
+          .append(User_Folder_Name)
           .append(DIRECTORY_DELIMITER)
           .append(userId)
           .toString();

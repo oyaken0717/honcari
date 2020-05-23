@@ -73,7 +73,7 @@ public class EditGroupController {
 
 		if (request.getHeader("REFERER").contains("edit_group") == true) {
 			returnParam = (String) session.getAttribute("formerPage");
-			if (request.getHeader("REFERER").contains("heroku")) {
+			if (!request.getHeader("REFERER").contains("heroku")) {
 				returnParam = request.getHeader("REFERER").substring(29);
 			}
 			model.addAttribute("returnParam", returnParam);
@@ -102,7 +102,7 @@ public class EditGroupController {
 			result.rejectValue("profileImage", null, "ファイルサイズが大きすぎます");
 		}
 
-		Group group = editGroupService.editGroup(form);
+		Group group = editGroupService.editGroup(form,request);
 		redirectAttributesm.addFlashAttribute("groupImageUrl", group.getGroupImage());
 
 		return "redirect:/group/show_detail?id=" + form.getGroupId();
