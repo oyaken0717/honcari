@@ -816,3 +816,26 @@ a.disabled{
 .notice-pending-approval:hover{
 	text-decoration: underline;
 }
+
+
+/* チュートリアル画面 */
+.tutorial-wrapper .font-weight-medium {
+	font-weight: 800;
+}
+
+.tutorial-wrapper .icon-round {
+    width: 80px;
+    line-height: 80px;
+	font-size: 2rem;
+	color: white;
+	background-color: var(--yellow);
+}
+
+.tutorial-wrapper .img-fluid{
+  border-radius: 0.25rem;
+  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+}
+
+
+
