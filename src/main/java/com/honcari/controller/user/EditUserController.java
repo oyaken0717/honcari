@@ -3,6 +3,8 @@ package com.honcari.controller.user;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -55,8 +57,8 @@ public class EditUserController {
 	@Autowired
     private S3UploadHelper s3UploadHelper;
 	
-    private static final String USER_FOLDER_NAME = System.getenv("AWS_USER_FOLDER_NAME");
-	private static final String BUCKET_NAME = System.getenv("AWS_BUCKET_NAME");
+    private String User_Folder_Name = System.getenv("AWS_USER_FOLDER_NAME");
+	private String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
 
 	
 	@ModelAttribute
@@ -89,7 +91,7 @@ public class EditUserController {
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String editUser(@Validated EditUserForm editUserForm, BindingResult result, 
-			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser) {
+			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
 		
 		System.out.println(editUserForm.getProfileImage().getSize());
 		
@@ -134,8 +136,12 @@ public class EditUserController {
 		user.setStatus(0);
 		user.setUpdatePasswordDate(new Timestamp(System.currentTimeMillis()));
 		if(!"".equals(editUserForm.getProfileImage().getOriginalFilename())) {
-			s3UploadHelper.saveUserFile(editUserForm.getProfileImage(), loginUser.getUser().getUserId());
-			String groupImageUrl = "https://"+BUCKET_NAME+".s3-ap-northeast-1.amazonaws.com/"+USER_FOLDER_NAME+"/"+loginUser.getUser().getUserId();
+			s3UploadHelper.saveUserFile(editUserForm.getProfileImage(), loginUser.getUser().getUserId(),request);
+			if (!request.getHeader("REFERER").contains("heroku")) {
+				User_Folder_Name = "profile-image-test";
+				Bucket_Name = "honcari-image-test";
+			}
+			String groupImageUrl = "https://"+Bucket_Name+".s3-ap-northeast-1.amazonaws.com/"+User_Folder_Name+"/"+loginUser.getUser().getUserId();
 			user.setImagePath(groupImageUrl);
 		}
 		editUserService.editUser(user);

@@ -1,5 +1,7 @@
 package com.honcari.service.group;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,15 +34,15 @@ public class EditGroupService {
 	@Autowired
 	private SearchGroupService searchGroupService;
 	
-	private static final String BUCKET_NAME = System.getenv("AWS_BUCKET_NAME");    
-	private static final String GROUP_FOLDER_NAME = System.getenv("AWS_GROUP_FOLDER_NAME");
+	private String Bucket_Name = System.getenv("AWS_BUCKET_NAME");    
+	private String Group_Folder_Name = System.getenv("AWS_GROUP_FOLDER_NAME");
 	
 	/**
 	 * グループ情報編集のためのメソッド.
 	 * 
 	 * @param form グループ編集フォーム
 	 */
-	public Group editGroup(EditGroupForm form) {
+	public Group editGroup(EditGroupForm form,HttpServletRequest request) {
 		Group group = searchGroupService.searchGroupById(form.getGroupId());
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());
@@ -57,8 +59,12 @@ public class EditGroupService {
 			group.setRequestedOwnerUserId(user.getUserId());
 		}
 		if(!"".equals(form.getGroupImage().getOriginalFilename())) {
-			s3UploadHelper.saveGroupFile(form.getGroupImage(),group.getId());
-			String groupImageUrl = "https://"+BUCKET_NAME+".s3-ap-northeast-1.amazonaws.com/"+GROUP_FOLDER_NAME+"/"+group.getId();
+			s3UploadHelper.saveGroupFile(form.getGroupImage(),group.getId(),request);
+			if (!request.getHeader("REFERER").contains("heroku")) {
+				Group_Folder_Name = "group-test";
+				Bucket_Name = "honcari-image-test";
+			}
+			String groupImageUrl = "https://"+Bucket_Name+".s3-ap-northeast-1.amazonaws.com/"+Group_Folder_Name+"/"+group.getId();
 	    	group.setGroupImage(groupImageUrl);
 		}
     	 updateGroupService.updateGroup(group);

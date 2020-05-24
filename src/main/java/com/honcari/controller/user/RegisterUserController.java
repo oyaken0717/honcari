@@ -1,4 +1,6 @@
 package com.honcari.controller.user;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +45,7 @@ public class RegisterUserController {
 	 * @return thank you ページへ遷移
 	 */
 	@RequestMapping(value="/register",method = RequestMethod.POST)
-	public String register(@Validated RegisterUserForm form, BindingResult result,Model mode) {
+	public String register(@Validated RegisterUserForm form, BindingResult result,Model mode,HttpServletRequest request) {
 		if (!form.getPassword().equals(form.getConfirmPassword())) {
 			result.rejectValue("password", null, "パスワードと確認用パスワードが一致していません。");
 		}
@@ -60,7 +62,7 @@ public class RegisterUserController {
 			return toRegisterUser();
 		}
 
-		registerUserService.registerUser(form);
+		registerUserService.registerUser(form,request);
 		return "redirect:/user/to_thank_register";
 	}
 	
