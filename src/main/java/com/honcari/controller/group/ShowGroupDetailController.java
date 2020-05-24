@@ -18,6 +18,7 @@ import com.honcari.domain.GroupRelation;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;
 import com.honcari.service.group.SearchGroupRelationService;
+import com.honcari.service.group.SearchRequestedOwnerService;
 import com.honcari.service.group.ShowGroupDetailService;
 
 /**
@@ -36,6 +37,9 @@ public class ShowGroupDetailController {
 	
 	@Autowired
 	private SearchGroupRelationService searchGroupRelationService;
+	
+	@Autowired
+	private SearchRequestedOwnerService searchRequestedOwnerService;
 
 	@Autowired
 	private HttpSession session;
@@ -69,6 +73,15 @@ public class ShowGroupDetailController {
 		// ログインユーザーがグループのオーナーか否かを確認
 		if (loginUser.getUser().getUserId() == group.getOwnerUserId()) {
 			model.addAttribute("owner", "owner");
+		}
+		
+		List<Group> requestedOwnerGroupList = searchRequestedOwnerService.searchRequestedOwnerUser(loginUser.getUser().getUserId());
+		if(requestedOwnerGroupList!=null) {
+			requestedOwnerGroupList.forEach((i -> {
+				if(i.getId()==id) {
+					model.addAttribute("hasRequestOwnerAdmin","hasRequestOwnerAdmin");
+				}
+			}));
 		}
 
 		model.addAttribute("b", b);

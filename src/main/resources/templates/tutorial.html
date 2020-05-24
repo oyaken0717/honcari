@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Honcari | このアプリについて</title>
+<!-- Style CSS -->
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/img/favicon.ico">
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- ヘッダー -->
+<nav th:replace="header::frag_header(0)"></nav>
+<!-- トップ -->
+<div class="container content-wrapper tutorial-wrapper">
+	<h2 class="section-heading"><span class="text-yellow font-weight-bold">Honcari</span>の使い方</h2>
+	<p class="section-description">身近な人とグループをつくり、読んでいる本の共有や貸し借りを行うことをサポートします。</p>
+	<!-- Row  -->
+        <div class="row mt-5">
+            <!-- Column -->
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="d-flex">
+                            <div class="no-shrink"><span class="icon-round rounded-circle text-center d-inline-block"><i class="fas fa-book"></i></span></div>
+                            <div class="p-3">
+                                <h6 class="font-weight-medium"><a href="#" th:href="@{/book/show_register}" class="a-link">本を登録する</a></h6>
+                                <p class="mt-3">自分が持っている本をアプリに登録しましょう！蔵書データから本を探すことができます。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="d-flex">
+                            <div class="no-shrink"><span class="icon-round rounded-circle text-center d-inline-block"><i class="fas fa-users"></i></span></div>
+                            <div class="p-3">
+                                <h6 class="font-weight-medium"><a href="#" th:href="@{/group/to_search}" class="a-link">グループに入る</a></h6>
+                                <p class="mt-3">本の貸し借りを行うためのグループに入りましょう！もちろん、身近な人たちを集めてグループをつくることも可能です。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="d-flex">
+                            <div class="no-shrink"><span class="icon-round rounded-circle text-center d-inline-block"><i class="fas fa-book-open"></i></span></div>
+                            <div class="p-3">
+                                <h6 class="font-weight-medium"><a href="#" th:href="@{/}" class="a-link">貸し借りを行う</a></h6>
+                                <p class="mt-3">グループで共有している本を見ることができます。気になる本があったら貸出リクエストを送りましょう！
+                                	リクエストがあった場合は<a th:href="@{/book_rental/show_pending_list}">レンタル申請管理画面</a>から承認することができます。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="d-flex">
+                            <div class="no-shrink"><span class="icon-round rounded-circle text-center d-inline-block"><i class="fas fa-cogs"></i></span></div>
+                            <div class="p-3">
+                                <h6 class="font-weight-medium"><a href="#" th:href="@{/user/show_mypage}" class="a-link">各種設定</a></h6>
+                                <p class="mt-3">貸出可否の設定やプロフィールの編集を自由に行うことができます！お気に入りの本にはコメントを追加して広めていきましょう！</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- Column -->
+            <div class="col-lg-6">
+                <img src="#" th:src="@{/img/books.jpeg}" class="img-fluid" alt="wrapkit" />
+            </div>
+        </div>
+</div>
+
+
+<footer th:replace="footer::footer"></footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+</body>
+</html>

@@ -8,10 +8,11 @@
 	--secondary: #332900;
 	--yellow: #f7c600; 
 	--yellowHover: #cca300; 
-	--green: #00f700;
-	--blue: #00c6f7;
-	--purple: #6300f7; 
-	--red: #f70063;
+	--green: #31f700;
+	--turquoise: #00f7c6;
+	--blue: #0031f7 ;
+	--purple: #c600f7 ; 
+	--red: #f70031;
 	--gray: #808080;
 }
 
@@ -815,3 +816,26 @@ a.disabled{
 .notice-pending-approval:hover{
 	text-decoration: underline;
 }
+
+
+/* チュートリアル画面 */
+.tutorial-wrapper .font-weight-medium {
+	font-weight: 800;
+}
+
+.tutorial-wrapper .icon-round {
+    width: 80px;
+    line-height: 80px;
+	font-size: 2rem;
+	color: white;
+	background-color: var(--yellow);
+}
+
+.tutorial-wrapper .img-fluid{
+  border-radius: 0.25rem;
+  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+}
+
+
+

@@ -9,13 +9,14 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div th:if="${NumOfPendingApproval} != 0 or ${NumOfGroupPendingApproval} != 0" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert" th:fragment="pending_approval">
+<div th:if="${NumOfPendingApproval} != 0 or ${NumOfGroupPendingApproval} != 0 or ${NumOfOwnerRequest} != 0" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert" th:fragment="pending_approval">
+  	<div class="notice-pending-approval" th:if="${NumOfPendingApproval} != 0"><a href="#" th:href="@{/book_rental/show_pending_list}"><strong style="color:red" th:text="'レンタル申請が' + ${NumOfPendingApproval} + '件来ています。'"></strong></a></div>
+  	<div class="notice-pending-approval" th:if="${NumOfGroupPendingApproval} != 0"><a  href="#" th:href="@{/group/to_management}"><strong style="color:red" th:text="'グループへの招待が' + ${NumOfGroupPendingApproval} + '件来ています。'"></strong></a></div>
+	<div class="notice-pending-approval" th:if="${NumOfOwnerRequest} != 0"><a  href="#" th:href="@{/group/to_management}"><strong style="color:red" th:text="'グループオーナーの権限委任依頼が' + ${NumOfOwnerRequest} + '件来ています。'"></strong></a></div>
+</div>
+<!-- <div th:if="${NumOfPendingApproval} != 0 or ${NumOfGroupPendingApproval} != 0" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert" th:fragment="pending_approval">
   	<a class="notice-pending-approval" th:if="${NumOfPendingApproval} != 0" href="#" th:href="@{/book_rental/show_pending_list}"><span th:text="'レンタル申請が' + ${NumOfPendingApproval} + '件来ています。'"></span></a>
   	<a class="notice-pending-approval" th:if="${NumOfGroupPendingApproval} != 0" href="#" th:href="@{/group/to_management}"><span th:text="'グループへの招待が' + ${NumOfGroupPendingApproval} + '件来ています。'"></span></a>
-</div>
-<!-- <div th:if="${NumOfGroupPendingApproval} != 0" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert" th:fragment="pending_approval">
-  	<span th:text="'グループへの招待が' + ${NumOfGroupPendingApproval} + '件来ています。'"></span>
-  	<a href="#" th:href="@{/group/to_management}">→詳細はこちら</a>
 </div> -->
 </body>
 </html>

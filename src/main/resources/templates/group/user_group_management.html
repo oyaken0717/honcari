@@ -50,7 +50,7 @@
 						<div class="my-3">
 							<div class="row" style="margin:70px">
 								<div class="col-md-4" th:each="group:${belongGroupList}">        
-								  <div class="mb-4 group-card DivLink">   
+								  <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
 						              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
 						              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 						              <div class="text-center" style="bottom:0">
@@ -72,7 +72,7 @@
 						<div class="my-3">
 							<div class="row" style="margin:70px">
 								<div class="col-md-4" th:each="group:${ownGroupList}">        
-								  <div class="mb-4 group-card DivLink">   
+								  <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
 						              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
 						              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 						              <div class="text-center" style="bottom:0">

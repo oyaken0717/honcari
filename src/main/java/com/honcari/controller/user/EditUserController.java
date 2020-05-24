@@ -3,6 +3,8 @@ package com.honcari.controller.user;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honcari.S3UploadHelper;
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
@@ -51,6 +54,13 @@ public class EditUserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+    private S3UploadHelper s3UploadHelper;
+	
+    private String User_Folder_Name = System.getenv("AWS_USER_FOLDER_NAME");
+	private String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
+
+	
 	@ModelAttribute
 	public EditUserForm setUpEditUserForm() {
 		return new EditUserForm();
@@ -81,7 +91,10 @@ public class EditUserController {
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String editUser(@Validated EditUserForm editUserForm, BindingResult result, 
-			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser) {
+			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
+		
+		System.out.println(editUserForm.getProfileImage().getSize());
+		
 		if(searchExistOtherUserByNameService.isExistOtherUserByName(editUserForm)) {
 			result.rejectValue("name", null, "入力された名前は登録済のため使用できません");
 		}
@@ -105,8 +118,11 @@ public class EditUserController {
 				|| (!confirmPassword.isEmpty() && newPassword.isEmpty())) {
 			result.rejectValue("confirmPassword", null, "パスワードが一致していません");
 		}
+		if(editUserForm.getProfileImage().getSize()>1048576) {
+			result.rejectValue("profileImage", null, "ファイルサイズが大きすぎます");
+		}
 		if(result.getErrorCount() >= 1 
-				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getImagePath()))) {
+				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getProfileImage()))) {
 			return showEditUser(model, loginUser);
 		}
 		User user = new User();
@@ -119,6 +135,15 @@ public class EditUserController {
 		}
 		user.setStatus(0);
 		user.setUpdatePasswordDate(new Timestamp(System.currentTimeMillis()));
+		if(!"".equals(editUserForm.getProfileImage().getOriginalFilename())) {
+			s3UploadHelper.saveUserFile(editUserForm.getProfileImage(), loginUser.getUser().getUserId(),request);
+			if (!request.getHeader("REFERER").contains("heroku")) {
+				User_Folder_Name = "profile-image-test";
+				Bucket_Name = "honcari-image-test";
+			}
+			String groupImageUrl = "https://"+Bucket_Name+".s3-ap-northeast-1.amazonaws.com/"+User_Folder_Name+"/"+loginUser.getUser().getUserId();
+			user.setImagePath(groupImageUrl);
+		}
 		editUserService.editUser(user);
 		if(!newPassword.isEmpty()) {
 			redirectAttributes.addFlashAttribute("updatePasswordMessage", "パスワードの変更が完了しました。");

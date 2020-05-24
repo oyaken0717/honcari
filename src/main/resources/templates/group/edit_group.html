@@ -20,7 +20,17 @@
 <div class="container content-wrapper">
 	<div class="row justify-content-md-center">
 		<div class="col-md-8 col-md-offset-4">
-			<form th:action="@{/group/edit_group}" th:object="${editGroupForm}" method="post">
+			<form th:action="@{/group/edit_group}" th:object="${editGroupForm}" method="post" enctype="multipart/form-data">
+			  <label for="custom-file" class="col-form-label">グループイメージ</label>
+			  <div id="file" class="input-group form-group"> 
+				<div class="custom-file">	
+					<input type="file" id="custom-file" class="custom-file-input inputFile" name="groupImage" accept="image/*">
+					<label class="custom-file-label" for="custom-file" data-browse="参照">ファイル選択...</label>
+				</div>
+				<div class="input-group-append">
+					<button type="button" class="btn btn-outline-secondary reset">取消</button>
+				</div>
+			  </div> 
 			  <div class="form-group">
 			    <label for="InputGroupName">グループ名</label>
 			    <label th:errors="*{name}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
@@ -31,16 +41,44 @@
 			    <label th:errors="*{description}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
 			    <input type="text" th:field="${group.description}" class="form-control" id="InputGroupDescription" placeholder="説明文">
 			  </div>
+			  <div class="form-group" th:if="${requestedOwnerUserName}==null">
+			    <label for="formGroupExampleInput2">オーナー権限を委任する</label> 
+			    <input type="text" class="form-control searchUser" id="formGroupExampleInput2" placeholder="権限を委任したいユーザー名を入力してください">
+			  	<div class="list-group addUserList">
+			  		<!-- jqueryで検索したユーザーリストを表示 -->
+			  	</div>
+			  </div>
+			   <div class="form-group" th:if="${requestedOwnerUserName}!=null">
+			   	<label for="formGroupExampleInput2">オーナー権限を委任する：</label> 
+			   	<div th:text="${requestedOwnerUserName} + ' さんに依頼中です。相手が承認するまでお待ちください。'"></div>
+			   　<input type="hidden" class="form-control" name="userName" th:value="${requestedOwnerUserName}">
+			   </div>
+			  	<input type="hidden" class="form-control loginUserId" th:value="${user.userId}">
+			  <div class="form-group" th:if="${requestedOwnerUserName}==null">
+<!-- 			    <label for="formGroupExampleInput2">オーナー権限を委任するユーザー</label>
+ -->			  	<div class="row mx-2 groupUser">
+			  		<!-- 招待するユーザーを追加するところ -->
+			  	</div>
+			  </div>
+			  <input type="hidden"  class="groupId" name="groupId" th:value="${group.id}">
 			  <small class="">グループを非公開にするにはこちらにチェックを入れてください</small> <input type="checkbox" name="groupStatus" th:field="${group.groupStatus}" value="1" id="InputGroupDescription">
 				<button class="btn btn-warning btn-lg btn-block">変更する</button>
 				<a th:href="@{${returnParam}}" class="btn btn-secondary btn-sm btn-block">戻る</a>			
 			  <input type="hidden" name="groupId" th:value="${group.id}">
 			　<input type="hidden" name="ownerUserId" th:value="${group.ownerUserId}">
+			  <input type="hidden" name="formerOwnerUserId" th:value="${group.requestedOwnerUserId}">
+			
 			</form>
 		</div>
 	</div>
 </div>
 <!-- フッター -->
 <footer th:replace="footer::footer"></footer>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:src="@{/js/owner_transfer.js}"></script>
+<script src="../static/js/file_reader.js" th:src="@{/js/file_reader.js}"></script>
+
+
 </body>
 </html>

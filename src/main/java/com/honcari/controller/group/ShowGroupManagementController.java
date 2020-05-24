@@ -16,6 +16,7 @@ import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
+import com.honcari.service.group.SearchRequestedOwnerService;
 import com.honcari.service.group.ShowGroupManagementService;
 
 /**
@@ -31,6 +32,10 @@ public class ShowGroupManagementController {
 
 	@Autowired
 	private ShowGroupManagementService showGroupManagementService;
+	
+	@Autowired
+	private SearchRequestedOwnerService searchRequestedOwnerService;
+
 
 	/**
 	 * グループ管理画面を表示するためのメソッド.
@@ -49,6 +54,9 @@ public class ShowGroupManagementController {
 		List<Group> ownGroupList = showGroupManagementService
 				.showGroupListByOwnerUserId(loginUser.getUser().getUserId());
 		
+		List<Group> requestedOwnerGroupList = searchRequestedOwnerService.searchRequestedOwnerUser(loginUser.getUser().getUserId());
+		model.addAttribute("requestedOwnerGroupList",requestedOwnerGroupList);
+
 		model.addAttribute("belongGroupList", belongGroupList);
 		model.addAttribute("notApprovedGroupList", notApprovedGroupList);
 		model.addAttribute("ownGroupList", ownGroupList);

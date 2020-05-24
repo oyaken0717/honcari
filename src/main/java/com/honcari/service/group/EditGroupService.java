@@ -1,10 +1,14 @@
 package com.honcari.service.group;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.honcari.S3UploadHelper;
 import com.honcari.domain.Group;
+import com.honcari.domain.User;
 import com.honcari.form.EditGroupForm;
 import com.honcari.repository.GroupRepository;
 
@@ -19,22 +23,52 @@ import com.honcari.repository.GroupRepository;
 public class EditGroupService {
 	
 	@Autowired
-	private GroupRepository groupRepositroty;
+	private RegisterGroupService registerGroupService;
+	
+	@Autowired
+	private UpdateGroupService updateGroupService;
+	
+	@Autowired
+    private S3UploadHelper s3UploadHelper;
+	
+	@Autowired
+	private SearchGroupService searchGroupService;
+	
+	private String Bucket_Name = System.getenv("AWS_BUCKET_NAME");    
+	private String Group_Folder_Name = System.getenv("AWS_GROUP_FOLDER_NAME");
 	
 	/**
 	 * グループ情報編集のためのメソッド.
 	 * 
 	 * @param form グループ編集フォーム
 	 */
-	public void editGroup(EditGroupForm form) {
-		System.out.println(form);
-		Group group = new Group();
-		group.setId(form.getGroupId());
+	public Group editGroup(EditGroupForm form,HttpServletRequest request) {
+		Group group = searchGroupService.searchGroupById(form.getGroupId());
 		group.setName(form.getName());
 		group.setDescription(form.getDescription());
 		group.setGroupStatus(form.getGroupStatus());
-		group.setOwnerUserId(form.getOwnerUserId());
-		groupRepositroty.update(group);
+		if(form.getGroupStatus()==null) {
+			group.setGroupStatus(0);	
+		}
+//		group.setOwnerUserId(form.getOwnerUserId());
+//		group.setRequestedOwnerUserId(null);
+		
+		//もしオーナー権限委任をする場合、requestedOwnwerUserIdにユーザーIDを詰める
+		if(form.getUserName()!=null) {
+			User user = registerGroupService.findByName(form.getUserName());
+			group.setRequestedOwnerUserId(user.getUserId());
+		}
+		if(!"".equals(form.getGroupImage().getOriginalFilename())) {
+			s3UploadHelper.saveGroupFile(form.getGroupImage(),group.getId(),request);
+			if (!request.getHeader("REFERER").contains("heroku")) {
+				Group_Folder_Name = "group-test";
+				Bucket_Name = "honcari-image-test";
+			}
+			String groupImageUrl = "https://"+Bucket_Name+".s3-ap-northeast-1.amazonaws.com/"+Group_Folder_Name+"/"+group.getId();
+	    	group.setGroupImage(groupImageUrl);
+		}
+    	 updateGroupService.updateGroup(group);
+		return group;
 	}
 
 }

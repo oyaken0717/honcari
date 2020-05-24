@@ -82,6 +82,8 @@ create table groups (
   , description text
   , owner_user_id integer
   , group_status integer not null
+  , requested_owner_user_id integer
+  , group_image text
 );
 
 
