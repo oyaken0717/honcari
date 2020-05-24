@@ -50,8 +50,6 @@ public class RegisterBookApiController {
 	@ResponseBody
 	@RequestMapping(value="/register_book", method=RequestMethod.POST)
 	public Map<String, String> registerBook(RegisterBookForm registerBookForm, @AuthenticationPrincipal LoginUser loginUser) {
-		System.out.println(registerBookForm);
-		
 		Integer bookId = null;
 		Book book = new Book();
 		OwnedBookInfo ownedBookInfo = new OwnedBookInfo();

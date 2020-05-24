@@ -42,7 +42,7 @@
     	</ul>
     	<!-- タブ・コンテント -->
     	<div class="tab-content">
-			<div class="tab-pane active fade" id="joined-groups" th:if="${belongGroupList}==null">
+			<div class="tab-pane active fade show" id="joined-groups" th:if="${belongGroupList}==null">
 				<div class="text-center" style="margin: 10px">参加しているグループはありません</div>
 			</div>   			
 			<div class="tab-pane active fade" id="joined-groups" th:unless="${belongGroupList}==null" >
