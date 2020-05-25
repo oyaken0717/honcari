@@ -41,7 +41,6 @@ public class SearchGroupController {
 	public String toSearchGroup(@AuthenticationPrincipal LoginUser loginUser, Model model) {
 		// デフォルトで全件検索
 		List<Group> groupList = searchGroupService.searchGroup("", 0);
-		System.out.println(groupList);
 
 		// グループ名で曖昧検索し総データ数を取得
 		Integer count = searchGroupService.count("");
