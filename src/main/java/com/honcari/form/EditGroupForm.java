@@ -30,6 +30,8 @@ public class EditGroupForm {
 	private String userName;
 	
 	private MultipartFile groupImage;
+	
+	private String imagePath;
 
 	public Integer getGroupId() {
 		return groupId;
@@ -95,11 +97,20 @@ public class EditGroupForm {
 		this.groupImage = groupImage;
 	}
 
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
 	@Override
 	public String toString() {
 		return "EditGroupForm [groupId=" + groupId + ", name=" + name + ", description=" + description
 				+ ", ownerUserId=" + ownerUserId + ", groupStatus=" + groupStatus + ", requestedOwnerUserId="
-				+ requestedOwnerUserId + ", userName=" + userName + ", groupImage=" + groupImage + "]";
+				+ requestedOwnerUserId + ", userName=" + userName + ", groupImage=" + groupImage + ", imagePath="
+				+ imagePath + "]";
 	}
 	
 	
