@@ -99,9 +99,9 @@
 									<div th:if="${ownedBookInfo.bookStatus} == 3" class="now-lending">
 										<img class="bd-placeholder-img thumbnail" style="opacity: 0.5" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 									</div>
-									<div class="p-2">
+									<div class="p-3" style="text-align:left">
 										<div class="mb-3 div-book-title">
-											<span class="card-text book-title" style="text-align:left" th:text="${ownedBookInfo.book.title}"></span>
+											<span class="card-text book-title" th:text="${ownedBookInfo.book.title}"></span>
 										</div>
 										<span class="book-owner">所有者：<a class="a-link" th:href="@{/user/show_user_page(userId=${ownedBookInfo.userId})}" th:text="${ownedBookInfo.user.name}"></a></span><br>			
 									</div>
