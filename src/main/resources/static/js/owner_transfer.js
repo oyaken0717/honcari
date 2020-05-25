@@ -47,6 +47,9 @@ $(function() {
 				$(".addUserList").append(addUserHTML);
 				$('[data-toggle="popover"]').popover();
 			})
+			if (data.userList == null) {
+				$(".addUserList").append('<div class="row user ml-2 mt-2" style="color:gray">該当ユーザーが存在しません</div>');				
+			}
 			return false;
 		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("エラーが発生しました！");
