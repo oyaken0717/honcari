@@ -66,6 +66,8 @@ public class EditGroupService {
 			}
 			String groupImageUrl = "https://"+Bucket_Name+".s3-ap-northeast-1.amazonaws.com/"+Group_Folder_Name+"/"+group.getId();
 	    	group.setGroupImage(groupImageUrl);
+		}else {
+			group.setGroupImage(form.getImagePath());
 		}
     	 updateGroupService.updateGroup(group);
 		return group;
