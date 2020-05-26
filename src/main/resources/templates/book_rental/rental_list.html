@@ -82,12 +82,12 @@
 									レンタル期間：<span th:text="${#dates.format(bookRental.beginning, 'yyyy年MM月dd日')}"></span>〜	
 												<span th:text="${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span><br>
 									ステータス：<span th:text="${bookRental.getBookRentalStatus()}"></span>
-									<div><button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#return-confirm-form">返却されたらこちら</button></div>
+									<div><button class="btn btn-warning btn-sm" data-toggle="modal" th:data-target="${'#return-confirm-form' + status.count}">返却されたらこちら</button></div>
 								</div>
 							</div>
 						</div>
 						<!-- Modal -->
-						<div class="modal fade" id="return-confirm-form" tabindex="-1" role="dialog">
+						<div class="modal fade" th:id="${'return-confirm-form' + status.count}" tabindex="-1" role="dialog">
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content">
 									<form method="post" th:action="@{/book_rental/confirm_return}">
