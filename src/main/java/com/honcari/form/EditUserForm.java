@@ -32,6 +32,8 @@ public class EditUserForm {
 	private String inputCurrentPassword;
 	/**	画像 */
 	private MultipartFile profileImage;
+	/**	画像パス */
+	private String imagePath;
 	/**	自己紹介文 */
 	private String profile;
 	public Integer getUserId() {
@@ -82,6 +84,12 @@ public class EditUserForm {
 	public void setProfileImage(MultipartFile profileImage) {
 		this.profileImage = profileImage;
 	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 	public String getProfile() {
 		return profile;
 	}
@@ -92,9 +100,7 @@ public class EditUserForm {
 	public String toString() {
 		return "EditUserForm [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
 				+ ", confirmPassword=" + confirmPassword + ", currentPassword=" + currentPassword
-				+ ", inputCurrentPassword=" + inputCurrentPassword + ", profileImage=" + profileImage + ", profile="
-				+ profile + "]";
+				+ ", inputCurrentPassword=" + inputCurrentPassword + ", profileImage=" + profileImage + ", imagePath="
+				+ imagePath + ", profile=" + profile + "]";
 	}
-
-	
 }

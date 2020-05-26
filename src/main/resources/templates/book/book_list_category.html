@@ -78,7 +78,7 @@
 								<img class="bd-placeholder-img thumbnail" style="opacity: 0.5" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 							</a>
 						</div>
-						<div class="p-2">
+						<div class="p-3">
 							<div class="mb-3 div-book-title">
 								<a class="card-text book-title a-link" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
 									<span class="card-text" th:text="${ownedBookInfo.book.title}"></span>
