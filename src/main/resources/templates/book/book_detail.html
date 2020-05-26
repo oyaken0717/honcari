@@ -13,7 +13,7 @@
 <nav th:replace="header::frag_header(0)"></nav>
 <div class="container content-wrapper">
 	<h2 class="section-heading">本をリクエストしよう</h2>
-	<p class="section-description">読んで見たい本があったらボタンを押そう</p>
+	<p class="section-description">読んで見たい本があったら貸出リクエストボタンを押そう</p>
 <!-- Row -->
   <div class="row align-items-center">
     <!-- Column -->
@@ -52,7 +52,7 @@
 			<div class="modal fade" id="rental-request-form" tabindex="-1" role="dialog">
   				<div class="modal-dialog modal-dialog-centered" role="document">
  				   <div class="modal-content">
- 				   <form method="post" th:action="@{/book_rental/send}" th:object="${rentalRequestForm}">
+ 				   <form method="post" th:action="@{/book_rental/send}" th:object="${rentalRequestForm}" id="requestForm">
  				     <div class="modal-header">
   				      <h5 class="modal-title">貸出期間を選択</h5>
   				      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -71,7 +71,7 @@
    				   </div>
     			   <div class="modal-footer">
     				 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">閉じる</button>
-    				 <button type="submit" class="btn btn-warning">リクエストを送信</button>
+    				 <button id="send-request-btn" type="submit" class="btn btn-warning">リクエストを送信</button>
   				   </div>
   				  </form>
   				  </div>
