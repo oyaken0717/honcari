@@ -40,6 +40,9 @@ $(function() {
 						+ '</a>'
 					+ '</div>';
 				
+				if(searchName==''){
+					addUserHTML = '';
+				}
 				$(".addUserList").append(addUserHTML);
 				$('[data-toggle="popover"]').popover();
 			})
@@ -116,4 +119,11 @@ $(function() {
 		serachUser($(".searchUser").val());
 		return false;
 	});
+	
+	$(function() {
+		  $('button').on('click', function() {
+		     $(this).prop('disabled', true);
+		     $('form').submit();
+		  });
+		});
 });

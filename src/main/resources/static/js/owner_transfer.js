@@ -60,6 +60,8 @@ $(function() {
 	}
 	
 	//ユーザー検索
+	serachUser('');
+	
 	$(".searchUser").on("keyup", function() {
 		var searchName = $(this).val()
 		serachUser(searchName);
