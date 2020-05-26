@@ -838,9 +838,6 @@ a.disabled{
 	letter-spacing: -.01em;
 }
 
-.group-card-descript {
-}
-
 /* 申請があるときのアラート */
 .notice-pending-approval{
 	color: var(--red) !important;
