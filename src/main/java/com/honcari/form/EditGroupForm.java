@@ -17,9 +17,10 @@ public class EditGroupForm {
 	private Integer groupId;
 	/** 名前 */
 	@NotBlank(message="入力必須項目です")
-	@Size(min=1,max=100, message="グループ名は1文字以上100文字以内で入力してください")
+	@Size(min=2,max=50, message="グループ名は2文字以上50文字以内で入力してください")
 	private String name;
 	/** グループの説明 */
+	@Size(min=1,max=500, message="説明は1文字以上500文字以内で入力してください")
 	@NotBlank(message="入力必須項目です")
 	private String description;
 	/** グループ作成者のid */

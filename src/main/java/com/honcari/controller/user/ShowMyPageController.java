@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.thymeleaf.TemplateEngine;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.LoginUser;
@@ -24,6 +25,9 @@ public class ShowMyPageController {
 
 	@Autowired
 	private SearchUserByUserIdService searchUserByUserIdService;
+	
+	@Autowired
+	private TemplateEngine templateEngine;
 
 	/**
 	 * マイページに遷移するメソッド.
@@ -34,8 +38,12 @@ public class ShowMyPageController {
 	 */
 	@RequestMapping("/show_mypage")
 	public String showMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		//キャッシュ削除
+		templateEngine.clearTemplateCacheFor("user/mypage");
+		
 		User user = searchUserByUserIdService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);
+		
 		return "user/mypage";
 	}
 }

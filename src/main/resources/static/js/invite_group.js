@@ -7,7 +7,12 @@ $(function() {
 		var url = location.href;
 		var groupId = $(".groupId").val();
 		console.log(url);
-		url = url.replace(/group\/(to_invite_group)/g, "search_user_api_for_invite")
+		if(url.includes('to_invite_group')){
+			url = url.replace(/group\/(to_invite_group)/g, "search_user_api_for_invite")
+		}
+		if(url.includes('invite_group')){
+			url = url.replace(/group\/(invite_group)/g, "search_user_api_for_invite")
+		}
 		console.log(url);
 		$.ajax({
 			url : url,

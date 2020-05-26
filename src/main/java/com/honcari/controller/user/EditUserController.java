@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.TemplateEngine;
 
 import com.honcari.S3UploadHelper;
 import com.honcari.CustomControllerAdvice.CommonAttribute;
@@ -157,6 +158,7 @@ public class EditUserController {
 			redirectAttributes.addFlashAttribute("updatePasswordMessage", "パスワードの変更が完了しました。");
 		}
 		redirectAttributes.addFlashAttribute("completeMessage", "プロフィール情報の変更が完了しました。");
+
 		return "redirect:/user/show_mypage";
 	}	
 }

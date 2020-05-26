@@ -119,20 +119,6 @@ public class SearchGroupController {
 				model.addAttribute("firstPage",page-2);
 				model.addAttribute("lastPage",page+2);
 			}
-//			if(totalPageNum<=5) {
-//				model.addAttribute("firstPage",1);
-//				model.addAttribute("lastPage",totalPageNum);
-//			}
-//			if(totalPageNum>5&&page<=4) {
-//				model.addAttribute("firstPage",1);
-//				model.addAttribute("lastPage",5);
-//			}else if(page==totalPageNum||page+1==totalPageNum) {
-//				model.addAttribute("firstPage",totalPageNum-4);
-//				model.addAttribute("lastPage",totalPageNum);
-//			}else{
-//				model.addAttribute("firstPage",page-2);
-//				model.addAttribute("lastPage",page+2);
-//			}
 		}
 
 		// ページング用に検索窓の入力内容と検索結果件数をスコープに格納

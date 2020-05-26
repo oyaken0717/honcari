@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.amazonaws.util.StringUtils;
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.S3UploadHelper;
 import com.honcari.domain.Group;
@@ -64,6 +65,12 @@ public class RegisterGroupController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result,
 			RedirectAttributes redirectAttributesm, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
+		if(form.getName().replaceAll("\u3000", "").equals("")) {
+			result.rejectValue("name", null, "全角スペースのみのグループ名は設定することができません");
+		}
+		if(form.getName().replaceAll("\u3000", "").equals("")) {
+			result.rejectValue("description", null, "全角スペースのみの説明は設定することができません");
+		}
 		if (result.hasErrors()) {
 			return toRegisterGroup(model, loginUser);
 		}
