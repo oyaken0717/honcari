@@ -232,6 +232,16 @@ h4.content-heading {
 	background-color: #F7C600;
 }
 
+.header-image {
+	display: inline-block !important;
+}
+
+#dropdownMenuLink4::after {
+	position: absolute;
+	top: 41%;
+	left: 89%;
+}
+
 /* フッター　*/
 footer {
 	padding: 20px;
