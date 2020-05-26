@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.LoginUser;
 import com.honcari.form.ContactForm;
 import com.honcari.service.SendContactMailService;
@@ -22,6 +23,7 @@ import com.honcari.service.SendContactMailService;
  *
  */
 @Controller
+@CommonAttribute
 public class ContactController {
 	
 	@Autowired

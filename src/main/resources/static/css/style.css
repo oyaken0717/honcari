@@ -232,6 +232,16 @@ h4.content-heading {
 	background-color: #F7C600;
 }
 
+.header-image {
+	display: inline-block !important;
+}
+
+#dropdownMenuLink4::after {
+	position: absolute;
+	top: 41%;
+	left: 89%;
+}
+
 /* フッター　*/
 footer {
 	padding: 20px;
@@ -821,8 +831,8 @@ a.disabled{
 
 .shadow {
     background-color: transparent;
-    background-image: -webkit-linear-gradient(rgba(248,249,250,0) 0,rgba(248,249,250,.6) 50%,rgba(248,249,250,.8) 100%);
-    background-image: linear-gradient(rgba(248,249,250,0) 0,rgba(248,249,250,.6) 50%,rgba(248,249,250,.8) 100%);
+    background-image: -webkit-linear-gradient(rgba(248,249,250,0) 20%,rgba(248,249,250,.5) 60%,rgba(248,249,250,.8) 100%);
+    background-image: linear-gradient(rgba(248,249,250,0) 20%,rgba(248,249,250,.5) 60%,rgba(248,249,250,.8) 100%);
 }
 
 .div-link .Link{
