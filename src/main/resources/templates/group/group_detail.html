@@ -36,8 +36,8 @@
       </div>
       <div class="col-lg-6">
         <h1 class="font-weight-light" th:text="${group.name}">group name</h1>
-        <span th:if="${group.groupStatus} == 1">(非公開グループ)</span>
-        <a class="btn btn-warning mt-2" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a>
+        <span th:if="${group.groupStatus} == 1">(非公開グループ)</span><br th:if="${group.groupStatus} == 1">
+        <a class="btn btn-warning mt-2" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a><br th:if="${b}==false">
         <a class="btn btn-secondary mt-2" th:href="@{'/group/reject_invite_group?groupId=' + ${group.id}}" role="button" th:if="${groupRelation}" onclick="return confirm('このグループに参加しません。よろしいですか？')">このグループに参加しない &raquo;</a>
   	    <small th:if="${hasRequestOwnerAdmin}">※オーナー権限委任依頼に返答しない限りこのグループを抜けることができません</small> 
       </div>
