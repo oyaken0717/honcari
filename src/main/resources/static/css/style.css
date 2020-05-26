@@ -328,17 +328,31 @@ ul.social-buttons {
 	margin: 0;
 }
 
-.image img, input[type="image"] {
-	opacity: 0.6;
+.image img {
+	object-fit: cover;
+}
+
+.user-image {
+	border-width:3px !important;
+}
+
+.delete-image {
+	background-color: #fff;
 }
 
 .custom-file {
-	max-width: 20rem;
 	overflow: hidden;
 }
 
 .custom-file-label {
 	white-space: nowrap;
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group-append .btn {
+	border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .dropdown .dd-text {
@@ -497,7 +511,7 @@ ul.social-buttons {
 }
 
 .card-body {
-	padding: 0.5rem;
+	padding: 1rem;
 }
 
 .div-book-title {
@@ -781,8 +795,14 @@ a.disabled{
   padding: 2rem 1rem;
   border-radius: 0.3rem;
   background-size: cover;
-  padding-top: 70px;
-  padding-bottom: 70px
+}
+
+.group-image2 {
+  background-image: url(/img/group.jpg);
+  color: #fff;
+  padding: 4.6rem 1rem;
+  border-radius: 0.3rem;
+  background-size: cover;
 }
 
 .category-image {

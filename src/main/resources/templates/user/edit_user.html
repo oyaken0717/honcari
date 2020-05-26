@@ -31,18 +31,22 @@
 					th:object="${editUserForm}" enctype="multipart/form-data">
 					<input type="hidden" name="userId" th:value="${user.userId}">
 					<input type="hidden" name="currentPassword" th:value="${user.password}">
-					<div class="form-group image mb-3">
-						<img class="rounded-lg mx-auto d-block border border-secondary" 
-							th:if="${user.imagePath}" th:src="${user.imagePath}" width="100px" height="100px">
-						<img class="rounded-lg mx-auto d-block border border-secondary" 
-							th:unless="${user.imagePath}" th:src="@{/img/user_default.png}" width="100px" height="100px">
+					<input id="name1" type="hidden" th:value="${User_Folder_Name}">
+					<input id="name2" type="hidden" th:value="${Bucket_Name}">
+					<div id="image-panel" class="form-group image mb-3 position-relative">
+						<img id="current-image" class="rounded-lg mx-auto d-block border border-secondary user-image"
+							th:src="${user.imagePath}" width="100px" height="100px">
+						<button type="button" id="delete-image" class="btn btn-sm btn-outline-secondary position-absolute"
+							style="top:69%;left:60%">削除</button>
+						<input id="image-path" type="hidden" name="imagePath" th:value="${user.imagePath}">
 					</div>
 					<div class="col-lg-10 mx-auto">
 						<div class="form-group row">  
 							<label class="col-sm-4 col-form-label" for="profileImage">プロフィール画像</label>
 							<div id="file" class="input-group col-sm-8"> 
-								<div class="custom-file ">
-									<input type="file" id="custom-file" class="custom-file-input" name="profileImage" accept="image/*">
+								<div class="custom-file">
+									<input type="file" id="custom-file" class="custom-file-input" name="profileImage" 
+										accept="image/*">
 									<label class="custom-file-label" for="custom-file" data-browse="参照">ファイル選択...</label>
 								</div>
 								<div class="input-group-append">

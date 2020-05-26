@@ -39,6 +39,9 @@ public class EditGroupController {
 
 	@Autowired
 	private HttpSession session;
+	
+	private  String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
+    private  String Group_Folder_Name = System.getenv("AWS_GROUP_FOLDER_NAME");
 
 	@ModelAttribute
 	public EditGroupForm setUpEditGroupForm() {
@@ -68,8 +71,13 @@ public class EditGroupController {
 		String returnParam = request.getHeader("REFERER").substring(21);
 		if (request.getHeader("REFERER").contains("heroku")) {
 			returnParam = request.getHeader("REFERER").substring(29);
+		}else {
+			Group_Folder_Name="group-test";
+			Bucket_Name="honcari-image-test";
 		}
 		model.addAttribute("returnParam", returnParam);
+		model.addAttribute("Group_Folder_Name", Group_Folder_Name);
+		model.addAttribute("Bucket_Name", Bucket_Name);
 
 		if (request.getHeader("REFERER").contains("edit_group") == true) {
 			returnParam = (String) session.getAttribute("formerPage");

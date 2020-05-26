@@ -21,9 +21,18 @@
 	<div class="row justify-content-md-center">
 		<div class="col-md-8 col-md-offset-4">
 			<form th:action="@{/group/edit_group}" th:object="${editGroupForm}" method="post" enctype="multipart/form-data">
+			  <input id="name1" type="hidden" th:value="${Group_Folder_Name}">
+			  <input id="name2" type="hidden" th:value="${Bucket_Name}">
+			  <div id="image-panel" class="form-group image mb-3 position-relative">
+				<img id="current-image" class="rounded-lg mx-auto d-block border border-secondary"
+					th:src="${group.groupImage}" width="320px" height="180px">
+				<button type="button" id="delete-image" class="btn btn-sm btn-outline-secondary position-absolute delete-image"
+					style="top:83%;left:75%;">削除</button>
+				<input id="image-path" type="hidden" name="imagePath" th:value="${group.groupImage}">
+			  </div>
 			  <label for="custom-file" class="col-form-label">グループイメージ</label>
 			  <div id="file" class="input-group form-group"> 
-				<div class="custom-file">	
+				<div class="custom-file">
 					<input type="file" id="custom-file" class="custom-file-input inputFile" name="groupImage" accept="image/*">
 					<label class="custom-file-label" for="custom-file" data-browse="参照">ファイル選択...</label>
 				</div>
@@ -75,7 +84,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" th:src="@{/js/owner_transfer.js}"></script>
-<script src="../static/js/file_reader.js" th:src="@{/js/file_reader.js}"></script>
+<script src="../static/js/group_file_reader.js" th:src="@{/js/group_file_reader.js}"></script>
 
 
 </body>

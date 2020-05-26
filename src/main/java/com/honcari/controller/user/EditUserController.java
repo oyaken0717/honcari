@@ -26,7 +26,6 @@ import com.honcari.form.EditUserForm;
 import com.honcari.service.user.EditUserService;
 import com.honcari.service.user.SearchExistOtherUserByEmailService;
 import com.honcari.service.user.SearchExistOtherUserByNameService;
-import com.honcari.service.user.SearchUserByUserIdService;
 
 /**
  * ユーザー情報を編集するコントローラー.
@@ -47,9 +46,6 @@ public class EditUserController {
 	
 	@Autowired
 	private SearchExistOtherUserByNameService searchExistOtherUserByNameService;
-	
-	@Autowired
-	private SearchUserByUserIdService searchUserByUserIdService;	
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -74,9 +70,14 @@ public class EditUserController {
 	 * @return プロフィール編集画面
 	 */
 	@RequestMapping(value="/show_edit")
-	public String showEditUser(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = searchUserByUserIdService.showUser(loginUser.getUser().getUserId());
-		model.addAttribute("user", user);
+	public String showEditUser(Model model, @AuthenticationPrincipal LoginUser loginUser, HttpServletRequest request) {
+		model.addAttribute("user", loginUser.getUser());
+		if (!request.getHeader("REFERER").contains("heroku")) {
+			User_Folder_Name = "profile-image-test";
+			Bucket_Name = "honcari-image-test";
+		}
+		model.addAttribute("User_Folder_Name", User_Folder_Name);
+		model.addAttribute("Bucket_Name", Bucket_Name);
 		return "user/edit_user";
 	}
 	
@@ -123,18 +124,22 @@ public class EditUserController {
 		}
 		if(result.getErrorCount() >= 1 
 				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getProfileImage()))) {
-			return showEditUser(model, loginUser);
+			return showEditUser(model, loginUser, request);
 		}
 		User user = new User();
 		BeanUtils.copyProperties(editUserForm, user);
+		System.out.println("form:"+user.getPassword());
 		if(!newPassword.isEmpty()) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			System.out.println("1:"+user.getPassword());
 		}
 		if(newPassword.isEmpty()) {
 			user.setPassword(currentPassword);
+			System.out.println("2:"+user.getPassword());
 		}
 		user.setStatus(0);
 		user.setUpdatePasswordDate(new Timestamp(System.currentTimeMillis()));
+		
 		if(!"".equals(editUserForm.getProfileImage().getOriginalFilename())) {
 			s3UploadHelper.saveUserFile(editUserForm.getProfileImage(), loginUser.getUser().getUserId(),request);
 			if (!request.getHeader("REFERER").contains("heroku")) {
@@ -143,7 +148,10 @@ public class EditUserController {
 			}
 			String groupImageUrl = "https://"+Bucket_Name+".s3-ap-northeast-1.amazonaws.com/"+User_Folder_Name+"/"+loginUser.getUser().getUserId();
 			user.setImagePath(groupImageUrl);
+		}else {
+			user.setImagePath(editUserForm.getImagePath());
 		}
+		
 		editUserService.editUser(user);
 		if(!newPassword.isEmpty()) {
 			redirectAttributes.addFlashAttribute("updatePasswordMessage", "パスワードの変更が完了しました。");

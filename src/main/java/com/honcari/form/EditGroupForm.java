@@ -1,6 +1,7 @@
 package com.honcari.form;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ public class EditGroupForm {
 	private Integer groupId;
 	/** 名前 */
 	@NotBlank(message="入力必須項目です")
+	@Size(min=1,max=100, message="グループ名は1文字以上100文字以内で入力してください")
 	private String name;
 	/** グループの説明 */
 	@NotBlank(message="入力必須項目です")
@@ -24,12 +26,14 @@ public class EditGroupForm {
 	private Integer ownerUserId;
 	/** グループの状態 */
 	private Integer groupStatus;
-	
+	/** グループオーナー権限委任リクエスト */
 	private Integer requestedOwnerUserId;
-	
+	/** グループオーナー権限委任リクエストを送るユーザー名 */
 	private String userName;
-	
+	/** グループ画像 */
 	private MultipartFile groupImage;
+	/** グループ画像 */
+	private String imagePath;
 
 	public Integer getGroupId() {
 		return groupId;
@@ -95,11 +99,20 @@ public class EditGroupForm {
 		this.groupImage = groupImage;
 	}
 
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
 	@Override
 	public String toString() {
 		return "EditGroupForm [groupId=" + groupId + ", name=" + name + ", description=" + description
 				+ ", ownerUserId=" + ownerUserId + ", groupStatus=" + groupStatus + ", requestedOwnerUserId="
-				+ requestedOwnerUserId + ", userName=" + userName + ", groupImage=" + groupImage + "]";
+				+ requestedOwnerUserId + ", userName=" + userName + ", groupImage=" + groupImage + ", imagePath="
+				+ imagePath + "]";
 	}
 	
 	

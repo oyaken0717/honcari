@@ -61,7 +61,7 @@ public class ShowBookListController {
 		model.addAttribute("categoryList", categoryList);
 		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 1);
 		if(belongGroupList==null) {
-			return "redirect:/group/to_search";
+			return "redirect:/tutorial";
 		}
 		
 		return "book/book_list";
