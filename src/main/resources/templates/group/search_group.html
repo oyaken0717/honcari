@@ -29,17 +29,19 @@
 	  <div style="margin: 50px 0 0 0">
         <p class="text-center" style="color:gray" th:if="${groupList}==null">検索結果がありませんでした</p>  
       </div>
-      <div class="row">
-        <div class="col-md-4" th:each="group:${groupList}">      
-          <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
-              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
-              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="text-center" style="bottom:0">
-              <a class ="Link" th:href="@{/group/show_detail(id=${group.id})}"></a> 
-                <small>オーナー： <a th:href="${'/user/show_user_page?userId=' + group.ownerUser.userId}" style="color:white" th:text="${group.ownerUser.name}"></a></small>
-              </div>
-          </div>
-        </div>
+      <div class="row" style="margin:40px">
+        <div class="col-md-4 mb-4" th:each="group:${groupList}">
+          <div class="group-card rounded-lg shadow div-link" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
+		    <div class="rounded-lg shadow">
+		      <a class="Link" th:href="@{/group/show_detail(id=${group.id})}"></a>
+	  	      <div class="over-text">
+		        <h4 class="text-truncate group-card-name" th:text="${group.name}"></h4>
+		        <div class="text-truncate group-card-descript" th:text="${group.description}"></div>
+		        <small class="text-truncate">オーナー ： <span th:text="${group.ownerUser.name}"></span></small>
+		      </div>
+		    </div>
+		  </div>
+		</div>
       </div>
 			<div  class="row pager justify-content-center"  th:unless="${groupList} == null">
 				<ul class="pagination">
@@ -61,14 +63,4 @@
 
 </body>
 <footer th:replace="footer::footer"></footer>
-<style>
-.card-body{
-    text-overflow: ellipsis;
-    display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-	height:80px;
-}
-</style>
 </html>
