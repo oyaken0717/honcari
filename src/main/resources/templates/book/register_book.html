@@ -43,7 +43,7 @@
 			<table id="book-list">
 				<tr class="mt-3 mb-3 text-center">
 					<th class="register-book-th">書籍サムネイル</th>
-					<th class="register-book-th">タイトル</th>
+					<th class="register-book-th">タイトル(外部リンク)</th>
 					<th class="register-book-th">著者</th>
 					<th class="register-book-th">出版日</th>
 					<th class="register-book-th">登録</th>
@@ -51,7 +51,7 @@
 				<tr th:each="item : ${volumeInfoList}" id="book-list-tr">
 					<td th:if="${item.volumeInfo.imageLinks}" id="book-image-link"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
 					<td th:unless="${item.volumeInfo.imageLinks}"><img class="book-img">No Photo</td>
-					<td th:if="${item.volumeInfo.title}"><a th:href="@{'https://books.google.co.jp/books?id=' + ${item.id}}" target="_blank"><span th:text="${item.volumeInfo.title}"></span></a></td>
+					<td th:if="${item.volumeInfo.title}"><a class="a-link" th:href="@{'https://books.google.co.jp/books?id=' + ${item.id}}" target="_blank"><span th:text="${item.volumeInfo.title}"></span></a></td>
 					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.authors}"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
 					<td th:unless="${item.volumeInfo.authors}"><span>ー</span></td>
