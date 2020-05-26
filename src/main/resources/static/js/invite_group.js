@@ -7,7 +7,12 @@ $(function() {
 		var url = location.href;
 		var groupId = $(".groupId").val();
 		console.log(url);
-		url = url.replace(/group\/(to_invite_group)/g, "search_user_api_for_invite")
+		if(url.includes('to_invite_group')){
+			url = url.replace(/group\/(to_invite_group)/g, "search_user_api_for_invite")
+		}
+		if(url.includes('invite_group')){
+			url = url.replace(/group\/(invite_group)/g, "search_user_api_for_invite")
+		}
 		console.log(url);
 		$.ajax({
 			url : url,
@@ -43,10 +48,16 @@ $(function() {
 							+ '<input class="user-profile" type="hidden" value="' + user.profile + '">'
 						+ '</a>'
 					+ '</div>';
+				if(searchName==''){
+					addUserHTML = '';
+				}
 				
 				$(".addUserList").append(addUserHTML);
 				$('[data-toggle="popover"]').popover();
 			})
+			if (data.userList == null) {
+				$(".addUserList").append('<div class="row user ml-2 mt-2" style="color:gray">該当ユーザーが存在しません</div>');				
+			}
 			return false;
 		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("エラーが発生しました！");
@@ -59,7 +70,7 @@ $(function() {
 	//ユーザー検索
 	$(".searchUser").on("keyup", function() {
 		var searchName = $(this).val()
-		serachUser(searchName);
+			serachUser(searchName);
 	});
 	
 //	//ユーザー検索

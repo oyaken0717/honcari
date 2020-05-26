@@ -54,6 +54,10 @@ public class RegisterUserController {
 			result.rejectValue("email", null, "このメールアドレスは既に登録されています。");
 		}
 		
+		if(form.getName().replaceAll("\u3000", "").equals("")) {
+			result.rejectValue("name", null, "全角スペースのみのユーザー名は設定することができません");
+		}
+		
 		if(registerUserService.checkUserByName(form.getName()) != null) {
 			result.rejectValue("name", null, "このユーザー名は既に登録されています。他のユーザー名を設定してください。");
 		}

@@ -20,7 +20,7 @@ $(function(){
 				if (theFile.type.match('image.*')) {
 					$("#current-image").removeClass("d-block").addClass("d-none");
 					$("#input-image").remove();
-					var $html = ['<img id="input-image" class="rounded-lg mx-auto d-block border border-secondary user-image" src="', e.target.result,'" title="', escape(theFile.name), '" width="100px" height="100px">'].join('');// 画像では画像のプレビューの表示
+					var $html = ['<img id="input-image" class="rounded-lg mx-auto d-block border border-secondary" src="', e.target.result,'" title="', escape(theFile.name), '" width="320px" height="180px">'].join('');// 画像では画像のプレビューの表示
 					$('#image-panel').append($html);
 				} else {
 					alert('画像でないファイルはアップロードできません');
@@ -45,8 +45,8 @@ $(function(){
 	
 	$('#delete-image').click(function(){
 		if(confirm("現在の画像を削除してよろしいですか？")) {
-			$('#current-image').removeClass("d-none").addClass("d-block").attr('src','https://'+name2+'.s3-ap-northeast-1.amazonaws.com/'+name1+'/user_default.png');
-			$('#image-path').val('https://'+name2+'.s3-ap-northeast-1.amazonaws.com/'+name1+'/user_default.png');
+			$('#current-image').removeClass("d-none").addClass("d-block").attr('src','https://'+name2+'.s3-ap-northeast-1.amazonaws.com/'+name1+'/group_default.jpg');
+			$('#image-path').val('https://'+name2+'.s3-ap-northeast-1.amazonaws.com/'+name1+'/group_default.jpg');
 			$('.custom-file-label').html('ファイル選択...');
 			$('#input-image').remove();
 			$('.custom-file-input').val('');

@@ -38,7 +38,7 @@
 					<a class="nav-link text-dark active" href="#joined-groups" data-toggle="tab">参加しているグループ</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-dark" href="#own-groups" data-toggle="tab">作成したグループ</a>
+					<a class="nav-link text-dark" href="#own-groups" data-toggle="tab">自身がオーナーのグループ</a>
 				</li>
 			</ul>
 			<!-- タブ・コンテント -->
@@ -47,43 +47,39 @@
 					<!-- 参加しているグループ -->
 					<div class="my-4">
 						<div th:if="${belongGroupList}==null"><p class="text-center">参加しているグループはありません</p></div>
-						<div class="my-3">
-							<div class="row" style="margin:70px">
-								<div class="col-md-4" th:each="group:${belongGroupList}">        
-								  <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
-						              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
-						              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						              <div class="text-center" style="bottom:0">
-						              <a class ="Link" th:href="@{/group/show_detail(id=${group.id})}"></a> 
-						                <small>オーナー： <a th:href="${'/user/show_user_page?userId=' + group.ownerUser.userId}" style="color:white" th:text="${group.ownerUser.name}"></a></small>
-						              	<input type="hidden" class="group-name" th:value="${group.name}">
-										<input type="hidden" class="group-description" th:value="${group.description}">
-						              </div>
-						          </div>
-								</div>
-							</div>
+						<div class="row">
+							<div class="col-md-4 mb-4" th:each="group:${belongGroupList}">      
+				  				<div class="group-card rounded-lg div-link" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
+		            				<div class="rounded-lg shadow">
+		              					<a class="Link" th:href="@{/group/show_detail(id=${group.id})}"></a>
+		              					<div class="over-text">
+		                					<h4 class="text-truncate group-card-name" th:text="${group.name}"></h4>
+		                					<div class="text-truncate group-card-descript" th:text="${group.description}"></div>
+		                					<small class="text-truncate">オーナー ： <span th:text="${group.ownerUser.name}"></span></small>
+		              					</div>
+		            				</div>
+		          				</div>
+		        			</div>
 						</div>
 					</div>
 				</div>
 				<div class="tab-pane fade" id="own-groups">
 					<!-- 作成したグループ -->
 					<div class="my-4">
-						<div th:if="${ownGroupList}==null"><p class="text-center">作成したグループはありません</p></div>
-						<div class="my-3">
-							<div class="row" style="margin:70px">
-								<div class="col-md-4" th:each="group:${ownGroupList}">        
-								  <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
-						              <h3 class="card-title text-center card-body" th:text="${group.name}" style="color:white">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h3>
-						              <p class="card-text text-center text-truncate" th:text="${group.description}" style="padding:1.25rem">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						              <div class="text-center" style="bottom:0">
-						              <a class ="Link" th:href="@{/group/show_detail(id=${group.id})}"></a> 
-						                <small>オーナー： <a th:href="${'/user/show_user_page?userId=' + group.ownerUser.userId}" style="color:white" th:text="${group.ownerUser.name}"></a></small>
-						              	<input type="hidden" class="group-name" th:value="${group.name}">
-										<input type="hidden" class="group-description" th:value="${group.description}">
-						              </div>
-						          </div>
-								</div>
-							</div>
+						<div th:if="${ownGroupList}==null"><p class="text-center">自身がオーナーのグループはありません</p></div>
+						<div class="row">
+							<div class="col-md-4 mb-4" th:each="group:${ownGroupList}">      
+				  				<div class="group-card rounded-lg shadow div-link" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
+		            				<div class="rounded-lg shadow">
+		              					<a class="Link" th:href="@{/group/show_detail(id=${group.id})}"></a>
+		              					<div class="over-text">
+		                					<h4 class="text-truncate group-card-name" th:text="${group.name}"></h4>
+		                					<div class="text-truncate group-card-descript" th:text="${group.description}"></div>
+		                					<small class="text-truncate">オーナー ： <span th:text="${group.ownerUser.name}"></span></small>
+		              					</div>
+		            				</div>
+		          				</div>
+		        			</div>
 						</div>
 					</div>
 				</div>

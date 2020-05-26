@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.TemplateEngine;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
@@ -39,6 +40,9 @@ public class EditGroupController {
 
 	@Autowired
 	private HttpSession session;
+	
+	private  String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
+    private  String Group_Folder_Name = System.getenv("AWS_GROUP_FOLDER_NAME");
 
 	@ModelAttribute
 	public EditGroupForm setUpEditGroupForm() {
@@ -54,6 +58,8 @@ public class EditGroupController {
 	 */
 	@RequestMapping("/to_edit_group")
 	public String toEditGroup(Integer groupId, Model model, HttpServletRequest request, @AuthenticationPrincipal LoginUser loginUser) {
+		if(request.getHeader("REFERER")==null)return "redirect:/";
+		
 		Group group = showGroupDetailService.showGroupDetail(groupId);
 		if(group.getRequestedOwnerUserId()!=null) {
 			group.getUserList().forEach((user -> {
@@ -68,8 +74,13 @@ public class EditGroupController {
 		String returnParam = request.getHeader("REFERER").substring(21);
 		if (request.getHeader("REFERER").contains("heroku")) {
 			returnParam = request.getHeader("REFERER").substring(29);
+		}else {
+			Group_Folder_Name="group-test";
+			Bucket_Name="honcari-image-test";
 		}
 		model.addAttribute("returnParam", returnParam);
+		model.addAttribute("Group_Folder_Name", Group_Folder_Name);
+		model.addAttribute("Bucket_Name", Bucket_Name);
 
 		if (request.getHeader("REFERER").contains("edit_group") == true) {
 			returnParam = (String) session.getAttribute("formerPage");

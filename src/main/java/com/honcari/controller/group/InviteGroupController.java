@@ -61,6 +61,8 @@ public class InviteGroupController {
 	 */
 	@RequestMapping("/to_invite_group")
 	public String toInviteGroup(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
+		if(request.getHeader("REFERER")==null)return "redirect:/";
+		
 		Group group = searchGroupService.searchGroupById(id);
 		model.addAttribute("group", group);
 		model.addAttribute("user", loginUser.getUser());
@@ -93,7 +95,7 @@ public class InviteGroupController {
 		}
 
 		if (result.hasErrors()) {
-			return toInviteGroup(form.getGroupId(), model, loginUser,request);
+			return toInviteGroup(form.getGroupId(),model,loginUser,request);
 		}
 
 		// ユーザーの名前からユーザー情報を取得

@@ -31,13 +31,13 @@
           <a class="nav-link nav-link-text" href="#" th:href="@{/tutorial}">アプリの使い方</a>
         </li>
 		<li id="page1" class="nav-item">
-          <a class="nav-link nav-link-text" href="register_book.html" th:href="@{/book/show_register}"><i class="fas fa-book" style="font-size:20px"></i>&nbsp;本を登録する</a>
+          <a class="nav-link nav-link-text" href="register_book.html" th:href="@{/book/show_register}">本を登録する</a>
         </li>
       </ul>
       <ul class="navbar-nav nav-justified" style="width:150px;">
         <li id="page2" class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle menu-btn" id="dropdownMenuLink3" 
-				th:src="@{/img/user_default.png}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-user-friends"></i></a>
 			<div class="dropdown-menu dropdown-menu-lg-right dd-text" aria-labelledby="dropdownMenuLink3">
 				<a class="dropdown-item" href="register_group.html" th:href="@{/group/to_register}">グループ作成</a>
@@ -47,9 +47,11 @@
 			</div>
         </li>
         <li id="page3" class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle menu-btn" id="dropdownMenuLink4" 
-				th:src="@{/img/user_default.png}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fas fa-user-alt"></i></a>
+			<a class="nav-link dropdown-toggle menu-btn image p-1 position-relative" id="dropdownMenuLink4" 
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<img id="header-image" class="rounded-lg my-auto d-block border border-secondary header-image"
+					th:if="${user.imagePath}" th:src="${user.imagePath}" width="40px" height="40px">
+			</a>
 			<div class="dropdown-menu dropdown-menu-lg-right dd-img" aria-labelledby="dropdownMenuLink4">
 				<a class="dropdown-item" href="mypage.html" th:href="@{/user/show_mypage}">マイページ</a>
 				<div class="dropdown-divider"></div>
@@ -74,6 +76,11 @@
   				$(this).addClass("active");
   			}
   		});
+  		var img = $("#header-image").attr("src").toString().slice(-16,-1);
+  		console.log(img);
+  		if(img == 'user_default.pn') {
+  			$("#header-image").css("opacity",0.75);
+  		}
   	});
   </script>
 </nav>

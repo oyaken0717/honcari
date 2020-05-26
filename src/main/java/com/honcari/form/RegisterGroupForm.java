@@ -3,6 +3,7 @@ package com.honcari.form;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,8 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class RegisterGroupForm {
 	/** グループ名 */
 	@NotBlank(message="入力必須項目です")
+	@Size(min=2,max=50, message="グループ名は2文字以上50文字以内で入力してください")
 	private String name;
 	/** 説明 */
+	@Size(min=10,max=500, message="グループの説明は10文字以上500文字以内で入力してください")
 	@NotBlank(message="入力必須項目です")
 	private String description;
 	/** ユーザー名のリスト */

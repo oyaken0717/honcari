@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.thymeleaf.TemplateEngine;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
@@ -43,6 +44,9 @@ public class ShowGroupDetailController {
 
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private TemplateEngine templateEngine;
 
 	/**
 	 * グループ詳細情報を表示するためのメソッド.
@@ -55,6 +59,8 @@ public class ShowGroupDetailController {
 	@RequestMapping("/show_detail")
 	public String showGroupDetail(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser,
 			HttpServletRequest request) {
+		if(request.getHeader("REFERER")==null)return "redirect:/";
+		
 		Group group = showGroupDetailService.showGroupDetail(id);
 		
 		List<OwnedBookInfo>ownedBookInfoList = new ArrayList<>();
@@ -98,6 +104,9 @@ public class ShowGroupDetailController {
 		if(request.getHeader("REFERER").contains("invite")==false&&request.getHeader("REFERER").contains("edit")==false) {
 			session.setAttribute("returnParam", returnParam);
 		}
+		
+		//キャッシュ削除
+		templateEngine.clearTemplateCacheFor("group/group_detail");
 
 		return "group/group_detail";
 	}

@@ -10183,26 +10183,15 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 @media print {
-	*, *::before, *::after {
-		text-shadow: none !important;
-		box-shadow: none !important;
-	}
-	a
-	:not
-	 
-	(
-	.btn
-	 
-	)
-	{
-	text-decoration
-	:
-	 
-	underline
-	;
-	
-	
-}
+  *,
+  *::before,
+  *::after {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  a:not(.btn) {
+    text-decoration: underline;
+  }
 
 abbr[title]::after {
 	content: " (" attr(title) ")";
@@ -10280,4 +10269,3 @@ body {
 	border-color: #dee2e6;
 }
 }
-/*# sourceMappingURL=bootstrap.css.map */
