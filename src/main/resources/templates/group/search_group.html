@@ -31,7 +31,7 @@
       </div>
       <div class="row" style="margin:40px">
         <div class="col-md-4 mb-4" th:each="group:${groupList}">
-          <div class="group-card rounded-lg shadow div-link" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
+          <div class="group-card rounded-lg div-link" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
 		    <div class="rounded-lg shadow">
 		      <a class="Link" th:href="@{/group/show_detail(id=${group.id})}"></a>
 	  	      <div class="over-text">
