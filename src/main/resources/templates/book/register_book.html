@@ -31,7 +31,7 @@
 				<p th:errors="*{searchWord}" style="color:red">　</p>
 				<span class="form-inline">
 	    		<input type="text" name="searchWord" class="form-control" placeholder="書籍名 / 著者名 / ISBN など" th:field="*{searchWord}" size="25%">　
-				<button class="btn btn-warning my-2 my-sm-0 register-book-white-btn">探す</button>
+				<button class="btn btn-outline-secondary my-2 my-sm-0 register-book-white-btn">探す</button>
 				</span>
 			</form>
 			</div>
@@ -113,7 +113,7 @@
 					</label>
 				</div>
 				<div class="modal-footer">
-					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-warning">登録する</button>
+					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-warning" onClick="javascript:double(this)">登録する</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
   				</div>
   				<div id="book-request-parameter"></div>
@@ -123,5 +123,10 @@
 </div>
 </div>
 <footer th:replace="footer::footer"></footer>
+<script>
+	function double(btn){
+		btn.disabled=true;
+	});
+</script>
 </body>
 </html>
