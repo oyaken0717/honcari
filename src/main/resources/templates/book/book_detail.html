@@ -26,8 +26,8 @@
       <div class="text-box">
           <p class="font-weight-bold">
             貸出状況：<span id="book-status" th:value="${ownedBookInfo.bookStatus}" th:text="${ownedBookInfo.getStatus()}">status</span>&nbsp;&nbsp;&nbsp;&nbsp;
-            貸出期間：<span th:if="${bookRental}" th:text="${#dates.format(bookRental.beginning, 'yyyy年MM月dd日')}"></span>〜
-          	<span th:if="${bookRental}" th:text="${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span>
+            <span th:if="${bookRental}" th:text="'貸出期間：' + ${#dates.format(bookRental.beginning, 'yyyy年MM月dd日')}"></span>
+          	<span th:if="${bookRental}" th:text="'〜' + ${#dates.format(bookRental.deadline, 'yyyy年MM月dd日')}"></span>
           </p>
           <p  class="font-weight-bold">
             所有者：<a th:href="@{/user/show_user_page(userId=${ownedBookInfo.user.userId})}" class="a-link">

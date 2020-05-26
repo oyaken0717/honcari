@@ -58,11 +58,9 @@ public class ShowBookDetailController {
 	public String showBookDetail(Model model, Integer ownedBookInfoId, @AuthenticationPrincipal LoginUser loginUser) {
 		OwnedBookInfo ownedBookInfo = showBookDetailService.searchByOwnedBookId(ownedBookInfoId);
 		BookRental bookRental = searchByOwnedBookInfoService.searchByOwnedBookInfo(ownedBookInfoId);
-		
 		if(ownedBookInfo.getUserId() == loginUser.getUser().getUserId()) {
 			return "error/500";
 		}
-		
 		model.addAttribute("ownedBookInfo", ownedBookInfo);
 		model.addAttribute("bookRental", bookRental);
 		model.addAttribute("book", ownedBookInfo.getBook());
