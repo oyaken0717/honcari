@@ -12,10 +12,6 @@
 </head>
 <body>
 <nav th:replace="header::frag_header(0)"></nav>
-<!-- <div th:if="${requestedOwnerGroupList}" th:each="group:${requestedOwnerGroupList}"  class="alert alert-success alert-dismissible fade show flash" role="alert" th:fragment="pending_approval">
-  	<span>グループ名：</span> <a th:href="@{/group/show_detail(id=${group.id})}"><strong th:text="${group.name}"> </strong></a><span> からオーナー権限の委任依頼が来ています。</span> 
-  	<a th:href="@{/group/approve_owner_request(groupId=${group.id})}" onclick="return confirm('この依頼に承諾します。よろしいですか？')">承諾する</a>  /  <a th:href="@{/group/reject_owner_request(groupId=${group.id})}" onclick="return confirm('この依頼を拒否します。よろしいですか？')">拒否する</a>
-</div> -->
 
 <div th:if="${complete}" id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert">
   <strong th:if="${approveOwnerRequest}">オーナー委任依頼に承諾しました！</strong>
@@ -42,7 +38,7 @@
 <div class="container content-wrapper">
     	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
-  			<li class="nav-item">
+  			<li class="nav-item"> 
     			<a class="nav-link text-dark active" href="#joined-groups" data-toggle="tab">参加しているグループ</a>
  	 		</li>
  	 		<li class="nav-item">
@@ -54,10 +50,10 @@
     	</ul>
     	<!-- タブ・コンテント -->
     	<div class="tab-content">
-			<div class="tab-pane active fade" id="joined-groups" th:if="${belongGroupList}==null">
+			<div class="tab-pane active fade show" id="joined-groups" th:if="${belongGroupList}==null">
 				<div class="text-center" style="margin: 10px">参加しているグループはありません</div>
 			</div>   			
-			<div class="tab-pane active fade" id="joined-groups" th:unless="${belongGroupList}==null" >
+			<div class="tab-pane active fade show" id="joined-groups" th:unless="${belongGroupList}==null" >
 		      <div class="row" style="margin:40px">
 		        <div class="col-md-4" th:each="group:${belongGroupList}">      
 				  <div class="mb-4 group-card DivLink" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
