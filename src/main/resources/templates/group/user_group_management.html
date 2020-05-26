@@ -49,7 +49,7 @@
 						<div th:if="${belongGroupList}==null"><p class="text-center">参加しているグループはありません</p></div>
 						<div class="row">
 							<div class="col-md-4 mb-4" th:each="group:${belongGroupList}">      
-				  				<div class="group-card rounded-lg shadow div-link" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
+				  				<div class="group-card rounded-lg div-link" th:style="'background-image:url(' + ${group.groupImage} + ')'">   
 		            				<div class="rounded-lg shadow">
 		              					<a class="Link" th:href="@{/group/show_detail(id=${group.id})}"></a>
 		              					<div class="over-text">
