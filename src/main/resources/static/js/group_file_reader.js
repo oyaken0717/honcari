@@ -44,7 +44,7 @@ $(function(){
 	});
 	
 	$('#delete-image').click(function(){
-		if(confirm("現在の画像を削除してよろしいですか？") {
+		if(confirm("現在の画像を削除してよろしいですか？")) {
 			$('#current-image').removeClass("d-none").addClass("d-block").attr('src','https://'+name2+'.s3-ap-northeast-1.amazonaws.com/'+name1+'/group_default.jpg');
 			$('#image-path').val('https://'+name2+'.s3-ap-northeast-1.amazonaws.com/'+name1+'/group_default.jpg');
 			$('.custom-file-label').html('ファイル選択...');

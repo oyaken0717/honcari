@@ -29,24 +29,31 @@
 
 <nav th:replace="header::frag_header(1)"></nav>
 
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class="group-image">
-  	<div class="group-detail" >
-      <h1 class="display-3" th:text="${group.name}">Hello, world!</h1>
-      <span th:if="${group.groupStatus} == 1">（非公開グループ）</span>
-      <p align="right"><a class="btn btn-warning btn-lg" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a></p>
-      <p align="right"><a class="btn btn-secondary btn-lg" th:href="@{'/group/reject_invite_group?groupId=' + ${group.id}}" role="button" th:if="${groupRelation}" onclick="return confirm('このグループに参加しません。よろしいですか？')">このグループに参加しない &raquo;</a></p>
-      <p align="right"><a class="btn btn-primary btn-lg" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null and hasRequestOwnerAdmin == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a></p>
-	  <a class="btn btn-primary btn-sm" th:href="@{${session.returnParam}}" role="button" >&laquo; 戻る</a>
+  <div class="container content-wrapper">
+    <div class="row align-items-center my-3">
+      <div class="col-lg-6">
+        <img class="img-fluid rounded-lg ml-auto mr-3 mb-4 mb-lg-0 d-block w-75" th:src="${group.groupImage}" alt="">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="font-weight-light" th:text="${group.name}">group name</h1>
+        <span th:if="${group.groupStatus} == 1">(非公開グループ)</span>
+        <a class="btn btn-warning mt-2" th:href="@{'/group/join?groupId=' + ${group.id}}" role="button" th:if="${b}==false" onclick="return confirm('このグループに参加します。よろしいですか？')">このグループに参加する &raquo;</a>
+        <a class="btn btn-secondary mt-2" th:href="@{'/group/reject_invite_group?groupId=' + ${group.id}}" role="button" th:if="${groupRelation}" onclick="return confirm('このグループに参加しません。よろしいですか？')">このグループに参加しない &raquo;</a>
+  	    <small th:if="${hasRequestOwnerAdmin}">※オーナー権限委任依頼に返答しない限りこのグループを抜けることができません</small> 
+      </div>
     </div>
-  </div>
+<!--   <div class="group-image"> -->
+<!--   	<div class="group-detail" > -->
+<!--       <h1 class="display-3">Hello, world!</h1> -->
+<!--     </div> -->
+<!--   </div> -->
   
 
-  <div class="container content-wrapper">
-  	  <small th:if="${hasRequestOwnerAdmin}" style="text-align:right">※オーナー権限委任依頼に返答しない限りこのグループを抜けることができません</small> 
-	  <div>
-		   <p align="right" class=".mt-5"><a class="btn btn-warning btn-sm" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId}">このグループに招待する</a>&nbsp;&nbsp;
-		   <a th:href="@{/group/to_edit_group(groupId=${group.id})}" class="btn btn-sm btn-outline-secondary" th:if="${userId}==${group.ownerUserId}">Edit</a></p>
+	  <div class="m-3">
+		  <a class="btn btn-sm btn-primary" th:href="@{${session.returnParam}}" role="button" >&laquo; 戻る</a>
+          <a class="btn btn-sm btn-primary float-right" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null and hasRequestOwnerAdmin == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a>
+		  <a class="btn btn-sm btn-outline-secondary float-right ml-4" th:href="@{/group/to_edit_group(groupId=${group.id})}" th:if="${userId}==${group.ownerUserId}">Edit</a>
+		  <a class="btn btn-sm btn-warning float-right" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId}">このグループに招待する</a>
 	  </div>
 	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">
@@ -88,7 +95,10 @@
 		      </div>
 			</div>
 			
-			<div class="tab-pane tab-content fade" id="book-list" th:unless="${group.userList}==null">
+			<div class="tab-pane tab-content fade" id="book-list" th:if="${#lists.size(ownedBookInfoList)}==0">
+			  <div class="text-center" style="margin:40px">シェアされている本はありません</div>
+			</div>
+			<div class="tab-pane tab-content fade" id="book-list" th:unless="${#lists.size(ownedBookInfoList)}==0">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="row">
@@ -118,11 +128,7 @@
 			</div>
 			
 			<div class="tab-pane tab-content fade" id="discussion">
-				<div>
-					<div class="text-center">
-						coming soon...
-					</div>
-				</div>
+				<div class="text-center" style="margin:40px">coming soon...</div>
 			</div>
 		</div>
 		

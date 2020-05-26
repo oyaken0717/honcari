@@ -152,9 +152,9 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserId(Integer userId) {
-		String sql = SQL + "WHERE u.status != 9 AND o.book_status != 4 AND u.user_id in ("
+		String sql = SQL + "WHERE o.book_status != 4 AND u.user_id in ("
 							+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
-								+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+								+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
 						 + "ORDER BY c.category_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR_LIMIT_16);
@@ -172,9 +172,9 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserIdAndCategoryId(Integer userId, Integer categoryId) {
-		String sql = SQL + "WHERE u.status != 9 AND o.book_status != 4 AND c.category_id = :categoryId AND u.user_id in ("
-				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
-				+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+		String sql = SQL + "WHERE o.book_status != 4 AND c.category_id = :categoryId AND u.user_id in ("
+				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
+				+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
 				+ "ORDER BY c.category_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
@@ -192,9 +192,9 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserIdAndTitle(Integer userId, String title) {
-		String sql = SQL + "WHERE b.title LIKE :title AND u.status != 9 AND o.book_status != 4 AND u.user_id in ("
-				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
-				+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+		String sql = SQL + "WHERE b.title LIKE :title AND o.book_status != 4 AND u.user_id in ("
+				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
+				+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
 				+ "ORDER BY c.category_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("title", "%" + title + "%");
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
@@ -213,9 +213,9 @@ public class CategoryRepository {
 	 * @return カテゴリ一覧
 	 */
 	public List<Category> findByUserIdAndCategoryId(Integer userId, Integer categoryId, Integer page) {
-		String sql = SQL + "WHERE u.status != 9 AND o.book_status != 4 AND c.category_id = :categoryId AND u.user_id in ("
-				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND group_id IN ("
-				+ "SELECT group_id FROM group_relations WHERE user_id = :userId)) "
+		String sql = SQL + "WHERE o.book_status != 4 AND c.category_id = :categoryId AND u.user_id in ("
+				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
+				+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
 				+ "ORDER BY c.category_id LIMIT 15 OFFSET :offset;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId).addValue("offset", (page-1)*15);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
