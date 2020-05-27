@@ -1,16 +1,11 @@
 package com.honcari.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.TemplateEngine;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
-import com.honcari.domain.LoginUser;
-import com.honcari.domain.User;
-import com.honcari.service.user.SearchUserByUserIdService;
 
 /**
  * マイページを表示するコントローラー.
@@ -24,9 +19,6 @@ import com.honcari.service.user.SearchUserByUserIdService;
 public class ShowMyPageController {
 
 	@Autowired
-	private SearchUserByUserIdService searchUserByUserIdService;
-	
-	@Autowired
 	private TemplateEngine templateEngine;
 
 	/**
@@ -37,12 +29,9 @@ public class ShowMyPageController {
 	 * @return マイページ画面
 	 */
 	@RequestMapping("/show_mypage")
-	public String showMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+	public String showMyPage() {
 		//キャッシュ削除
 		templateEngine.clearTemplateCacheFor("user/mypage");
-		
-		User user = searchUserByUserIdService.showUser(loginUser.getUser().getUserId());
-		model.addAttribute("user", user);
 		
 		return "user/mypage";
 	}

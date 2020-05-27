@@ -1,9 +1,7 @@
 package com.honcari.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
-import com.honcari.domain.LoginUser;
 import com.honcari.form.ContactForm;
 import com.honcari.service.SendContactMailService;
 
@@ -42,8 +39,7 @@ public class ContactController {
 	 * @return お問い合わせ画面
 	 */
 	@RequestMapping("/show_contact")
-	public String showContact(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		model.addAttribute("user", loginUser.getUser());
+	public String showContact() {
 		return "contact";
 	}
 	
@@ -58,9 +54,9 @@ public class ContactController {
 	 */
 	@RequestMapping(value = "/contact", method = RequestMethod.POST)
 	public String contact(@Validated ContactForm contactForm, BindingResult result, 
-			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser) {
+			RedirectAttributes redirectAttributes) {
 		if(result.hasErrors()) {
-			return showContact(model, loginUser);
+			return showContact();
 		}
 		sendContactMailService.sendContactMailToCustomer(contactForm);
 		redirectAttributes.addFlashAttribute("successMessage", "お問い合わせを送信しました！");

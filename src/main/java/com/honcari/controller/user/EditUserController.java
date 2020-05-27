@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.TemplateEngine;
 
-import com.honcari.S3UploadHelper;
 import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.S3UploadHelper;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.EditUserForm;
@@ -71,8 +70,7 @@ public class EditUserController {
 	 * @return プロフィール編集画面
 	 */
 	@RequestMapping(value="/show_edit")
-	public String showEditUser(Model model, @AuthenticationPrincipal LoginUser loginUser, HttpServletRequest request) {
-		model.addAttribute("user", loginUser.getUser());
+	public String showEditUser(Model model, HttpServletRequest request) {
 		if (!request.getHeader("REFERER").contains("heroku")) {
 			User_Folder_Name = "profile-image-test";
 			Bucket_Name = "honcari-image-test";
@@ -125,7 +123,7 @@ public class EditUserController {
 		}
 		if(result.getErrorCount() >= 1 
 				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getProfileImage()))) {
-			return showEditUser(model, loginUser, request);
+			return showEditUser(model, request);
 		}
 		User user = new User();
 		BeanUtils.copyProperties(editUserForm, user);

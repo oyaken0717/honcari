@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,8 +45,7 @@ public class RegisterGroupController {
 	}
 
 	@RequestMapping("/to_register")
-	public String toRegisterGroup(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		model.addAttribute("user", loginUser.getUser());
+	public String toRegisterGroup() {
 		return "group/register_group";
 	}
 
@@ -61,7 +59,7 @@ public class RegisterGroupController {
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result,
-			RedirectAttributes redirectAttributesm, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
+			RedirectAttributes redirectAttributesm, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
 		if(form.getName().replaceAll("\u3000", "").equals("")) {
 			result.rejectValue("name", null, "全角スペースのみのグループ名は設定することができません");
 		}
@@ -69,7 +67,7 @@ public class RegisterGroupController {
 			result.rejectValue("description", null, "全角スペースのみの説明は設定することができません");
 		}
 		if (result.hasErrors()) {
-			return toRegisterGroup(model, loginUser);
+			return toRegisterGroup();
 		}
 
 		List<User> userList = new ArrayList<>();
