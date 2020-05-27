@@ -94,4 +94,5 @@ create table group_relations (
   , user_id integer not null references users(user_id)
   , group_id integer not null references groups(group_id)
   , relation_status integer not null 
+  , send_invite_user_id integer not null
 );

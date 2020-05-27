@@ -72,7 +72,6 @@
 			  <input type="hidden"  class="groupId" name="groupId" th:value="${group.id}">
 			  <small class="">グループを非公開にするにはこちらにチェックを入れてください</small> <input type="checkbox" name="groupStatus" th:field="${group.groupStatus}" value="1" id="InputGroupDescription">
 				<button class="btn btn-warning btn-lg btn-block">変更する</button>
-				<a th:href="@{${returnParam}}" class="btn btn-secondary btn-sm btn-block">戻る</a>			
 			  <input type="hidden" name="groupId" th:value="${group.id}">
 			　<input type="hidden" name="ownerUserId" th:value="${group.ownerUserId}">			
 			</form>

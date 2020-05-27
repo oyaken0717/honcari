@@ -17,10 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
+import com.honcari.domain.GroupRelation;
+import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.InviteGroupForm;
 import com.honcari.service.group.InviteGroupService;
 import com.honcari.service.group.RegisterGroupService;
+import com.honcari.service.group.SeachInvitedUserInGroupService;
 import com.honcari.service.group.SearchGroupService;
 
 /**
@@ -42,6 +45,9 @@ public class InviteGroupController {
 
 	@Autowired
 	private RegisterGroupService registerGroupService;
+	
+	@Autowired
+	private SeachInvitedUserInGroupService seachInvitedUserInGroupService;
 
 	@ModelAttribute
 	public InviteGroupForm setInviteGroupForm() {
@@ -59,8 +65,12 @@ public class InviteGroupController {
 	@RequestMapping("/to_invite_group")
 	public String toInviteGroup(Integer id, Model model,HttpServletRequest request) {
 		if(request.getHeader("REFERER")==null)return "redirect:/";
-		
+		User loginUser = (User) model.getAttribute("loginUser");
 		Group group = searchGroupService.searchGroupById(id);
+		
+		List<GroupRelation> grList = seachInvitedUserInGroupService.seachInvitedUser(id, loginUser.getUserId());
+		
+		model.addAttribute("grList",grList);
 		model.addAttribute("group", group);
 		
 		String returnParam = request.getHeader("REFERER").substring(21);
@@ -85,6 +95,7 @@ public class InviteGroupController {
 	@RequestMapping(value="/invite_group",method = RequestMethod.POST)
 	public String inviteGroup(@Validated InviteGroupForm form, BindingResult result,
 			RedirectAttributes redirectAttributesm, Model model,HttpServletRequest request) {
+		User loginUser = (User) model.getAttribute("loginUser");
 
 		if (form.getUserNameList() == null) {
 			result.rejectValue("userNameList", null, "招待したいユーザーのユーザー名を入力してください");
@@ -103,7 +114,7 @@ public class InviteGroupController {
 				userList.add(user);
 			});
 		}
-		inviteGroupService.inviteGroup(userList, form.getGroupId());
+		inviteGroupService.inviteGroup(loginUser.getUserId(),userList, form.getGroupId());
 		redirectAttributesm.addFlashAttribute("userList", userList);
 
 		// 招待完了後の画面にてポップアップ表示するためのモデル格納
