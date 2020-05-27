@@ -31,7 +31,7 @@
 				<p th:errors="*{searchWord}" style="color:red">　</p>
 				<span class="form-inline">
 	    		<input type="text" name="searchWord" class="form-control" placeholder="書籍名 / 著者名 / ISBN など" th:field="*{searchWord}" size="25%">　
-				<button class="btn btn-warning my-2 my-sm-0 register-book-white-btn">探す</button>
+				<button class="btn btn-outline-secondary my-2 my-sm-0 register-book-white-btn">探す</button>
 				</span>
 			</form>
 			</div>
@@ -43,7 +43,7 @@
 			<table id="book-list">
 				<tr class="mt-3 mb-3 text-center">
 					<th class="register-book-th">書籍サムネイル</th>
-					<th class="register-book-th">タイトル</th>
+					<th class="register-book-th">タイトル(外部リンク)</th>
 					<th class="register-book-th">著者</th>
 					<th class="register-book-th">出版日</th>
 					<th class="register-book-th">登録</th>
@@ -51,7 +51,7 @@
 				<tr th:each="item : ${volumeInfoList}" id="book-list-tr">
 					<td th:if="${item.volumeInfo.imageLinks}" id="book-image-link"><img class="book-img" th:src="${item.volumeInfo.imageLinks.smallThumbnail}"></td>
 					<td th:unless="${item.volumeInfo.imageLinks}"><img class="book-img">No Photo</td>
-					<td th:if="${item.volumeInfo.title}"><a th:href="@{'https://books.google.co.jp/books?id=' + ${item.id}}" target="_blank"><span th:text="${item.volumeInfo.title}"></span></a></td>
+					<td th:if="${item.volumeInfo.title}"><a class="a-link" th:href="@{'https://books.google.co.jp/books?id=' + ${item.id}}" target="_blank"><span th:text="${item.volumeInfo.title}"></span></a></td>
 					<td th:unless="${item.volumeInfo.title}"><span>ー</span></td>
 					<td th:if="${item.volumeInfo.authors}"><span th:text="${item.volumeInfo.authors[0]}"></span></td>
 					<td th:unless="${item.volumeInfo.authors}"><span>ー</span></td>
@@ -113,7 +113,7 @@
 					</label>
 				</div>
 				<div class="modal-footer">
-					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-warning">登録する</button>
+					<button id="book-register-button" type="reset" data-dismiss="modal" class="btn btn-warning" onClick="javascript:double(this)">登録する</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
   				</div>
   				<div id="book-request-parameter"></div>
@@ -123,5 +123,10 @@
 </div>
 </div>
 <footer th:replace="footer::footer"></footer>
+<script>
+	function double(btn){
+		btn.disabled=true;
+	});
+</script>
 </body>
 </html>

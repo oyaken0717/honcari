@@ -15,6 +15,7 @@ import com.honcari.domain.LoginUser;
 import com.honcari.service.book_rental.CountPendingApproval;
 import com.honcari.service.group.CountInvitePendingService;
 import com.honcari.service.group.SearchRequestedOwnerService;
+import com.honcari.service.user.SearchUserByUserIdService;
 
 @ControllerAdvice(annotations = CustomControllerAdvice.CommonAttribute.class)
 public class CustomControllerAdvice {
@@ -30,6 +31,9 @@ public class CustomControllerAdvice {
 	
 	@Autowired
 	private SearchRequestedOwnerService searchRequestedOwnerService;
+	
+	@Autowired
+	private SearchUserByUserIdService searchUserByUserIdService;
 
 	
   @ModelAttribute
@@ -43,7 +47,7 @@ public class CustomControllerAdvice {
 	  
 	  int groupNotice = NumOfGroupPendingApproval + NumOfOwnerRequest;
 	  model.addAttribute("groupNotice",groupNotice);
-	  model.addAttribute("user", loginUser.getUser());
+	  model.addAttribute("user", searchUserByUserIdService.showUser(loginUser.getUser().getUserId()));
   }
   
 }

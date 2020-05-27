@@ -549,6 +549,12 @@ ul.social-buttons {
 }
 
 /* 本登録・マイブックの一覧共通のデザイン */
+.table-responsive {
+	display: block;
+	width: 100%;
+	overflow-x: hidden;
+}
+
 #book-list-tr {
 	border-bottom: solid 1px #eee;
 }
@@ -624,6 +630,7 @@ li.category {
 
 .pager .pagination li span {
 	border-bottom: none;
+	background-color: #cca300;
 }
 
 .pager .pagination li a:hover, .pager .pagination li a.active {

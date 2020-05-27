@@ -79,7 +79,6 @@ public class RegisterBookController {
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("searchWord", searchGoogleBookForm.getSearchWord());
 		model.addAttribute("nowPageNumber", pageNumber);
-		System.out.println(volumeInfoList.get(0));
 		return "book/register_book";
 	}
 }

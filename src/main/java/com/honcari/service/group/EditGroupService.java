@@ -10,7 +10,6 @@ import com.honcari.S3UploadHelper;
 import com.honcari.domain.Group;
 import com.honcari.domain.User;
 import com.honcari.form.EditGroupForm;
-import com.honcari.repository.GroupRepository;
 
 /**
  * グループ情報を編集するためのサービス.
