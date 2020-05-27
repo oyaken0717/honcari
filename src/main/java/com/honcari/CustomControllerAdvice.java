@@ -59,7 +59,7 @@ public class CustomControllerAdvice {
 	  
 	  int groupNotice = NumOfGroupPendingApproval + NumOfOwnerRequest;
 	  model.addAttribute("groupNotice",groupNotice);
-	  model.addAttribute("user", searchUserByUserIdService.showUser(loginUser.getUser().getUserId()));
+	  model.addAttribute("loginUser", searchUserByUserIdService.showUser(loginUser.getUser().getUserId()));
   }
   
 }
