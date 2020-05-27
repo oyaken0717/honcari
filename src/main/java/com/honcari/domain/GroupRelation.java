@@ -15,6 +15,10 @@ public class GroupRelation {
 	private Integer GroupId;
 	/** 参加状況 */
 	private Integer relation_status;
+	
+	private Integer sendInviteUserId;
+	
+	private User user;
 
 	public Integer getId() {
 		return id;
@@ -48,12 +52,28 @@ public class GroupRelation {
 		this.relation_status = relation_status;
 	}
 
+	public Integer getSendInviteUserId() {
+		return sendInviteUserId;
+	}
+
+	public void setSendInviteUserId(Integer sendInviteUserId) {
+		this.sendInviteUserId = sendInviteUserId;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "GroupRelation [id=" + id + ", userId=" + userId + ", GroupId=" + GroupId + ", relation_status="
-				+ relation_status + "]";
+				+ relation_status + ", sendInviteUserId=" + sendInviteUserId + ", user=" + user + "]";
 	}
-
+	
 	
 
 }

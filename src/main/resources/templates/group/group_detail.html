@@ -45,9 +45,9 @@
 
 	  <div class="m-3">
 		  <a class="btn btn-sm btn-outline-secondary" th:href="@{${session.returnParam}}" role="button" >&laquo; 戻る</a>
-          <a class="btn btn-sm btn-primary float-right" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null and hasRequestOwnerAdmin == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a>
+          <a class="btn btn-sm btn-primary float-right ml-4" th:href="@{'/group/out_group?id=' + ${group.id}}" role="button" th:if="${b==true and owner == null and hasRequestOwnerAdmin == null}" onclick="return confirm('本当にこのグループから抜けますか？')">このグループを抜ける &raquo;</a>
 		  <a class="btn btn-sm btn-outline-secondary float-right ml-4" th:href="@{/group/to_edit_group(groupId=${group.id})}" th:if="${userId}==${group.ownerUserId}">Edit</a>
-		  <a class="btn btn-sm btn-warning float-right" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId}">このグループに招待する</a>
+		  <a class="btn btn-sm btn-warning float-right" th:href="@{'/group/to_invite_group?id=' + ${group.id}}" role="button" th:if="${userId}==${group.ownerUserId} or ${b}==true">このグループに招待する</a>
 	  </div>
 	<!-- タブ・メニュー -->
 	    <ul class="nav nav-tabs nav-justified justify-content-center">

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,11 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
+import com.honcari.domain.GroupRelation;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.InviteGroupForm;
 import com.honcari.service.group.InviteGroupService;
 import com.honcari.service.group.RegisterGroupService;
+import com.honcari.service.group.SeachInvitedUserInGroupService;
 import com.honcari.service.group.SearchGroupService;
 
 /**
@@ -45,6 +46,9 @@ public class InviteGroupController {
 
 	@Autowired
 	private RegisterGroupService registerGroupService;
+	
+	@Autowired
+	private SeachInvitedUserInGroupService seachInvitedUserInGroupService;
 
 	@ModelAttribute
 	public InviteGroupForm setInviteGroupForm() {
@@ -64,6 +68,10 @@ public class InviteGroupController {
 		if(request.getHeader("REFERER")==null)return "redirect:/";
 		
 		Group group = searchGroupService.searchGroupById(id);
+		
+		List<GroupRelation> grList = seachInvitedUserInGroupService.seachInvitedUser(id, loginUser.getUser().getUserId());
+		
+		model.addAttribute("grList",grList);
 		model.addAttribute("group", group);
 		model.addAttribute("user", loginUser.getUser());
 		
@@ -107,7 +115,7 @@ public class InviteGroupController {
 				userList.add(user);
 			});
 		}
-		inviteGroupService.inviteGroup(userList, form.getGroupId());
+		inviteGroupService.inviteGroup(loginUser.getUser().getUserId(),userList, form.getGroupId());
 		redirectAttributesm.addFlashAttribute("userList", userList);
 
 		// 招待完了後の画面にてポップアップ表示するためのモデル格納

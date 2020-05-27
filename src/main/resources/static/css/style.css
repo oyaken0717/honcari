@@ -785,6 +785,12 @@ li.category {
 	margin-top: 7px;
 }
 
+.delete-user-icon2 {
+	font-size: 1.0rem;
+	color: #dc3545;
+	margin-top: 7px;
+}
+
 /* 貸し出し不可の時の */
 .no-lending {
 	position: absolute;
