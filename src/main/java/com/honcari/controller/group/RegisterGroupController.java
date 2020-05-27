@@ -16,15 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.amazonaws.util.StringUtils;
 import com.honcari.CustomControllerAdvice.CommonAttribute;
-import com.honcari.S3UploadHelper;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.RegisterGroupForm;
 import com.honcari.service.group.RegisterGroupService;
-import com.honcari.service.group.UpdateGroupService;
 
 /**
  * グループ作成をするコントローラ.
