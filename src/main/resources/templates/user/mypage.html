@@ -37,22 +37,22 @@
 				<div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 float-left">
 					<div class="image mb-3">
 						<img class="rounded-lg mx-auto d-block border border-secondary user-image"
-							th:if="${user.imagePath}" th:src="${user.imagePath}" width="100px" height="100px">
+							th:if="${loginUser.imagePath}" th:src="${loginUser.imagePath}" width="100px" height="100px">
 					</div>
 					<div class="col-lg-10 mx-auto">
 					<div class="table-responsible">
 						<table class="table">
 							<tr>
 								<th width="30%">名前</th>
-								<td width="70%" th:text="${user.name}">本</td>
+								<td width="70%" th:text="${loginUser.name}">本</td>
 							</tr>
 							<tr>
 								<th class="profile-item">メールアドレス</th>
-								<td th:text="${user.email}"></td>
+								<td th:text="${loginUser.email}"></td>
 							</tr>
 							<tr>
 								<th class="profile-item">プロフィール</th>
-								<td style="white-space:pre-wrap" th:text="${user.profile}"></td>
+								<td style="white-space:pre-wrap" th:text="${loginUser.profile}"></td>
 							</tr>
 						</table>
 					</div>

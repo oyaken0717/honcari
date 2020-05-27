@@ -29,16 +29,16 @@
 			<div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 float-left">
 				<form action="mypage.html" th:action="@{/user/edit}" method="post" 
 					th:object="${editUserForm}" enctype="multipart/form-data">
-					<input type="hidden" name="userId" th:value="${user.userId}">
-					<input type="hidden" name="currentPassword" th:value="${user.password}">
+					<input type="hidden" name="userId" th:value="${loginUser.userId}">
+					<input type="hidden" name="currentPassword" th:value="${loginUser.password}">
 					<input id="name1" type="hidden" th:value="${User_Folder_Name}">
 					<input id="name2" type="hidden" th:value="${Bucket_Name}">
 					<div id="image-panel" class="form-group image mb-3 position-relative">
 						<img id="current-image" class="rounded-lg mx-auto d-block border border-secondary user-image"
-							th:src="${user.imagePath}" width="100px" height="100px">
+							th:src="${loginUser.imagePath}" width="100px" height="100px">
 						<button type="button" id="delete-image" class="btn btn-sm btn-outline-secondary position-absolute"
 							style="top:69%;left:60%">削除</button>
-						<input id="image-path" type="hidden" name="imagePath" th:value="${user.imagePath}">
+						<input id="image-path" type="hidden" name="imagePath" th:value="${loginUser.imagePath}">
 					</div>
 					<div class="col-lg-10 mx-auto">
 						<div class="form-group row">  
@@ -61,7 +61,7 @@
 							</div>
 							<label class="col-sm-4 col-form-label" for="name">名前<small style="color:red">(必須)</small></label>
 							<div class="col-sm-8">
-								<input id="name" class="form-control" type="text" name="name" th:value="${user.name}" required>
+								<input id="name" class="form-control" type="text" name="name" th:value="${loginUser.name}" required>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -71,7 +71,7 @@
 							</div>
 							<label class="col-sm-4 col-form-label" for="email">メールアドレス<small style="color:red">(必須)</small></label>
 							<div class="col-sm-8">
-								<input id="email" class="form-control" type="email" name="email" th:value="${user.email}" required>
+								<input id="email" class="form-control" type="email" name="email" th:value="${loginUser.email}" required>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -81,7 +81,7 @@
 							</div>
 							<label class="col-sm-4 col-form-label" for="profile">プロフィール</label>
 							<div class="col-sm-8">
-								<textarea id="profile" class="form-control" name="profile" th:text="${user.profile}" rows="5"></textarea>
+								<textarea id="profile" class="form-control" name="profile" th:text="${loginUser.profile}" rows="5"></textarea>
 							</div>
 						</div>
 						<div class="form-group row">

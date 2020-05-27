@@ -17,6 +17,12 @@ import com.honcari.service.group.CountInvitePendingService;
 import com.honcari.service.group.SearchRequestedOwnerService;
 import com.honcari.service.user.SearchUserByUserIdService;
 
+/**
+ * 全ページ共通処理としてアノテーションを作成するAdvice.
+ * 
+ * @author katsuya.fujishima
+ *
+ */
 @ControllerAdvice(annotations = CustomControllerAdvice.CommonAttribute.class)
 public class CustomControllerAdvice {
 	@Target(ElementType.TYPE)
@@ -36,8 +42,14 @@ public class CustomControllerAdvice {
 	private SearchUserByUserIdService searchUserByUserIdService;
 
 	
-  @ModelAttribute
-  public void addOneObject( @AuthenticationPrincipal LoginUser loginUser,Model model) {
+  /**
+   * 各申請件数とログイン中のユーザー情報をリクエストスコープに格納するメソッド.
+   * 
+ * @param loginUser ログイン中のユーザー
+ * @param model リクエストスコープ
+ */
+@ModelAttribute
+  public void addOneObject(@AuthenticationPrincipal LoginUser loginUser,Model model) {
 	  int  NumOfPendingApproval = countPendingApproval.countPendingApproval(loginUser.getUser().getUserId());
 	  model.addAttribute("NumOfPendingApproval", NumOfPendingApproval);
 	  int  NumOfGroupPendingApproval = countInvitePendingService.countInvitePending(loginUser.getUser().getUserId(), 0);
@@ -47,7 +59,7 @@ public class CustomControllerAdvice {
 	  
 	  int groupNotice = NumOfGroupPendingApproval + NumOfOwnerRequest;
 	  model.addAttribute("groupNotice",groupNotice);
-	  model.addAttribute("user", searchUserByUserIdService.showUser(loginUser.getUser().getUserId()));
+	  model.addAttribute("loginUser", searchUserByUserIdService.showUser(loginUser.getUser().getUserId()));
   }
   
 }

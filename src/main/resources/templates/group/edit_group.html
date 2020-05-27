@@ -62,7 +62,7 @@
 			   	<div th:text="${requestedOwnerUserName} + ' さんに依頼中です。相手が承認するまでお待ちください。'"></div>
 			   　<input type="hidden" class="form-control" name="userName" th:value="${requestedOwnerUserName}">
 			   </div>
-			  	<input type="hidden" class="form-control loginUserId" th:value="${user.userId}">
+			  	<input type="hidden" class="form-control loginUserId" th:value="${loginUser.userId}">
 			  <div class="form-group" th:if="${requestedOwnerUserName}==null">
 <!-- 			    <label for="formGroupExampleInput2">オーナー権限を委任するユーザー</label>
  -->			  	<div class="row mx-2 groupUser">
