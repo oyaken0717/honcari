@@ -478,31 +478,72 @@ ul.social-buttons {
 
 .thumbnail {
 	height: 250px;
+	width: 180px;
+	object-fit: cover;
+}
+
+@media screen and (max-width: 992px) {
+	.thumbnail {
+	height: 180px;
+	width: 130px;
+	object-fit: cover;
+	}
 }
 
 .thumbnail-no {
 	height: 250px;
+	width: 100%;
+	object-fit: cover;
+}
+
+@media screen and (max-width: 992px) {
+	.thumbnail-no {
+	height: 180px;
+	width: 100%;
+	object-fit: cover;
+	}
 }
 
 .now-lending {
 	position: relative;
 }
 
-.now-lending:after {
-	background: #f70031;
-	bottom: 0;
-	left: 0;
-	color: #fff;
-	content: "Now Lending";
-	font-size: 15px;
-	font-weight: 700;
-	height: 23px;
-	letter-spacing: 1px;
-	line-height: 22px;
+.now {
 	position: absolute;
-	text-align: center;
-	width: 100%;
-	z-index: 600;
+    left: 0;
+    top: 15px;
+    z-index: 2;
+    color: #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.lending {
+	position: absolute;
+    left: 0;
+    top: 30px;
+    z-index: 2;
+    color: #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.now-lending:after {
+	display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 110px 110px 0 0;
+    border-color: #ea352d transparent transparent transparent;
 }
 
 .thumbnail img {
