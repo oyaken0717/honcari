@@ -7,7 +7,12 @@ $(function() {
 		var url = location.href;
 		var groupId = $(".groupId").val();
 		console.log(url);
-		url = url.replace(/group\/(to_edit_group)/g, "search_user_api_for_owner_transfer")
+		if(url.includes('to_edit_group')){
+			url = url.replace(/group\/(to_edit_group)/g, "search_user_api_for_owner_transfer")
+		}
+		if(url.includes('edit_group')){
+			url = url.replace(/group\/(edit_group)/g, "search_user_api_for_owner_transfer")
+		}
 		console.log(url);
 		$.ajax({
 			url : url,

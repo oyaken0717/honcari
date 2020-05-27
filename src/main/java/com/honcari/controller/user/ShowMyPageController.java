@@ -25,9 +25,6 @@ public class ShowMyPageController {
 
 	@Autowired
 	private SearchUserByUserIdService searchUserByUserIdService;
-	
-	@Autowired
-	private TemplateEngine templateEngine;
 
 	/**
 	 * マイページに遷移するメソッド.
@@ -38,8 +35,6 @@ public class ShowMyPageController {
 	 */
 	@RequestMapping("/show_mypage")
 	public String showMyPage(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		//キャッシュ削除
-		templateEngine.clearTemplateCacheFor("user/mypage");
 		
 		User user = searchUserByUserIdService.showUser(loginUser.getUser().getUserId());
 		model.addAttribute("user", user);

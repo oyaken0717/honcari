@@ -85,7 +85,7 @@ public class EditGroupController {
 		if (request.getHeader("REFERER").contains("edit_group") == true) {
 			returnParam = (String) session.getAttribute("formerPage");
 			if (!request.getHeader("REFERER").contains("heroku")) {
-				returnParam = request.getHeader("REFERER").substring(29);
+				returnParam = request.getHeader("REFERER").substring(28);
 			}
 			model.addAttribute("returnParam", returnParam);
 		}else {
@@ -106,11 +106,17 @@ public class EditGroupController {
 	@RequestMapping(value = "/edit_group")
 	public String editGroup(@Validated EditGroupForm form, BindingResult result, Model model,
 			HttpServletRequest request,@AuthenticationPrincipal LoginUser loginUser,RedirectAttributes redirectAttributesm) {
-		if (result.hasErrors()) {
-			return toEditGroup(form.getGroupId(), model, request,loginUser);
+		
+		if(form.getName().replaceAll("\u3000", "").equals("")) {
+			result.rejectValue("name", null, "全角スペースのみのグループ名は設定することができません");
 		}
+		
 		if(form.getGroupImage().getSize()>1048576) {
 			result.rejectValue("profileImage", null, "ファイルサイズが大きすぎます");
+		}
+		
+		if (result.hasErrors()) {
+			return toEditGroup(form.getGroupId(), model, request,loginUser);
 		}
 
 		Group group = editGroupService.editGroup(form,request);

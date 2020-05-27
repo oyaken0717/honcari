@@ -54,6 +54,9 @@ public class EditUserController {
 	@Autowired
     private S3UploadHelper s3UploadHelper;
 	
+	@Autowired
+	private TemplateEngine templateEngine;
+	
     private String User_Folder_Name = System.getenv("AWS_USER_FOLDER_NAME");
 	private String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
 
@@ -95,7 +98,9 @@ public class EditUserController {
 	public String editUser(@Validated EditUserForm editUserForm, BindingResult result, 
 			Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
 		
-		System.out.println(editUserForm.getProfileImage().getSize());
+		if(editUserForm.getName().replaceAll("\u3000", "").equals("")) {
+			result.rejectValue("name", null, "全角スペースのみのユーザー名は設定することができません");
+		}
 		
 		if(searchExistOtherUserByNameService.isExistOtherUserByName(editUserForm)) {
 			result.rejectValue("name", null, "入力された名前は登録済のため使用できません");
@@ -127,6 +132,10 @@ public class EditUserController {
 				|| (result.getErrorCount() == 1 && !Objects.isNull(editUserForm.getProfileImage()))) {
 			return showEditUser(model, loginUser, request);
 		}
+		
+		//キャッシュ削除
+		templateEngine.clearTemplateCacheFor("user/mypage");
+		
 		User user = new User();
 		BeanUtils.copyProperties(editUserForm, user);
 		System.out.println("form:"+user.getPassword());
