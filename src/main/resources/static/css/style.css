@@ -510,8 +510,8 @@ ul.social-buttons {
 
 .now {
 	position: absolute;
-    left: 0;
-    top: 15px;
+    left: 16px;
+    top: 31px;
     z-index: 2;
     color: #fff;
     -webkit-transform: rotate(-45deg);
@@ -522,8 +522,8 @@ ul.social-buttons {
 
 .lending {
 	position: absolute;
-    left: 0;
-    top: 30px;
+    left: 16px;
+    top: 46px;
     z-index: 2;
     color: #fff;
     -webkit-transform: rotate(-45deg);
@@ -536,8 +536,8 @@ ul.social-buttons {
 	display: block;
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 16px;
+    left: 16px;
     z-index: 1;
     width: 0;
     height: 0;
