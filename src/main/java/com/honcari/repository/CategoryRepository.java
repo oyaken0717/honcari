@@ -216,8 +216,8 @@ public class CategoryRepository {
 		String sql = SQL + "WHERE o.book_status != 4 AND c.category_id = :categoryId AND u.user_id in ("
 				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
 				+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
-				+ "ORDER BY c.category_id LIMIT 15 OFFSET :offset;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId).addValue("offset", (page-1)*15);
+				+ "ORDER BY c.category_id LIMIT 16 OFFSET :offset;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId).addValue("offset", (page-1)*16);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
 		if (categoryList.isEmpty()) {
 			return null;
