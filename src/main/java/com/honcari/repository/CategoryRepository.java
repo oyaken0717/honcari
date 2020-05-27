@@ -95,6 +95,10 @@ public class CategoryRepository {
 				category.setOwnedBookInfoList(ownedBookInfoList);
 				categoryList.add(category);
 			}
+			if(rs.getInt("o_book_status") != 1) {
+				continue;
+			}
+			
 			if(limitCount >= 16) {
 				continue;
 			}
@@ -155,7 +159,7 @@ public class CategoryRepository {
 		String sql = SQL + "WHERE o.book_status != 4 AND u.user_id in ("
 							+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
 								+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
-						 + "ORDER BY c.category_id;";
+						 + "ORDER BY c.category_id ASC, o.owned_book_info_id DESC;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR_LIMIT_16);
 		if (categoryList.isEmpty()) {
@@ -175,7 +179,7 @@ public class CategoryRepository {
 		String sql = SQL + "WHERE o.book_status != 4 AND c.category_id = :categoryId AND u.user_id in ("
 				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
 				+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
-				+ "ORDER BY c.category_id;";
+				+ "ORDER BY c.category_id ASC, o.owned_book_info_id DESC;;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
 		if (categoryList.isEmpty()) {
@@ -195,7 +199,7 @@ public class CategoryRepository {
 		String sql = SQL + "WHERE b.title LIKE :title AND o.book_status != 4 AND u.user_id in ("
 				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
 				+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
-				+ "ORDER BY c.category_id;";
+				+ "ORDER BY c.category_id ASC, o.owned_book_info_id DESC;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("title", "%" + title + "%");
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
 		if (categoryList.isEmpty()) {
@@ -216,7 +220,7 @@ public class CategoryRepository {
 		String sql = SQL + "WHERE o.book_status != 4 AND c.category_id = :categoryId AND u.user_id in ("
 				+ "SELECT user_id FROM group_relations WHERE user_id != :userId AND relation_status=1 AND group_id IN ("
 				+ "SELECT group_id FROM group_relations WHERE user_id = :userId AND relation_status!=9)) "
-				+ "ORDER BY c.category_id LIMIT 16 OFFSET :offset;";
+				+ "ORDER BY c.category_id ASC, o.owned_book_info_id DESC LIMIT 16 OFFSET :offset;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("categoryId", categoryId).addValue("offset", (page-1)*16);
 		List<Category> categoryList = template.query(sql, param, CATEGORY_RESULT_SET_EXTRACTOR);
 		if (categoryList.isEmpty()) {

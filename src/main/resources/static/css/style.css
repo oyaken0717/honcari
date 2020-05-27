@@ -478,29 +478,32 @@ ul.social-buttons {
 
 .thumbnail {
 	height: 250px;
-	width: 180px;
-	object-fit: cover;
+	width: auto;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+	.thumbnail {
+	height: 200px;
+	width: auto;
+	}
 }
 
 @media screen and (max-width: 992px) {
 	.thumbnail {
-	height: 180px;
-	width: 130px;
-	object-fit: cover;
+	height: 125px;
+	width: auto;
 	}
 }
 
 .thumbnail-no {
 	height: 250px;
 	width: 100%;
-	object-fit: cover;
 }
 
 @media screen and (max-width: 992px) {
 	.thumbnail-no {
-	height: 180px;
+	height: 125px;
 	width: 100%;
-	object-fit: cover;
 	}
 }
 
