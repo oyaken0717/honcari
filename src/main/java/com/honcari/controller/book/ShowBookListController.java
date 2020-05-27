@@ -75,7 +75,7 @@ public class ShowBookListController {
 		
 		Integer userId = loginUser.getUser().getUserId();
 //		本の数を15で割った時の総ページ数
-		Integer totalPageNum = showBookListOneCategory.findByUserIdAndCategoryId(userId, categoryId).get(0).getOwnedBookInfoList().size() / 15 + 1;
+		Integer totalPageNum = showBookListOneCategory.findByUserIdAndCategoryId(userId, categoryId).get(0).getOwnedBookInfoList().size() / 16 + 1;
 		
 		List<Category> categoryList = ShowBookListOneCategoryByPageService.findByUserIdAndCategoryId(userId, categoryId, page);
 		int NumOfPendingApproval = countPendingApproval.countPendingApproval(userId);
