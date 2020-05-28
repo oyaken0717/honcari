@@ -447,13 +447,15 @@ ul.social-buttons {
 }
 
 .dropdown .dd-text {
-	position: relative;
+	position: absolute;
 	top: 41px;
+	right: -15px;
 }
 
 .dropdown .dd-img {
-	position: relative;
+	position: absolute;
 	top: 48px;
+	right: -18px;
 }
 
 .dropdown:hover .dropdown-menu {
