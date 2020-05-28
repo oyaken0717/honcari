@@ -236,10 +236,18 @@ h4.content-heading {
 	display: inline-block !important;
 }
 
+#dropdownMenuLink3::after{
+	position: absolute;
+	top: 30%;
+	left: 89%;
+	font-size: 25px;
+}
+
 #dropdownMenuLink4::after {
 	position: absolute;
 	top: 41%;
 	left: 89%;
+	font-size: 25px;
 }
 
 /* フッター　*/
@@ -440,7 +448,7 @@ ul.social-buttons {
 
 .dropdown .dd-text {
 	position: relative;
-	top: 38px;
+	top: 41px;
 }
 
 .dropdown .dd-img {
