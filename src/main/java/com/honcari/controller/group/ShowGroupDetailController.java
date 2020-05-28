@@ -65,9 +65,11 @@ public class ShowGroupDetailController {
 		
 		List<OwnedBookInfo>ownedBookInfoList = new ArrayList<>();
 		group.getUserList().forEach(user -> {
-			user.getOwnedBookInfoList().forEach(ownedBookInfo ->{
-				ownedBookInfoList.add(ownedBookInfo);
-			});
+			if(user.getOwnedBookInfoList().size() != 0) {
+				user.getOwnedBookInfoList().forEach(ownedBookInfo ->{
+					ownedBookInfoList.add(ownedBookInfo);
+				});
+			}
 		});
 		
 		GroupRelation groupRelation = searchGroupRelationService.searchByUserIdAndGroupIdAndStatus(loginUser.getUser().getUserId(),id,0);
