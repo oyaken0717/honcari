@@ -30,6 +30,7 @@ public class OutFromGroupService {
 		GroupRelation gr = groupRelationRepository.findByUserIdAndGroupId(userId, groupId);
 		//group_relationのステータスを9（停止）に変更
 		gr.setRelation_status(9);
+		gr.setSendInviteUserId(0);
 		groupRelationRepository.update(gr);
 	}
 

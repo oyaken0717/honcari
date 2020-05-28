@@ -29,7 +29,7 @@ public class InviteGroupService {
 	 * @param userList ユーザー情報リスト
 	 * @param groupId グループid
 	 */
-	public void inviteGroup(List<User> userList, Integer groupId) {
+	public void inviteGroup(Integer userId,List<User> userList, Integer groupId) {
 
 		userList.forEach(user -> {
 			//ユーザー名とグループidでgroup_relation情報を取得
@@ -37,13 +37,14 @@ public class InviteGroupService {
 			
 			//対象ユーザーとグループのgroup_relation情報が存在していない場合はインサート処理
 			if (gr == null) {
-				groupRelationRepository.insert(user.getUserId(), groupId, 0);
+				groupRelationRepository.insert(user.getUserId(), groupId, 0, userId);
 				return;
 			}
 			
 			//対象ユーザーとグループのgroup_relation情報が存在している場合はアップデート処理
 			if (gr.getRelation_status() == 9) {
 				gr.setRelation_status(0);
+				gr.setSendInviteUserId(userId);
 				groupRelationRepository.update(gr);
 			}
 		});

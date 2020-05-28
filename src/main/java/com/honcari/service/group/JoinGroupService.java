@@ -31,7 +31,7 @@ public class JoinGroupService {
 
 		//対象ユーザーとグループのgroup_relation情報が存在していない場合はインサート処理
 		if (gr == null) {
-			grRepository.insert(userId, groupId, 1);
+			grRepository.insert(userId, groupId, 1,0);
 			return;
 		}
 		

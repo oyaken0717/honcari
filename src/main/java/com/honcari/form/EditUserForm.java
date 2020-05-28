@@ -3,6 +3,7 @@ package com.honcari.form;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ public class EditUserForm {
 	private Integer userId;
 	/**	名前 */
 	@NotBlank(message="入力は必須です")
+	@Size(min=2,max=100, message="名前は2文字以上100文字以内で入力してください")
 	private String name;
 	/**	メールアドレス */
 	@NotNull(message="入力は必須です")
