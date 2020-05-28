@@ -50,7 +50,7 @@
 			<a class="nav-link dropdown-toggle menu-btn image p-1 position-relative" id="dropdownMenuLink4" 
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<img id="header-image" class="rounded-lg my-auto d-block border border-secondary header-image"
-					th:if="${user.imagePath}" th:src="${user.imagePath}" width="40px" height="40px">
+					th:if="${loginUser.imagePath}" th:src="${loginUser.imagePath}" width="40px" height="40px">
 			</a>
 			<div class="dropdown-menu dropdown-menu-lg-right dd-img" aria-labelledby="dropdownMenuLink4">
 				<a class="dropdown-item" href="mypage.html" th:href="@{/user/show_mypage}">マイページ</a>

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
-import com.honcari.domain.User;
 import com.honcari.service.group.ShowGroupManagementService;
 import com.honcari.service.user.SearchUserByUserIdService;
 

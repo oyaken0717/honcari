@@ -83,14 +83,16 @@
 			<hr>
 			<div class="slider">
 				<div class="mr-2 ml-2 bg-white" th:each="ownedBookInfo: ${category.ownedBookInfoList}"><!-- 間隔を空けるためにmargin(仮) -->
-					<div th:if="${ownedBookInfo.bookStatus} != 3">
+					<div class="p-3" th:if="${ownedBookInfo.bookStatus} != 3">
 						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
-							<img class="mx-auto bd-placeholder-img thumbnail" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
+							<img class="bd-placeholder-img thumbnail img-fluid" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 						</a>
 					</div>
-					<div th:if="${ownedBookInfo.bookStatus} == 3" class="now-lending">
+					<div th:if="${ownedBookInfo.bookStatus} == 3" class="now-lending p-3">
+						<div class="now">now</div>
+						<div class="lending">lending!!</div>
 						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
-							<img class="mx-auto bd-placeholder-img thumbnail" style="opacity: 0.5;" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
+							<img class="bd-placeholder-img thumbnail img-fluid" style="opacity: 0.5;" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 						</a>
 					</div>
 					<div class="card-body">

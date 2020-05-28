@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
+import com.honcari.domain.GroupRelation;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.InviteGroupForm;
 import com.honcari.service.group.InviteGroupService;
 import com.honcari.service.group.RegisterGroupService;
+import com.honcari.service.group.SeachInvitedUserInGroupService;
 import com.honcari.service.group.SearchGroupService;
 
 /**
@@ -45,6 +45,9 @@ public class InviteGroupController {
 
 	@Autowired
 	private RegisterGroupService registerGroupService;
+	
+	@Autowired
+	private SeachInvitedUserInGroupService seachInvitedUserInGroupService;
 
 	@ModelAttribute
 	public InviteGroupForm setInviteGroupForm() {
@@ -60,12 +63,15 @@ public class InviteGroupController {
 	 * @return 招待画面へ遷移
 	 */
 	@RequestMapping("/to_invite_group")
-	public String toInviteGroup(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
+	public String toInviteGroup(Integer id, Model model,HttpServletRequest request) {
 		if(request.getHeader("REFERER")==null)return "redirect:/";
-		
+		User loginUser = (User) model.getAttribute("loginUser");
 		Group group = searchGroupService.searchGroupById(id);
+		
+		List<GroupRelation> grList = seachInvitedUserInGroupService.seachInvitedUser(id, loginUser.getUserId());
+		
+		model.addAttribute("grList",grList);
 		model.addAttribute("group", group);
-		model.addAttribute("user", loginUser.getUser());
 		
 		String returnParam = request.getHeader("REFERER").substring(21);
 		if(request.getHeader("REFERER").contains("heroku")) {
@@ -88,14 +94,15 @@ public class InviteGroupController {
 	 */
 	@RequestMapping(value="/invite_group",method = RequestMethod.POST)
 	public String inviteGroup(@Validated InviteGroupForm form, BindingResult result,
-			RedirectAttributes redirectAttributesm, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
+			RedirectAttributes redirectAttributesm, Model model,HttpServletRequest request) {
+		User loginUser = (User) model.getAttribute("loginUser");
 
 		if (form.getUserNameList() == null) {
 			result.rejectValue("userNameList", null, "招待したいユーザーのユーザー名を入力してください");
 		}
 
 		if (result.hasErrors()) {
-			return toInviteGroup(form.getGroupId(),model,loginUser,request);
+			return toInviteGroup(form.getGroupId(),model,request);
 		}
 
 		// ユーザーの名前からユーザー情報を取得
@@ -107,7 +114,7 @@ public class InviteGroupController {
 				userList.add(user);
 			});
 		}
-		inviteGroupService.inviteGroup(userList, form.getGroupId());
+		inviteGroupService.inviteGroup(loginUser.getUserId(),userList, form.getGroupId());
 		redirectAttributesm.addFlashAttribute("userList", userList);
 
 		// 招待完了後の画面にてポップアップ表示するためのモデル格納

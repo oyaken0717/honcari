@@ -20,12 +20,20 @@
 <div class="container content-wrapper">
 	<div class="row justify-content-md-center">
 		<div class="col-md-8 col-md-offset-4">
-			<form th:action="@{/group/invite_group}" th:object="${inviteGroupForm}" method="post">
+			 <form th:action="@{/group/invite_group}" th:object="${inviteGroupForm}" method="post">
 			  <div class="form-group" style="color:grey">
-			    グループ名: <span th:text="${group.name}"></span>
+			    <div class="text-muted">
+			    グループ名:
+					<a class="text-muted a-link" th:if="${loginUser.userId != group.ownerUserId}" th:href="@{/user/show_user_page(userId=${group.ownerUserId})}" th:text="${group.ownerUser.name}"></a>
+					<a class="text-muted a-link" th:if="${loginUser.userId == group.ownerUserId}" th:href="@{/user/show_mypage}" th:text="${group.ownerUser.name}"></a>
+				</div>
 			  </div>
-			  <div class="form-group description"  style="color:grey">
-			    説明文： <span th:text="${group.description}"></span>
+			  <div class="form-group" style="color:grey">
+			  	招待中のユーザー：
+			  	<span th:each="gr:${grList}">
+				  	<a class="a-link" th:text="${gr.user.name}" th:href="@{/user/show_user_page(userId=${gr.userId})}">花子さん</a>
+				  	<a th:href="@{/group/cancel_invite(userId=${gr.user.userId},groupId=${group.Id})}" onclick="return confirm('このグループへの招待をキャンセルします。よろしいですか？')"><i class="far fa-window-close delete-user-icon2"></i></a>&nbsp;&nbsp;
+			  	</span>
 			  </div>
 			  <div class="form-group">
 			    <label for="formGroupExampleInput2">ユーザー検索</label>  <label th:errors="*{userNameList}"  class="control-label" style="color: red" for="InputGroupDescription"></label>
@@ -34,7 +42,7 @@
 			  		<!-- jqueryで検索したユーザーリストを表示 -->
 			  	</div>
 			  </div>
-			  <input type="hidden" class="form-control loginUserId" th:value="${user.userId}">
+			  <input type="hidden" class="form-control loginUserId" th:value="${loginUser.userId}">
 			  <div class="form-group">
 			    <label for="formGroupExampleInput2">招待するユーザー</label>
 			  	<div class="row mx-2 groupUserList">
@@ -42,8 +50,7 @@
 			  	</div>
 			  </div>
 			  <input type="hidden"  class="groupId" name="groupId" th:value="${group.id}">
-			  <button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">
-					招待する</button><a th:href="@{${returnParam}}" class="btn btn-secondary btn-sm btn-block">戻る</a>
+			  <button class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#lendering-request-form">招待する</button>
 			</form>
 		</div>
 	</div>

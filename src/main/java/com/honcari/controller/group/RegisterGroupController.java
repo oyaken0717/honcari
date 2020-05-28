@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.amazonaws.util.StringUtils;
 import com.honcari.CustomControllerAdvice.CommonAttribute;
-import com.honcari.S3UploadHelper;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.RegisterGroupForm;
 import com.honcari.service.group.RegisterGroupService;
-import com.honcari.service.group.UpdateGroupService;
 
 /**
  * グループ作成をするコントローラ.
@@ -49,8 +45,7 @@ public class RegisterGroupController {
 	}
 
 	@RequestMapping("/to_register")
-	public String toRegisterGroup(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		model.addAttribute("user", loginUser.getUser());
+	public String toRegisterGroup() {
 		return "group/register_group";
 	}
 
@@ -64,7 +59,7 @@ public class RegisterGroupController {
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerGroup(@Validated RegisterGroupForm form, BindingResult result,
-			RedirectAttributes redirectAttributesm, Model model, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
+			RedirectAttributes redirectAttributesm, @AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
 		if(form.getName().replaceAll("\u3000", "").equals("")) {
 			result.rejectValue("name", null, "全角スペースのみのグループ名は設定することができません");
 		}
@@ -72,7 +67,7 @@ public class RegisterGroupController {
 			result.rejectValue("description", null, "全角スペースのみの説明は設定することができません");
 		}
 		if (result.hasErrors()) {
-			return toRegisterGroup(model, loginUser);
+			return toRegisterGroup();
 		}
 
 		List<User> userList = new ArrayList<>();

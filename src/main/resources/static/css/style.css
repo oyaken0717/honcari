@@ -270,12 +270,85 @@ ul.social-buttons {
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
-	color: #fff;
+	color: #000;
 	border-radius: 100%;
 	outline: none;
-	background-color: var(--yellow);
+	background-color: #fff;
 }
 
+.social-btn:hover {
+	color: #fff;
+}
+
+.twitter:hover {
+	background-color: #1da1f2;
+}
+
+.facebook:hover {
+	background-color: rgb(24, 119, 242);
+}
+
+.instagram {
+	font-size: 20px;
+	line-height: 50px;
+	display: block;
+	width: 50px;
+	height: 50px;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	color: #000;
+	border-radius: 100%;
+	outline: none;
+	z-index: 0;
+}
+
+.instagram:before {
+	content: "";
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -2;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	transition: 0.3s;
+	background-color: #fff;
+}
+
+.instagram:after {
+	content: "";
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -4;
+	color: #fff;
+	opacity: 0;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	transition: 0.3s;
+	background: -webkit-radial-gradient(32% 106%, circle cover, rgb(255, 225, 125) 0%, rgb(255, 205, 105) 10%, rgb(250, 145, 55) 28%, rgb(235, 65, 65) 42%, transparent 82%), -webkit-linear-gradient(-45deg, rgb(35, 75, 215) 12%, rgb(195, 60, 190) 58%);
+	background: -moz-radial-gradient(32% 106%, circle cover, rgb(255, 225, 125) 0%, rgb(255, 205, 105) 10%, rgb(250, 145, 55) 28%, rgb(235, 65, 65) 42%, transparent 82%), -moz-linear-gradient(-45deg, rgb(35, 75, 215) 12%, rgb(195, 60, 190) 58%);
+	background: radial-gradient(circle farthest-corner at 32% 106%, rgb(255, 225, 125) 0%, rgb(255, 205, 105) 10%, rgb(250, 145, 55) 28%, rgb(235, 65, 65) 42%, transparent 82%), linear-gradient(135deg, rgb(35, 75, 215) 12%, rgb(195, 60, 190) 58%);
+}
+
+.instagram:hover {
+	color: #fff;
+}
+
+.instagram:hover:before {
+	opacity: 0;
+}
+
+.instagram:hover:after {
+	opacity: 1;
+}
 .logo {
 	font-size: 20px;
 	width: 80px;
@@ -478,31 +551,75 @@ ul.social-buttons {
 
 .thumbnail {
 	height: 250px;
+	width: auto;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+	.thumbnail {
+	height: 200px;
+	width: auto;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.thumbnail {
+	height: 125px;
+	width: auto;
+	}
 }
 
 .thumbnail-no {
 	height: 250px;
+	width: 100%;
+}
+
+@media screen and (max-width: 992px) {
+	.thumbnail-no {
+	height: 125px;
+	width: 100%;
+	}
 }
 
 .now-lending {
 	position: relative;
 }
 
-.now-lending:after {
-	background: #f70031;
-	bottom: 0;
-	left: 0;
-	color: #fff;
-	content: "Now Lending";
-	font-size: 15px;
-	font-weight: 700;
-	height: 23px;
-	letter-spacing: 1px;
-	line-height: 22px;
+.now {
 	position: absolute;
-	text-align: center;
-	width: 100%;
-	z-index: 600;
+    left: 16px;
+    top: 31px;
+    z-index: 2;
+    color: #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.lending {
+	position: absolute;
+    left: 16px;
+    top: 46px;
+    z-index: 2;
+    color: #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.now-lending:after {
+	display: block;
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 110px 110px 0 0;
+    border-color: #ea352d transparent transparent transparent;
 }
 
 .thumbnail img {
@@ -781,6 +898,12 @@ li.category {
 
 .delete-user-icon {
 	font-size: 1.5rem;
+	color: #dc3545;
+	margin-top: 7px;
+}
+
+.delete-user-icon2 {
+	font-size: 1.0rem;
 	color: #dc3545;
 	margin-top: 7px;
 }
