@@ -580,13 +580,13 @@ ul.social-buttons {
 	}
 }
 
-.now-lending {
+.not-rentable {
 	position: relative;
 }
 
-.now {
+.not {
 	position: absolute;
-    left: 16px;
+    left: 21px;
     top: 31px;
     z-index: 2;
     color: #fff;
@@ -596,7 +596,7 @@ ul.social-buttons {
     font-weight: 600;
 }
 
-.lending {
+.rentable {
 	position: absolute;
     left: 16px;
     top: 46px;
@@ -608,7 +608,7 @@ ul.social-buttons {
     font-weight: 600;
 }
 
-.now-lending:after {
+.not-rentable:after {
 	display: block;
     content: '';
     position: absolute;

@@ -26,26 +26,24 @@
     </button>
     <!-- ナビゲーションメニュー -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive" th:if="${page!=9}">
-      <ul class="navbar-nav mr-2">
-		<li id="page1" class="nav-item mr-1">
-          <a class="nav-link nav-link-text" href="#" th:href="@{/tutorial}">アプリの使い方</a>
+      <ul class="navbar-nav mr-4">
+		<li id="page1" class="nav-item">
+          <a class="nav-link" href="#" th:href="@{/tutorial}">アプリの使い方</a>
         </li>
 		<li id="page1" class="nav-item">
-          <a class="nav-link nav-link-text" href="register_book.html" th:href="@{/book/show_register}">本を登録する</a>
+          <a class="nav-link" href="register_book.html" th:href="@{/book/show_register}">本を登録する</a>
         </li>
-      </ul>
-      <ul class="navbar-nav nav-justified" style="width:150px;">
         <li id="page2" class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle menu-btn" id="dropdownMenuLink3" 
+			<a class="nav-link dropdown-toggle" id="dropdownMenuLink3" 
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fas fa-user-friends"></i></a>
+				グループ</a>
 			<div class="dropdown-menu dropdown-menu-lg-right dd-text" aria-labelledby="dropdownMenuLink3">
 				<a class="dropdown-item" href="register_group.html" th:href="@{/group/to_register}">グループ作成</a>
 				<a class="dropdown-item" href="search_group.html" th:href="@{/group/to_search}">グループを探す</a>
-				<a class="dropdown-item" href="group_management.html" th:href="@{/group/to_management}">グループ管理 
-				<span class="badge-pill badge-danger" th:if="${groupNotice}!=0" th:text="${groupNotice}">10</span></a>
 			</div>
         </li>
+      </ul>
+      <ul class="navbar-nav nav-justified mr-3">
         <li id="page3" class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle menu-btn image p-1 position-relative" id="dropdownMenuLink4" 
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,6 +54,8 @@
 				<a class="dropdown-item" href="mypage.html" th:href="@{/user/show_mypage}">マイページ</a>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="mybook.html" th:href="@{/book/show_mybook?page=0}">マイブック</a>
+				<a class="dropdown-item" href="group_management.html" th:href="@{/group/to_management}">マイグループ 
+				<span class="badge-pill badge-danger" th:if="${groupNotice}!=0" th:text="${groupNotice}">10</span></a>
 				<a class="dropdown-item" href="lend_management.html" th:href="@{/book_rental/show_pending_list}">レンタル申請管理<span th:if="${NumOfPendingApproval}!=0" class="badge-pill badge-danger" th:text="${NumOfPendingApproval}">10</span></a>
 				<a class="dropdown-item" href="lend_management.html" th:href="@{/book_rental/show_list}">レンタル中</a>
 				<a class="dropdown-item" href="lental_history.html" th:href="@{/book_rental/show_history}">レンタル履歴</a>
