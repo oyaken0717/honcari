@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.honcari.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.GroupRelation;
-import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.InviteGroupForm;
 import com.honcari.service.group.InviteGroupService;
