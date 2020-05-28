@@ -79,7 +79,7 @@
 							<div class="col-sm-8" th:if="${#fields.hasErrors('profile')}">
 								<label class="col-form-label" style="color:red" th:errors="*{profile}"></label>
 							</div>
-							<label class="col-sm-4 col-form-label" for="profile">プロフィール</label>
+							<label class="col-sm-4 col-form-label" for="profile">プロフィール<small>(500字以内)</small></label>
 							<div class="col-sm-8">
 								<textarea id="profile" class="form-control" name="profile" th:text="${loginUser.profile}" rows="5"></textarea>
 							</div>

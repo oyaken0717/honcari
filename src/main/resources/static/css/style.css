@@ -292,6 +292,18 @@ ul.social-buttons {
 	justify-content: center;
 }
 
+.twitter:hover {
+	color: #1da1f2;
+}
+
+.facebook-f:hover {
+	color: #3B5998;
+}
+
+.instagram:hover {
+	color: #D93177;
+}
+
 /* 本一覧ページ　*/
 .home-image {
 	background-image: url(/img/shelf3.jpg);

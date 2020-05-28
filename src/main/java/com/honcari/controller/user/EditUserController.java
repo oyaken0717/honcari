@@ -104,9 +104,13 @@ public class EditUserController {
 		if(searchExistOtherUserByNameService.isExistOtherUserByName(editUserForm)) {
 			result.rejectValue("name", null, "入力された名前は登録済のため使用できません");
 		}
+		if(!editUserForm.getProfile().isEmpty() && 500 < editUserForm.getProfile().length()) {
+			result.rejectValue("profile", null, "プロフィール文は500文字以内で入力してください");
+		}
 		if(searchExistOtherUserByEmailService.isExistOtherUserByEmail(editUserForm)) {
 			result.rejectValue("email", null, "入力されたメールアドレスは登録済のため使用できません");
 		}
+		
 		//パスワードの入力があるときだけチェックを実施するためにFormでなくこちらでチェック
 		String currentPassword = editUserForm.getCurrentPassword();
 		String inputCurrentPassword = editUserForm.getInputCurrentPassword();
