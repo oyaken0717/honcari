@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.GroupRelation;
 import com.honcari.domain.User;
@@ -84,11 +84,11 @@ public class InviteGroupController {
 	/**
 	 * 招待するためのメソッド.
 	 * 
-	 * @param form                招待するユーザーの名前が格納されたフォーム
+	 * @param form 招待するユーザーの名前が格納されたフォーム
 	 * @param result
 	 * @param redirectAttributesm
 	 * @param model
-	 * @param loginUser           ログインユーザー
+	 * @param loginUser ログインユーザー
 	 * @return グループ詳細画面へ遷移
 	 */
 	@RequestMapping(value="/invite_group",method = RequestMethod.POST)

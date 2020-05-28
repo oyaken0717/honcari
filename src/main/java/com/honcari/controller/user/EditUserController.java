@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.TemplateEngine;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
-import com.honcari.S3UploadHelper;
+import com.honcari.common.S3UploadHelper;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.User;
 import com.honcari.form.EditUserForm;
@@ -141,14 +141,11 @@ public class EditUserController {
 		
 		User user = new User();
 		BeanUtils.copyProperties(editUserForm, user);
-		System.out.println("form:"+user.getPassword());
 		if(!newPassword.isEmpty()) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			System.out.println("1:"+user.getPassword());
 		}
 		if(newPassword.isEmpty()) {
 			user.setPassword(currentPassword);
-			System.out.println("2:"+user.getPassword());
 		}
 		user.setStatus(0);
 		user.setUpdatePasswordDate(new Timestamp(System.currentTimeMillis()));

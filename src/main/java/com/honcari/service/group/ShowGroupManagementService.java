@@ -24,10 +24,25 @@ public class ShowGroupManagementService {
 	@Autowired
 	private GroupRepository groupRepository;
 	
+	/**
+	 * グループ関係情報のステータス参加しているグループを検査するためのメソッド.
+	 * 
+	 * @param userId ユーザーID
+	 * @param status グループ関係情報のステータス
+	 * @return グループ情報リスト
+	 */
 	public List<Group> showGroupListByBelongUserIdAndRelationStatus(Integer userId,Integer status){
 		return groupRepository.findByUserIdAndStatus(userId, status);
 	}
 	
+	/**
+	 * グループのステータスとグループ関係情報のステータスとユーザーIDでグループを検索するためのメソッド.
+	 * 
+	 * @param userId ユーザーID
+	 * @param groupStatus グループステータス
+	 * @param relationStatus グループ関係情報のステータス
+	 * @return グループ情報のリスト
+	 */
 	public List<Group> showGroupListByBelongUserIdAndGroupStatus(Integer userId,Integer groupStatus,Integer relationStatus){
 		return groupRepository.findByUserIdAndGroupStatus(userId, groupStatus, relationStatus);
 	}

@@ -9,35 +9,57 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.service.group.SearchGroupService;
-import com.honcari.service.group.UpdateOwnerRequestService;
+import com.honcari.service.group.UpdateGroupService;
 
+/**
+ * グループオーナー権限委任依頼に返答するためのコントローラ.
+ * 
+ * @author yamaseki
+ *
+ */
 @Controller
 @RequestMapping("/group")
 public class RequestGroupOwnerController {
 	
 	@Autowired
-	private UpdateOwnerRequestService updateOwnerRequestService;
+	private UpdateGroupService updateGroupService;
 	
 	@Autowired
 	private SearchGroupService searchGroupService;
 	
+	/**
+	 * オーナー権限委任依頼に承諾するためのメソッド.
+	 * 
+	 * @param loginUser ログインユーザー
+	 * @param groupId グループiD
+	 * @param redirectAttributesm
+	 * @return グループ管理画面
+	 */
 	@RequestMapping("/approve_owner_request")
 	public String approveOwnerRequest(@AuthenticationPrincipal LoginUser loginUser,Integer groupId,RedirectAttributes redirectAttributesm) {
 		Group group = searchGroupService.searchGroupById(groupId);
 		group.setOwnerUserId(loginUser.getUser().getUserId());
 		group.setRequestedOwnerUserId(null);
-		updateOwnerRequestService.updateOwnerRequest(group);
+		updateGroupService.updateGroup(group);
 		
 		redirectAttributesm.addFlashAttribute("approveOwnerRequest", "approveOwnerRequest");
 		redirectAttributesm.addFlashAttribute("complete", "complete");
 		return "redirect:/group/to_management";
 	}
 	
+	/**
+	 * オーナー権限委任依頼を拒否するためのメソッド.
+	 * 
+	 * @param loginUser ログインユーザー
+	 * @param groupId グループID
+	 * @param redirectAttributesm
+	 * @return グループ管理画面
+	 */
 	@RequestMapping("/reject_owner_request")
 	public String rejectOwnerRequest(@AuthenticationPrincipal LoginUser loginUser,Integer groupId,RedirectAttributes redirectAttributesm) {
 		Group group = searchGroupService.searchGroupById(groupId);
 		group.setRequestedOwnerUserId(null);
-		updateOwnerRequestService.updateOwnerRequest(group);
+		updateGroupService.updateGroup(group);
 		redirectAttributesm.addFlashAttribute("rejectOwnerRequest", "rejectOwnerRequest");
 		redirectAttributesm.addFlashAttribute("complete", "complete");
 		return "redirect:/group/to_management";

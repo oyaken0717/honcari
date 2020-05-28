@@ -3,7 +3,7 @@ package com.honcari.controller.user;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 
 /**
  * マイページを表示するコントローラー.

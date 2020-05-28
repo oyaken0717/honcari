@@ -1,4 +1,4 @@
-package com.honcari;
+package com.honcari.common;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.honcari;
+package com.honcari.common;
 
 import java.io.IOException;
 import java.io.InputStream;

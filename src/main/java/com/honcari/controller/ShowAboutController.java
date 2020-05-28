@@ -3,7 +3,7 @@ package com.honcari.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 
 /**
  * アプリの概要ページを表示するコントローラ.
@@ -12,7 +12,7 @@ import com.honcari.CustomControllerAdvice.CommonAttribute;
  *
  */
 @Controller
-@CommonAttribute
+@RequestMapping("")
 public class ShowAboutController {
 	
 	/**
