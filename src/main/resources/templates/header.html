@@ -76,10 +76,11 @@
   				$(this).addClass("active");
   			}
   		});
-  		var img = $("#header-image").attr("src").toString().slice(-16,-1);
-  		console.log(img);
-  		if(img == 'user_default.pn') {
-  			$("#header-image").css("opacity",0.75);
+  		if($("#header-image").attr("src") != null){
+  			var img = $("#header-image").attr("src").toString().slice(-16,-1);
+  			if(img == 'user_default.pn') {
+  				$("#header-image").css("opacity",0.75);
+  			}
   		}
   	});
   </script>
