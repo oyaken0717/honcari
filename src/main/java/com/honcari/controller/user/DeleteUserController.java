@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.controller.ShowFaqController;
 import com.honcari.domain.BookRental;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
@@ -24,6 +26,7 @@ import com.honcari.service.user.DeleteUserService;
  *
  */
 @Controller
+@CommonAttribute
 @RequestMapping("/user")
 public class DeleteUserController {
 	
@@ -38,6 +41,9 @@ public class DeleteUserController {
 	
 	@Autowired
 	private SearchGroupByUserIdService searchGroupByUserIdService;
+	
+	@Autowired
+	private ShowFaqController showFaqController;
 	
 	/**
 	 * ユーザ情報を削除するメソッド(statusを9に変更する)
@@ -62,8 +68,9 @@ public class DeleteUserController {
 			model.addAttribute("groupError", "オーナーになっているグループがあります。オーナー権を委任して下さい");
 		}
 		if(bookRentalListByOwner.size() != 0 || bookRentalListByBorrower.size() != 0 || groupList.size() != 0) {
-			return "faq";
+			return showFaqController.showFaq();
 		}
+		System.out.println("きちゃってる....?");
 		deleteUserService.deleteUser(userId);
 		return "redirect:/logout";
 	}	
