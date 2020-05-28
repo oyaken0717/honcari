@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.BookRental;
 import com.honcari.domain.LoginUser;
 import com.honcari.domain.OwnedBookInfo;

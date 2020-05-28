@@ -1,3 +1,5 @@
+//グループ削除機能。現状は使用していないがサ再度使用する可能性あり
+
 //package com.honcari.service.group;
 //
 //import org.springframework.beans.factory.annotation.Autowired;

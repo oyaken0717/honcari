@@ -84,8 +84,8 @@ public class GroupRepository {
 				userList.add(user);
 
 				beforeUserId = nowUserId;
+				beforeOwnedBookInfoId  = 0;
 			}
-
 			int OwnedBookInfoId = rs.getInt("o_owned_book_info_id");
 			if (OwnedBookInfoId != beforeOwnedBookInfoId) {
 				OwnedBookInfo ownedBookInfo = new OwnedBookInfo();

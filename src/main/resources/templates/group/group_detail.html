@@ -67,7 +67,7 @@
 				<div class="row">
 			      <div class="col-md-7">
 			        <h3>グループ概要</h3>
-			        <p class="text-muted" th:text="${group.description}">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+			        <p class="text-muted" th:text="${group.description}"></p>
 			      </div>
 			      <div class="col-md-5">
 				      <div>
@@ -133,15 +133,5 @@
 <script type="text/javascript" src="/js/slick.min.js"></script>
 <script type="text/javascript" src="/js/slick_option.js"></script>
 <script src="../static/js/group_detail.js" th:src="@{/js/group_detail.js}"></script>
-  </body>
-<style>
-.tab-content{
-  /** ５行以上で省略 */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 10;
-  -webkit-box-orient: vertical;
-}
-</style>
+</body>
 </html>

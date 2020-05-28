@@ -1,7 +1,6 @@
 package com.honcari.controller.group;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.form.EditGroupForm;
 import com.honcari.service.group.EditGroupService;
@@ -34,9 +33,6 @@ public class EditGroupController {
 
 	@Autowired
 	private EditGroupService editGroupService;
-
-	@Autowired
-	private HttpSession session;
 	
 	private  String Bucket_Name = System.getenv("AWS_BUCKET_NAME");
     private  String Group_Folder_Name = System.getenv("AWS_GROUP_FOLDER_NAME");
@@ -55,6 +51,7 @@ public class EditGroupController {
 	 */
 	@RequestMapping("/to_edit_group")
 	public String toEditGroup(Integer groupId, Model model, HttpServletRequest request) {
+		//URLからの直接アクセスの場合はホーム画面へリダイレクトさせる
 		if(request.getHeader("REFERER")==null)return "redirect:/";
 		
 		Group group = showGroupDetailService.showGroupDetail(groupId);
@@ -65,28 +62,15 @@ public class EditGroupController {
 				}
 			}));
 		}
-		model.addAttribute("group", group);
 
-		String returnParam = request.getHeader("REFERER").substring(21);
-		if (request.getHeader("REFERER").contains("heroku")) {
-			returnParam = request.getHeader("REFERER").substring(29);
-		}else {
+		if (!request.getHeader("REFERER").contains("heroku")) {
 			Group_Folder_Name="group-test";
 			Bucket_Name="honcari-image-test";
 		}
-		model.addAttribute("returnParam", returnParam);
+		
+		model.addAttribute("group", group);
 		model.addAttribute("Group_Folder_Name", Group_Folder_Name);
 		model.addAttribute("Bucket_Name", Bucket_Name);
-
-		if (request.getHeader("REFERER").contains("edit_group") == true) {
-			returnParam = (String) session.getAttribute("formerPage");
-			if (!request.getHeader("REFERER").contains("heroku")) {
-				returnParam = request.getHeader("REFERER").substring(28);
-			}
-			model.addAttribute("returnParam", returnParam);
-		}else {
-			session.setAttribute("formerPage", request.getHeader("REFERER"));
-		}
 
 		return "group/edit_group";
 	}

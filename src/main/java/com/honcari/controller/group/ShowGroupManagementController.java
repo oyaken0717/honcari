@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.LoginUser;
 import com.honcari.service.group.SearchRequestedOwnerService;
@@ -41,17 +41,23 @@ public class ShowGroupManagementController {
 	 */
 	@RequestMapping("/to_management")
 	public String showBelongGroup(@AuthenticationPrincipal LoginUser loginUser, Model model) {
+		//参加しているグループのリスト
+		List<Group> belongGroupList = showGroupManagementService
+				.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 1);
 		
-		List<Group> belongGroupList = showGroupManagementService.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 1);
-		List<Group> notApprovedGroupList = showGroupManagementService.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 0);
+		//承認待ちのグループのリスト
+		List<Group> notApprovedGroupList = showGroupManagementService
+				.showGroupListByBelongUserIdAndRelationStatus(loginUser.getUser().getUserId(), 0);
 		
-		//自身が作成したグループのリスト
+		//自身がオーナーのグループのリスト
 		List<Group> ownGroupList = showGroupManagementService
 				.showGroupListByOwnerUserId(loginUser.getUser().getUserId());
 		
-		List<Group> requestedOwnerGroupList = searchRequestedOwnerService.searchRequestedOwnerUser(loginUser.getUser().getUserId());
+		//オーナー権限委任依頼があるグループのリスト
+		List<Group> requestedOwnerGroupList = searchRequestedOwnerService
+				.searchRequestedOwnerUser(loginUser.getUser().getUserId());
+		
 		model.addAttribute("requestedOwnerGroupList",requestedOwnerGroupList);
-
 		model.addAttribute("belongGroupList", belongGroupList);
 		model.addAttribute("notApprovedGroupList", notApprovedGroupList);
 		model.addAttribute("ownGroupList", ownGroupList);

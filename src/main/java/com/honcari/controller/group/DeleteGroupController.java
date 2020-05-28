@@ -1,3 +1,5 @@
+//グループ削除機能が必要になった際に使用する
+
 //package com.honcari.controller.group;
 //
 //import org.springframework.beans.factory.annotation.Autowired;

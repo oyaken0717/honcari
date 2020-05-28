@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.TemplateEngine;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 import com.honcari.domain.Group;
 import com.honcari.domain.GroupRelation;
 import com.honcari.domain.LoginUser;
@@ -51,7 +51,7 @@ public class ShowGroupDetailController {
 	/**
 	 * グループ詳細情報を表示するためのメソッド.
 	 * 
-	 * @param id        グループid
+	 * @param id グループid
 	 * @param model
 	 * @param loginUser ログインユーザー
 	 * @return グループ詳細画面へ遷移
@@ -65,9 +65,11 @@ public class ShowGroupDetailController {
 		
 		List<OwnedBookInfo>ownedBookInfoList = new ArrayList<>();
 		group.getUserList().forEach(user -> {
-			user.getOwnedBookInfoList().forEach(ownedBookInfo ->{
-				ownedBookInfoList.add(ownedBookInfo);
-			});
+			if(user.getOwnedBookInfoList().size() != 0) {
+				user.getOwnedBookInfoList().forEach(ownedBookInfo ->{
+					ownedBookInfoList.add(ownedBookInfo);
+				});
+			}
 		});
 		
 		GroupRelation groupRelation = searchGroupRelationService.searchByUserIdAndGroupIdAndStatus(loginUser.getUser().getUserId(),id,0);
@@ -98,12 +100,12 @@ public class ShowGroupDetailController {
 		
 		//戻る機能
 		String returnParam = request.getHeader("REFERER").substring(21);
+		//heroku（本番環境）の場合
 		if(request.getHeader("REFERER").contains("heroku")) {
 			returnParam = request.getHeader("REFERER").substring(29);
-		}		
-		if(request.getHeader("REFERER").contains("invite")==false&&request.getHeader("REFERER").contains("edit")==false) {
-			session.setAttribute("returnParam", returnParam);
 		}
+		
+		session.setAttribute("returnParam", returnParam);
 		
 		//キャッシュ削除
 		templateEngine.clearTemplateCacheFor("group/group_detail");
