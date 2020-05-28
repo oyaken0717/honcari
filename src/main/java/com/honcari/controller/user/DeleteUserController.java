@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.honcari.CustomControllerAdvice.CommonAttribute;
+import com.honcari.common.CustomControllerAdvice.CommonAttribute;
 import com.honcari.controller.ShowFaqController;
 import com.honcari.domain.BookRental;
 import com.honcari.domain.Group;
