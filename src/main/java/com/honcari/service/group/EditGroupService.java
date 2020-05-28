@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.honcari.S3UploadHelper;
+import com.honcari.common.S3UploadHelper;
 import com.honcari.domain.Group;
 import com.honcari.domain.User;
 import com.honcari.form.EditGroupForm;
@@ -49,8 +49,6 @@ public class EditGroupService {
 		if(form.getGroupStatus()==null) {
 			group.setGroupStatus(0);	
 		}
-//		group.setOwnerUserId(form.getOwnerUserId());
-//		group.setRequestedOwnerUserId(null);
 		
 		//もしオーナー権限委任をする場合、requestedOwnwerUserIdにユーザーIDを詰める
 		if(form.getUserName()!=null) {

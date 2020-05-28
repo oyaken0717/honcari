@@ -18,14 +18,14 @@ create table category (
   , name character varying(100) not null
 );
 
-insert into category values(1, '文学・小説');
-insert into category values(2, '社会・ビジネス');
-insert into category values(3, '実用・教育');
-insert into category values(4, '旅行・地図');
-insert into category values(5, '趣味');
-insert into category values(6, 'アート・教養・エンタメ');
-insert into category values(7, '事典・図鑑・語学・辞書');
-insert into category values(8, 'こども');
+insert into category values(1, '文学・小説・エッセイ');
+insert into category values(2, 'IT・コンピュータ');
+insert into category values(3, '社会・ビジネス・専門');
+insert into category values(4, '趣味・旅行・スポーツ');
+insert into category values(5, '暮らし・健康');
+insert into category values(6, 'エンタメ・ゲーム');
+insert into category values(7, '語学・参考書');
+insert into category values(8, '漫画');
 insert into category values(9, 'その他');
 
 -- books

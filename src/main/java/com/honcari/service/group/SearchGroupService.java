@@ -42,6 +42,12 @@ public class SearchGroupService {
 		return groupRepository.findByGroupId(id);
 	}
 	
+	/**
+	 * グループの名前でグループ件数を検索するメソッド.
+	 * 
+	 * @param name グループ名
+	 * @return
+	 */
 	public Integer count(String name) {
 		return groupRepository.count(name);
 	}

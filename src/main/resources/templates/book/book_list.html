@@ -88,13 +88,6 @@
 							<img class="bd-placeholder-img thumbnail img-fluid" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
 						</a>
 					</div>
-					<div th:if="${ownedBookInfo.bookStatus} == 3" class="now-lending p-3">
-						<div class="now">now</div>
-						<div class="lending">lending!!</div>
-						<a th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">
-							<img class="bd-placeholder-img thumbnail img-fluid" style="opacity: 0.5;" src="" th:src="@{${ownedBookInfo.book.thumbnailPath}}">
-						</a>
-					</div>
 					<div class="card-body">
 						<div class="mb-3 div-book-title">
 							<a class="card-text book-title a-link" th:href="@{'/book/show_detail?ownedBookInfoId=' + ${ownedBookInfo.ownedBookInfoId}}">

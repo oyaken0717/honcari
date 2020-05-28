@@ -1,7 +1,5 @@
 package com.honcari.controller.group;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,9 +27,6 @@ public class JoinGroupController {
 	private SearchUserInGroupService searchUserInGroupService;
 
 	@Autowired
-	private HttpSession session;
-
-	@Autowired
 	private JoinGroupService joinGroupService;
 
 	/**
@@ -51,7 +46,7 @@ public class JoinGroupController {
 	/**
 	 * グループに参加するメソッド.
 	 * 
-	 * @param groupId           グループ情報
+	 * @param groupId グループ情報
 	 * @param loginUserログインユーザー
 	 * @param model
 	 * @param redirect
@@ -61,9 +56,6 @@ public class JoinGroupController {
 	public String joinGroup(Integer groupId, @AuthenticationPrincipal LoginUser loginUser, Model model,
 			RedirectAttributes redirect) {
 		joinGroupService.joinGroup(loginUser.getUser().getUserId(), groupId);
-		if (session.getAttribute("fromManagement") != null) {
-			return "redirect:/group/to_management";
-		}
 
 		// 参加完了後の画面にてポップアップ表示するためのモデル格納
 		redirect.addFlashAttribute("joinGroup", "joinGroup");

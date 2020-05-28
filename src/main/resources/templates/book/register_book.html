@@ -9,7 +9,6 @@
 	<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
 	<link rel="shortcut icon" href="/img/favicon.ico">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -22,9 +21,9 @@
 	<div id="flash" class="alert alert-success alert-dismissible fade show flash" role="alert">
   		<span id="register-success"></span>
 	</div>
-		<div class="register-book-image text-center">
-	<h2 class="section-heading">マイブックに本を登録しよう</h2>
-	<p class="section-description">キーワードで検索</p>
+	<div class="register-book-image text-center">
+		<h2 class="section-heading">マイブックに本を登録しよう</h2>
+		<p class="section-description">キーワードで検索</p>
 			<div class="search-book-for-add row justify-content-center">
 			<form th:action="@{/book/search_books}" method="POST" th:object="${searchGoogleBookForm}">
 				<p th:if="${nothing}" th:text="${nothing}" style="color:red"></p>

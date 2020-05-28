@@ -26,6 +26,7 @@ public class RegisterGroupForm {
 	private List<String> userNameList;
 	/** グループステータス */
 	private Integer status;
+	
 	public String getName() {
 		return name;
 	}
