@@ -20,7 +20,7 @@ $(function(){
 				if (theFile.type.match('image.*')) {
 					$("#current-image").removeClass("d-block").addClass("d-none");
 					$("#input-image").remove();
-					var $html = ['<img id="input-image" class="rounded-lg mx-auto d-block border border-secondary user-image" src="', e.target.result,'" title="', escape(theFile.name), '" width="100px" height="100px">'].join('');// 画像では画像のプレビューの表示
+					var $html = ['<img id="input-image" class="rounded-lg mx-auto d-block border border-secondary user-image" src="', e.target.result,'" title="', encodeURI(theFile.name), '" width="100px" height="100px">'].join('');// 画像では画像のプレビューの表示
 					$('#image-panel').append($html);
 				} else {
 					alert('画像でないファイルはアップロードできません');
@@ -32,7 +32,7 @@ $(function(){
 		
 		reader.readAsDataURL(file);
 		
-		$(this).next('.custom-file-label').html(escape(file.name));
+		$(this).next('.custom-file-label').html(encodeURI(file.name));
 	}
 	
 	//ファイルの取消

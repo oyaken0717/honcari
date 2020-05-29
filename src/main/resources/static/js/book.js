@@ -22,6 +22,7 @@ $(function() {
 	});
 	
 	$(document).on('click', '#book-register-button', function(){
+		$(this).prop('disabled', true);
 		var token = $("meta[name='_csrf']").attr("content");
 	    var header = $("meta[name='_csrf_header']").attr("content");
 	    $(document).ajaxSend(function(e, xhr, options) {
@@ -64,6 +65,7 @@ $(function() {
 			$('#register-category-id').val(1);
 			const xhr = new XMLHttpRequest();
 			xhr.withCredentials = true;
+			$("#book-register-button").prop('disabled', false);
 			$("#flash").show();
 			$("#register-success").text('書籍の登録が完了しました');
 			setTimeout(hideAlert, 3000);
