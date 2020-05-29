@@ -118,7 +118,13 @@ public class EditOwnedBookInfoController {
 		//ownedBookInfoのbookStatusを削除に変更し更新処理を行う
 		ownedBookInfo.setBookStatus(BookStatusEnum.DELETE.getValue());
 		ownedBookInfo.setVersion(version);
-		editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
+		try {
+			editOwnedBookInfoService.editOwnedBookInfo(ownedBookInfo);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			model.addAttribute("errorMessage", "書籍情報の削除に失敗しました");
+			return showEditBook(model, ownedBookInfo.getOwnedBookInfoId());
+		}
 		redirectAttributes.addFlashAttribute("successMessage", "書籍の登録を削除しました");
 		return "redirect:/book/show_mybook";
 	}
