@@ -37,22 +37,22 @@ public class RefuseRequestController {
 	 * @param bookRentalVersion    貸出状況バージョン
 	 * @param ownedBookInfoVersion 所有情報バージョン
 	 * @param redirectAttributes   フラッシュスコープ
-	 * @return 貸出情報一覧画面
+	 * @return 貸出申請管理画面
 	 */
 	@RequestMapping(value = "/determine", params = "refuse", method = RequestMethod.POST) 
 	public String refuseRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
 			Integer rentalStatus, Integer bookRentalVersion, Integer ownedBookInfoVersion,
 			RedirectAttributes redirectAttributes) {
 		String updateUserName = loginUser.getUser().getName();
+		
+		// 却下処理を実行
 		try {
 			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
-				refuseRentalRequestService.refuseRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
-						ownedBookInfoVersion);
+				refuseRentalRequestService.refuseRentalRequest(bookRentalId, updateUserName, bookRentalVersion, ownedBookInfoVersion);
 			  //延長承認待ちの状態を仮定しているが、実際は存在しないby湯口
 			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
 				refuseExtendRequestService.refuseExtendRequest(bookRentalId, updateUserName, bookRentalVersion);
 			}
-			// TODO 借り手にメール送信
 			redirectAttributes.addFlashAttribute("successMessage", "貸出リクエストを却下しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();

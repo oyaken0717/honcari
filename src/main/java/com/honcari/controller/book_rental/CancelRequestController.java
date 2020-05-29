@@ -37,7 +37,7 @@ public class CancelRequestController {
 	 * @param bookRentalVersion    貸出状況バージョン
 	 * @param ownedBookInfoVersion 所有情報バージョン
 	 * @param redirectAttributes   フラッシュスコープ
-	 * @return 貸出情報一覧画面
+	 * @return 貸出申請管理画面
 	 */
 	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
 	public String cancelRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
@@ -45,10 +45,10 @@ public class CancelRequestController {
 			RedirectAttributes redirectAttributes) {
 		String updateUserName = loginUser.getUser().getName();
 
+		// キャンセル処理を実行
 		try {
 			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
-				cancelRentalRequestService.cancelRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
-						ownedBookInfoVersion);
+				cancelRentalRequestService.cancelRentalRequest(bookRentalId, updateUserName, bookRentalVersion, ownedBookInfoVersion);
 			  //延長承認待ちの状態を仮定しているが、実際は存在しないby湯口
 			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
 				cancelExtendRequestService.cancelExtendRequest(bookRentalId, updateUserName, bookRentalVersion);

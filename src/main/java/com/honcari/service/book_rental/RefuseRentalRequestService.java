@@ -41,14 +41,15 @@ public class RefuseRentalRequestService {
 	public void refuseRentalRequest(Integer bookRentalId, String updateUserName, Integer bookRentalVersion,
 			Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
-		bookRental.setRentalStatus(RentalStatusEnum.REJECTED.getValue());
+		bookRental.setRentalStatus(RentalStatusEnum.REJECTED.getValue()); // 却下
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
+		
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
-		ownedBookInfo.setBookStatus(BookStatusEnum.RENTABLE.getValue());
+		ownedBookInfo.setBookStatus(BookStatusEnum.RENTABLE.getValue()); // 貸出可能
 		ownedBookInfo.setVersion(ownedBookInfoVersion);
 
-		// データベースの更新ができなかった場合は例外処理を行う
+		// データベースの更新ができなかった（レコードの更新数が0の場合）は例外処理を行う
 		int updateBookRentalCount = bookRentalRepository.update(bookRental);
 		int updateOwnedBookInfoCount = ownedBookInfoRepository.update(ownedBookInfo);
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {

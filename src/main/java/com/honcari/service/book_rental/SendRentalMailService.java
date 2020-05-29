@@ -54,6 +54,7 @@ public class SendRentalMailService {
 		String mailSubHeading = null;
 		String emailTo = null;
 
+		// 貸出状況によってメール内容と送信先を変える
 		if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
 			doneUserName = bookRental.getCreationUserName();
 			mailHeading = "貸出申請送信のお知らせ";
@@ -86,15 +87,19 @@ public class SendRentalMailService {
 			emailTo = bookRental.getBorrowUser().getEmail();
 		}
 
+		// 開発環境と本番環境でメールに添付するリンクパスを変更
 		String url = request.getRequestURL().toString();
 		String rentalListPath = url.replace(request.getRequestURI(), "/book_rental/show_list");
 		String applicationPath = url.replace(request.getRequestURI(), "/");
+
+		// メールのHTMLファイルの値をセット
 		context.setVariable("doneUserName", doneUserName);
 		context.setVariable("mailHeading", mailHeading);
 		context.setVariable("mailSubHeading", mailSubHeading);
 		context.setVariable("book", ownedBookInfo.getBook());
 		context.setVariable("rentalListPath", rentalListPath);
 		context.setVariable("applicationPath", applicationPath);
+
 		createRentalMail(emailTo, mailHeading, context);
 	}
 
@@ -111,10 +116,9 @@ public class SendRentalMailService {
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
-				helper.setFrom("greatpotato@gmail.com");
 				helper.setTo(emailTo);
 				helper.setSubject("【Hocari】" + subject);
-				helper.setText(getMailBody("book_rental_mail", context), true);
+				helper.setText(getMailBody("book_rental_mail", context), true); // メール本文のHTMLファイルを指定
 			}
 		});
 		return null;

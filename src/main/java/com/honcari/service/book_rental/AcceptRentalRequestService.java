@@ -43,15 +43,16 @@ public class AcceptRentalRequestService {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
 		bookRental.setBeginning(bookRental.getRequestBeginning());
 		bookRental.setDeadline(bookRental.getRequestDeadline());
-		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue());
+		bookRental.setRentalStatus(RentalStatusEnum.APPROVED.getValue()); // 承認済み
 		bookRental.setApprovalDate(new Timestamp(System.currentTimeMillis()));
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
+		
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
-		ownedBookInfo.setBookStatus(BookStatusEnum.LENDING.getValue());
+		ownedBookInfo.setBookStatus(BookStatusEnum.LENDING.getValue()); // 貸出中
 		ownedBookInfo.setVersion(ownedBookInfoVersion);
 
-		// データベースの更新ができなかった場合は例外処理を行う
+		// データベースの更新ができなかった場合（レコードの更新数が0の場合）は例外処理を行う
 		int updateBookRentalCount = bookRentalRepository.update(bookRental);
 		int updateOwnedBookInfoCount = ownedBookInfoRepository.update(ownedBookInfo);
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {

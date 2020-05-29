@@ -55,7 +55,7 @@ public class SendRequestController {
 	 * @param form               フォーム
 	 * @param result             エラーチェック
 	 * @param redirectAttributes リダイレクトスコープ
-	 * @return 貸出情報一覧画面
+	 * @return 貸出申請管理画面
 	 */
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public String sendRentalRequest(Model model, @AuthenticationPrincipal LoginUser loginUser,
@@ -67,9 +67,9 @@ public class SendRequestController {
 		Integer ownerId = form.getOwnerId();
 		Integer ownedBookInfoVersion = form.getOwnedBookInfoVersion();
 
-		// 貸出状況のエラーチェック
+		// 貸出可以外の本を借りた場合と所有者自らがリクエストを送った場合にエラー
 		if (bookStatus != 1 || ownerId == borrowUserId) {
-			result.rejectValue("requestDeadline", "500", "不正なリクエストが行われました");
+			return "error/500";
 		}
 
 		if (result.hasErrors()) {

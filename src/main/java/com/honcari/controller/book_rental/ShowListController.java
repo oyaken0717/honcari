@@ -47,11 +47,11 @@ public class ShowListController {
 	}
 
 	/**
-	 * 貸出管理画面を表示する.
+	 * 貸出中の本一覧画面を表示する.
 	 * 
-	 * @param userId ユーザーID
+	 * @param loginUser ログインユーザー
 	 * @param model  リクエストスコープ
-	 * @return 貸出管理画面
+	 * @return 貸出中の本一覧画面
 	 */
 	@RequestMapping("/show_list")
 	public String showList(@AuthenticationPrincipal LoginUser loginUser, Model model) {

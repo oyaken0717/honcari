@@ -43,9 +43,9 @@ public class ShowPendingListController {
 	/**
 	 * 貸出管理画面を表示する.
 	 * 
-	 * @param userId ユーザーID
+	 * @param loginUser ログインユーザー
 	 * @param model  リクエストスコープ
-	 * @return 貸出管理画面
+	 * @return 貸出申請管理画面
 	 */
 	@RequestMapping("/show_pending_list")
 	public String showPendingList(@AuthenticationPrincipal LoginUser loginUser, Model model) {
@@ -53,12 +53,13 @@ public class ShowPendingListController {
 		List<BookRental> BookRentalListByOwner = searchByOwnerService.searchRentalListByOwner(userId);
 		List<BookRental> BookRentalListByBorrower = searchByBorrowerService.searchRentalListByBorrower(userId);
 
-		// 貸す承認待ち本リスト
+		// 承認待ちの本リスト
 		List<BookRental> lendPendingList = BookRentalListByOwner.stream()
 				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.WAIT_APPROVAL.getValue()
 						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_EXTEND.getValue())
 				.collect(Collectors.toList());
-		// 借りる承認待ち本リスト
+		
+		// 申請中の本リスト
 		List<BookRental> borrowPendingList = BookRentalListByBorrower.stream()
 				.filter(bookRental -> bookRental.getRentalStatus() == RentalStatusEnum.WAIT_APPROVAL.getValue()
 						|| bookRental.getRentalStatus() == RentalStatusEnum.WAIT_EXTEND.getValue())

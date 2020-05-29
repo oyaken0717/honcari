@@ -37,17 +37,18 @@ public class AcceptRequestController {
 	 * @param bookRentalVersion    貸出状況バージョン
 	 * @param ownedBookInfoVersion 所有情報バージョン
 	 * @param redirectAttributes   フラッシュスコープ
-	 * @return 貸出情報一覧画面
+	 * @return 貸出申請管理画面
 	 */
 	@RequestMapping(value = "/determine", params = "accept",method = RequestMethod.POST)
 	public String acceptRequest(Integer bookRentalId, @AuthenticationPrincipal LoginUser loginUser,
 			Integer rentalStatus, Integer bookRentalVersion, Integer ownedBookInfoVersion,
 			RedirectAttributes redirectAttributes) {
 		String updateUserName = loginUser.getUser().getName();
+		
+		//承認処理を実行
 		try {
 			if (rentalStatus == RentalStatusEnum.WAIT_APPROVAL.getValue()) {
-				acceptRentalRequestService.acceptRentalRequest(bookRentalId, updateUserName, bookRentalVersion,
-						ownedBookInfoVersion);
+				acceptRentalRequestService.acceptRentalRequest(bookRentalId, updateUserName, bookRentalVersion, ownedBookInfoVersion);
 			  //延長承認待ちの状態を仮定しているが、実際は存在しないby湯口
 			} else if (rentalStatus == RentalStatusEnum.WAIT_EXTEND.getValue()) {
 				acceptExtendRequestService.acceptExtendRequest(bookRentalId, updateUserName, bookRentalVersion);

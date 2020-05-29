@@ -37,19 +37,21 @@ public class ConfirmReturnService {
 	public void confirmReturn(Integer bookRentalId, Integer bookStatus, String updateUserName,
 			Integer bookRentalVersion, Integer ownedBookInfoVersion) {
 		BookRental bookRental = bookRentalRepository.load(bookRentalId);
-		bookRental.setRentalStatus(RentalStatusEnum.RETURNED.getValue());
+		bookRental.setRentalStatus(RentalStatusEnum.RETURNED.getValue()); // 返却済
 		bookRental.setUpdateUserName(updateUserName);
 		bookRental.setVersion(bookRentalVersion);
+		
 		OwnedBookInfo ownedBookInfo = bookRental.getOwnedBookInfo();
 		ownedBookInfo.setBookStatus(bookStatus);
 		ownedBookInfo.setVersion(ownedBookInfoVersion);
 
-		// データベースの更新ができなかった場合は例外処理を行う
+		// データベースの更新ができなかった場合（レコードの更新数が0の場合）は例外処理を行う
 		int updateBookRentalCount = bookRentalRepository.update(bookRental);
 		int updateOwnedBookInfoCount = ownedBookInfoRepository.update(ownedBookInfo);
 		if (updateBookRentalCount != 1 || updateOwnedBookInfoCount != 1) {
 			throw new IllegalStateException("Faild to confirm book return!");
 		}
+		
 		//メール送信
 		sendRentalMailService.sendRentalMail(bookRental);
 	}

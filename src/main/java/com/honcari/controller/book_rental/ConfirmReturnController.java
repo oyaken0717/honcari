@@ -38,9 +38,9 @@ public class ConfirmReturnController {
 			RedirectAttributes redirectAttributes) {
 		String processingUserName = loginUser.getUser().getName();
 
+		// 返却確認処理を実行
 		try {
-			confirmReturnService.confirmReturn(bookRentalId, updateStatus, processingUserName, bookRentalVersion,
-					ownedBookInfoVersion);
+			confirmReturnService.confirmReturn(bookRentalId, updateStatus, processingUserName, bookRentalVersion, ownedBookInfoVersion);
 			redirectAttributes.addFlashAttribute("successMessage", "本の返却を確認しました！");
 		} catch (Exception ex) {
 			ex.printStackTrace();

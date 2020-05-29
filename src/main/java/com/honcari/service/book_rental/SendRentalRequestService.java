@@ -47,16 +47,17 @@ public class SendRentalRequestService {
 		BookRental bookRental = new BookRental();
 		bookRental.setOwnedBookInfoId(ownedBookInfoId);
 		bookRental.setBorrowUserId(borrowUserId);
-		bookRental.setRentalStatus(RentalStatusEnum.WAIT_APPROVAL.getValue());
+		bookRental.setRentalStatus(RentalStatusEnum.WAIT_APPROVAL.getValue()); // 承認待ち
 		bookRental.setRequestBeginning(requestBeginning);
 		bookRental.setRequestDeadline(requestDeadline);
 		bookRental.setCreationUserName(borrowUserName);
+		
 		bookRentalRepository.insert(bookRental);
 		OwnedBookInfo ownedBookInfo = ownedBookInfoRepository.findByOwnedBookInfoId(ownedBookInfoId);
 		ownedBookInfo.setVersion(ownedBookInfoVersion);
-		ownedBookInfo.setBookStatus(BookStatusEnum.BEFORE_LENDING.getValue());
+		ownedBookInfo.setBookStatus(BookStatusEnum.BEFORE_LENDING.getValue()); // 貸出承認待ち
 
-		// データベースの更新ができなかった場合は例外処理を行う
+		// データベースの更新ができなかった場合（レコードの更新数が0の場合）は例外処理を行う
 		int updateCount = ownedBookInfoRepository.update(ownedBookInfo);
 		if (updateCount != 1) {
 			throw new IllegalStateException("Faild updating status of the book!");
