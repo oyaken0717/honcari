@@ -96,10 +96,12 @@ public class CategoryRepository {
 				categoryList.add(category);
 			}
 			if(rs.getInt("o_book_status") != 1) {
+				beforeCategoryId = nowCategoryId;
 				continue;
 			}
 			
 			if(limitCount >= 16) {
+				beforeCategoryId = nowCategoryId;
 				continue;
 			}
 			OwnedBookInfo ownedBookInfo = new OwnedBookInfo();
