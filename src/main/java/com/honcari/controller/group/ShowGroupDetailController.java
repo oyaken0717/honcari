@@ -67,7 +67,9 @@ public class ShowGroupDetailController {
 		group.getUserList().forEach(user -> {
 			if(user.getOwnedBookInfoList().size() != 0) {
 				user.getOwnedBookInfoList().forEach(ownedBookInfo ->{
-					ownedBookInfoList.add(ownedBookInfo);
+					if(ownedBookInfo.getBookStatus() != 4) {						
+						ownedBookInfoList.add(ownedBookInfo);
+					}
 				});
 			}
 		});
